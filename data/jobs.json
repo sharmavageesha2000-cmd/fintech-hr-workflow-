@@ -1,0 +1,90 @@
+[
+  {
+    "id": "job-1",
+    "title": "Frontend Developer",
+    "department": "Technology",
+    "experienceRequired": "1–3 Years",
+    "totalVacancies": 2,
+    "vacanciesLeft": 2,
+    "status": "ACTIVE",
+    "skills": ["React.js", "JavaScript", "HTML5 & CSS3", "Tailwind CSS", "TypeScript", "Responsive Design", "REST APIs"],
+    "description": "Building modern, responsive, high-performance web applications using React.js and modern JavaScript/TypeScript."
+  },
+  {
+    "id": "job-2",
+    "title": "Backend Developer",
+    "department": "Technology",
+    "experienceRequired": "2–4 Years",
+    "totalVacancies": 2,
+    "vacanciesLeft": 2,
+    "status": "ACTIVE",
+    "skills": ["Node.js", "Express", "REST APIs", "SQL / PostgreSQL", "MongoDB", "Databases", "Backend Development"],
+    "description": "Designing scalable REST APIs, microservices, and database schemas with Node.js and PostgreSQL/MongoDB."
+  },
+  {
+    "id": "job-3",
+    "title": "Full Stack AI Engineer",
+    "department": "Technology",
+    "experienceRequired": "2–5 Years",
+    "totalVacancies": 2,
+    "vacanciesLeft": 2,
+    "status": "ACTIVE",
+    "skills": ["React.js", "Node.js", "Python", "FastAPI", "Gemini API / LLMs", "PostgreSQL", "REST APIs", "Docker"],
+    "description": "Building scalable full stack web applications integrating React, Node.js/Python APIs, and Gemini LLM pipelines."
+  },
+  {
+    "id": "job-4",
+    "title": "AI/ML Engineer",
+    "department": "Artificial Intelligence",
+    "experienceRequired": "2–5 Years",
+    "totalVacancies": 2,
+    "vacanciesLeft": 2,
+    "status": "ACTIVE",
+    "skills": ["Python", "Machine Learning", "PyTorch / TensorFlow", "LLMs", "Data Processing", "AI Workflows"],
+    "description": "Developing machine learning models, LLM pipelines, and AI data processing workflows using Python."
+  },
+  {
+    "id": "job-5",
+    "title": "Data Analyst",
+    "department": "Data",
+    "experienceRequired": "1–3 Years",
+    "totalVacancies": 1,
+    "vacanciesLeft": 1,
+    "status": "ACTIVE",
+    "skills": ["SQL", "Excel", "Power BI / Tableau", "Python", "Data Visualization", "Analytics"],
+    "description": "Extracting business insights, writing complex SQL queries, and creating executive data visualization dashboards."
+  },
+  {
+    "id": "job-6",
+    "title": "Business Analyst",
+    "department": "Business",
+    "experienceRequired": "1–3 Years",
+    "totalVacancies": 1,
+    "vacanciesLeft": 1,
+    "status": "ACTIVE",
+    "skills": ["Requirement Gathering (BRD/FRD)", "Agile / Scrum", "Jira", "Process Mapping", "Documentation", "Business Analysis"],
+    "description": "Bridging business stakeholders and engineering teams with detailed requirement analysis, BRD/FRD creation, and Agile workflows."
+  },
+  {
+    "id": "job-7",
+    "title": "Business Development Executive",
+    "department": "Sales",
+    "experienceRequired": "1–3 Years",
+    "totalVacancies": 2,
+    "vacanciesLeft": 2,
+    "status": "ACTIVE",
+    "skills": ["Lead Generation", "Client Management", "B2B Sales", "CRM", "Communication", "Outreach"],
+    "description": "Driving outbound client acquisitions, managing enterprise accounts, and closing strategic sales opportunities."
+  },
+  {
+    "id": "job-8",
+    "title": "UI/UX Designer",
+    "department": "Design",
+    "experienceRequired": "1–3 Years",
+    "totalVacancies": 1,
+    "vacanciesLeft": 1,
+    "status": "ACTIVE",
+    "skills": ["Figma", "UI Design", "UX Research", "Wireframing", "Prototyping", "Design Systems"],
+    "description": "Crafting user-centric UI designs, wireframes, interactive prototypes, and conducting user research in Figma."
+  }
+]

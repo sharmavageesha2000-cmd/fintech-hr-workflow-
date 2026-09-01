@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: hr-smartflow-automation
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: node server.js
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+      - key: RECRUITER_EMAIL
+        value: sharmavageesha2000@gmail.com
+      - key: RECRUITER_NAME
+        value: Vageesha Sharma
+      - key: GOOGLE_APP_PASSWORD
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false

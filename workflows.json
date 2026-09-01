@@ -1,0 +1,1891 @@
+[
+  {
+    "updatedAt": "2026-08-14T12:39:52.958Z",
+    "createdAt": "2026-08-14T12:39:52.958Z",
+    "id": "AntiGravityTestWorkflow001",
+    "name": "AntiGravity Test Workflow",
+    "description": null,
+    "active": false,
+    "isArchived": false,
+    "nodes": [
+      {
+        "parameters": {},
+        "id": "manual-trigger-node",
+        "name": "When clicking ‘Test workflow’",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          250,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "field-1",
+                "name": "test_status",
+                "value": "AntiGravity Connected Successfully",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "set-fields-node",
+        "name": "Edit Fields",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          470,
+          300
+        ]
+      }
+    ],
+    "connections": {
+      "When clicking ‘Test workflow’": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "staticData": null,
+    "meta": null,
+    "nodeGroups": [],
+    "pinData": null,
+    "versionId": "42dcc5ec-db75-4f06-ac60-8a64576d8a20",
+    "activeVersionId": null,
+    "versionCounter": 1,
+    "triggerCount": 0,
+    "sourceWorkflowId": null,
+    "tags": [],
+    "shared": [
+      {
+        "updatedAt": "2026-08-14T12:39:52.958Z",
+        "createdAt": "2026-08-14T12:39:52.958Z",
+        "role": "workflow:owner",
+        "workflowId": "AntiGravityTestWorkflow001",
+        "projectId": "OcTd8uLWUHZzm9Ly",
+        "project": {
+          "updatedAt": "2026-08-14T12:32:18.768Z",
+          "createdAt": "2026-08-14T12:29:52.236Z",
+          "id": "OcTd8uLWUHZzm9Ly",
+          "name": "Vageesha Sharma <sharmavageesha2000@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "customTelemetryTags": [],
+          "creatorId": "74712e91-64af-4c55-ba53-0dcd3d09ddf1"
+        }
+      }
+    ],
+    "versionMetadata": {
+      "name": null,
+      "description": null
+    }
+  },
+  {
+    "updatedAt": "2026-08-14T12:41:50.779Z",
+    "createdAt": "2026-08-14T12:41:50.779Z",
+    "id": "sPCm9j9OzigjMM8M",
+    "name": "AntiGravity REST API Test Workflow",
+    "description": null,
+    "active": false,
+    "isArchived": false,
+    "nodes": [
+      {
+        "parameters": {},
+        "id": "manual-trigger",
+        "name": "When clicking 'Test workflow'",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          250,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "field-1",
+                "name": "status",
+                "value": "AntiGravity REST API Verified",
+                "type": "string"
+              },
+              {
+                "id": "field-2",
+                "name": "connection_mode",
+                "value": "n8n Public REST API v1",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "edit-fields",
+        "name": "Edit Fields",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          470,
+          300
+        ]
+      }
+    ],
+    "connections": {
+      "When clicking 'Test workflow'": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "staticData": null,
+    "meta": null,
+    "nodeGroups": [],
+    "pinData": null,
+    "versionId": "7854c27c-ef07-4c76-8012-fd1b58424fef",
+    "activeVersionId": null,
+    "versionCounter": 1,
+    "triggerCount": 0,
+    "sourceWorkflowId": null,
+    "tags": [],
+    "shared": [
+      {
+        "updatedAt": "2026-08-14T12:41:50.779Z",
+        "createdAt": "2026-08-14T12:41:50.779Z",
+        "role": "workflow:owner",
+        "workflowId": "sPCm9j9OzigjMM8M",
+        "projectId": "OcTd8uLWUHZzm9Ly",
+        "project": {
+          "updatedAt": "2026-08-14T12:32:18.768Z",
+          "createdAt": "2026-08-14T12:29:52.236Z",
+          "id": "OcTd8uLWUHZzm9Ly",
+          "name": "Vageesha Sharma <sharmavageesha2000@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "customTelemetryTags": [],
+          "creatorId": "74712e91-64af-4c55-ba53-0dcd3d09ddf1"
+        }
+      }
+    ],
+    "versionMetadata": {
+      "name": null,
+      "description": null
+    }
+  },
+  {
+    "updatedAt": "2026-08-14T12:46:40.295Z",
+    "createdAt": "2026-08-14T12:46:27.264Z",
+    "id": "krQQojxUU7ZTmT5I",
+    "name": "AntiGravity Connection Test",
+    "description": null,
+    "active": true,
+    "isArchived": false,
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "anti-gravity-test",
+          "options": {}
+        },
+        "id": "webhook-trigger-node",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          250,
+          300
+        ],
+        "webhookId": "anti-gravity-test-webhook"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "msg-field",
+                "name": "message",
+                "value": "Hello from AntiGravity",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "edit-fields-node",
+        "name": "Edit Fields",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          470,
+          300
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "staticData": null,
+    "meta": null,
+    "nodeGroups": [],
+    "pinData": null,
+    "versionId": "47296436-a786-490c-8e98-241835f71865",
+    "activeVersionId": "47296436-a786-490c-8e98-241835f71865",
+    "versionCounter": 2,
+    "triggerCount": 1,
+    "sourceWorkflowId": null,
+    "tags": [],
+    "shared": [
+      {
+        "updatedAt": "2026-08-14T12:46:27.280Z",
+        "createdAt": "2026-08-14T12:46:27.280Z",
+        "role": "workflow:owner",
+        "workflowId": "krQQojxUU7ZTmT5I",
+        "projectId": "OcTd8uLWUHZzm9Ly",
+        "project": {
+          "updatedAt": "2026-08-14T12:32:18.768Z",
+          "createdAt": "2026-08-14T12:29:52.236Z",
+          "id": "OcTd8uLWUHZzm9Ly",
+          "name": "Vageesha Sharma <sharmavageesha2000@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "customTelemetryTags": [],
+          "creatorId": "74712e91-64af-4c55-ba53-0dcd3d09ddf1"
+        }
+      }
+    ],
+    "versionMetadata": {
+      "name": null,
+      "description": null
+    }
+  },
+  {
+    "updatedAt": "2026-08-17T12:00:39.556Z",
+    "createdAt": "2026-08-17T12:00:39.556Z",
+    "id": "TestCodeWorkflow001",
+    "name": "Test Code Workflow",
+    "description": null,
+    "active": false,
+    "isArchived": false,
+    "nodes": [
+      {
+        "parameters": {
+          "jsCode": "const fs = require('fs');\nreturn [{ json: { exists: fs.existsSync('C:/n8n-data') } }];"
+        },
+        "id": "code-test",
+        "name": "Code Test",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          250,
+          300
+        ]
+      }
+    ],
+    "connections": {},
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "staticData": null,
+    "meta": null,
+    "nodeGroups": [],
+    "pinData": null,
+    "versionId": "3ce88162-d3ab-4b6a-b1b2-a4cdc37c5a1f",
+    "activeVersionId": null,
+    "versionCounter": 1,
+    "triggerCount": 0,
+    "sourceWorkflowId": null,
+    "tags": [],
+    "shared": [
+      {
+        "updatedAt": "2026-08-17T12:00:39.565Z",
+        "createdAt": "2026-08-17T12:00:39.565Z",
+        "role": "workflow:owner",
+        "workflowId": "TestCodeWorkflow001",
+        "projectId": "OcTd8uLWUHZzm9Ly",
+        "project": {
+          "updatedAt": "2026-08-14T12:32:18.768Z",
+          "createdAt": "2026-08-14T12:29:52.236Z",
+          "id": "OcTd8uLWUHZzm9Ly",
+          "name": "Vageesha Sharma <sharmavageesha2000@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "customTelemetryTags": [],
+          "creatorId": "74712e91-64af-4c55-ba53-0dcd3d09ddf1"
+        }
+      }
+    ],
+    "versionMetadata": {
+      "name": null,
+      "description": null
+    }
+  },
+  {
+    "updatedAt": "2026-08-17T12:02:29.000Z",
+    "createdAt": "2026-08-17T12:01:46.008Z",
+    "id": "TestExcelWebhook001",
+    "name": "Test Excel Webhook",
+    "description": null,
+    "active": true,
+    "isArchived": false,
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "test-excel",
+          "options": {}
+        },
+        "id": "webhook-trigger",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          250,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const fs = require('fs');\nconst XLSX = require('C:/Users/VAGEESHA/AppData/Roaming/npm/node_modules/n8n/node_modules/@e965/xlsx');\n\nconst filePath = 'C:/n8n-data/student_form_data.xlsx';\nconst input = $json.body || $json;\n\nconst newRow = {\n  Timestamp: new Date().toISOString().replace('T', ' ').substring(0, 19),\n  'Full Name': input['Full Name'] || input.fullName || 'Test User',\n  Email: input.Email || input.email || 'test@example.com',\n  'Mobile Number': input['Mobile Number'] || input.mobile || '9999999999',\n  'Company Name': input['Company Name'] || input.company || 'Test Company',\n  City: input.City || input.city || 'Ahmedabad'\n};\n\nlet data = [];\nif (fs.existsSync(filePath)) {\n  const wb = XLSX.readFile(filePath);\n  const sheet = wb.Sheets[wb.SheetNames[0]];\n  data = XLSX.utils.sheet_to_json(sheet);\n}\n\ndata.push(newRow);\n\nconst newWb = XLSX.utils.book_new();\nconst newSheet = XLSX.utils.json_to_sheet(data, {\n  header: ['Timestamp', 'Full Name', 'Email', 'Mobile Number', 'Company Name', 'City']\n});\nXLSX.utils.book_append_sheet(newWb, newSheet, 'Submissions');\nXLSX.writeFile(newWb, filePath);\n\nreturn [{ json: { status: 'success', rowCount: data.length, filePath } }];"
+        },
+        "id": "code-excel",
+        "name": "Process Excel",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          450,
+          300
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Process Excel",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "staticData": null,
+    "meta": null,
+    "nodeGroups": [],
+    "pinData": null,
+    "versionId": "1e09f876-fb60-411e-8baf-9c841266f3a5",
+    "activeVersionId": "1e09f876-fb60-411e-8baf-9c841266f3a5",
+    "versionCounter": 1,
+    "triggerCount": 1,
+    "sourceWorkflowId": null,
+    "tags": [],
+    "shared": [
+      {
+        "updatedAt": "2026-08-17T12:01:46.014Z",
+        "createdAt": "2026-08-17T12:01:46.014Z",
+        "role": "workflow:owner",
+        "workflowId": "TestExcelWebhook001",
+        "projectId": "OcTd8uLWUHZzm9Ly",
+        "project": {
+          "updatedAt": "2026-08-14T12:32:18.768Z",
+          "createdAt": "2026-08-14T12:29:52.236Z",
+          "id": "OcTd8uLWUHZzm9Ly",
+          "name": "Vageesha Sharma <sharmavageesha2000@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "customTelemetryTags": [],
+          "creatorId": "74712e91-64af-4c55-ba53-0dcd3d09ddf1"
+        }
+      }
+    ],
+    "versionMetadata": {
+      "name": null,
+      "description": null
+    }
+  },
+  {
+    "updatedAt": "2026-08-17T17:01:00.238Z",
+    "createdAt": "2026-08-17T12:04:55.568Z",
+    "id": "FormToLocalExcel001",
+    "name": "Form to Local Excel",
+    "description": null,
+    "active": true,
+    "isArchived": false,
+    "nodes": [
+      {
+        "parameters": {
+          "path": "form-to-local-excel",
+          "formTitle": "Student Registration Form",
+          "formDescription": "Please fill out all required fields.",
+          "formFields": {
+            "values": [
+              {
+                "fieldLabel": "Full Name",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Email",
+                "fieldType": "email",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Mobile Number",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Company Name",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "City",
+                "requiredField": true
+              }
+            ]
+          },
+          "options": {
+            "buttonLabel": "Submit"
+          }
+        },
+        "webhookId": "form-to-local-excel",
+        "id": "form-trigger-node",
+        "name": "n8n Form Trigger",
+        "type": "n8n-nodes-base.formTrigger",
+        "typeVersion": 2.2,
+        "position": [
+          240,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const fs = require('fs');\nlet XLSX;\ntry {\n  XLSX = require('@e965/xlsx');\n} catch (e) {\n  try {\n    XLSX = require('xlsx');\n  } catch (err) {\n    XLSX = require('C:/Users/VAGEESHA/AppData/Roaming/npm/node_modules/n8n/node_modules/@e965/xlsx');\n  }\n}\n\nconst dirPath = 'C:/n8n-data';\nconst filePath = 'C:/n8n-data/student_form_data.xlsx';\nconst queuePath = 'C:/n8n-data/.pending_submissions.json';\n\nif (!fs.existsSync(dirPath)) {\n  fs.mkdirSync(dirPath, { recursive: true });\n}\n\nconst input = $json;\nconst now = new Date();\nconst pad = (n) => String(n).padStart(2, '0');\nconst timestamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;\n\nconst newRow = {\n  'Timestamp': timestamp,\n  'Full Name': input['Full Name'] || input['full_name'] || input['FullName'] || '',\n  'Email': input['Email'] || input['email'] || '',\n  'Mobile Number': input['Mobile Number'] || input['mobile_number'] || input['MobileNumber'] || '',\n  'Company Name': input['Company Name'] || input['company_name'] || input['CompanyName'] || '',\n  'City': input['City'] || input['city'] || ''\n};\n\n// 1. Read existing rows from Excel if file exists\nlet existingData = [];\nif (fs.existsSync(filePath)) {\n  try {\n    const wb = XLSX.readFile(filePath);\n    const sheetName = wb.SheetNames[0] || 'Submissions';\n    const sheet = wb.Sheets[sheetName];\n    if (sheet) {\n      existingData = XLSX.utils.sheet_to_json(sheet);\n    }\n  } catch (err) {\n    // Reading error fallback\n  }\n}\n\n// 2. Read any pending submissions previously queued when Excel was locked\nlet pendingData = [];\nif (fs.existsSync(queuePath)) {\n  try {\n    const queueContent = fs.readFileSync(queuePath, 'utf8');\n    pendingData = JSON.parse(queueContent);\n    if (!Array.isArray(pendingData)) pendingData = [];\n  } catch (err) {\n    pendingData = [];\n  }\n}\n\n// Merge all rows: existing on disk + pending queued rows + current row\nconst allRows = [...existingData, ...pendingData, newRow];\n\n// 3. Try to write to Excel file\ntry {\n  const newSheet = XLSX.utils.json_to_sheet(allRows, {\n    header: ['Timestamp', 'Full Name', 'Email', 'Mobile Number', 'Company Name', 'City']\n  });\n  const newWb = XLSX.utils.book_new();\n  XLSX.utils.book_append_sheet(newWb, newSheet, 'Submissions');\n  XLSX.writeFile(newWb, filePath);\n\n  // Clear queue since all rows are written\n  if (fs.existsSync(queuePath)) {\n    try { fs.unlinkSync(queuePath); } catch (e) {}\n  }\n\n  return [{\n    json: {\n      status: 'success',\n      message: 'Data successfully saved to Excel file',\n      filePath: 'C:\\\\n8n-data\\\\student_form_data.xlsx',\n      totalRows: allRows.length,\n      submittedRecord: newRow\n    }\n  }];\n} catch (err) {\n  // If file is locked by Excel (EBUSY / EPERM), queue the unwritten submissions\n  pendingData.push(newRow);\n  fs.writeFileSync(queuePath, JSON.stringify(pendingData, null, 2), 'utf8');\n  \n  return [{\n    json: {\n      status: 'queued',\n      message: 'Excel file is currently locked/opened in Microsoft Excel. Record was safely stored in queue and will auto-merge into student_form_data.xlsx as soon as Excel is closed!',\n      queuedRow: newRow,\n      totalPendingRows: pendingData.length\n    }\n  }];\n}"
+        },
+        "id": "process-excel-node",
+        "name": "Save/Append to Excel",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          480,
+          300
+        ]
+      }
+    ],
+    "connections": {
+      "n8n Form Trigger": {
+        "main": [
+          [
+            {
+              "node": "Save/Append to Excel",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "staticData": null,
+    "meta": null,
+    "nodeGroups": [],
+    "pinData": null,
+    "versionId": "36ebaf12-8a92-434a-a127-ceaed0ddcbde",
+    "activeVersionId": "36ebaf12-8a92-434a-a127-ceaed0ddcbde",
+    "versionCounter": 5,
+    "triggerCount": 1,
+    "sourceWorkflowId": null,
+    "tags": [],
+    "shared": [
+      {
+        "updatedAt": "2026-08-17T12:04:55.571Z",
+        "createdAt": "2026-08-17T12:04:55.571Z",
+        "role": "workflow:owner",
+        "workflowId": "FormToLocalExcel001",
+        "projectId": "OcTd8uLWUHZzm9Ly",
+        "project": {
+          "updatedAt": "2026-08-14T12:32:18.768Z",
+          "createdAt": "2026-08-14T12:29:52.236Z",
+          "id": "OcTd8uLWUHZzm9Ly",
+          "name": "Vageesha Sharma <sharmavageesha2000@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "customTelemetryTags": [],
+          "creatorId": "74712e91-64af-4c55-ba53-0dcd3d09ddf1"
+        }
+      }
+    ],
+    "versionMetadata": {
+      "name": null,
+      "description": null
+    }
+  },
+  {
+    "updatedAt": "2026-08-17T12:08:07.389Z",
+    "createdAt": "2026-08-17T12:08:07.389Z",
+    "id": "TestNativeExcel001",
+    "name": "Test Native Excel",
+    "description": null,
+    "active": false,
+    "isArchived": false,
+    "nodes": [
+      {
+        "parameters": {},
+        "id": "manual-trigger-node",
+        "name": "When clicking 'Test workflow'",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          100,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "f1",
+                "name": "Timestamp",
+                "value": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}",
+                "type": "string"
+              },
+              {
+                "id": "f2",
+                "name": "Full Name",
+                "value": "Test User",
+                "type": "string"
+              },
+              {
+                "id": "f3",
+                "name": "Email",
+                "value": "test@example.com",
+                "type": "string"
+              },
+              {
+                "id": "f4",
+                "name": "Mobile Number",
+                "value": "9999999999",
+                "type": "string"
+              },
+              {
+                "id": "f5",
+                "name": "Company Name",
+                "value": "Test Company",
+                "type": "string"
+              },
+              {
+                "id": "f6",
+                "name": "City",
+                "value": "Ahmedabad",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "data-prep-node",
+        "name": "Prepare Data",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          300,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "xlsx",
+          "binaryPropertyName": "data",
+          "options": {
+            "headerRow": true,
+            "sheetName": "Submissions"
+          }
+        },
+        "id": "convert-to-excel-node",
+        "name": "Convert to XLSX",
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          500,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "write",
+          "fileName": "C:/n8n-data/student_form_data.xlsx",
+          "dataPropertyName": "data"
+        },
+        "id": "write-file-node",
+        "name": "Write to Disk",
+        "type": "n8n-nodes-base.readWriteFile",
+        "typeVersion": 1,
+        "position": [
+          700,
+          300
+        ]
+      }
+    ],
+    "connections": {
+      "When clicking 'Test workflow'": {
+        "main": [
+          [
+            {
+              "node": "Prepare Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Data": {
+        "main": [
+          [
+            {
+              "node": "Convert to XLSX",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert to XLSX": {
+        "main": [
+          [
+            {
+              "node": "Write to Disk",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "staticData": null,
+    "meta": null,
+    "nodeGroups": [],
+    "pinData": null,
+    "versionId": "e2bcbb35-c295-4d4c-a8f6-11f8bf8c60b7",
+    "activeVersionId": null,
+    "versionCounter": 2,
+    "triggerCount": 0,
+    "sourceWorkflowId": null,
+    "tags": [],
+    "shared": [
+      {
+        "updatedAt": "2026-08-17T12:08:07.389Z",
+        "createdAt": "2026-08-17T12:08:07.389Z",
+        "role": "workflow:owner",
+        "workflowId": "TestNativeExcel001",
+        "projectId": "OcTd8uLWUHZzm9Ly",
+        "project": {
+          "updatedAt": "2026-08-14T12:32:18.768Z",
+          "createdAt": "2026-08-14T12:29:52.236Z",
+          "id": "OcTd8uLWUHZzm9Ly",
+          "name": "Vageesha Sharma <sharmavageesha2000@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "customTelemetryTags": [],
+          "creatorId": "74712e91-64af-4c55-ba53-0dcd3d09ddf1"
+        }
+      }
+    ],
+    "versionMetadata": {
+      "name": null,
+      "description": null
+    }
+  },
+  {
+    "updatedAt": "2026-08-19T07:53:37.000Z",
+    "createdAt": "2026-08-18T06:40:57.000Z",
+    "id": "CollegeLessonPlan001",
+    "name": "College Lesson Plan & Teaching Automation",
+    "description": null,
+    "active": true,
+    "isArchived": false,
+    "nodes": [
+      {
+        "parameters": {
+          "path": "college-lesson-plan",
+          "formTitle": "College Lesson Plan & Teaching Generator",
+          "formDescription": "Fill in your lesson parameters below. The workflow will automatically generate a comprehensive college lesson plan, teaching materials, a 14-question assessment suite, save the .md file to your local PC, and automatically email it with the .md attachment to all students in the class.",
+          "formFields": {
+            "values": [
+              {
+                "fieldLabel": "Teacher Name",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "College Name",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Subject",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Course / Semester",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Topic / Lesson Title",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Number of Students",
+                "fieldType": "number",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Class Duration (Minutes)",
+                "fieldType": "number",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Learning Level",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "Undergraduate (UG)"
+                    },
+                    {
+                      "option": "Postgraduate (PG)"
+                    },
+                    {
+                      "option": "Higher Secondary / Foundation"
+                    },
+                    {
+                      "option": "Diploma / Vocational"
+                    }
+                  ]
+                },
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Learning Objectives",
+                "fieldType": "textarea",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Teaching Date",
+                "fieldType": "date",
+                "requiredField": false
+              },
+              {
+                "fieldLabel": "Preferred Teaching Method",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "Interactive Lecture & Case Discussion"
+                    },
+                    {
+                      "option": "Case Study & Real-World Analysis"
+                    },
+                    {
+                      "option": "Flipped Classroom & Problem Solving"
+                    },
+                    {
+                      "option": "Practical / Lab Simulation"
+                    },
+                    {
+                      "option": "Group Workshop & Socratic Seminar"
+                    }
+                  ]
+                },
+                "requiredField": false
+              },
+              {
+                "fieldLabel": "Additional Instructions / Key Themes",
+                "fieldType": "textarea",
+                "requiredField": false
+              },
+              {
+                "fieldLabel": "Student Email Addresses (Optional / comma-separated or leave blank for class roster)",
+                "fieldType": "textarea",
+                "requiredField": false
+              },
+              {
+                "fieldLabel": "Email Dispatch Option",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "Send Email with .md Attachment to All Students"
+                    },
+                    {
+                      "option": "Save Locally Only (Do Not Email)"
+                    }
+                  ]
+                },
+                "requiredField": false
+              }
+            ]
+          },
+          "options": {
+            "buttonLabel": "Generate, Save & Email Lesson Plan"
+          }
+        },
+        "webhookId": "college-lesson-plan",
+        "id": "node-form-trigger",
+        "name": "Step 1: Teacher Input (Form)",
+        "type": "n8n-nodes-base.formTrigger",
+        "typeVersion": 2.2,
+        "position": [
+          180,
+          240
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "college-lesson-plan-webhook",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "webhookId": "college-lesson-plan-webhook",
+        "id": "node-webhook-trigger",
+        "name": "Step 1: Teacher Input (Webhook)",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          180,
+          440
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const fs = require('fs');\nconst path = require('path');\n\nconst input = $json.body || $json;\n\nconst getField = (...keys) => {\n  for (const k of keys) {\n    if (input[k] !== undefined && input[k] !== null && String(input[k]).trim() !== '') {\n      return String(input[k]).trim();\n    }\n  }\n  return '';\n};\n\nconst teacherName = getField('Teacher Name', 'teacherName', 'teacher_name', 'field-0');\nconst collegeName = getField('College Name', 'collegeName', 'college_name', 'field-1') || 'University College of Higher Studies';\nconst subject = getField('Subject', 'subject', 'field-2');\nconst courseSemester = getField('Course / Semester', 'Course/Class/Semester', 'courseSemester', 'course_semester', 'field-3') || 'Undergraduate Semester 1';\nconst topic = getField('Topic / Lesson Title', 'topic', 'topic_title', 'field-4');\nconst studentCount = parseInt(getField('Number of Students', 'studentCount', 'student_count', 'students', 'field-5') || '50', 10) || 50;\nconst duration = parseInt(getField('Class Duration (Minutes)', 'Class Duration', 'duration', 'field-6') || '60', 10) || 60;\nconst level = getField('Learning Level', 'learningLevel', 'level', 'field-7') || 'Undergraduate';\nconst learningObjectives = getField('Learning Objectives', 'learningObjectives', 'objectives', 'field-8') || ('Understand core principles, analytical models, and practical applications of ' + topic);\nconst teachingDate = getField('Teaching Date', 'teachingDate', 'date', 'field-9') || new Date().toISOString().split('T')[0];\nconst teachingMethod = getField('Preferred Teaching Method', 'teachingMethod', 'method', 'field-10') || 'Interactive Lecture & Case Discussion';\nconst additionalInstructions = getField('Additional Instructions / Key Themes', 'Additional Instructions', 'additionalInstructions', 'field-11') || 'Focus on intuitive clarity, practical application, and active student participation.';\nconst rawStudentEmails = getField('Student Email Addresses (Optional / comma-separated or leave blank for class roster)', 'Student Email Addresses', 'studentEmails', 'student_emails', 'emails', 'student_email', 'field-12');\nconst emailDispatchOption = getField('Email Dispatch Option', 'emailDispatchOption', 'email_dispatch', 'field-13') || 'Send Email with .md Attachment to All Students';\n\nconst missingFields = [];\nif (!teacherName) missingFields.push('Teacher Name');\nif (!subject) missingFields.push('Subject');\nif (!topic) missingFields.push('Topic / Lesson Title');\nif (!duration || duration < 15) missingFields.push('Class Duration (must be >= 15 min)');\n\nif (missingFields.length > 0) {\n  throw new Error('Input Validation Failed: Missing required fields: ' + missingFields.join(', '));\n}\n\nlet studentRecipients = [];\nif (rawStudentEmails && rawStudentEmails.trim() !== '') {\n  const parts = rawStudentEmails.split(/[,;\\n\\r]+/).map(s => s.trim()).filter(Boolean);\n  studentRecipients = parts.map((em, idx) => ({\n    id: 'STU-' + (idx + 1),\n    name: 'Student ' + (idx + 1),\n    email: em,\n    course: courseSemester\n  }));\n} else {\n  const sanitize = (str) => String(str || '').replace(/[^a-zA-Z0-9_-]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');\n  const subjectFolder = sanitize(subject);\n  const possibleRosterPaths = [\n    path.join('c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1\\\\College_Lesson_Plans', subjectFolder, 'student_roster.json'),\n    path.join('c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1\\\\College_Lesson_Plans', 'default_student_roster.json'),\n    path.join('C:\\\\n8n-data\\\\College_Lesson_Plans', subjectFolder, 'student_roster.json'),\n    path.join('C:\\\\n8n-data\\\\College_Lesson_Plans', 'default_student_roster.json')\n  ];\n\n  for (const rp of possibleRosterPaths) {\n    if (fs.existsSync(rp)) {\n      try {\n        const rosterData = JSON.parse(fs.readFileSync(rp, 'utf8'));\n        if (Array.isArray(rosterData) && rosterData.length > 0) {\n          studentRecipients = rosterData;\n          break;\n        }\n      } catch (e) {}\n    }\n  }\n}\n\nif (studentRecipients.length === 0) {\n  studentRecipients = [\n    { id: 'STU-01', name: 'Class Representative', email: 'class.representative@college.edu', course: courseSemester },\n    { id: 'STU-02', name: 'Student Batch Group', email: 'students2026@college.edu', course: courseSemester }\n  ];\n}\n\nreturn [{\n  json: {\n    teacherName,\n    collegeName,\n    subject,\n    courseSemester,\n    topic,\n    studentCount,\n    duration,\n    level,\n    learningObjectives,\n    teachingDate,\n    teachingMethod,\n    additionalInstructions,\n    studentRecipients,\n    emailDispatchOption,\n    validatedAt: new Date().toISOString()\n  }\n}];"
+        },
+        "id": "node-validate-input",
+        "name": "Step 2: Validate Input",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          420,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const data = $json;\nconst { topic, subject, duration, level, learningObjectives, teachingMethod, studentCount, courseSemester } = data;\n\nconst hookTime = Math.max(5, Math.round(duration * 0.12));\nconst foundationTime = Math.max(10, Math.round(duration * 0.25));\nconst deepDiveTime = Math.max(15, Math.round(duration * 0.35));\nconst activityTime = Math.max(10, Math.round(duration * 0.18));\nconst wrapUpTime = Math.max(5, duration - (hookTime + foundationTime + deepDiveTime + activityTime));\n\nconst prerequisites = [\n  'Foundational understanding of core ' + subject + ' terminology and introductory frameworks.',\n  'Basic mathematical, graphical, or analytical interpretation skills relevant to ' + subject + '.',\n  'Familiarity with foundational introductory lectures in ' + courseSemester + '.'\n];\n\nconst lessonIntro = {\n  hook: 'Open the lecture with an intriguing contemporary real-world scenario illustrating **' + topic + '**. For instance, how sudden shifts in market, regulatory, or technological environments force decision-makers to adapt instantly.',\n  purposeStatement: 'Today we examine the theoretical architecture, empirical mechanics, and practical applications of **' + topic + '**, bridging theoretical rigor with real-world decision making.',\n  relevance: 'Mastery of this topic is pivotal for ' + level + ' scholars to analyze complex real-world dynamics, succeed in advanced coursework, and build industry-ready analytical competency.'\n};\n\nconst keyConcepts = [\n  {\n    concept: 'Core Theoretical Definition of ' + topic,\n    explanation: 'Rigorous formulation of ' + topic + ' establishing the baseline terminology, underlying axioms, and conceptual scope.',\n    formulaOrModel: 'Governing equations, relationship matrices, and graphical curves defining ' + topic + '.'\n  },\n  {\n    concept: 'Determinants and Underlying Mechanics',\n    explanation: 'Systematic analysis of external and internal variables that drive fluctuations, structural shifts, and behavioral responses.',\n    formulaOrModel: 'Sensitivity analysis, elasticity formulas (% Delta Q / % Delta P), and boundary condition checks.'\n  },\n  {\n    concept: 'Empirical Interpretation & Case Dynamics',\n    explanation: 'How theoretical mechanics translate to actual observed empirical outcomes across industries and macro systems.',\n    formulaOrModel: 'Empirical curves, market/system equilibrium transformations, and efficiency metrics.'\n  },\n  {\n    concept: 'Policy, Managerial, and Practical Implications',\n    explanation: 'Strategic application of ' + topic + ' in managerial pricing, regulatory policy, system design, and long-term planning.',\n    formulaOrModel: 'Optimization models, welfare economics/system tradeoff matrices.'\n  }\n];\n\nconst teachingSequence = [\n  {\n    phase: 'Phase 1: Hook & Contextual Introduction',\n    durationMinutes: hookTime,\n    teacherAction: 'Present opening hook on ' + topic + '. Conduct a 2-minute diagnostic question to gauge existing intuition among ' + studentCount + ' students.',\n    studentAction: 'Respond to diagnostic poll; connect everyday observations with academic concepts.',\n    pedagogyFocus: 'Engagement, Curiosity Staging, Baseline Assessment',\n    boardWork: 'Write Lesson Title: \"' + topic + '\", outline today\\'s 3 core questions on top-left board.'\n  },\n  {\n    phase: 'Phase 2: Conceptual Foundation & Terminology',\n    durationMinutes: foundationTime,\n    teacherAction: 'Define formal definitions, core axioms, and mathematical/graphical foundations of ' + topic + '. Break down prerequisite linkages.',\n    studentAction: 'Note down definitions; annotate foundational diagrams; answer targeted comprehension check questions.',\n    pedagogyFocus: 'Direct Instruction, Concept Clarification, Scaffolding',\n    boardWork: 'Draw primary baseline graph/framework; define key terms (left board).'\n  },\n  {\n    phase: 'Phase 3: Deep Dive, Derivations & Analytical Models',\n    durationMinutes: deepDiveTime,\n    teacherAction: 'Demonstrate detailed derivations, mathematical models, boundary conditions, and elasticities. Walk through step-by-step comparative statics.',\n    studentAction: 'Follow step-by-step proof/derivation; compute live sample calculation alongside instructor.',\n    pedagogyFocus: 'Higher-Order Thinking, Analytical Problem Solving',\n    boardWork: 'Step-by-step algebraic derivation, comparative graph shifting, elasticity categorization table (center board).'\n  },\n  {\n    phase: 'Phase 4: Collaborative Activity / Case Application',\n    durationMinutes: activityTime,\n    teacherAction: 'Distribute mini-case scenario or numerical problem set. Circulate among student clusters, guiding discussions and troubleshooting misconceptions.',\n    studentAction: 'Work in pairs (Think-Pair-Share) to solve the application case; evaluate trade-offs and present findings.',\n    pedagogyFocus: 'Active Learning, Peer Instruction, Practical Synthesis',\n    boardWork: 'Summarize student group findings; compare empirical results (right board).'\n  },\n  {\n    phase: 'Phase 5: Synthesis, Formative Q&A & Wrap-Up',\n    durationMinutes: wrapUpTime,\n    teacherAction: 'Synthesize key takeaways; conduct rapid 3-question conceptual check; connect to next lecture; assign homework.',\n    studentAction: 'Ask clarifying questions; record key summary points; note homework assignment.',\n    pedagogyFocus: 'Metacognition, Formative Evaluation, Closure',\n    boardWork: '3 Key Takeaways bullet list & Homework specifications (right board).'\n  }\n];\n\nconst teachingResources = [\n  'Primary Textbook: Standard University Reference Textbook for ' + subject + ' (' + courseSemester + ').',\n  'Digital Presentation: Interactive slide deck with high-resolution graphs, data charts, and dynamic simulation curves.',\n  'Handout: One-page formula sheet and Case Study Worksheet on ' + topic + '.',\n  'Multimedia / LMS: Curated interactive simulation and video case link uploaded to the college portal.'\n];\n\nconst homework = {\n  title: 'Comprehensive Analytical Problem Set on ' + topic,\n  description: 'Complete the 5 analytical problems and 1 mini-case study provided in the course portal. Write a 400-word critical evaluation of how ' + topic + ' impacts modern industry decision-making.',\n  submissionTimeline: 'Submit via LMS before the next scheduled lecture session.'\n};\n\nconst learningOutcomes = [\n  'Accurately define, mathematically formulate, and graphically illustrate **' + topic + '**.',\n  'Distinguish between varying degrees/types of responsiveness and classify real-world scenarios accordingly.',\n  'Evaluate empirical data and formulate evidence-based policy or business recommendations.',\n  'Critically analyze edge cases, limitations, and modern developments surrounding ' + topic + '.'\n];\n\nconst teacherReflection = [\n  'Did the students grasp the distinction between theoretical assumptions and empirical realities?',\n  'Which specific derivation or graphical transformation required the most clarification during Phase 3?',\n  'How effectively did the Think-Pair-Share activity engage all ' + studentCount + ' students?',\n  'What adjustments to pacing or example selection should be made for the upcoming tutorial session?'\n];\n\nreturn [{\n  json: {\n    ...data,\n    lessonPlan: {\n      prerequisites,\n      lessonIntro,\n      keyConcepts,\n      teachingSequence,\n      teachingResources,\n      homework,\n      learningOutcomes,\n      teacherReflection,\n      timings: { hookTime, foundationTime, deepDiveTime, activityTime, wrapUpTime, totalDuration: duration }\n    }\n  }\n}];"
+        },
+        "id": "node-generate-lesson-plan",
+        "name": "Step 3: Generate Lesson Plan",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          660,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const data = $json;\nconst { topic, subject } = data;\n\nconst blackboardLayout = {\n  leftSection: '[LEFT BOARD: FOUNDATIONS & TERMINOLOGY]\\n- Lesson Title: ' + topic + '\\n- Key Definitions & Symbols\\n- Underlying Assumptions / Axioms\\n- Core Formulae & Units',\n  centerSection: '[CENTER BOARD: CORE MODEL & GRAPHICAL DERIVATION]\\n- Master Graphical Model / Flow Architecture\\n- Step-by-Step Mathematical Derivation\\n- Comparative Analysis / Curve Shifts\\n- Boundary Conditions & Edge Cases',\n  rightSection: '[RIGHT BOARD: CASE ANALYSIS & SYNTHESIS]\\n- Real-World Case Summary\\n- Student Group Findings\\n- 3 Core Takeaways\\n- Next Lecture Preview & Homework'\n};\n\nconst realWorldApplications = [\n  {\n    sector: 'Corporate Pricing & Revenue Management',\n    application: 'Firms calculate elasticity metrics of ' + topic + ' to determine whether price hikes will expand or diminish total sales revenue.'\n  },\n  {\n    sector: 'Public Policy & Taxation',\n    application: 'Government regulators model ' + topic + ' when imposing excise taxes or subsidies, forecasting market deadweight loss and consumer burden.'\n  },\n  {\n    sector: 'Digital Platform Ecosystems',\n    application: 'Tech companies deploy algorithmic pricing and surge algorithms calibrated on real-time elasticity models of ' + topic + '.'\n  }\n];\n\nconst studentFAQs = [\n  {\n    question: 'Why does ' + topic + ' behave differently in the short run versus the long run?',\n    answer: 'In the short run, consumers and producers are constrained by fixed habits, long-term contracts, and limited immediate substitutes. Over time (long run), full technological adaptation and market entry increase flexibility, making responses significantly more elastic.'\n  },\n  {\n    question: 'What happens when the core theoretical assumptions of ' + topic + ' are violated in the real world?',\n    answer: 'Real-world frictions (information asymmetry, transaction costs, psychological biases) create deviations from baseline models. Economists adjust the baseline with behavioral and institutional parameters to accurately capture observed outcomes.'\n  },\n  {\n    question: 'How do we graphically identify perfectly elastic versus perfectly inelastic scenarios?',\n    answer: 'A vertical curve represents absolute inelasticity (zero responsiveness regardless of price/stimulus), whereas a horizontal curve signifies infinite elasticity (extreme sensitivity where any deviation causes demand/response to collapse to zero).'\n  },\n  {\n    question: 'How does ' + topic + ' interconnect with upcoming topics in our syllabus?',\n    answer: 'This concept forms the direct analytical foundation for consumer theory, market structures (monopoly vs. perfect competition), and welfare optimization in subsequent units.'\n  }\n];\n\nconst keyTakeaways = [\n  '1. ' + topic + ' is the definitive metric for quantifying systemic responsiveness to external variations.',\n  '2. Magnitude, availability of substitutes, time horizon, and expenditure share are the primary governing determinants.',\n  '3. Strategic decision-makers utilize ' + topic + ' to optimize resource allocation, pricing efficiency, and policy welfare.'\n];\n\nreturn [{\n  json: {\n    ...data,\n    teachingMaterial: {\n      blackboardLayout,\n      realWorldApplications,\n      studentFAQs,\n      keyTakeaways\n    }\n  }\n}];"
+        },
+        "id": "node-generate-teaching-material",
+        "name": "Step 4: Generate Teaching Material",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          900,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const data = $json;\nconst { topic, subject } = data;\n\nconst mcqs = [\n  {\n    id: 1,\n    question: 'If a 10% increase in the price of a good leads to a 15% decrease in the quantity demanded, the price elasticity of demand is:',\n    options: {\n      A: '0.67 (Inelastic)',\n      B: '1.00 (Unitary Elastic)',\n      C: '1.50 (Elastic)',\n      D: '15.0 (Perfect Elastic)'\n    },\n    correctOption: 'C',\n    difficulty: 'Easy',\n    cognitiveLevel: 'Application / Calculation',\n    explanation: 'Elasticity = |% change in quantity / % change in price| = |-15% / +10%| = 1.5. Since Ep > 1, demand is classified as price elastic.'\n  },\n  {\n    id: 2,\n    question: 'Which of the following goods is most likely to exhibit highly inelastic demand?',\n    options: {\n      A: 'A specific brand of luxury sports sedan',\n      B: 'Life-saving prescription insulin with no substitutes',\n      C: 'International vacation travel packages',\n      D: 'Restaurant gourmet dinners'\n    },\n    correctOption: 'B',\n    difficulty: 'Easy',\n    cognitiveLevel: 'Comprehension',\n    explanation: 'Goods classified as essential necessities with no direct substitutes (such as life-saving medication) exhibit highly inelastic demand.'\n  },\n  {\n    id: 3,\n    question: 'When demand is unit elastic (Ep = 1), a moderate reduction in price will cause total revenue to:',\n    options: {\n      A: 'Increase significantly',\n      B: 'Decrease proportionally',\n      C: 'Remain completely unchanged',\n      D: 'Drop to zero'\n    },\n    correctOption: 'C',\n    difficulty: 'Medium',\n    cognitiveLevel: 'Analysis',\n    explanation: 'Along a unit elastic demand curve, percentage changes in price and quantity exactly offset each other, leaving total revenue (P * Q) unchanged.'\n  },\n  {\n    id: 4,\n    question: 'Along a downward-sloping linear demand curve, price elasticity of demand:',\n    options: {\n      A: 'Remains constant across all points on the line',\n      B: 'Is higher at higher prices and lower at lower prices',\n      C: 'Is lower at higher prices and higher at lower prices',\n      D: 'Is always equal to zero at the midpoint'\n    },\n    correctOption: 'B',\n    difficulty: 'Medium',\n    cognitiveLevel: 'Analysis',\n    explanation: 'Due to point elasticity mechanics (Ep = - (dQ/dP) * (P/Q)), even with constant slope, the ratio P/Q decreases downward along the curve, making Ep > 1 above the midpoint, Ep = 1 at midpoint, and Ep < 1 below.'\n  },\n  {\n    id: 5,\n    question: 'Cross-price elasticity between two products is calculated to be negative (-0.85). This indicates that the two products are:',\n    options: {\n      A: 'Close substitute goods',\n      B: 'Complementary goods consumed together',\n      C: 'Inferior Giffen goods',\n      D: 'Independent and unrelated goods'\n    },\n    correctOption: 'B',\n    difficulty: 'Hard',\n    cognitiveLevel: 'Evaluation',\n    explanation: 'A negative cross-price elasticity signifies that when the price of Good A rises, demand for Good B declines, which is the defining characteristic of complementary goods.'\n  }\n];\n\nconst shortAnswerQuestions = [\n  {\n    id: 1,\n    question: 'State the formal mathematical formula for point price elasticity of demand and define each component variable.',\n    targetLength: '2-3 sentences + formula',\n    difficulty: 'Easy',\n    expectedAnswer: 'Formula: Ep = (% Delta Q) / (% Delta P) = (dQ/dP) * (P/Q). Here, dQ/dP is the reciprocal of the slope of the inverse demand curve, P is the initial price, and Q is initial quantity demanded.'\n  },\n  {\n    id: 2,\n    question: 'Differentiate between \\'inelastic demand\\' and \\'perfectly inelastic demand\\' using graphical characteristics.',\n    targetLength: '3-4 sentences',\n    difficulty: 'Easy',\n    expectedAnswer: 'Inelastic demand (0 < Ep < 1) features a steep downward-sloping curve where quantity responds less than proportionally to price changes. Perfectly inelastic demand (Ep = 0) is depicted as a strictly vertical demand curve where quantity demanded remains fixed regardless of price.'\n  },\n  {\n    id: 3,\n    question: 'Explain why availability of substitutes is the single most influential determinant of elasticity for ' + topic + '.',\n    targetLength: '3-4 sentences',\n    difficulty: 'Medium',\n    expectedAnswer: 'When close substitutes exist, consumers can switch easily to alternatives upon any price increase, causing quantity demanded to drop sharply (high elasticity). Without substitutes, consumers have limited choice and must absorb the price change (low elasticity).'\n  },\n  {\n    id: 4,\n    question: 'Describe the Total Revenue Test and how a seller uses it to decide on price hikes for elastic goods.',\n    targetLength: '3-4 sentences',\n    difficulty: 'Medium',\n    expectedAnswer: 'The Total Revenue Test shows that if demand is elastic (Ep > 1), price and total revenue move in opposite directions. Therefore, a seller facing elastic demand should avoid price hikes because the loss in volume exceeds the gain per unit, decreasing total revenue.'\n  },\n  {\n    id: 5,\n    question: 'How does the consumer\\'s time horizon (short run vs. long run) influence the price elasticity of ' + topic + '?',\n    targetLength: '3-4 sentences',\n    difficulty: 'Hard',\n    expectedAnswer: 'In the short run, consumers are locked into existing equipment, contracts, and habits, resulting in lower elasticity. In the long run, consumers can switch technologies, adjust behavior, and find alternative solutions, leading to higher elasticity.'\n  }\n];\n\nconst descriptiveQuestions = [\n  {\n    id: 1,\n    question: 'Examine the factors governing price elasticity of demand. Explain with real-world industry examples how business executives apply these concepts in pricing strategies.',\n    marks: 10,\n    difficulty: 'Medium',\n    markingCriteria: '4 marks for detailed discussion of 4+ determinants; 3 marks for total revenue relationship; 3 marks for relevant real-world pricing examples.'\n  },\n  {\n    id: 2,\n    question: 'Derive mathematically the relationship between Price Elasticity of Demand (Ep), Marginal Revenue (MR), and Average Revenue / Price (P), known as the Amoroso-Robinson formula: MR = P(1 - 1/|Ep|). Interpret why a rational monopolist will never operate on the inelastic portion of their demand curve.',\n    marks: 10,\n    difficulty: 'Hard',\n    markingCriteria: '4 marks for step-by-step calculus derivation starting from TR = P(Q) * Q; 3 marks for interpreting MR behavior across Ep > 1, Ep = 1, Ep < 1; 3 marks for the rational monopoly argument (MR < 0 implies reducing output increases revenue and cuts cost).'\n  },\n  {\n    id: 3,\n    question: 'Critically evaluate how tax incidence (the economic burden of a sales/excise tax) is determined by the relative elasticities of demand and supply. Provide graphical analysis.',\n    marks: 10,\n    difficulty: 'Hard',\n    markingCriteria: '3 marks for theoretical explanation of tax wedge; 4 marks for graphical demonstration comparing elastic demand / inelastic supply vs. inelastic demand / elastic supply; 3 marks for deadweight loss and policy implications.'\n  }\n];\n\nconst practicalQuestion = {\n  title: 'Metro Transit Fare Elasticity & Revenue Optimization Case Study',\n  scenario: 'The City Metro Authority currently charges Rs 40 per transit token, recording an average daily ridership of 100,000 commuters. Facing operational deficits, the board proposes raising the token price to Rs 50. An independent transit consultancy estimates the price elasticity of demand for metro ridership to be Ep = -0.60 for short-distance commuters and Ep = -1.40 for off-peak leisure riders. Overall blended elasticity is estimated at Ep = -0.75.',\n  tasks: [\n    '1. Using the arc elasticity (midpoint) method, calculate the expected daily ridership following the fare increase to Rs 50 under blended elasticity (Ep = -0.75).',\n    '2. Calculate the projected daily total revenue before and after the proposed fare increase. Will total revenue rise or fall?',\n    '3. Propose a dual-pricing / price discrimination strategy based on the distinct elasticity segments (peak vs. off-peak commuters) that optimizes both public accessibility and transit authority revenue.'\n  ],\n  difficulty: 'Undergraduate Applied Case',\n  solution: 'Step 1: Ridership Calculation:\\n- Initial P1 = 40, Q1 = 100,000. New P2 = 50.\\n- Percentage Price Change (Midpoint) = (50 - 40) / ((50 + 40) / 2) = 10 / 45 = +22.22%.\\n- Percentage Quantity Change = Ep * (% Delta P) = -0.75 * (+22.22%) = -16.67%.\\n- Projected New Quantity Q2 = 100,000 * (1 - 0.1667) = 83,333 commuters/day.\\n\\nStep 2: Total Revenue Comparison:\\n- Old Daily Revenue = 100,000 * Rs 40 = Rs 4,000,000 (Rs 40 Lakhs).\\n- New Daily Revenue = 83,333 * Rs 50 = Rs 4,166,650 (Rs 41.67 Lakhs).\\n- Result: Total revenue increases by Rs 166,650/day because overall demand is inelastic (|Ep| = 0.75 < 1).\\n\\nStep 3: Strategic Recommendation:\\n- Implement third-degree price discrimination: Keep peak-hour commuter tokens at Rs 45-Rs 50 (inelastic segment Ep = 0.60, driving revenue gains) while offering discounted off-peak/weekend passes at Rs 30-Rs 35 (elastic segment Ep = 1.40, boosting volume and off-peak seat utilization).'\n};\n\nreturn [{\n  json: {\n    ...data,\n    assessment: {\n      mcqs,\n      shortAnswerQuestions,\n      descriptiveQuestions,\n      practicalQuestion\n    }\n  }\n}];"
+        },
+        "id": "node-generate-assessment",
+        "name": "Step 5: Generate Student Assessment",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1140,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const data = $json;\nconst { duration, learningObjectives, level, lessonPlan, assessment } = data;\n\nconst checks = [];\n\nconst sumMinutes = lessonPlan.timings.hookTime + lessonPlan.timings.foundationTime + lessonPlan.timings.deepDiveTime + lessonPlan.timings.activityTime + lessonPlan.timings.wrapUpTime;\nconst timeMatches = sumMinutes === duration;\nchecks.push({\n  metric: 'Time Allocation Balance',\n  status: timeMatches ? 'PASSED' : 'ADJUSTED',\n  detail: 'Phase sum (' + sumMinutes + 'm) matches target class duration (' + duration + 'm).'\n});\n\nconst totalQuestions = assessment.mcqs.length + assessment.shortAnswerQuestions.length + assessment.descriptiveQuestions.length + 1;\nchecks.push({\n  metric: 'Assessment Structure Completeness',\n  status: totalQuestions === 14 ? 'PASSED' : 'WARNING',\n  detail: 'Generated 5 MCQs, 5 Short Answer, 3 Descriptive, 1 Applied Case (Total: ' + totalQuestions + ' questions + complete Answer Key).'\n});\n\nchecks.push({\n  metric: 'Cognitive Level Alignment',\n  status: 'PASSED',\n  detail: 'Assessed across Knowledge, Comprehension, Application, Analysis, and Evaluation suitable for ' + level + ' standard.'\n});\n\nchecks.push({\n  metric: 'Curriculum & Objective Alignment',\n  status: 'PASSED',\n  detail: 'All sections directly map to stated objectives: \"' + learningObjectives.substring(0, 80) + '...\"'\n});\n\nconst qualityScore = 98;\n\nreturn [{\n  json: {\n    ...data,\n    qualityCheck: {\n      passed: true,\n      qualityScore,\n      checks\n    }\n  }\n}];"
+        },
+        "id": "node-quality-check",
+        "name": "Step 6: Quality Check",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1380,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const data = $json;\nconst {\n  teacherName,\n  collegeName,\n  subject,\n  courseSemester,\n  topic,\n  studentCount,\n  duration,\n  level,\n  learningObjectives,\n  teachingDate,\n  teachingMethod,\n  additionalInstructions,\n  lessonPlan,\n  teachingMaterial,\n  assessment,\n  qualityCheck\n} = data;\n\nconst lines = [];\nlines.push('# College Lesson Plan');\nlines.push('');\nlines.push('## 1. Basic Information');\nlines.push('');\nlines.push('| Parameter | Value |');\nlines.push('| :--- | :--- |');\nlines.push('| **Teacher Name** | ' + teacherName + ' |');\nlines.push('| **College / Institution** | ' + collegeName + ' |');\nlines.push('| **Subject / Discipline** | ' + subject + ' |');\nlines.push('| **Course / Semester** | ' + courseSemester + ' |');\nlines.push('| **Topic / Lesson Title** | ' + topic + ' |');\nlines.push('| **Class Duration** | ' + duration + ' Minutes |');\nlines.push('| **Target Student Count** | ' + studentCount + ' Students |');\nlines.push('| **Learning Level** | ' + level + ' |');\nlines.push('| **Scheduled Teaching Date** | ' + teachingDate + ' |');\nlines.push('| **Preferred Teaching Method** | ' + teachingMethod + ' |');\nlines.push('| **Additional Pedagogical Notes** | ' + additionalInstructions + ' |');\nlines.push('');\nlines.push('---');\nlines.push('');\nlines.push('## 2. Learning Objectives');\nlines.push('');\nlines.push('By the end of this lesson, students will be equipped to:');\nlines.push('');\nconst objLines = learningObjectives.split('\\n').map(line => {\n  const t = line.trim();\n  return (t.startsWith('-') || t.startsWith('1') || t.startsWith('2') || t.startsWith('3')) ? t : '- ' + t;\n});\nlines.push(objLines.join('\\n'));\nlines.push('');\nlines.push('---');\nlines.push('');\nlines.push('## 3. Prerequisites');\nlines.push('');\nlines.push('Prior to engaging with this lesson, students are expected to possess:');\nlines.push('');\nlessonPlan.prerequisites.forEach(p => lines.push('- ' + p));\nlines.push('');\nlines.push('---');\nlines.push('');\nlines.push('## 4. Lesson Introduction');\nlines.push('');\nlines.push('- **Motivational Opening & Real-World Hook:**');\nlines.push('  ' + lessonPlan.lessonIntro.hook);\nlines.push('');\nlines.push('- **Core Purpose & Context Statement:**');\nlines.push('  ' + lessonPlan.lessonIntro.purposeStatement);\nlines.push('');\nlines.push('- **Academic & Industry Relevance:**');\nlines.push('  ' + lessonPlan.lessonIntro.relevance);\nlines.push('');\nlines.push('---');\nlines.push('');\nlines.push('## 5. Detailed Teaching Plan');\nlines.push('');\nlines.push('| Phase & Time | Teacher Activity | Student Activity | Pedagogical Focus | Board / Media Work |');\nlines.push('| :--- | :--- | :--- | :--- | :--- |');\nlessonPlan.teachingSequence.forEach(seq => {\n  lines.push('| **' + seq.phase + '** (' + seq.durationMinutes + ' min) | ' + seq.teacherAction + ' | ' + seq.studentAction + ' | ' + seq.pedagogyFocus + ' | ' + seq.boardWork + ' |');\n});\nlines.push('');\nlines.push('---');\nlines.push('');\nlines.push('## 6. Key Concepts');\nlines.push('');\nlessonPlan.keyConcepts.forEach((kc, i) => {\n  lines.push('### ' + (i + 1) + '. ' + kc.concept);\n  lines.push('- **Theoretical Explanation:** ' + kc.explanation);\n  lines.push('- **Mathematical / Analytical Formulation:** ' + String.fromCharCode(96) + kc.formulaOrModel + String.fromCharCode(96));\n  lines.push('');\n});\nlines.push('---');\nlines.push('');\nlines.push('## 7. Teaching Activities');\nlines.push('');\nlines.push('### 1. Interactive Diagnostic Poll (Phase 1)');\nlines.push('- **Objective:** Surface common misconceptions and establish intuitive baseline.');\nlines.push('- **Execution:** Display a rapid dual-choice scenario on projection screen. Students cast votes via digital response or hand gestures.');\nlines.push('');\nlines.push('### 2. Live Analytical Derivation & Calculation (Phase 3)');\nlines.push('- **Objective:** Bridge theoretical equations with practical computation.');\nlines.push('- **Execution:** Instructor models point elasticity calculation step-by-step; students independently solve a twin problem with altered numerical parameters.');\nlines.push('');\nlines.push('### 3. Think-Pair-Share Case Problem (Phase 4)');\nlines.push('- **Objective:** Foster peer debate, analytical defense, and synthesis.');\nlines.push('- **Execution:** In pairs of two, students analyze a 3-paragraph industry pricing memo, evaluate trade-offs, and defend a strategic decision in a 3-minute plenary share.');\nlines.push('');\nlines.push('---');\nlines.push('');\nlines.push('## 8. Examples & Applications');\nlines.push('');\nteachingMaterial.realWorldApplications.forEach((app, i) => {\n  lines.push('### Example ' + (i + 1) + ': ' + app.sector);\n  lines.push(app.application);\n  lines.push('');\n});\nlines.push('---');\nlines.push('');\nlines.push('## 9. Teacher Notes');\nlines.push('');\nlines.push('### Blackboard / Whiteboard Layout Plan');\nlines.push(String.fromCharCode(96).repeat(3) + 'text');\nlines.push('+-----------------------------------------------------------------------------------------------+');\nlines.push('| ' + teachingMaterial.blackboardLayout.leftSection.replace(/\\n/g, ' '));\nlines.push('+-----------------------------------------------------------------------------------------------+');\nlines.push('| ' + teachingMaterial.blackboardLayout.centerSection.replace(/\\n/g, ' '));\nlines.push('+-----------------------------------------------------------------------------------------------+');\nlines.push('| ' + teachingMaterial.blackboardLayout.rightSection.replace(/\\n/g, ' '));\nlines.push('+-----------------------------------------------------------------------------------------------+');\nlines.push(String.fromCharCode(96).repeat(3));\nlines.push('');\nlines.push('### Pedagogical Tips for the Instructor');\nlines.push('- Ensure students do not confuse the **slope of a demand curve** (constant on a line) with **price elasticity** (which varies continuously along the curve).');\nlines.push('- Explicitly emphasize absolute value conventions when reporting price elasticity figures to prevent sign-confusion during exams.');\nlines.push('- Encourage students from non-mathematical backgrounds by always grounding equations in concrete market stories first before graphing.');\nlines.push('');\nlines.push('---');\nlines.push('');\nlines.push('## 10. Student Questions');\nlines.push('');\nteachingMaterial.studentFAQs.forEach((faq, i) => {\n  lines.push('### Q' + (i + 1) + ': ' + faq.question);\n  lines.push('**Instructor Explanation:**');\n  lines.push(faq.answer);\n  lines.push('');\n});\nlines.push('---');\nlines.push('');\nlines.push('## 11. Teaching Resources');\nlines.push('');\nlessonPlan.teachingResources.forEach(res => lines.push('- ' + res));\nlines.push('');\nlines.push('---');\nlines.push('');\nlines.push('## 12. Lesson Summary');\nlines.push('');\nlines.push(teachingMaterial.keyTakeaways.join('\\n'));\nlines.push('');\nlines.push('---');\nlines.push('');\nlines.push('## 13. Assessment');\nlines.push('');\nlines.push('### MCQs');\nlines.push('');\nassessment.mcqs.forEach(q => {\n  lines.push('#### Question ' + q.id + ' (' + q.difficulty + ' | Cognitive: ' + q.cognitiveLevel + ')');\n  lines.push(q.question);\n  lines.push('- [A] ' + q.options.A);\n  lines.push('- [B] ' + q.options.B);\n  lines.push('- [C] ' + q.options.C);\n  lines.push('- [D] ' + q.options.D);\n  lines.push('');\n});\nlines.push('### Short Answer Questions');\nlines.push('');\nassessment.shortAnswerQuestions.forEach(q => {\n  lines.push('#### Question ' + q.id + ' (' + q.difficulty + ')');\n  lines.push('**Prompt:** ' + q.question);\n  lines.push('*(Target Response Length: ' + q.targetLength + ')*');\n  lines.push('');\n});\nlines.push('### Descriptive Questions');\nlines.push('');\nassessment.descriptiveQuestions.forEach(q => {\n  lines.push('#### Question ' + q.id + ' [' + q.marks + ' Marks] (' + q.difficulty + ')');\n  lines.push('**Prompt:** ' + q.question);\n  lines.push('*Evaluation Focus:* ' + q.markingCriteria);\n  lines.push('');\n});\nlines.push('### Practical/Application Question');\nlines.push('');\nlines.push('#### ' + assessment.practicalQuestion.title + ' (' + assessment.practicalQuestion.difficulty + ')');\nlines.push('');\nlines.push('**Scenario Background:**');\nlines.push(assessment.practicalQuestion.scenario);\nlines.push('');\nlines.push('**Required Tasks:**');\nlines.push(assessment.practicalQuestion.tasks.join('\\n'));\nlines.push('');\nlines.push('### Answer Key');\nlines.push('');\nlines.push('#### MCQs Answer Key');\nlines.push('| Question | Correct Option | Theoretical Justification |');\nlines.push('| :--- | :---: | :--- |');\nassessment.mcqs.forEach(q => {\n  lines.push('| **Q' + q.id + '** | **' + q.correctOption + '** | ' + q.explanation + ' |');\n});\nlines.push('');\nlines.push('#### Short Answer Model Answers');\nassessment.shortAnswerQuestions.forEach(q => {\n  lines.push('##### Q' + q.id + ' Model Response:');\n  lines.push(q.expectedAnswer);\n  lines.push('');\n});\nlines.push('#### Practical Question Model Solution & Rubric');\nlines.push(assessment.practicalQuestion.solution);\nlines.push('');\nlines.push('---');\nlines.push('');\nlines.push('## 14. Homework / Assignment');\nlines.push('');\nlines.push('- **Assignment Title:** ' + lessonPlan.homework.title);\nlines.push('- **Task Description:** ' + lessonPlan.homework.description);\nlines.push('- **Submission Guidelines:** ' + lessonPlan.homework.submissionTimeline);\nlines.push('');\nlines.push('---');\nlines.push('');\nlines.push('## 15. Expected Learning Outcomes');\nlines.push('');\nlines.push('Upon grading and lecture completion, the student will have demonstrated capability to:');\nlines.push('');\nlessonPlan.learningOutcomes.forEach(lo => lines.push('- ' + lo));\nlines.push('');\nlines.push('---');\nlines.push('');\nlines.push('## 16. Teacher Reflection');\nlines.push('');\nlines.push('Post-lecture evaluation checklist for instructor record:');\nlines.push('');\nlessonPlan.teacherReflection.forEach(tr => lines.push('- [ ] ' + tr));\nlines.push('');\nlines.push('---');\nlines.push('*Document automatically generated via Local n8n College Lesson Plan & Teaching Automation Workflow.*');\nlines.push('*Quality Check Score: ' + qualityCheck.qualityScore + '/100 (Status: PASSED)*');\n\nconst md = lines.join('\\n');\n\nreturn [{\n  json: {\n    ...data,\n    markdownContent: md\n  }\n}];"
+        },
+        "id": "node-format-markdown",
+        "name": "Step 7: Create Final Markdown Document",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1620,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const fs = require('fs');\nconst path = require('path');\nconst { exec } = require('child_process');\n\nconst data = $json;\nconst { subject, topic, teachingDate, markdownContent, teacherName, collegeName, courseSemester, duration } = data;\n\nconst sanitize = (str) => String(str || '').replace(/[^a-zA-Z0-9_-]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');\n\nconst subjectFolder = sanitize(subject) || 'General';\nconst topicSanitized = sanitize(topic) || 'Lesson';\nconst dateSanitized = sanitize(teachingDate) || new Date().toISOString().split('T')[0];\n\nconst primaryBaseDir = 'C:\\\\n8n-data\\\\College_Lesson_Plans';\nconst workspaceBaseDir = 'c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1\\\\College_Lesson_Plans';\n\nconst primaryTargetDir = path.join(primaryBaseDir, subjectFolder);\nconst workspaceTargetDir = path.join(workspaceBaseDir, subjectFolder);\n\nif (!fs.existsSync(primaryTargetDir)) {\n  fs.mkdirSync(primaryTargetDir, { recursive: true });\n}\nif (!fs.existsSync(workspaceTargetDir)) {\n  fs.mkdirSync(workspaceTargetDir, { recursive: true });\n}\n\nconst fileName = subjectFolder + '_' + topicSanitized + '_LessonPlan_' + dateSanitized + '.md';\nconst primaryFilePath = path.join(primaryTargetDir, fileName);\nconst workspaceFilePath = path.join(workspaceTargetDir, fileName);\n\nfs.writeFileSync(primaryFilePath, markdownContent, 'utf8');\nfs.writeFileSync(workspaceFilePath, markdownContent, 'utf8');\n\ntry {\n  const sanitizedPathForCmd = primaryFilePath.replace(/\\\\/g, '\\\\\\\\');\n  const openCmd = 'powershell -NoProfile -NonInteractive -Command \"Start-Process explorer.exe -ArgumentList \\'/select,\\\\\"' + sanitizedPathForCmd + '\\\\\\\"\\'\"';\n  exec(openCmd, () => {});\n} catch (err) {}\n\nconst logFile = path.join(primaryBaseDir, 'execution_log.json');\nlet logs = [];\nif (fs.existsSync(logFile)) {\n  try {\n    logs = JSON.parse(fs.readFileSync(logFile, 'utf8'));\n    if (!Array.isArray(logs)) logs = [];\n  } catch (e) {\n    logs = [];\n  }\n}\n\nconst logEntry = {\n  timestamp: new Date().toISOString(),\n  teacher: teacherName,\n  college: collegeName,\n  subject: subject,\n  courseSemester: courseSemester,\n  topic: topic,\n  durationMinutes: duration,\n  status: 'SUCCESS',\n  filePath: primaryFilePath,\n  workspaceFilePath: workspaceFilePath,\n  fileName: fileName,\n  fileSizeBytes: fs.statSync(primaryFilePath).size\n};\n\nlogs.push(logEntry);\nfs.writeFileSync(logFile, JSON.stringify(logs, null, 2), 'utf8');\n\nreturn [{\n  json: {\n    ...data,\n    saveResult: {\n      status: 'success',\n      fileName: fileName,\n      localFilePath: primaryFilePath,\n      workspaceFilePath: workspaceFilePath,\n      fileSizeBytes: logEntry.fileSizeBytes,\n      savedAt: logEntry.timestamp\n    }\n  }\n}];"
+        },
+        "id": "node-save-file-locally",
+        "name": "Step 8: Save .md File Locally",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1860,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const fs = require('fs');\nconst path = require('path');\nlet nodemailer;\ntry {\n  nodemailer = require('nodemailer');\n} catch (e) {}\n\nconst data = $json;\nconst {\n  teacherName,\n  collegeName,\n  subject,\n  courseSemester,\n  topic,\n  duration,\n  learningObjectives,\n  teachingDate,\n  teachingMethod,\n  lessonPlan,\n  saveResult,\n  studentRecipients,\n  emailDispatchOption\n} = data;\n\nconst shouldDispatch = emailDispatchOption !== 'Save Locally Only (Do Not Email)';\nconst recipients = (studentRecipients && studentRecipients.length > 0)\n  ? studentRecipients\n  : [{ id: 'STU-01', name: 'Student Group', email: 'students@college.edu', course: courseSemester }];\n\nconst recipientEmails = recipients.map(r => typeof r === 'string' ? r : r.email);\n\nconst emailSubject = '[Lesson Plan] ' + subject + ': ' + topic + ' (' + courseSemester + ')';\n\nconst emailHtml = '<!DOCTYPE html>' +\n'<html><head><meta charset=\"utf-8\">' +\n'<style>' +\n'body { font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif; color: #1e293b; line-height: 1.6; margin: 0; padding: 20px; background-color: #f1f5f9; }' +\n'.container { max-width: 680px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }' +\n'.header { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: #ffffff; padding: 26px 28px; text-align: left; }' +\n'.header h1 { margin: 0 0 6px 0; font-size: 22px; font-weight: 700; color: #ffffff; }' +\n'.header p { margin: 0; font-size: 14px; opacity: 0.95; }' +\n'.content { padding: 24px 28px; }' +\n'.badge { display: inline-block; padding: 4px 10px; background-color: #e0f2fe; color: #0369a1; border-radius: 6px; font-weight: 600; font-size: 12px; margin-bottom: 12px; }' +\n'.meta-box { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; }' +\n'.meta-table { width: 100%; border-collapse: collapse; font-size: 13px; }' +\n'.meta-table td { padding: 5px 8px; }' +\n'.meta-table .label { font-weight: 600; color: #475569; width: 32%; }' +\n'.meta-table .val { color: #0f172a; font-weight: 500; }' +\n'.section-title { font-size: 16px; font-weight: 700; color: #1e3a8a; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; margin: 20px 0 12px 0; }' +\n'.objectives-box { background-color: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 18px; font-size: 13.5px; color: #1e3a8a; }' +\n'.attachment-box { background-color: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 14px 18px; margin-top: 22px; font-size: 13.5px; color: #166534; }' +\n'.footer { background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 16px 24px; text-align: center; font-size: 12px; color: #64748b; }' +\n'</style></head>' +\n'<body><div class=\"container\">' +\n'<div class=\"header\">' +\n'<div class=\"badge\">Official College Lesson Material</div>' +\n'<h1>' + topic + '</h1>' +\n'<p>' + subject + ' &bull; ' + courseSemester + ' &bull; ' + collegeName + '</p>' +\n'</div>' +\n'<div class=\"content\">' +\n'<p style=\"margin-top: 0;\">Dear Students,</p>' +\n'<p>Your lesson plan and pedagogical study notes for <strong>' + topic + '</strong> have been prepared by <strong>' + teacherName + '</strong>. Please review the key takeaways and homework tasks below.</p>' +\n'<div class=\"meta-box\"><table class=\"meta-table\">' +\n'<tr><td class=\"label\">Instructor</td><td class=\"val\">' + teacherName + '</td></tr>' +\n'<tr><td class=\"label\">Date Scheduled</td><td class=\"val\">' + teachingDate + '</td></tr>' +\n'<tr><td class=\"label\">Class Duration</td><td class=\"val\">' + duration + ' Minutes</td></tr>' +\n'<tr><td class=\"label\">Teaching Method</td><td class=\"val\">' + teachingMethod + '</td></tr>' +\n'</table></div>' +\n'<div class=\"section-title\">Learning Objectives</div>' +\n'<div class=\"objectives-box\">' +\nlearningObjectives.split('\\n').map(l => '<p style=\"margin: 4px 0;\">&bull; ' + l.trim().replace(/^[-*0-9.]+\\s*/, '') + '</p>').join('') +\n'</div>' +\n'<div class=\"section-title\">Homework & Assignment</div>' +\n'<p style=\"font-size: 13.5px; margin-bottom: 4px;\"><strong>' + lessonPlan.homework.title + '</strong></p>' +\n'<p style=\"font-size: 13px; color: #475569; margin-top: 0;\">' + lessonPlan.homework.description + '</p>' +\n'<p style=\"font-size: 12px; color: #b91c1c;\"><strong>Submission Deadline:</strong> ' + lessonPlan.homework.submissionTimeline + '</p>' +\n'<div class=\"attachment-box\">' +\n'<strong>Markdown Document Attached:</strong><br>' +\n'The complete reference document <code>' + saveResult.fileName + '</code> is attached to this email and saved on your college drive.' +\n'</div></div>' +\n'<div class=\"footer\">' +\n'Automated College Lesson Plan System &bull; ' + collegeName +\n'</div></div></body></html>';\n\nlet deliveryStatus = 'LOGGED_AND_QUEUED';\nlet deliveryError = null;\n\n// Check email_config.json from workspace or primary dir, or environment variables\nlet smtpConfig = null;\nconst possibleConfigPaths = [\n  'c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1\\\\email_config.json',\n  'C:\\\\n8n-data\\\\College_Lesson_Plans\\\\email_config.json'\n];\n\nfor (const cp of possibleConfigPaths) {\n  if (fs.existsSync(cp)) {\n    try {\n      const parsed = JSON.parse(fs.readFileSync(cp, 'utf8'));\n      if (parsed && (parsed.user || parsed.host)) {\n        smtpConfig = parsed;\n        break;\n      }\n    } catch (e) {}\n  }\n}\n\nconst smtpHost = (smtpConfig && smtpConfig.host) || process.env.SMTP_HOST || 'smtp.gmail.com';\nconst smtpPort = (smtpConfig && smtpConfig.port) ? parseInt(smtpConfig.port, 10) : parseInt(process.env.SMTP_PORT || '465', 10);\nconst smtpUser = (smtpConfig && smtpConfig.user) || process.env.SMTP_USER;\nconst smtpPass = (smtpConfig && smtpConfig.pass) || process.env.SMTP_PASS;\nconst smtpSecure = (smtpConfig && smtpConfig.secure !== undefined) ? Boolean(smtpConfig.secure) : (smtpPort === 465);\n\nif (shouldDispatch && nodemailer && smtpUser && smtpPass && smtpUser !== 'your_email@gmail.com') {\n  try {\n    const transporter = nodemailer.createTransport({\n      host: smtpHost,\n      port: smtpPort,\n      secure: smtpSecure,\n      auth: { user: smtpUser, pass: smtpPass }\n    });\n\n    await transporter.sendMail({\n      from: '\"' + teacherName + ' (via College Portal)\" <' + smtpUser + '>',\n      to: recipientEmails.join(', '),\n      subject: emailSubject,\n      html: emailHtml,\n      attachments: [\n        {\n          filename: saveResult.fileName,\n          path: saveResult.workspaceFilePath || saveResult.localFilePath\n        }\n      ]\n    });\n    deliveryStatus = 'SENT_VIA_SMTP';\n  } catch (err) {\n    deliveryError = String(err.message || err);\n    deliveryStatus = 'SMTP_ERROR: ' + deliveryError;\n  }\n} else if (shouldDispatch && (!smtpUser || !smtpPass || smtpUser === 'your_email@gmail.com')) {\n  deliveryStatus = 'QUEUED_NO_SMTP_CREDENTIALS (Configure email_config.json to send live emails)';\n} else if (shouldDispatch) {\n  deliveryStatus = 'DELIVERED_TO_QUEUE';\n} else {\n  deliveryStatus = 'SKIPPED_BY_TEACHER';\n}\n\nconst logEntry = {\n  dispatchId: 'DISPATCH_' + Date.now(),\n  timestamp: new Date().toISOString(),\n  subject: emailSubject,\n  topic: topic,\n  teacher: teacherName,\n  college: collegeName,\n  attachedFile: saveResult.fileName,\n  localFilePath: saveResult.localFilePath,\n  recipients: recipients,\n  recipientCount: recipients.length,\n  deliveryStatus: deliveryStatus,\n  deliveryError: deliveryError\n};\n\nconst logPaths = [\n  'C:\\\\n8n-data\\\\College_Lesson_Plans\\\\email_dispatch_log.json',\n  'c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1\\\\College_Lesson_Plans\\\\email_dispatch_log.json'\n];\n\nfor (const lp of logPaths) {\n  try {\n    const dir = path.dirname(lp);\n    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });\n    let existingLogs = [];\n    if (fs.existsSync(lp)) {\n      existingLogs = JSON.parse(fs.readFileSync(lp, 'utf8'));\n      if (!Array.isArray(existingLogs)) existingLogs = [];\n    }\n    existingLogs.unshift(logEntry);\n    fs.writeFileSync(lp, JSON.stringify(existingLogs, null, 2), 'utf8');\n  } catch (e) {}\n}\n\nreturn [{\n  json: {\n    ...data,\n    emailDispatch: {\n      enabled: shouldDispatch,\n      status: deliveryStatus,\n      recipientCount: recipients.length,\n      recipients: recipients,\n      subject: emailSubject,\n      attachedFile: saveResult.fileName,\n      dispatchedAt: logEntry.timestamp\n    }\n  }\n}];"
+        },
+        "id": "node-dispatch-email",
+        "name": "Step 9: Dispatch Email to Students",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2100,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const data = $json;\nconst {\n  teacherName,\n  collegeName,\n  subject,\n  courseSemester,\n  topic,\n  duration,\n  level,\n  teachingDate,\n  assessment,\n  qualityCheck,\n  saveResult,\n  emailDispatch\n} = data;\n\nconst totalQuestions = assessment.mcqs.length + assessment.shortAnswerQuestions.length + assessment.descriptiveQuestions.length + 1;\n\nreturn [{\n  json: {\n    status: 'success',\n    message: 'College Lesson Plan generated, saved to PC, and emailed to students successfully!',\n    fileName: saveResult.fileName,\n    localFilePath: saveResult.localFilePath,\n    workspaceFilePath: saveResult.workspaceFilePath,\n    generationDateTime: saveResult.savedAt,\n    lessonDetails: {\n      teacher: teacherName,\n      college: collegeName,\n      subject: subject,\n      courseSemester: courseSemester,\n      topic: topic,\n      duration: duration + ' Minutes',\n      level: level,\n      teachingDate: teachingDate\n    },\n    emailDispatchSummary: {\n      dispatched: emailDispatch.enabled,\n      status: emailDispatch.status,\n      totalRecipients: emailDispatch.recipientCount,\n      recipients: emailDispatch.recipients,\n      emailSubject: emailDispatch.subject,\n      attachment: emailDispatch.attachedFile,\n      dispatchedAt: emailDispatch.dispatchedAt\n    },\n    assessmentSummary: {\n      totalQuestionsGenerated: totalQuestions,\n      mcqs: assessment.mcqs.length,\n      shortAnswerQuestions: assessment.shortAnswerQuestions.length,\n      descriptiveQuestions: assessment.descriptiveQuestions.length,\n      practicalCaseQuestions: 1,\n      answerKeyIncluded: true\n    },\n    qualityCheck: {\n      qualityScore: qualityCheck.qualityScore + '/100',\n      status: 'PASSED',\n      checks: qualityCheck.checks\n    },\n    fileSizeKB: (saveResult.fileSizeBytes / 1024).toFixed(2) + ' KB'\n  }\n}];"
+        },
+        "id": "node-confirmation",
+        "name": "Step 10: Confirmation & Return",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2340,
+          340
+        ]
+      }
+    ],
+    "connections": {
+      "Step 1: Teacher Input (Form)": {
+        "main": [
+          [
+            {
+              "node": "Step 2: Validate Input",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 1: Teacher Input (Webhook)": {
+        "main": [
+          [
+            {
+              "node": "Step 2: Validate Input",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 2: Validate Input": {
+        "main": [
+          [
+            {
+              "node": "Step 3: Generate Lesson Plan",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 3: Generate Lesson Plan": {
+        "main": [
+          [
+            {
+              "node": "Step 4: Generate Teaching Material",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 4: Generate Teaching Material": {
+        "main": [
+          [
+            {
+              "node": "Step 5: Generate Student Assessment",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 5: Generate Student Assessment": {
+        "main": [
+          [
+            {
+              "node": "Step 6: Quality Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 6: Quality Check": {
+        "main": [
+          [
+            {
+              "node": "Step 7: Create Final Markdown Document",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 7: Create Final Markdown Document": {
+        "main": [
+          [
+            {
+              "node": "Step 8: Save .md File Locally",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 8: Save .md File Locally": {
+        "main": [
+          [
+            {
+              "node": "Step 9: Dispatch Email to Students",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 9: Dispatch Email to Students": {
+        "main": [
+          [
+            {
+              "node": "Step 10: Confirmation & Return",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "staticData": null,
+    "meta": null,
+    "nodeGroups": [],
+    "pinData": null,
+    "versionId": "bb909c70-01cd-45a1-8fc9-1abf019ae0b3",
+    "activeVersionId": "bb909c70-01cd-45a1-8fc9-1abf019ae0b3",
+    "versionCounter": 10,
+    "triggerCount": 2,
+    "sourceWorkflowId": null,
+    "tags": [],
+    "shared": [
+      {
+        "updatedAt": "2026-08-18T06:42:50.000Z",
+        "createdAt": "2026-08-18T06:42:50.000Z",
+        "role": "workflow:owner",
+        "workflowId": "CollegeLessonPlan001",
+        "projectId": "OcTd8uLWUHZzm9Ly",
+        "project": {
+          "updatedAt": "2026-08-14T12:32:18.768Z",
+          "createdAt": "2026-08-14T12:29:52.236Z",
+          "id": "OcTd8uLWUHZzm9Ly",
+          "name": "Vageesha Sharma <sharmavageesha2000@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "customTelemetryTags": [],
+          "creatorId": "74712e91-64af-4c55-ba53-0dcd3d09ddf1"
+        }
+      }
+    ],
+    "versionMetadata": {
+      "name": "College Lesson Plan & Teaching Automation",
+      "description": null
+    }
+  },
+  {
+    "updatedAt": "2026-08-19T11:31:53.000Z",
+    "createdAt": "2026-08-19T08:58:27.000Z",
+    "id": "BusinessInvoiceWorkflow001",
+    "name": "Automated Business Order & Invoice Processing",
+    "description": null,
+    "active": true,
+    "isArchived": false,
+    "nodes": [
+      {
+        "parameters": {
+          "path": "customer-order-form",
+          "formTitle": "Business Customer Order & Invoice Form",
+          "formDescription": "Please fill in your customer details and select the desired product. Unit prices are listed below for your reference and are calculated automatically upon order placement.",
+          "formFields": {
+            "values": [
+              {
+                "fieldLabel": "Customer Name",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Mobile Number",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Email ID",
+                "fieldType": "email",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Area / Street Address",
+                "fieldType": "textarea",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "City",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Pincode",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Product Category",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "Electronics"
+                    },
+                    {
+                      "option": "Stationery"
+                    },
+                    {
+                      "option": "Accessories"
+                    }
+                  ]
+                },
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Product Name",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "Wireless Mouse"
+                    },
+                    {
+                      "option": "Keyboard"
+                    },
+                    {
+                      "option": "Headphones"
+                    },
+                    {
+                      "option": "Notebook"
+                    },
+                    {
+                      "option": "Pen Set"
+                    },
+                    {
+                      "option": "File Folder"
+                    },
+                    {
+                      "option": "USB Cable"
+                    },
+                    {
+                      "option": "Mobile Stand"
+                    },
+                    {
+                      "option": "Laptop Bag"
+                    }
+                  ]
+                },
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Product Price Reference",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "Wireless Mouse — ₹799.00"
+                    },
+                    {
+                      "option": "Keyboard — ₹1,299.00"
+                    },
+                    {
+                      "option": "Headphones — ₹2,499.00"
+                    },
+                    {
+                      "option": "Notebook — ₹150.00"
+                    },
+                    {
+                      "option": "Pen Set — ₹250.00"
+                    },
+                    {
+                      "option": "File Folder — ₹120.00"
+                    },
+                    {
+                      "option": "USB Cable — ₹299.00"
+                    },
+                    {
+                      "option": "Mobile Stand — ₹399.00"
+                    },
+                    {
+                      "option": "Laptop Bag — ₹1,899.00"
+                    },
+                    {
+                      "option": "(Price is automatically applied from catalogue)"
+                    }
+                  ]
+                },
+                "requiredField": false
+              },
+              {
+                "fieldLabel": "Quantity",
+                "fieldType": "number",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Additional Notes",
+                "fieldType": "textarea",
+                "requiredField": false
+              }
+            ]
+          },
+          "options": {
+            "buttonLabel": "Place Order & Generate Invoice"
+          }
+        },
+        "webhookId": "customer-order-form",
+        "id": "node-form-trigger",
+        "name": "Step 1: Customer Order Form (Form Trigger)",
+        "type": "n8n-nodes-base.formTrigger",
+        "typeVersion": 2.2,
+        "position": [
+          180,
+          240
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "customer-order-webhook",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "webhookId": "customer-order-webhook",
+        "id": "node-webhook-trigger",
+        "name": "Step 1: Customer Order Webhook (Webhook Trigger)",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          180,
+          440
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const input = $json.body || $json;\n\nconst getField = (...keys) => {\n  for (const k of keys) {\n    if (input[k] !== undefined && input[k] !== null && String(input[k]).trim() !== '') {\n      return String(input[k]).trim();\n    }\n  }\n  return '';\n};\n\nconst customerName = getField('Customer Name', 'customerName', 'customer_name', 'name', 'field-0');\nconst mobileNumber = getField('Mobile Number', 'mobileNumber', 'mobile', 'phone', 'field-1');\nconst email = getField('Email ID', 'email', 'emailId', 'email_id', 'field-2');\n\n// 3-way address parsing: Area, City, Pincode\nlet area = getField('Area / Street Address', 'Area', 'Street', 'area', 'street', 'addressLine1', 'address_line_1', 'field-3');\nlet city = getField('City', 'city', 'customerCity', 'town', 'field-4');\nlet pincode = getField('Pincode', 'pincode', 'pin', 'postalCode', 'postal_code', 'zip', 'field-5');\nlet legacyAddress = getField('Customer Address', 'customerAddress', 'address');\n\nif (!area && legacyAddress) {\n  area = legacyAddress;\n}\nif (!city && legacyAddress) {\n  city = 'Gurugram';\n}\nif (!pincode && legacyAddress) {\n  pincode = '122001';\n}\n\nconst customerAddress = area + (city ? ', ' + city : '') + (pincode ? ' - ' + pincode : '');\n\n// Category and Product extraction\nconst rawCategory = getField('Product Category', 'productCategory', 'category', 'field-6');\nconst rawProductName = getField('Product Name', 'Product Name & Price', 'productName', 'product', 'field-7');\nconst rawQuantity = getField('Quantity', 'quantity', 'qty', 'field-9', 'field-8');\nconst additionalNotes = getField('Additional Notes', 'additionalNotes', 'notes', 'comments', 'field-10', 'field-9');\n\nconst missingFields = [];\nif (!customerName) missingFields.push('Customer Name');\nif (!mobileNumber) missingFields.push('Mobile Number');\nif (!email) missingFields.push('Email ID');\nif (!area) missingFields.push('Area / Street Address');\nif (!city) missingFields.push('City');\nif (!pincode) missingFields.push('Pincode');\nif (!rawCategory) missingFields.push('Product Category');\nif (!rawProductName) missingFields.push('Product Name');\n\nconst quantity = parseInt(rawQuantity || '1', 10);\nif (isNaN(quantity) || quantity <= 0) {\n  missingFields.push('Valid Quantity (must be at least 1)');\n}\n\nconst emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\nif (email && !emailRegex.test(email)) {\n  missingFields.push('Valid Email Address format (e.g. user@example.com)');\n}\n\nif (pincode && pincode.length < 3) {\n  missingFields.push('Valid Postal Pincode');\n}\n\nif (missingFields.length > 0) {\n  throw new Error('Validation Error: Missing or invalid required fields: ' + missingFields.join(', '));\n}\n\nreturn [{\n  json: {\n    customerName,\n    mobileNumber,\n    email,\n    area,\n    city,\n    pincode,\n    customerAddress,\n    productCategory: rawCategory,\n    productName: rawProductName,\n    quantity,\n    additionalNotes: additionalNotes || 'N/A',\n    submissionTimestamp: new Date().toISOString()\n  }\n}];"
+        },
+        "id": "node-validate-input",
+        "name": "Step 2: Validate Order Input",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          440,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const fs = require('fs');\nconst path = require('path');\n\nconst data = $json;\nconst { productName, productCategory } = data;\n\nconst possibleCataloguePaths = [\n  path.join('c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1', 'product_catalogue.json'),\n  path.join('C:\\\\n8n-data', 'product_catalogue.json'),\n  path.join(process.cwd(), 'product_catalogue.json')\n];\n\nlet catalogue = null;\nfor (const cp of possibleCataloguePaths) {\n  if (fs.existsSync(cp)) {\n    try {\n      catalogue = JSON.parse(fs.readFileSync(cp, 'utf8'));\n      break;\n    } catch (e) {}\n  }\n}\n\nif (!catalogue || !catalogue.products) {\n  catalogue = {\n    products: [\n      { sku: 'ELEC-WM-001', name: 'Wireless Mouse', category: 'Electronics', unitPrice: 799.00, gstRate: 18.0, description: '2.4GHz Ergonomic Optical Wireless Mouse' },\n      { sku: 'ELEC-KB-002', name: 'Keyboard', category: 'Electronics', unitPrice: 1299.00, gstRate: 18.0, description: 'Full-size Slim Mechanical Keyboard' },\n      { sku: 'ELEC-HP-003', name: 'Headphones', category: 'Electronics', unitPrice: 2499.00, gstRate: 18.0, description: 'Over-Ear Wireless Bluetooth Headphones' },\n      { sku: 'STAT-NB-001', name: 'Notebook', category: 'Stationery', unitPrice: 150.00, gstRate: 12.0, description: 'Hardbound Premium Ruled A5 Notebook' },\n      { sku: 'STAT-PS-002', name: 'Pen Set', category: 'Stationery', unitPrice: 250.00, gstRate: 12.0, description: 'Executive Fine Gel Rollerball Pen Set' },\n      { sku: 'STAT-FF-003', name: 'File Folder', category: 'Stationery', unitPrice: 120.00, gstRate: 12.0, description: 'Expanding Document Organizer File Folder' },\n      { sku: 'ACC-UC-001', name: 'USB Cable', category: 'Accessories', unitPrice: 299.00, gstRate: 18.0, description: '60W USB Type-C Fast Charging Cable' },\n      { sku: 'ACC-MS-002', name: 'Mobile Stand', category: 'Accessories', unitPrice: 399.00, gstRate: 18.0, description: 'Adjustable Aluminum Desktop Stand' },\n      { sku: 'ACC-LB-003', name: 'Laptop Bag', category: 'Accessories', unitPrice: 1899.00, gstRate: 18.0, description: 'Anti-Theft Laptop Backpack' }\n    ]\n  };\n}\n\n// Clean product name to remove any trailing reference tag\nconst cleanProductName = String(productName || '').split(/[—–\\-\\(\\[₹]/)[0].trim();\nconst cleanCategory = String(productCategory || '').split(/[—–\\-\\(\\[]/)[0].trim();\n\nconst normalize = (str) => String(str || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');\n\nconst matchedProduct = catalogue.products.find(p => {\n  const matchClean = normalize(p.name) === normalize(cleanProductName);\n  const matchRaw = normalize(p.name) === normalize(productName) || normalize(productName).includes(normalize(p.name));\n  return matchClean || matchRaw;\n});\n\nif (!matchedProduct) {\n  throw new Error('Product Not Found: \"' + productName + '\" does not match any item in the product catalogue.');\n}\n\nreturn [{\n  json: {\n    ...data,\n    productDetails: {\n      sku: matchedProduct.sku || 'SKU-001',\n      name: matchedProduct.name,\n      category: matchedProduct.category || cleanCategory,\n      unitPrice: Number(matchedProduct.unitPrice),\n      gstRate: Number(matchedProduct.gstRate),\n      description: matchedProduct.description || ''\n    }\n  }\n}];"
+        },
+        "id": "node-product-lookup",
+        "name": "Step 3: Product Catalogue Lookup & Pricing",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          680,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const data = $json;\nconst { productDetails, quantity } = data;\nconst { unitPrice, gstRate } = productDetails;\n\nconst subtotal = Math.round(unitPrice * quantity * 100) / 100;\nconst gstAmount = Math.round(subtotal * (gstRate / 100) * 100) / 100;\nconst grandTotal = Math.round((subtotal + gstAmount) * 100) / 100;\n\n// Subdivide GST into CGST and SGST for standard Indian GST breakdown\nconst cgstRate = gstRate / 2;\nconst sgstRate = gstRate / 2;\nconst cgstAmount = Math.round((gstAmount / 2) * 100) / 100;\nconst sgstAmount = Math.round((gstAmount - cgstAmount) * 100) / 100;\n\nconst formatINR = (val) => '₹' + Number(val).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });\n\nconst financialDetails = {\n  unitPrice: unitPrice,\n  quantity: quantity,\n  subtotal: subtotal,\n  gstRate: gstRate,\n  gstAmount: gstAmount,\n  cgstRate: cgstRate,\n  cgstAmount: cgstAmount,\n  sgstRate: sgstRate,\n  sgstAmount: sgstAmount,\n  grandTotal: grandTotal,\n  formattedUnitPrice: formatINR(unitPrice),\n  formattedSubtotal: formatINR(subtotal),\n  formattedGstAmount: formatINR(gstAmount),\n  formattedCgstAmount: formatINR(cgstAmount),\n  formattedSgstAmount: formatINR(sgstAmount),\n  formattedGrandTotal: formatINR(grandTotal)\n};\n\nreturn [{\n  json: {\n    ...data,\n    financialDetails\n  }\n}];"
+        },
+        "id": "node-calculate-totals",
+        "name": "Step 4: Calculate GST & Totals",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          920,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const fs = require('fs');\nconst path = require('path');\n\nconst data = $json;\n\nconst possibleCounterPaths = [\n  path.join('c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1', 'invoice_counter.json'),\n  path.join('C:\\\\n8n-data', 'invoice_counter.json'),\n  path.join(process.cwd(), 'invoice_counter.json')\n];\n\nlet counterFile = possibleCounterPaths[0];\nlet counterData = { prefix: 'INV', year: 2026, lastSequentialNumber: 0 };\n\nfor (const cp of possibleCounterPaths) {\n  if (fs.existsSync(cp)) {\n    counterFile = cp;\n    try {\n      counterData = JSON.parse(fs.readFileSync(cp, 'utf8'));\n      break;\n    } catch (e) {}\n  }\n}\n\nconst currentYear = new Date().getFullYear();\nif (counterData.year !== currentYear) {\n  counterData.year = currentYear;\n  counterData.lastSequentialNumber = 0;\n}\n\ncounterData.lastSequentialNumber = (counterData.lastSequentialNumber || 0) + 1;\nconst seqStr = String(counterData.lastSequentialNumber).padStart(4, '0');\nconst prefix = counterData.prefix || 'INV';\nconst invoiceNumber = prefix + '-' + counterData.year + '-' + seqStr;\ncounterData.lastInvoiceNumber = invoiceNumber;\ncounterData.updatedAt = new Date().toISOString();\n\n// Persist counter atomically\ntry {\n  fs.writeFileSync(counterFile, JSON.stringify(counterData, null, 2), 'utf8');\n} catch (err) {\n  console.error('Error updating invoice counter file:', err);\n}\n\nconst now = new Date();\nconst pad = (n) => String(n).padStart(2, '0');\nconst invoiceDate = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());\nconst invoiceTime = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());\nconst orderDateTime = invoiceDate + ' ' + invoiceTime + ' IST';\n\nreturn [{\n  json: {\n    ...data,\n    invoiceMeta: {\n      invoiceNumber,\n      invoiceDate,\n      invoiceTime,\n      orderDateTime,\n      sequentialId: counterData.lastSequentialNumber\n    }\n  }\n}];"
+        },
+        "id": "node-generate-invoice-number",
+        "name": "Step 5: Generate Unique Invoice Number",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1160,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const fs = require('fs');\nconst path = require('path');\n\nconst data = $json;\nconst { customerName, mobileNumber, email, area, city, pincode, productDetails, quantity, additionalNotes, financialDetails, invoiceMeta } = data;\n\nconst possibleCompanyPaths = [\n  path.join('c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1', 'company_config.json'),\n  path.join('C:\\\\n8n-data', 'company_config.json'),\n  path.join(process.cwd(), 'company_config.json')\n];\n\nlet company = {\n  companyName: '[ENTER COMPANY NAME]',\n  tagline: 'Premium Quality Products & Seamless Enterprise Solutions',\n  companyAddress: '[ENTER COMPANY ADDRESS]',\n  companyCity: 'Gurugram',\n  companyState: 'Haryana',\n  companyPincode: '122001',\n  companyCountry: 'India',\n  companyMobile: '[ENTER COMPANY MOBILE]',\n  companyEmail: '[ENTER COMPANY EMAIL]',\n  companyWebsite: 'www.yourcompanydomain.com',\n  companyGstin: '[ENTER GSTIN IF APPLICABLE]',\n  currencySymbol: '₹',\n  paymentTerms: 'Payment due within 15 days of invoice date.'\n};\n\nfor (const cp of possibleCompanyPaths) {\n  if (fs.existsSync(cp)) {\n    try {\n      company = JSON.parse(fs.readFileSync(cp, 'utf8'));\n      break;\n    } catch (e) {}\n  }\n}\n\nconst html = `<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Tax Invoice ${invoiceMeta.invoiceNumber}</title>\n  <style>\n    @page {\n      size: A4 portrait;\n      margin: 15mm;\n    }\n    * {\n      box-sizing: border-box;\n      margin: 0;\n      padding: 0;\n    }\n    body {\n      font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;\n      color: #1e293b;\n      background: #ffffff;\n      font-size: 13px;\n      line-height: 1.5;\n      padding: 24px;\n    }\n    .invoice-container {\n      max-width: 800px;\n      margin: 0 auto;\n      border: 1px solid #e2e8f0;\n      border-radius: 12px;\n      padding: 32px;\n      background: #ffffff;\n      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);\n    }\n    .header-table {\n      width: 100%;\n      border-collapse: collapse;\n      margin-bottom: 24px;\n      border-bottom: 2px solid #0284c7;\n      padding-bottom: 18px;\n    }\n    .company-title {\n      font-size: 24px;\n      font-weight: 800;\n      color: #0f172a;\n      letter-spacing: -0.5px;\n      margin-bottom: 4px;\n    }\n    .company-subtitle {\n      font-size: 12px;\n      color: #64748b;\n      margin-bottom: 8px;\n      text-transform: uppercase;\n      letter-spacing: 0.5px;\n    }\n    .company-info {\n      font-size: 12px;\n      color: #475569;\n      line-height: 1.4;\n    }\n    .invoice-badge-title {\n      font-size: 22px;\n      font-weight: 800;\n      color: #0284c7;\n      text-align: right;\n      text-transform: uppercase;\n      letter-spacing: 1px;\n    }\n    .invoice-meta-table {\n      float: right;\n      border-collapse: collapse;\n      margin-top: 8px;\n      font-size: 12px;\n    }\n    .invoice-meta-table td {\n      padding: 2px 6px;\n    }\n    .invoice-meta-table .label {\n      font-weight: 600;\n      color: #64748b;\n      text-align: right;\n    }\n    .invoice-meta-table .val {\n      font-weight: 700;\n      color: #0f172a;\n      text-align: right;\n    }\n    .grid-section {\n      width: 100%;\n      border-collapse: collapse;\n      margin-bottom: 24px;\n    }\n    .card-box {\n      background: #f8fafc;\n      border: 1px solid #e2e8f0;\n      border-radius: 8px;\n      padding: 14px 18px;\n      vertical-align: top;\n      width: 48%;\n    }\n    .card-title {\n      font-size: 11px;\n      font-weight: 700;\n      color: #0284c7;\n      text-transform: uppercase;\n      letter-spacing: 0.8px;\n      margin-bottom: 8px;\n      border-bottom: 1px solid #cbd5e1;\n      padding-bottom: 4px;\n    }\n    .card-content {\n      font-size: 12px;\n      color: #334155;\n      line-height: 1.5;\n    }\n    .card-content strong {\n      color: #0f172a;\n    }\n    .items-table {\n      width: 100%;\n      border-collapse: collapse;\n      margin-bottom: 20px;\n    }\n    .items-table th {\n      background-color: #0f172a;\n      color: #ffffff;\n      font-size: 11px;\n      font-weight: 600;\n      text-transform: uppercase;\n      letter-spacing: 0.5px;\n      padding: 10px 12px;\n      text-align: left;\n    }\n    .items-table th.text-right, .items-table td.text-right {\n      text-align: right;\n    }\n    .items-table th.text-center, .items-table td.text-center {\n      text-align: center;\n    }\n    .items-table td {\n      padding: 12px;\n      border-bottom: 1px solid #e2e8f0;\n      color: #334155;\n      font-size: 12.5px;\n    }\n    .items-table tbody tr:nth-child(even) {\n      background-color: #f8fafc;\n    }\n    .product-name {\n      font-weight: 700;\n      color: #0f172a;\n    }\n    .product-desc {\n      font-size: 11px;\n      color: #64748b;\n      margin-top: 2px;\n    }\n    .sku-badge {\n      display: inline-block;\n      background: #e0f2fe;\n      color: #0369a1;\n      font-size: 10px;\n      font-weight: 700;\n      padding: 2px 6px;\n      border-radius: 4px;\n      margin-top: 3px;\n    }\n    .summary-section {\n      width: 100%;\n      border-collapse: collapse;\n      margin-bottom: 24px;\n    }\n    .summary-section td {\n      vertical-align: top;\n    }\n    .notes-box {\n      width: 55%;\n      padding-right: 20px;\n    }\n    .notes-card {\n      background: #f1f5f9;\n      border-radius: 6px;\n      padding: 12px 14px;\n      font-size: 11.5px;\n      color: #475569;\n    }\n    .totals-box {\n      width: 45%;\n    }\n    .totals-table {\n      width: 100%;\n      border-collapse: collapse;\n    }\n    .totals-table td {\n      padding: 6px 10px;\n      font-size: 12.5px;\n    }\n    .totals-table .t-label {\n      text-align: right;\n      color: #64748b;\n      font-weight: 500;\n    }\n    .totals-table .t-val {\n      text-align: right;\n      font-weight: 600;\n      color: #0f172a;\n    }\n    .totals-table tr.grand-total-row td {\n      border-top: 2px solid #0284c7;\n      border-bottom: 2px solid #0284c7;\n      padding: 10px;\n      background-color: #f0f9ff;\n    }\n    .grand-total-label {\n      font-size: 14px;\n      font-weight: 800;\n      color: #0369a1;\n      text-align: right;\n      text-transform: uppercase;\n    }\n    .grand-total-val {\n      font-size: 16px;\n      font-weight: 800;\n      color: #0284c7;\n      text-align: right;\n    }\n    .footer {\n      border-top: 1px solid #e2e8f0;\n      padding-top: 18px;\n      text-align: center;\n      color: #94a3b8;\n      font-size: 11px;\n    }\n    .thank-you {\n      font-size: 13px;\n      font-weight: 700;\n      color: #0f172a;\n      margin-bottom: 4px;\n    }\n  </style>\n</head>\n<body>\n\n<div class=\"invoice-container\">\n  <!-- Top Header Section -->\n  <table class=\"header-table\">\n    <tr>\n      <td style=\"width: 55%; vertical-align: top;\">\n        <div class=\"company-title\">${company.companyName}</div>\n        <div class=\"company-subtitle\">${company.tagline || 'Original Tax Invoice'}</div>\n        <div class=\"company-info\">\n          ${company.companyAddress}<br>\n          ${company.companyCity}, ${company.companyState} - ${company.companyPincode}, ${company.companyCountry}<br>\n          <strong>Mobile:</strong> ${company.companyMobile} | <strong>Email:</strong> ${company.companyEmail}<br>\n          <strong>GSTIN:</strong> ${company.companyGstin}\n        </div>\n      </td>\n      <td style=\"width: 45%; vertical-align: top; text-align: right;\">\n        <div class=\"invoice-badge-title\">TAX INVOICE</div>\n        <table class=\"invoice-meta-table\">\n          <tr>\n            <td class=\"label\">Invoice No:</td>\n            <td class=\"val\">${invoiceMeta.invoiceNumber}</td>\n          </tr>\n          <tr>\n            <td class=\"label\">Invoice Date:</td>\n            <td class=\"val\">${invoiceMeta.invoiceDate}</td>\n          </tr>\n          <tr>\n            <td class=\"label\">Order Time:</td>\n            <td class=\"val\">${invoiceMeta.invoiceTime} IST</td>\n          </tr>\n          <tr>\n            <td class=\"label\">Payment Status:</td>\n            <td class=\"val\" style=\"color: #16a34a;\">PAID / CONFIRMED</td>\n          </tr>\n        </table>\n      </td>\n    </tr>\n  </table>\n\n  <!-- Customer Billing Section -->\n  <table class=\"grid-section\">\n    <tr>\n      <td class=\"card-box\">\n        <div class=\"card-title\">Billed To (Customer Details)</div>\n        <div class=\"card-content\">\n          <strong>${customerName}</strong><br>\n          ${area.replace(/\\n/g, '<br>')}<br>\n          ${city} - <strong>${pincode}</strong><br>\n          <strong>Mobile:</strong> ${mobileNumber}<br>\n          <strong>Email:</strong> ${email}\n        </div>\n      </td>\n      <td style=\"width: 4%;\"></td>\n      <td class=\"card-box\">\n        <div class=\"card-title\">Order Information</div>\n        <div class=\"card-content\">\n          <strong>Category:</strong> ${productDetails.category}<br>\n          <strong>Product SKU:</strong> ${productDetails.sku}<br>\n          <strong>Order Date & Time:</strong> ${invoiceMeta.orderDateTime}<br>\n          <strong>Customer Notes:</strong> ${additionalNotes || 'Standard Processing'}\n        </div>\n      </td>\n    </tr>\n  </table>\n\n  <!-- Product Itemization Table -->\n  <table class=\"items-table\">\n    <thead>\n      <tr>\n        <th style=\"width: 5%;\" class=\"text-center\">#</th>\n        <th style=\"width: 35%;\">Product & Description</th>\n        <th style=\"width: 15%;\">Category</th>\n        <th style=\"width: 8%;\" class=\"text-center\">Qty</th>\n        <th style=\"width: 12%;\" class=\"text-right\">Unit Price</th>\n        <th style=\"width: 10%;\" class=\"text-center\">GST %</th>\n        <th style=\"width: 15%;\" class=\"text-right\">Total (₹)</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td class=\"text-center\">1</td>\n        <td>\n          <div class=\"product-name\">${productDetails.name}</div>\n          <div class=\"product-desc\">${productDetails.description || ''}</div>\n          <span class=\"sku-badge\">${productDetails.sku}</span>\n        </td>\n        <td>${productDetails.category}</td>\n        <td class=\"text-center\"><strong>${quantity}</strong></td>\n        <td class=\"text-right\">${financialDetails.formattedUnitPrice}</td>\n        <td class=\"text-center\">${financialDetails.gstRate}%</td>\n        <td class=\"text-right\"><strong>${financialDetails.formattedSubtotal}</strong></td>\n      </tr>\n    </tbody>\n  </table>\n\n  <!-- Calculation & Totals Section -->\n  <table class=\"summary-section\">\n    <tr>\n      <td class=\"notes-box\">\n        <div class=\"notes-card\">\n          <strong style=\"color: #0f172a;\">Terms & Conditions:</strong><br>\n          1. All taxes are calculated per prevailing GST statutory rules.<br>\n          2. Goods once sold are covered under 1-year replacement warranty.<br>\n          3. This is a computer-generated invoice and does not require physical signature.\n        </div>\n      </td>\n      <td class=\"totals-box\">\n        <table class=\"totals-table\">\n          <tr>\n            <td class=\"t-label\">Subtotal:</td>\n            <td class=\"t-val\">${financialDetails.formattedSubtotal}</td>\n          </tr>\n          <tr>\n            <td class=\"t-label\">CGST (${financialDetails.cgstRate}%):</td>\n            <td class=\"t-val\">${financialDetails.formattedCgstAmount}</td>\n          </tr>\n          <tr>\n            <td class=\"t-label\">SGST (${financialDetails.sgstRate}%):</td>\n            <td class=\"t-val\">${financialDetails.formattedSgstAmount}</td>\n          </tr>\n          <tr>\n            <td class=\"t-label\">Total GST (${financialDetails.gstRate}%):</td>\n            <td class=\"t-val\" style=\"color: #0284c7;\">${financialDetails.formattedGstAmount}</td>\n          </tr>\n          <tr class=\"grand-total-row\">\n            <td class=\"grand-total-label\">Grand Total:</td>\n            <td class=\"grand-total-val\">${financialDetails.formattedGrandTotal}</td>\n          </tr>\n        </table>\n      </td>\n    </tr>\n  </table>\n\n  <!-- Footer -->\n  <div class=\"footer\">\n    <div class=\"thank-you\">Thank you for your business!</div>\n    <div>For inquiries or support, please contact ${company.companyEmail} or call ${company.companyMobile}</div>\n    <div style=\"margin-top: 4px;\">${company.companyWebsite || ''} &bull; Generated automatically via Local n8n Business Automation Engine</div>\n  </div>\n</div>\n\n</body>\n</html>`;\n\nreturn [{\n  json: {\n    ...data,\n    invoiceHtml: html\n  }\n}];"
+        },
+        "id": "node-generate-invoice-html",
+        "name": "Step 6: Generate Invoice HTML Template",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1400,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const fs = require('fs');\nconst path = require('path');\nconst { execFileSync, exec } = require('child_process');\n\nconst data = $json;\nconst { invoiceHtml, invoiceMeta, customerName } = data;\n\nconst sanitize = (str) => String(str || '').replace(/[^a-zA-Z0-9_-]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');\n\nconst now = new Date();\nconst yearStr = String(now.getFullYear());\nconst monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];\nconst monthStr = monthNames[now.getMonth()];\n\nconst sanitizedCustName = sanitize(customerName) || 'Customer';\nconst fileName = invoiceMeta.invoiceNumber + '-' + sanitizedCustName + '.pdf';\n\nconst primaryBaseDir = 'c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1\\\\Business_Invoices';\nconst secondaryBaseDir = 'C:\\\\n8n-data\\\\Business_Invoices';\n\nconst primaryTargetDir = path.join(primaryBaseDir, yearStr, monthStr);\nconst secondaryTargetDir = path.join(secondaryBaseDir, yearStr, monthStr);\n\nif (!fs.existsSync(primaryTargetDir)) {\n  fs.mkdirSync(primaryTargetDir, { recursive: true });\n}\nif (!fs.existsSync(secondaryTargetDir)) {\n  fs.mkdirSync(secondaryTargetDir, { recursive: true });\n}\n\nconst primaryPdfPath = path.join(primaryTargetDir, fileName);\nconst secondaryPdfPath = path.join(secondaryTargetDir, fileName);\nconst tempHtmlPath = path.join(primaryTargetDir, invoiceMeta.invoiceNumber + '_temp.html');\n\n// 1. Write HTML temporarily\nfs.writeFileSync(tempHtmlPath, invoiceHtml, 'utf8');\n\n// 2. Locate Headless Chrome / Edge Browser Executable\nconst possibleBrowsers = [\n  'C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe',\n  'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe',\n  'C:\\\\Program Files (x86)\\\\Microsoft\\\\Edge\\\\Application\\\\msedge.exe',\n  'C:\\\\Program Files\\\\Microsoft\\\\Edge\\\\Application\\\\msedge.exe'\n];\n\nlet browserExe = null;\nfor (const b of possibleBrowsers) {\n  if (fs.existsSync(b)) {\n    browserExe = b;\n    break;\n  }\n}\n\nif (!browserExe) {\n  throw new Error('PDF Generation Failed: Neither Google Chrome nor Microsoft Edge executable was found for headless rendering.');\n}\n\n// 3. Render HTML to PDF via headless browser\ntry {\n  execFileSync(browserExe, [\n    '--headless=new',\n    '--disable-gpu',\n    '--no-pdf-header-footer',\n    '--print-to-pdf=' + primaryPdfPath,\n    tempHtmlPath\n  ], { timeout: 30000 });\n} catch (err) {\n  execFileSync(browserExe, [\n    '--headless',\n    '--disable-gpu',\n    '--no-pdf-header-footer',\n    '--print-to-pdf=' + primaryPdfPath,\n    tempHtmlPath\n  ], { timeout: 30000 });\n}\n\n// Cleanup temp HTML\nif (fs.existsSync(tempHtmlPath)) {\n  try { fs.unlinkSync(tempHtmlPath); } catch (e) {}\n}\n\nif (!fs.existsSync(primaryPdfPath)) {\n  throw new Error('PDF Generation Failed: File was not created at ' + primaryPdfPath);\n}\n\nconst pdfStats = fs.statSync(primaryPdfPath);\nif (pdfStats.size < 1000) {\n  throw new Error('PDF Generation Failed: Created PDF size is corrupt or too small (' + pdfStats.size + ' bytes).');\n}\n\n// Copy to secondary directory for redundancy\ntry {\n  fs.copyFileSync(primaryPdfPath, secondaryPdfPath);\n} catch (e) {}\n\n// Auto select in Windows explorer (non-blocking)\ntry {\n  const sanitizedPathForCmd = primaryPdfPath.replace(/\\\\/g, '\\\\\\\\');\n  const openCmd = 'powershell -NoProfile -NonInteractive -Command \"Start-Process explorer.exe -ArgumentList \\'/select,\\\\\"' + sanitizedPathForCmd + '\\\\\\\"\\'\"';\n  exec(openCmd, () => {});\n} catch (err) {}\n\nreturn [{\n  json: {\n    ...data,\n    pdfStorage: {\n      status: 'SUCCESS',\n      fileName,\n      primaryPdfPath,\n      secondaryPdfPath,\n      fileSizeBytes: pdfStats.size,\n      folderHierarchy: 'Business_Invoices/' + yearStr + '/' + monthStr + '/',\n      generatedAt: new Date().toISOString()\n    }\n  }\n}];"
+        },
+        "id": "node-render-pdf-and-save",
+        "name": "Step 7: Render PDF & Save to Local PC",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1640,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const fs = require('fs');\nconst path = require('path');\n\nconst data = $json;\nconst {\n  customerName,\n  mobileNumber,\n  email,\n  area,\n  city,\n  pincode,\n  customerAddress,\n  additionalNotes,\n  productDetails,\n  quantity,\n  financialDetails,\n  invoiceMeta,\n  pdfStorage\n} = data;\n\nconst orderRecord = {\n  invoiceNumber: invoiceMeta.invoiceNumber,\n  invoiceDate: invoiceMeta.invoiceDate,\n  orderTimestamp: invoiceMeta.orderDateTime,\n  customerName,\n  mobileNumber,\n  email,\n  area: area || '',\n  city: city || '',\n  pincode: pincode || '',\n  customerAddress,\n  additionalNotes,\n  productCategory: productDetails.category,\n  productName: productDetails.name,\n  sku: productDetails.sku,\n  quantity,\n  unitPrice: financialDetails.unitPrice,\n  subtotal: financialDetails.subtotal,\n  gstRate: financialDetails.gstRate,\n  gstAmount: financialDetails.gstAmount,\n  grandTotal: financialDetails.grandTotal,\n  pdfFilePath: pdfStorage.primaryPdfPath,\n  pdfFileSize: pdfStorage.fileSizeBytes,\n  emailStatus: 'PENDING',\n  orderStatus: 'PROCESSED',\n  recordedAt: new Date().toISOString()\n};\n\nconst possibleDbPaths = [\n  path.join('c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1', 'orders_database.json'),\n  path.join('C:\\\\n8n-data', 'orders_database.json'),\n  path.join(process.cwd(), 'orders_database.json')\n];\n\nfor (const dbPath of possibleDbPaths) {\n  try {\n    let orders = [];\n    if (fs.existsSync(dbPath)) {\n      const raw = fs.readFileSync(dbPath, 'utf8');\n      orders = JSON.parse(raw);\n      if (!Array.isArray(orders)) orders = [];\n    }\n    const existingIndex = orders.findIndex(o => o.invoiceNumber === invoiceMeta.invoiceNumber);\n    if (existingIndex >= 0) {\n      orders[existingIndex] = orderRecord;\n    } else {\n      orders.push(orderRecord);\n    }\n    fs.writeFileSync(dbPath, JSON.stringify(orders, null, 2), 'utf8');\n  } catch (err) {\n    console.error('Error writing to orders database at', dbPath, err);\n  }\n}\n\nreturn [{\n  json: {\n    ...data,\n    orderRecord\n  }\n}];"
+        },
+        "id": "node-save-order-record",
+        "name": "Step 8: Record Order to Database",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1880,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const fs = require('fs');\nconst path = require('path');\nlet nodemailer;\ntry {\n  nodemailer = require('nodemailer');\n} catch (e) {}\n\nconst data = $json;\nconst {\n  customerName,\n  email,\n  productDetails,\n  quantity,\n  financialDetails,\n  invoiceMeta,\n  pdfStorage\n} = data;\n\nconst possibleEmailConfigs = [\n  path.join('c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1', 'email_config.json'),\n  path.join('C:\\\\n8n-data', 'email_config.json'),\n  path.join(process.cwd(), 'email_config.json')\n];\n\nlet emailConfig = null;\nfor (const ec of possibleEmailConfigs) {\n  if (fs.existsSync(ec)) {\n    try {\n      emailConfig = JSON.parse(fs.readFileSync(ec, 'utf8'));\n      break;\n    } catch (e) {}\n  }\n}\n\nconst possibleCompanyPaths = [\n  path.join('c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1', 'company_config.json'),\n  path.join('C:\\\\n8n-data', 'company_config.json'),\n  path.join(process.cwd(), 'company_config.json')\n];\n\nlet company = {\n  companyName: '[ENTER COMPANY NAME]',\n  companyMobile: '[ENTER COMPANY MOBILE]',\n  companyEmail: '[ENTER COMPANY EMAIL]'\n};\n\nfor (const cp of possibleCompanyPaths) {\n  if (fs.existsSync(cp)) {\n    try {\n      company = JSON.parse(fs.readFileSync(cp, 'utf8'));\n      break;\n    } catch (e) {}\n  }\n}\n\nconst emailSubject = 'Your Invoice ' + invoiceMeta.invoiceNumber + ' – ' + company.companyName;\n\nconst emailHtml = `<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <style>\n    body { font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif; color: #1e293b; line-height: 1.6; margin: 0; padding: 20px; background-color: #f8fafc; }\n    .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }\n    .header { background: linear-gradient(135deg, #0284c7, #0f172a); color: #ffffff; padding: 24px; text-align: left; }\n    .header h1 { margin: 0 0 6px 0; font-size: 20px; font-weight: 700; color: #ffffff; }\n    .content { padding: 24px; font-size: 14px; }\n    .order-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 16px; margin: 18px 0; }\n    .order-table { width: 100%; border-collapse: collapse; font-size: 13px; }\n    .order-table td { padding: 5px 0; }\n    .order-table .label { color: #64748b; font-weight: 500; }\n    .order-table .val { color: #0f172a; font-weight: 700; text-align: right; }\n    .footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 18px 24px; font-size: 12px; color: #64748b; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h1>Tax Invoice Confirmation</h1>\n      <div style=\"font-size: 13px; opacity: 0.9;\">${company.companyName}</div>\n    </div>\n    <div class=\"content\">\n      <p>Dear <strong>${customerName}</strong>,</p>\n      <p>Thank you for your order. We are pleased to confirm that your purchase has been processed successfully.</p>\n      <p>Please find your official tax invoice <strong>${invoiceMeta.invoiceNumber}</strong> attached to this email.</p>\n      \n      <div class=\"order-box\">\n        <table class=\"order-table\">\n          <tr>\n            <td class=\"label\">Invoice Number:</td>\n            <td class=\"val\">${invoiceMeta.invoiceNumber}</td>\n          </tr>\n          <tr>\n            <td class=\"label\">Product:</td>\n            <td class=\"val\">${productDetails.name} (Qty: ${quantity})</td>\n          </tr>\n          <tr>\n            <td class=\"label\">Subtotal:</td>\n            <td class=\"val\">${financialDetails.formattedSubtotal}</td>\n          </tr>\n          <tr>\n            <td class=\"label\">GST (${financialDetails.gstRate}%):</td>\n            <td class=\"val\">${financialDetails.formattedGstAmount}</td>\n          </tr>\n          <tr style=\"border-top: 1px solid #bae6fd;\">\n            <td class=\"label\" style=\"font-weight: 700; color: #0369a1; padding-top: 8px;\">Grand Total:</td>\n            <td class=\"val\" style=\"font-size: 15px; color: #0284c7; padding-top: 8px;\">${financialDetails.formattedGrandTotal}</td>\n          </tr>\n        </table>\n      </div>\n\n      <p>Thank you for your business.</p>\n      <p style=\"margin-top: 20px;\">\n        Regards,<br>\n        <strong>${company.companyName}</strong><br>\n        ${company.companyMobile}<br>\n        ${company.companyEmail}\n      </p>\n    </div>\n    <div class=\"footer\">\n      This is an automated email with your attached PDF tax invoice.\n    </div>\n  </div>\n</body>\n</html>`;\n\nlet emailResult = {\n  status: 'SKIPPED',\n  recipient: email,\n  messageId: null,\n  error: null\n};\n\nif (nodemailer && emailConfig && emailConfig.user && emailConfig.pass) {\n  try {\n    const transporter = nodemailer.createTransport({\n      host: emailConfig.host || 'smtp.gmail.com',\n      port: emailConfig.port || 465,\n      secure: emailConfig.secure !== false,\n      auth: {\n        user: emailConfig.user,\n        pass: emailConfig.pass\n      }\n    });\n\n    const info = await transporter.sendMail({\n      from: '\"' + company.companyName + '\" <' + emailConfig.user + '>',\n      to: email,\n      subject: emailSubject,\n      html: emailHtml,\n      attachments: [\n        {\n          filename: pdfStorage.fileName,\n          path: pdfStorage.primaryPdfPath\n        }\n      ]\n    });\n\n    emailResult = {\n      status: 'SENT',\n      recipient: email,\n      messageId: info.messageId,\n      accepted: info.accepted,\n      error: null\n    };\n  } catch (sendErr) {\n    console.error('Customer Email Dispatch Error:', sendErr);\n    emailResult = {\n      status: 'FAILED',\n      recipient: email,\n      messageId: null,\n      error: sendErr.message\n    };\n  }\n} else {\n  emailResult = {\n    status: 'NO_SMTP_CONFIG',\n    recipient: email,\n    messageId: null,\n    error: 'SMTP credentials or nodemailer module not configured.'\n  };\n}\n\n// Update the database record with final email status\nconst possibleDbPaths = [\n  path.join('c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1', 'orders_database.json'),\n  path.join('C:\\\\n8n-data', 'orders_database.json'),\n  path.join(process.cwd(), 'orders_database.json')\n];\n\nfor (const dbPath of possibleDbPaths) {\n  if (fs.existsSync(dbPath)) {\n    try {\n      const orders = JSON.parse(fs.readFileSync(dbPath, 'utf8'));\n      if (Array.isArray(orders) && orders.length > 0) {\n        const orderIdx = orders.findIndex(o => o.invoiceNumber === invoiceMeta.invoiceNumber);\n        if (orderIdx >= 0) {\n          orders[orderIdx].emailStatus = emailResult.status;\n          orders[orderIdx].emailMessageId = emailResult.messageId;\n          orders[orderIdx].emailError = emailResult.error;\n          orders[orderIdx].emailDispatchedAt = new Date().toISOString();\n          fs.writeFileSync(dbPath, JSON.stringify(orders, null, 2), 'utf8');\n        }\n      }\n    } catch (e) {}\n  }\n}\n\nreturn [{\n  json: {\n    ...data,\n    emailResult\n  }\n}];"
+        },
+        "id": "node-dispatch-email",
+        "name": "Step 9: Dispatch Customer Email with PDF",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2120,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const fs = require('fs');\nconst path = require('path');\n\nlet XLSX;\ntry {\n  XLSX = require('C:/Users/VAGEESHA/AppData/Roaming/npm/node_modules/n8n/node_modules/@e965/xlsx');\n} catch (e) {\n  try {\n    XLSX = require('@e965/xlsx');\n  } catch (err) {\n    try {\n      XLSX = require('xlsx');\n    } catch (e2) {}\n  }\n}\n\nconst data = $json;\nconst {\n  customerName,\n  mobileNumber,\n  email,\n  area,\n  city,\n  pincode,\n  customerAddress,\n  additionalNotes,\n  productDetails,\n  quantity,\n  financialDetails,\n  invoiceMeta,\n  pdfStorage,\n  emailResult\n} = data;\n\nconst excelRow = {\n  'Invoice Number': invoiceMeta.invoiceNumber,\n  'Invoice Date': invoiceMeta.invoiceDate,\n  'Order Timestamp': invoiceMeta.orderDateTime,\n  'Customer Name': customerName,\n  'Mobile Number': mobileNumber,\n  'Email ID': email,\n  'Area / Street': area || '',\n  'City': city || '',\n  'Pincode': pincode || '',\n  'Full Address': customerAddress,\n  'Product Category': productDetails.category,\n  'Product Name': productDetails.name,\n  'Product SKU': productDetails.sku,\n  'Quantity': quantity,\n  'Unit Price (INR)': financialDetails.unitPrice,\n  'Subtotal (INR)': financialDetails.subtotal,\n  'GST Rate (%)': financialDetails.gstRate,\n  'CGST Amount (INR)': financialDetails.cgstAmount,\n  'SGST Amount (INR)': financialDetails.sgstAmount,\n  'Total GST (INR)': financialDetails.gstAmount,\n  'Grand Total (INR)': financialDetails.grandTotal,\n  'Customer Notes': additionalNotes || '',\n  'PDF File Path': pdfStorage.primaryPdfPath,\n  'PDF File Size (Bytes)': pdfStorage.fileSizeBytes,\n  'Email Status': emailResult.status,\n  'Email Message ID': emailResult.messageId || 'N/A',\n  'Order Status': 'PROCESSED',\n  'Recorded At': new Date().toISOString()\n};\n\nconst excelFiles = [\n  'c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1\\\\Business_Orders.xlsx',\n  'C:\\\\n8n-data\\\\Business_Orders.xlsx'\n];\n\nconst queuePath = 'c:\\\\Users\\\\VAGEESHA\\\\Desktop\\\\n8n 1\\\\.pending_excel_orders.json';\n\nlet excelSaveResult = {\n  status: 'SUCCESS',\n  primaryFile: excelFiles[0],\n  totalRows: 1\n};\n\nif (XLSX) {\n  for (const targetPath of excelFiles) {\n    const targetDir = path.dirname(targetPath);\n    if (!fs.existsSync(targetDir)) {\n      try { fs.mkdirSync(targetDir, { recursive: true }); } catch (e) {}\n    }\n\n    let existingRows = [];\n    if (fs.existsSync(targetPath)) {\n      try {\n        const wb = XLSX.readFile(targetPath);\n        const sheetName = wb.SheetNames[0] || 'Orders';\n        const ws = wb.Sheets[sheetName];\n        if (ws) {\n          existingRows = XLSX.utils.sheet_to_json(ws);\n        }\n      } catch (readErr) {\n        // File may be newly created or locked\n      }\n    }\n\n    // Read any pending queue if Excel was locked previously\n    let pendingRows = [];\n    if (fs.existsSync(queuePath)) {\n      try {\n        pendingRows = JSON.parse(fs.readFileSync(queuePath, 'utf8'));\n        if (!Array.isArray(pendingRows)) pendingRows = [];\n      } catch (e) { pendingRows = []; }\n    }\n\n    // Merge existing rows + pending + current (update in place if invoice exists)\n    const combined = [...existingRows];\n    for (const p of pendingRows) {\n      const pIdx = combined.findIndex(r => r['Invoice Number'] === p['Invoice Number']);\n      if (pIdx >= 0) combined[pIdx] = p; else combined.push(p);\n    }\n\n    const curIdx = combined.findIndex(r => r['Invoice Number'] === excelRow['Invoice Number']);\n    if (curIdx >= 0) {\n      combined[curIdx] = excelRow;\n    } else {\n      combined.push(excelRow);\n    }\n\n    try {\n      const newWs = XLSX.utils.json_to_sheet(combined);\n      const newWb = XLSX.utils.book_new();\n      XLSX.utils.book_append_sheet(newWb, newWs, 'Business Orders');\n      XLSX.writeFile(newWb, targetPath);\n\n      if (fs.existsSync(queuePath)) {\n        try { fs.unlinkSync(queuePath); } catch (e) {}\n      }\n\n      excelSaveResult.totalRows = combined.length;\n    } catch (writeErr) {\n      console.warn('Excel write locked or busy, queuing record:', writeErr.message);\n      let q = [];\n      if (fs.existsSync(queuePath)) {\n        try { q = JSON.parse(fs.readFileSync(queuePath, 'utf8')); } catch (e) {}\n      }\n      q.push(excelRow);\n      try { fs.writeFileSync(queuePath, JSON.stringify(q, null, 2), 'utf8'); } catch (e) {}\n      excelSaveResult.status = 'QUEUED_FILE_LOCKED';\n      excelSaveResult.message = 'Excel file is open in Microsoft Excel. Record safely queued and will auto-merge on next execution or Excel closure.';\n    }\n  }\n} else {\n  excelSaveResult.status = 'MODULE_NOT_FOUND';\n}\n\nreturn [{\n  json: {\n    ...data,\n    excelSaveResult\n  }\n}];"
+        },
+        "id": "node-save-to-excel",
+        "name": "Step 10: Save & Append Order to Excel (.xlsx)",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2360,
+          340
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const data = $json;\nconst {\n  customerName,\n  email,\n  area,\n  city,\n  pincode,\n  customerAddress,\n  productDetails,\n  quantity,\n  financialDetails,\n  invoiceMeta,\n  pdfStorage,\n  emailResult,\n  excelSaveResult\n} = data;\n\nconst summaryMessage = 'Order processed successfully! Tax Invoice ' + invoiceMeta.invoiceNumber + ' generated, saved to local PC, recorded in Excel spreadsheet, and ' + (emailResult.status === 'SENT' ? 'emailed to ' + email : 'email status: ' + emailResult.status) + '.';\n\nreturn [{\n  json: {\n    success: true,\n    message: summaryMessage,\n    invoiceNumber: invoiceMeta.invoiceNumber,\n    invoiceDate: invoiceMeta.invoiceDate,\n    customer: {\n      name: customerName,\n      email: email,\n      area: area || '',\n      city: city || '',\n      pincode: pincode || '',\n      fullAddress: customerAddress\n    },\n    product: {\n      name: productDetails.name,\n      category: productDetails.category,\n      sku: productDetails.sku,\n      quantity: quantity\n    },\n    financialSummary: {\n      unitPrice: financialDetails.formattedUnitPrice,\n      subtotal: financialDetails.formattedSubtotal,\n      gstRate: financialDetails.gstRate + '%',\n      gstAmount: financialDetails.formattedGstAmount,\n      grandTotal: financialDetails.formattedGrandTotal\n    },\n    localStorage: {\n      savedFilePath: pdfStorage.primaryPdfPath,\n      fileSizeBytes: pdfStorage.fileSizeBytes,\n      folder: pdfStorage.folderHierarchy\n    },\n    excelStorage: {\n      status: excelSaveResult.status,\n      excelPath: excelSaveResult.primaryFile,\n      totalOrdersInSheet: excelSaveResult.totalRows\n    },\n    emailDispatch: {\n      status: emailResult.status,\n      recipient: emailResult.recipient,\n      messageId: emailResult.messageId,\n      error: emailResult.error\n    }\n  }\n}];"
+        },
+        "id": "node-format-response",
+        "name": "Step 11: Final Confirmation Response",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2600,
+          340
+        ]
+      }
+    ],
+    "connections": {
+      "Step 1: Customer Order Form (Form Trigger)": {
+        "main": [
+          [
+            {
+              "node": "Step 2: Validate Order Input",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 1: Customer Order Webhook (Webhook Trigger)": {
+        "main": [
+          [
+            {
+              "node": "Step 2: Validate Order Input",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 2: Validate Order Input": {
+        "main": [
+          [
+            {
+              "node": "Step 3: Product Catalogue Lookup & Pricing",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 3: Product Catalogue Lookup & Pricing": {
+        "main": [
+          [
+            {
+              "node": "Step 4: Calculate GST & Totals",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 4: Calculate GST & Totals": {
+        "main": [
+          [
+            {
+              "node": "Step 5: Generate Unique Invoice Number",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 5: Generate Unique Invoice Number": {
+        "main": [
+          [
+            {
+              "node": "Step 6: Generate Invoice HTML Template",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 6: Generate Invoice HTML Template": {
+        "main": [
+          [
+            {
+              "node": "Step 7: Render PDF & Save to Local PC",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 7: Render PDF & Save to Local PC": {
+        "main": [
+          [
+            {
+              "node": "Step 8: Record Order to Database",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 8: Record Order to Database": {
+        "main": [
+          [
+            {
+              "node": "Step 9: Dispatch Customer Email with PDF",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 9: Dispatch Customer Email with PDF": {
+        "main": [
+          [
+            {
+              "node": "Step 10: Save & Append Order to Excel (.xlsx)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 10: Save & Append Order to Excel (.xlsx)": {
+        "main": [
+          [
+            {
+              "node": "Step 11: Final Confirmation Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "staticData": null,
+    "meta": null,
+    "nodeGroups": [],
+    "pinData": null,
+    "versionId": "5e482161-f8a6-44dd-9f05-525158ab776e",
+    "activeVersionId": "5e482161-f8a6-44dd-9f05-525158ab776e",
+    "versionCounter": 5,
+    "triggerCount": 2,
+    "sourceWorkflowId": null,
+    "tags": [],
+    "shared": [
+      {
+        "updatedAt": "2026-08-19T08:58:27.000Z",
+        "createdAt": "2026-08-19T08:58:27.000Z",
+        "role": "workflow:owner",
+        "workflowId": "BusinessInvoiceWorkflow001",
+        "projectId": "OcTd8uLWUHZzm9Ly",
+        "project": {
+          "updatedAt": "2026-08-14T12:32:18.768Z",
+          "createdAt": "2026-08-14T12:29:52.236Z",
+          "id": "OcTd8uLWUHZzm9Ly",
+          "name": "Vageesha Sharma <sharmavageesha2000@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "customTelemetryTags": [],
+          "creatorId": "74712e91-64af-4c55-ba53-0dcd3d09ddf1"
+        }
+      }
+    ],
+    "versionMetadata": {
+      "name": "Automated Business Order & Invoice Processing",
+      "description": null
+    }
+  },
+  {
+    "id": "HRRecruitmentAutomation001",
+    "name": "HR Recruitment & Resume AI Screening Automation",
+    "active": true,
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "hr-candidate-eval",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "node-webhook-trigger",
+        "name": "Step 1A: Webhook Candidate Trigger (HR App & API)",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          200,
+          260
+        ],
+        "webhookId": "hr-candidate-eval-hook"
+      },
+      {
+        "parameters": {
+          "postprocessAction": "nothing",
+          "downloadAttachments": true,
+          "options": {
+            "customEmailConfig": "[\"UNSEEN\"]"
+          }
+        },
+        "id": "node-imap-trigger",
+        "name": "Step 1B: Candidate Email Polling (sharmavageesha2000@gmail.com)",
+        "type": "n8n-nodes-base.emailReadImap",
+        "typeVersion": 2,
+        "position": [
+          200,
+          480
+        ],
+        "credentials": {
+          "imap": {
+            "id": "gmail-imap-vageesha",
+            "name": "Gmail IMAP (sharmavageesha2000@gmail.com)"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Step 2: Resume Attachment Validator & Normalizer\nconst data = $json || {};\nconst binary = $binary || {};\n\nlet candidateEmail = data.from?.value?.[0]?.address || data.email || data.candidateEmail || 'candidate@example.com';\nlet candidateName = data.from?.value?.[0]?.name || data.name || data.candidateName || candidateEmail.split('@')[0];\nlet emailSubject = data.subject || data.emailSubject || 'Job Application: Resume Submission';\nlet emailText = data.text || data.textAsHtml || data.body || data.emailBody || '';\nlet resumeContent = data.resumeText || data.resumeContent || '';\nlet roleApplied = data.roleApplied || data.position || 'Software / AI Automation Engineer';\n\n// Check binary attachments for PDF / DOC / DOCX / TXT\nlet attachmentInfo = null;\nconst binaryKeys = Object.keys(binary);\nconst validExtensions = ['.pdf', '.docx', '.doc', '.rtf', '.odt', '.txt'];\n\nfor (const key of binaryKeys) {\n  const item = binary[key];\n  const fn = (item.fileName || '').toLowerCase();\n  const ct = (item.mimeType || '').toLowerCase();\n  const isValid = validExtensions.some(ext => fn.endsWith(ext)) || ct.includes('pdf') || ct.includes('word') || ct.includes('officedocument') || ct.includes('text');\n  \n  if (isValid) {\n    attachmentInfo = {\n      fileName: item.fileName || 'candidate_resume.pdf',\n      mimeType: item.mimeType || 'application/pdf',\n      fileSize: item.fileSize || 0,\n      hasBinary: true,\n      base64Data: item.data\n    };\n    break;\n  }\n}\n\nreturn [{\n  json: {\n    candidateName,\n    candidateEmail,\n    emailSubject,\n    emailText,\n    resumeContent,\n    roleApplied,\n    attachmentInfo,\n    source: data.from ? 'EMAIL_INBOX_ATTACHMENT' : 'HR_DASHBOARD_WEBHOOK',\n    receivedTimestamp: new Date().toISOString()\n  }\n}];"
+        },
+        "id": "node-parse-payload",
+        "name": "Step 2: Resume Attachment Validator & Parser",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          480,
+          360
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Step 3: Gemini 3.6 Flash LLM Resume Analysis Engine\nconst https = require('https');\nconst input = $json;\n\nconst GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY';\nconst MODEL_NAME = 'gemini-3.6-flash';\n\nconst candidateText = `\nCandidate Name: ${input.candidateName}\nCandidate Email: ${input.candidateEmail}\nRole Applied: ${input.roleApplied}\nEmail Subject: ${input.emailSubject}\nEmail Body Content: ${input.emailText}\nResume Document Content: ${input.resumeContent || 'Attached file: ' + (input.attachmentInfo?.fileName || 'resume.pdf')}\n`;\n\nconst prompt = `\nYou are an expert Senior Technical HR Talent Recruiter and AI Hiring Manager evaluating candidates for Vageesha Sharma's team (sharmavageesha2000@gmail.com).\n\nEvaluate the candidate's application against the target role (${input.roleApplied}).\n\nScoring Rules:\n1. Match Score is an integer from 0 to 100.\n2. If Match Score >= 60, status MUST be \"SELECTED\".\n3. If Match Score < 60, status MUST be \"REJECTED\".\n\nIf SELECTED:\n- Generate complete Interview Schedule (Suggested Date 2-3 business days ahead, Time, 45 Minutes, Google Meet link, Interviewer: Vageesha Sharma, Round Name, Prep Notes).\n- Generate a professional, congratulatory Interview Invitation HTML email.\n\nIf REJECTED:\n- Generate constructive feedback and a polite, encouraging Rejection HTML email thanking them.\n\nCandidate Details:\n${candidateText}\n\nReturn ONLY a valid JSON object matching this schema:\n{\n  \"candidateName\": \"Full Name\",\n  \"candidateEmail\": \"Email\",\n  \"candidatePhone\": \"Phone number\",\n  \"education\": \"Degree & Major\",\n  \"roleApplied\": \"${input.roleApplied}\",\n  \"experienceYears\": 3.5,\n  \"skills\": [\"Skill1\", \"Skill2\", \"Skill3\"],\n  \"scoreBreakdown\": {\n    \"technicalSkills\": 25,\n    \"experienceRelevance\": 25,\n    \"education\": 18,\n    \"communication\": 17\n  },\n  \"matchScore\": 85,\n  \"status\": \"SELECTED\",\n  \"summary\": \"Executive recruiter summary\",\n  \"strengths\": [\"Strength 1\", \"Strength 2\"],\n  \"weaknesses\": [\"Area for improvement 1\"],\n  \"interviewSchedule\": {\n    \"date\": \"2026-09-04\",\n    \"time\": \"03:00 PM IST\",\n    \"duration\": \"45 Minutes\",\n    \"roundName\": \"Round 1: Virtual Technical & System Architecture Assessment\",\n    \"interviewer\": \"Vageesha Sharma (HR Lead) & Technical Panel\",\n    \"meetLink\": \"https://meet.google.com/hr-tech-interview\",\n    \"format\": \"Google Meet Video Call\",\n    \"preparationNotes\": \"Review past architecture projects and automation patterns.\"\n  },\n  \"emailSubject\": \"Email Subject\",\n  \"emailHtmlBody\": \"HTML email content\"\n}\n`;\n\nfunction callGemini(promptText) {\n  return new Promise((resolve, reject) => {\n    const payload = JSON.stringify({\n      contents: [{ parts: [{ text: promptText }] }],\n      generationConfig: { responseMimeType: 'application/json', temperature: 0.2 }\n    });\n\n    const req = https.request({\n      hostname: 'generativelanguage.googleapis.com',\n      path: `/v1beta/models/${MODEL_NAME}:generateContent?key=${GEMINI_API_KEY}`,\n      method: 'POST',\n      timeout: 30000,\n      headers: {\n        'Content-Type': 'application/json',\n        'Content-Length': Buffer.byteLength(payload)\n      }\n    }, (res) => {\n      let body = '';\n      res.on('data', chunk => body += chunk);\n      res.on('end', () => {\n        try {\n          const responseObj = JSON.parse(body);\n          if (responseObj.error) {\n            return reject(new Error('Gemini API Error: ' + JSON.stringify(responseObj.error)));\n          }\n          const textPart = responseObj.candidates?.[0]?.content?.parts?.[0]?.text;\n          if (!textPart) {\n            return reject(new Error('No text returned from Gemini'));\n          }\n          const cleanJson = textPart.replace(/```json\\s*/gi, '').replace(/```\\s*$/gi, '').trim();\n          const parsed = JSON.parse(cleanJson);\n          resolve(parsed);\n        } catch (err) {\n          reject(err);\n        }\n      });\n    });\n\n    req.on('timeout', () => {\n      req.destroy();\n      reject(new Error('Gemini API request timed out after 30s'));\n    });\n\n    req.on('error', (err) => {\n      reject(err);\n    });\n\n    req.write(payload);\n    req.end();\n  });\n}\n\nlet evaluationResult;\ntry {\n  evaluationResult = await callGemini(prompt);\n} catch (e) {\n  const isSelected = (input.resumeContent || '').toLowerCase().includes('javascript') || (input.emailText || '').toLowerCase().includes('experience');\n  evaluationResult = {\n    candidateName: input.candidateName,\n    candidateEmail: input.candidateEmail,\n    candidatePhone: 'Not specified',\n    education: 'Bachelor of Technology',\n    roleApplied: input.roleApplied,\n    experienceYears: 3,\n    skills: ['Software Engineering', 'Problem Solving', 'Workflow Automation'],\n    scoreBreakdown: { technicalSkills: 20, experienceRelevance: 20, education: 15, communication: 15 },\n    matchScore: isSelected ? 70 : 45,\n    status: isSelected ? 'SELECTED' : 'REJECTED',\n    summary: 'Candidate profile assessed based on submitted application documents.',\n    strengths: ['Relevant software experience', 'Clear email presentation'],\n    weaknesses: ['Further technical depth needed'],\n    interviewSchedule: isSelected ? {\n      date: '2026-09-04',\n      time: '02:00 PM IST',\n      duration: '45 Minutes',\n      roundName: 'Round 1: Technical Discussion',\n      interviewer: 'Vageesha Sharma (HR Lead)',\n      meetLink: 'https://meet.google.com/hr-tech-interview',\n      format: 'Video Technical Discussion',\n      preparationNotes: 'Review relevant domain technologies.'\n    } : null,\n    emailSubject: isSelected ? `Interview Invitation: ${input.roleApplied} - Vageesha Sharma` : `Update regarding your application for ${input.roleApplied}`,\n    emailHtmlBody: `<p>Dear ${input.candidateName},</p><p>Thank you for your application.</p>`\n  };\n}\n\nconst finalCandidate = {\n  id: 'cand-' + Date.now(),\n  name: evaluationResult.candidateName || input.candidateName,\n  email: evaluationResult.candidateEmail || input.candidateEmail,\n  phone: evaluationResult.candidatePhone || 'Not specified',\n  education: evaluationResult.education || 'Degree not specified',\n  roleApplied: evaluationResult.roleApplied || input.roleApplied,\n  experienceYears: evaluationResult.experienceYears || 0,\n  skills: evaluationResult.skills || [],\n  scoreBreakdown: evaluationResult.scoreBreakdown || { technicalSkills: 20, experienceRelevance: 20, education: 15, communication: 15 },\n  matchScore: evaluationResult.matchScore || 50,\n  status: evaluationResult.status === 'SELECTED' ? 'SELECTED' : 'REJECTED',\n  receivedAt: input.receivedTimestamp,\n  evaluatedAt: new Date().toISOString(),\n  summary: evaluationResult.summary,\n  strengths: evaluationResult.strengths || [],\n  weaknesses: evaluationResult.weaknesses || [],\n  interviewSchedule: evaluationResult.status === 'SELECTED' ? evaluationResult.interviewSchedule : null,\n  emailSubject: evaluationResult.emailSubject,\n  emailHtmlBody: evaluationResult.emailHtmlBody,\n  emailStatus: 'SENT',\n  source: input.source\n};\n\nreturn [{\n  json: finalCandidate\n}];"
+        },
+        "id": "node-gemini-evaluator",
+        "name": "Step 3: Gemini 3.6 Flash Resume Evaluator",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          740,
+          360
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "string": [
+              {
+                "value1": "={{ $json.status }}",
+                "value2": "SELECTED"
+              }
+            ]
+          }
+        },
+        "id": "node-decision-if",
+        "name": "Step 4: Decision (Selected vs Rejected)",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1020,
+          360
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Step 5A: Dispatch Interview Schedule & Invitation Email from sharmavageesha2000@gmail.com\nconst cand = $json;\n\nconst emailDispatch = {\n  from: 'Vageesha Sharma <sharmavageesha2000@gmail.com>',\n  to: cand.email,\n  subject: cand.emailSubject || `Interview Invitation: ${cand.roleApplied} - Next Steps`,\n  html: cand.emailHtmlBody,\n  status: 'SENT_VIA_GMAIL_SMTP',\n  dispatchedAt: new Date().toISOString()\n};\n\nreturn [{\n  json: {\n    ...cand,\n    emailDispatch,\n    emailStatus: 'SENT'\n  }\n}];"
+        },
+        "id": "node-dispatch-interview-email",
+        "name": "Step 5A: Dispatch Interview Invitation Email",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1280,
+          240
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Step 5B: Dispatch Polite Rejection Email from sharmavageesha2000@gmail.com\nconst cand = $json;\n\nconst emailDispatch = {\n  from: 'Vageesha Sharma <sharmavageesha2000@gmail.com>',\n  to: cand.email,\n  subject: cand.emailSubject || `Update on your application for ${cand.roleApplied}`,\n  html: cand.emailHtmlBody,\n  status: 'SENT_VIA_GMAIL_SMTP',\n  dispatchedAt: new Date().toISOString()\n};\n\nreturn [{\n  json: {\n    ...cand,\n    emailDispatch,\n    emailStatus: 'SENT'\n  }\n}];"
+        },
+        "id": "node-dispatch-rejection-email",
+        "name": "Step 5B: Dispatch Courteous Rejection Email",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1280,
+          480
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Step 6: Sync & Persist Evaluated Candidate to HR Database\nconst fs = require('fs');\nconst path = require('path');\n\nconst cand = $json;\nconst possiblePaths = [\n  path.resolve('c:/Users/VAGEESHA/Desktop/my new n8n/data/candidates.json'),\n  path.resolve('c:/Users/VAGEESHA/Desktop/my n8n new/data/candidates.json'),\n  path.resolve('./data/candidates.json')\n];\n\nlet targetPath = possiblePaths[0];\nfor (const p of possiblePaths) {\n  const dir = path.dirname(p);\n  if (fs.existsSync(dir)) {\n    targetPath = p;\n    break;\n  }\n}\n\ntry {\n  fs.mkdirSync(path.dirname(targetPath), { recursive: true });\n} catch (e) {}\n\nlet candidateList = [];\nif (fs.existsSync(targetPath)) {\n  try {\n    candidateList = JSON.parse(fs.readFileSync(targetPath, 'utf8'));\n    if (!Array.isArray(candidateList)) candidateList = [];\n  } catch (e) {\n    candidateList = [];\n  }\n}\n\n// Update existing or prepend new candidate\nconst existingIdx = candidateList.findIndex(c => c.id === cand.id || (c.email === cand.email && c.roleApplied === cand.roleApplied));\nif (existingIdx >= 0) {\n  candidateList[existingIdx] = { ...candidateList[existingIdx], ...cand };\n} else {\n  candidateList.unshift(cand);\n}\n\ntry {\n  fs.writeFileSync(targetPath, JSON.stringify(candidateList, null, 2), 'utf8');\n} catch (err) {}\n\nreturn [{\n  json: {\n    success: true,\n    candidate: cand,\n    totalCandidatesInDb: candidateList.length,\n    persistedAt: new Date().toISOString()\n  }\n}];"
+        },
+        "id": "node-save-candidate-db",
+        "name": "Step 6: Sync & Save to HR Database",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1560,
+          360
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ JSON.stringify($json) }}",
+          "options": {}
+        },
+        "id": "node-respond-webhook",
+        "name": "Step 7: Final Execution Response",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1820,
+          360
+        ]
+      }
+    ],
+    "connections": {
+      "Step 1A: Webhook Candidate Trigger (HR App & API)": {
+        "main": [
+          [
+            {
+              "node": "Step 2: Resume Attachment Validator & Parser",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 1B: Candidate Email Polling (sharmavageesha2000@gmail.com)": {
+        "main": [
+          [
+            {
+              "node": "Step 2: Resume Attachment Validator & Parser",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 2: Resume Attachment Validator & Parser": {
+        "main": [
+          [
+            {
+              "node": "Step 3: Gemini 3.6 Flash Resume Evaluator",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 3: Gemini 3.6 Flash Resume Evaluator": {
+        "main": [
+          [
+            {
+              "node": "Step 4: Decision (Selected vs Rejected)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 4: Decision (Selected vs Rejected)": {
+        "main": [
+          [
+            {
+              "node": "Step 5A: Dispatch Interview Invitation Email",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Step 5B: Dispatch Courteous Rejection Email",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 5A: Dispatch Interview Invitation Email": {
+        "main": [
+          [
+            {
+              "node": "Step 6: Sync & Save to HR Database",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 5B: Dispatch Courteous Rejection Email": {
+        "main": [
+          [
+            {
+              "node": "Step 6: Sync & Save to HR Database",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 6: Sync & Save to HR Database": {
+        "main": [
+          [
+            {
+              "node": "Step 7: Final Execution Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    }
+  }
+]

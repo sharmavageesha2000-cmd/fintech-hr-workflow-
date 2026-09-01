@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR SmartFlow • Startup Hiring, Interviews &amp; Call Letters</title>
+  <meta name="description" content="HR SmartFlow - AI-Powered Resume Screening, Authentic Google Meet Interviews & Official Job Offer Call Letters.">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome 6 Pro/Free Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- ================= Sidebar ================= -->
+    <aside class="sidebar">
+      <div>
+        <!-- Brand Logo -->
+        <div class="sidebar-brand">
+          <div class="brand-icon">
+            <i class="fa-solid fa-users-gear"></i>
+          </div>
+          <div class="brand-info">
+            <h2>HR SmartFlow</h2>
+            <p>Smart HR. Stronger Teams.</p>
+          </div>
+        </div>
+
+        <!-- Menu Navigation -->
+        <nav class="sidebar-menu">
+          <div class="menu-section-label">MAIN</div>
+          <a class="nav-link active" id="navDashboard" data-view="dashboard">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>Dashboard</span>
+          </a>
+          <a class="nav-link" id="navCandidates" data-view="candidates">
+            <i class="fa-solid fa-user-group"></i>
+            <span>Candidates</span>
+            <span class="nav-badge" id="sidebarCandidateBadge">0</span>
+          </a>
+          <a class="nav-link" id="navJobs" data-view="jobs">
+            <i class="fa-solid fa-briefcase"></i>
+            <span>Job Vacancies</span>
+            <span class="nav-badge" id="sidebarJobsBadge" style="background:#10b981;">4</span>
+          </a>
+          <a class="nav-link" id="navInterviews" data-view="interviews">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Interviews &amp; Offers</span>
+          </a>
+          <a class="nav-link" id="navWebsite" href="/website/" target="_blank" title="Open Finova Technologies Static Website">
+            <i class="fa-solid fa-globe" style="color:var(--primary-blue-light, #3b82f6);"></i>
+            <span>Finova Website</span>
+            <span class="nav-badge" style="background:#3b82f6;">Live</span>
+          </a>
+          <a class="nav-link" id="navSettings" data-view="settings">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Startup Mode Info Card -->
+      <div class="startup-info-card">
+        <span class="card-badge"><i class="fa-solid fa-bolt"></i> Live Poller Active</span>
+        <h4>Startup Recruitment</h4>
+        <p>Listening to <strong>sharmavageesha2000@gmail.com</strong> every 10 seconds.</p>
+      </div>
+    </aside>
+
+    <!-- ================= Main Content ================= -->
+    <main class="main-wrapper">
+      <!-- Top Header Bar -->
+      <header class="top-header">
+        <div class="header-title-group">
+          <h1>Startup Hiring Hub <span class="wave-hand">👋</span></h1>
+          <p>Welcome back, <strong>Vageesha Sharma</strong>! Manage your candidate pipeline, interviews &amp; job offers.</p>
+        </div>
+
+        <div class="header-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="globalSearchInput" placeholder="Search candidate by name, email, skills, or role...">
+        </div>
+
+        <div class="header-controls">
+          <button class="icon-badge-btn" id="headerSettingsBtn" title="Email & API Settings">
+            <i class="fa-solid fa-gear"></i>
+          </button>
+          <div class="user-profile-pill" id="userProfileBtn">
+            <div class="user-avatar">VS</div>
+            <div class="user-meta">
+              <span class="user-name">Vageesha Sharma</span>
+              <span class="user-role">Founder &amp; Hiring Lead</span>
+            </div>
+          </div>
+          <div class="date-pill-btn">
+            <i class="fa-regular fa-calendar"></i>
+            <span id="headerCurrentDate">Aug 31, 2026</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content Body -->
+      <div class="dashboard-content">
+        <!-- Row 1: 4 Simple & Real KPI Cards -->
+        <section class="startup-kpi-row">
+          <div class="startup-kpi-card">
+            <div class="kpi-icon-box purple"><i class="fa-solid fa-file-lines"></i></div>
+            <div class="kpi-text-box">
+              <span class="kpi-title-text">Applications Received</span>
+              <span class="kpi-number-text" id="kpiTotalCandidates">0</span>
+              <span class="kpi-sub-text green"><i class="fa-solid fa-robot"></i> 100% Gemini AI Evaluated</span>
+            </div>
+          </div>
+
+          <div class="startup-kpi-card">
+            <div class="kpi-icon-box green"><i class="fa-solid fa-calendar-check"></i></div>
+            <div class="kpi-text-box">
+              <span class="kpi-title-text">Shortlisted for Interview</span>
+              <span class="kpi-number-text" id="kpiSelectedCount">0</span>
+              <span class="kpi-sub-text green"><i class="fa-solid fa-video"></i> Google Meet Scheduled</span>
+            </div>
+          </div>
+
+          <div class="startup-kpi-card">
+            <div class="kpi-icon-box red"><i class="fa-solid fa-envelope-circle-check"></i></div>
+            <div class="kpi-text-box">
+              <span class="kpi-title-text">Rejections Handled</span>
+              <span class="kpi-number-text" id="kpiRejectedCount">0</span>
+              <span class="kpi-sub-text muted"><i class="fa-regular fa-paper-plane"></i> Polite Feedback Sent</span>
+            </div>
+          </div>
+
+          <div class="startup-kpi-card">
+            <div class="kpi-icon-box blue"><i class="fa-solid fa-award"></i></div>
+            <div class="kpi-text-box">
+              <span class="kpi-title-text">Offers / Call Letters</span>
+              <span class="kpi-number-text" id="kpiOffersCount">0</span>
+              <span class="kpi-sub-text blue"><i class="fa-solid fa-certificate"></i> Official Call Letters Sent</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Row 2: Startup Overview (Funnel + Interactive Job Vacancies Manager) -->
+        <section class="startup-overview-row">
+          <!-- Card 1: Startup Recruitment Funnel -->
+          <div class="clean-card">
+            <div class="clean-card-header">
+              <h3><i class="fa-solid fa-filter" style="color:var(--primary-purple);"></i> Real-Time Recruitment Funnel</h3>
+            </div>
+            <div class="startup-funnel-list">
+              <div class="funnel-row">
+                <div class="funnel-row-meta">
+                  <span>Applications Ingested (Email / Scanner)</span>
+                  <strong id="funnelTotal">0 Candidates (100%)</strong>
+                </div>
+                <div class="funnel-progress-track">
+                  <div class="funnel-progress-fill purple" style="width: 100%;"></div>
+                </div>
+              </div>
+
+              <div class="funnel-row">
+                <div class="funnel-row-meta">
+                  <span>Gemini 3.6 Flash Evaluated</span>
+                  <strong id="funnelEvaluated">0 Candidates (100%)</strong>
+                </div>
+                <div class="funnel-progress-track">
+                  <div class="funnel-progress-fill purple" style="width: 100%;"></div>
+                </div>
+              </div>
+
+              <div class="funnel-row">
+                <div class="funnel-row-meta">
+                  <span>Shortlisted (Selected &amp; Meet Link Sent)</span>
+                  <strong id="funnelSelected">0 Candidates (0%)</strong>
+                </div>
+                <div class="funnel-progress-track">
+                  <div class="funnel-progress-fill green" id="funnelSelectedBar" style="width: 50%;"></div>
+                </div>
+              </div>
+
+              <div class="funnel-row">
+                <div class="funnel-row-meta">
+                  <span>Official Job Offers &amp; Call Letters Sent</span>
+                  <strong id="funnelOffers">0 Offers (0%)</strong>
+                </div>
+                <div class="funnel-progress-track">
+                  <div class="funnel-progress-fill blue" id="funnelOffersBar" style="width: 25%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Interactive Open Roles & Vacancies Manager -->
+          <div class="clean-card" id="jobsSection">
+            <div class="clean-card-header">
+              <div>
+                <h3><i class="fa-solid fa-briefcase" style="color:var(--primary-purple);"></i> Job Roles &amp; Vacancies Left</h3>
+                <span style="font-size:0.72rem; color:var(--text-muted); font-weight:600; margin-top:2px; display:inline-block;">
+                  <i class="fa-solid fa-arrows-up-down" style="color:var(--primary-purple);"></i> Displaying 4 roles at a time • Scroll down to roll through all
+                </span>
+              </div>
+              <button class="btn-primary-purple" id="openAddJobModalBtn" style="padding:0.35rem 0.85rem; font-size:0.78rem;">
+                <i class="fa-solid fa-plus"></i> Add New Job Role
+              </button>
+            </div>
+            <div class="open-roles-list" id="openRolesContainer">
+              <!-- Dynamically populated from data/jobs.json with edit buttons and vacancy badges -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= Live AI Candidate Pipeline Table Section ================= -->
+        <section class="candidates-table-section" id="candidatesSection">
+          <div class="candidates-table-header">
+            <!-- Filter Tabs -->
+            <div class="candidate-filter-tabs">
+              <button class="c-tab active" data-filter="ALL">All Applications (<span id="countAll">0</span>)</button>
+              <button class="c-tab" data-filter="SELECTED">Shortlisted (<span id="countSelected">0</span>)</button>
+              <button class="c-tab" data-filter="OFFER_EXTENDED">Offers Sent (<span id="countOffers">0</span>)</button>
+              <button class="c-tab" data-filter="REJECTED">Rejected (<span id="countRejected">0</span>)</button>
+            </div>
+
+            <!-- Job Role Dropdown Filter & Experience Dropdown Filter -->
+            <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+              <div style="display:flex; align-items:center; gap:0.35rem;">
+                <label style="font-size:0.78rem; font-weight:700; color:var(--text-muted);"><i class="fa-solid fa-filter"></i> Role:</label>
+                <select id="roleFilterSelect" style="padding:0.45rem 0.85rem; font-weight:600; font-size:0.82rem; border-radius:8px; border:1px solid #cbd5e1; outline:none; background:#ffffff; color:#0f172a;">
+                  <option value="ALL">All Job Roles</option>
+                </select>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:0.35rem;">
+                <label style="font-size:0.78rem; font-weight:700; color:var(--text-muted);"><i class="fa-solid fa-user-clock"></i> Exp:</label>
+                <select id="expFilterSelect" style="padding:0.45rem 0.85rem; font-weight:600; font-size:0.82rem; border-radius:8px; border:1px solid #cbd5e1; outline:none; background:#ffffff; color:#0f172a;">
+                  <option value="ALL">All Experience</option>
+                  <option value="FRESHER">Freshers (0-1 Yrs)</option>
+                  <option value="MID">Mid-Level (2-4 Yrs)</option>
+                  <option value="SENIOR">Senior (5+ Yrs)</option>
+                </select>
+              </div>
+
+              <button class="btn-secondary-light" id="checkInboxBtn" title="Check Gmail for new applications">
+                <i class="fa-solid fa-inbox"></i> Check Gmail
+              </button>
+              <button class="btn-secondary-light" id="qaGenerateReport" title="Export candidate data">
+                <i class="fa-solid fa-file-arrow-down"></i> Export CSV
+              </button>
+              <button class="btn-primary-purple" id="openScannerBtn">
+                <i class="fa-solid fa-sparkles"></i> AI Resume Scanner
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Candidate</th>
+                  <th>Role Applied</th>
+                  <th>Experience</th>
+                  <th>Match Score</th>
+                  <th>Screening</th>
+                  <th>Interview Status</th>
+                  <th>Authentic Google Meet</th>
+                  <th>Actions &amp; Call Letter</th>
+                </tr>
+              </thead>
+              <tbody id="candidatesTableBody">
+                <!-- Dynamically populated candidate rows -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table Pagination Footer -->
+          <div class="table-pagination-footer" id="tablePaginationFooter">
+            <div class="pagination-info">
+              Showing <strong id="paginationStart">1</strong> to <strong id="paginationEnd">5</strong> of <strong id="paginationTotal">0</strong> candidates
+            </div>
+            <div class="pagination-page-size">
+              <label for="pageSizeSelect">Rows per page:</label>
+              <select id="pageSizeSelect">
+                <option value="5" selected>5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="ALL">All</option>
+              </select>
+            </div>
+            <div class="pagination-controls" id="paginationControls">
+              <button class="pag-btn" id="prevPageBtn" disabled>
+                <i class="fa-solid fa-chevron-left"></i> Previous
+              </button>
+              <div class="pag-numbers" id="pagNumbers"></div>
+              <button class="pag-btn" id="nextPageBtn">
+                Next <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- ================= Issue Official Job Offer / Call Letter Modal ================= -->
+  <div class="modal-backdrop" id="offerModal">
+    <div class="modal-card" style="max-width:620px;">
+      <div class="modal-header">
+        <div>
+          <h2 style="font-size:1.25rem; font-weight:800;"><i class="fa-solid fa-award" style="color:var(--primary-purple);"></i> Issue Official Job Offer &amp; Call Letter</h2>
+          <p style="font-size:0.82rem; color:var(--text-muted);">Mark interview as completed and automatically dispatch the formal Call Letter via Gmail SMTP.</p>
+        </div>
+        <button class="icon-badge-btn" id="closeOfferModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="offerForm">
+          <input type="hidden" id="offerCandidateId" name="candidateId">
+
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:14px; margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong id="offerCandidateName" style="font-size:1.05rem; color:#166534; display:block;">Candidate Name</strong>
+                <span id="offerCandidateEmail" style="font-size:0.82rem; color:#15803d;">candidate@example.com</span>
+              </div>
+              <span id="offerCandidateRole" class="badge-pill green" style="font-weight:700;">Role Applied</span>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Annual Compensation Package (CTC) *</label>
+              <input type="text" id="offerCtc" name="ctcPackage" value="₹16,00,000 per annum (Full-Time)" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;" required>
+            </div>
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Official Joining Date *</label>
+              <input type="text" id="offerJoiningDate" name="joiningDate" value="Monday, 14 September 2026" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;" required>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Work Mode</label>
+              <select id="offerWorkMode" name="workMode" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff;">
+                <option value="Remote / Hybrid (Flexible Work Arrangements)">Remote / Hybrid (Flexible)</option>
+                <option value="100% Remote (Work from Anywhere)">100% Remote</option>
+                <option value="On-Site / Office Location">On-Site Office</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Reporting Authority</label>
+              <input type="text" id="offerReportingTo" value="Vageesha Sharma (Founder &amp; Hiring Lead)" readonly style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; background:#f8fafc; color:#475569;">
+            </div>
+          </div>
+
+          <div class="modal-footer" style="padding:12px 0 0 0; justify-content:flex-end; gap:8px;">
+            <button type="button" class="btn-secondary-light" id="cancelOfferModalBtn">Cancel</button>
+            <button type="submit" class="btn-primary-purple" id="submitOfferBtn">
+              <i class="fa-solid fa-paper-plane"></i> Send Official Call Letter via Email
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Job Role & Vacancy Modal (Add / Edit) ================= -->
+  <div class="modal-backdrop" id="jobModal">
+    <div class="modal-card" style="max-width:580px;">
+      <div class="modal-header">
+        <div>
+          <h2 id="jobModalTitle" style="font-size:1.25rem; font-weight:800;"><i class="fa-solid fa-briefcase" style="color:var(--primary-purple);"></i> Manage Job Role &amp; Vacancies</h2>
+          <p style="font-size:0.82rem; color:var(--text-muted);">Set required experience, vacancies left, and hiring status for HR management.</p>
+        </div>
+        <button class="icon-badge-btn" id="closeJobModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="jobForm">
+          <input type="hidden" id="jobId" name="jobId">
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Job Title / Role *</label>
+              <input type="text" id="jobTitle" name="title" placeholder="e.g. AI Prompt Engineer" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;" required>
+            </div>
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Department</label>
+              <input type="text" id="jobDept" name="department" placeholder="e.g. Engineering / Automation" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;">
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Required Experience *</label>
+              <select id="jobExp" name="experienceRequired" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff;">
+                <option value="Fresher (0-1 Yrs)">Fresher (0-1 Yrs)</option>
+                <option value="1-3 Yrs">1-3 Yrs (Junior / Associate)</option>
+                <option value="2-4 Yrs">2-4 Yrs (Mid-Level)</option>
+                <option value="3-5 Yrs">3-5 Yrs (Specialist)</option>
+                <option value="5+ Yrs">5+ Yrs (Senior / Lead)</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Hiring Status</label>
+              <select id="jobStatus" name="status" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff;">
+                <option value="ACTIVE">Active (Actively Hiring)</option>
+                <option value="INTERVIEW_STAGE">Interview Stage (Reviewing)</option>
+                <option value="PAUSED">Paused (On Hold)</option>
+                <option value="CLOSED">Closed (Filled)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Total Open Vacancies *</label>
+              <input type="number" id="jobTotalVacancies" name="totalVacancies" min="1" value="2" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;" required>
+            </div>
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Vacancies Left *</label>
+              <input type="number" id="jobVacanciesLeft" name="vacanciesLeft" min="0" value="1" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;" required>
+            </div>
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Required Skills (Comma separated)</label>
+            <input type="text" id="jobSkills" name="skills" placeholder="e.g. Prompt Engineering, Python, n8n, Gemini API" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;">
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Job Description / Requirements</label>
+            <textarea id="jobDesc" name="description" rows="3" placeholder="Brief summary of candidate responsibilities..." style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; font-family:inherit; font-size:0.85rem;"></textarea>
+          </div>
+
+          <div class="modal-footer" style="padding:10px 0 0 0; justify-content:space-between;">
+            <button type="button" class="btn-secondary-light" id="deleteJobBtn" style="color:#dc2626; display:none;">
+              <i class="fa-regular fa-trash-can"></i> Delete Role
+            </button>
+            <div style="display:flex; gap:8px;">
+              <button type="button" class="btn-secondary-light" id="cancelJobModalBtn">Cancel</button>
+              <button type="submit" class="btn-primary-purple"><i class="fa-solid fa-floppy-disk"></i> Save Job Role</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Detailed Candidate Modal ================= -->
+  <div class="modal-backdrop" id="candidateModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h2 id="modalName" style="font-size:1.3rem; font-weight:800;">Candidate Details</h2>
+          <p id="modalRole" style="font-size:0.85rem; color:var(--text-muted);">Role Applied</p>
+        </div>
+        <button class="icon-badge-btn" id="closeCandidateModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="modalBodyContent">
+        <!-- Rendered profile details -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary-light" id="modalCloseFooterBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= AI Resume Scanner Modal ================= -->
+  <div class="modal-backdrop" id="scannerModal">
+    <div class="modal-card" style="max-width:680px;">
+      <div class="modal-header">
+        <div>
+          <h2 style="font-size:1.25rem; font-weight:800;"><i class="fa-solid fa-sparkles" style="color:var(--primary-purple);"></i> AI Resume Scanner &amp; Intake</h2>
+          <p style="font-size:0.82rem; color:var(--text-muted);">Upload PDF/DOC resume or enter application details for instant Gemini 3.6 Flash screening.</p>
+        </div>
+        <button class="icon-badge-btn" id="closeScannerModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px; margin-bottom:15px;">
+          <strong style="font-size:0.75rem; text-transform:uppercase; color:#64748b; display:block; margin-bottom:6px;">⚡ Quick Presets:</strong>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button type="button" class="btn-secondary-light" id="presetSelect" style="padding:4px 10px; font-size:0.75rem;">Full Stack Lead (Select)</button>
+            <button type="button" class="btn-secondary-light" id="presetAi" style="padding:4px 10px; font-size:0.75rem;">AI Engineer (Select)</button>
+            <button type="button" class="btn-secondary-light" id="presetReject" style="padding:4px 10px; font-size:0.75rem;">Clerical (Reject)</button>
+          </div>
+        </div>
+
+        <form id="scannerForm" enctype="multipart/form-data">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Candidate Name *</label>
+              <input type="text" id="scanName" name="candidateName" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;" required>
+            </div>
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Candidate Email *</label>
+              <input type="email" id="scanEmail" name="candidateEmail" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;" required>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Target Role *</label>
+              <input type="text" id="scanRole" name="roleApplied" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;" required>
+            </div>
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Phone Number</label>
+              <input type="text" id="scanPhone" name="candidatePhone" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;">
+            </div>
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Resume File (PDF, DOCX, TXT)</label>
+            <input type="file" id="scanFile" name="resumeFile" accept=".pdf,.doc,.docx,.txt" style="width:100%; padding:8px; border:1px dashed #cbd5e1; border-radius:8px; background:#f8fafc;">
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Resume Content / Message Body</label>
+            <textarea id="scanText" name="resumeText" rows="4" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; font-family:inherit; font-size:0.85rem;" placeholder="Paste resume text or application message here..."></textarea>
+          </div>
+
+          <div class="modal-footer" style="padding:10px 0 0 0;">
+            <button type="button" class="btn-secondary-light" id="cancelScanModalBtn">Cancel</button>
+            <button type="submit" class="btn-primary-purple" id="submitScanModalBtn"><i class="fa-solid fa-bolt"></i> Run Gemini Screening</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Settings Modal ================= -->
+  <div class="modal-backdrop" id="settingsModal">
+    <div class="modal-card" style="max-width:580px;">
+      <div class="modal-header">
+        <div>
+          <h2 style="font-size:1.2rem; font-weight:800;"><i class="fa-solid fa-envelope-circle-check" style="color:var(--primary-purple);"></i> Email &amp; Google Meet Config</h2>
+          <p style="font-size:0.82rem; color:var(--text-muted);">Inbox poller, SMTP credentials &amp; permanent Google Meet video room</p>
+        </div>
+        <button class="icon-badge-btn" id="closeSettingsModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="settingsForm">
+          <div style="margin-bottom:14px;">
+            <label style="font-size:0.82rem; font-weight:600; display:block; margin-bottom:4px;">Recruiter Email</label>
+            <input type="email" id="setRecruiterEmail" value="sharmavageesha2000@gmail.com" readonly style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; background:#f1f5f9; color:#475569;">
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <label style="font-size:0.82rem; font-weight:600; display:block; margin-bottom:4px;">Default Authentic Google Meet Link</label>
+            <input type="text" id="setDefaultMeetLink" value="https://meet.google.com/qoy-livx-rku" placeholder="https://meet.google.com/xxx-yyyy-zzz" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;">
+            <span style="font-size:0.75rem; color:#64748b;">Authentic 3-4-3 Google Meet room format.</span>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <label style="font-size:0.82rem; font-weight:600; display:block; margin-bottom:4px;">Google 16-Character App Password</label>
+            <input type="text" id="setAppPassword" value="YOUR_GOOGLE_APP_PASSWORD" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;">
+            <span style="font-size:0.75rem; color:#64748b;">Direct link: <a href="https://myaccount.google.com/apppasswords" target="_blank" style="color:var(--primary-purple); font-weight:bold;">https://myaccount.google.com/apppasswords</a></span>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <label style="font-size:0.82rem; font-weight:600; display:block; margin-bottom:4px;">Google Gemini API Key</label>
+            <input type="password" id="setGeminiKey" value="YOUR_GEMINI_API_KEY" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;">
+          </div>
+
+          <div class="modal-footer" style="padding:10px 0 0 0;">
+            <button type="button" class="btn-secondary-light" id="cancelSettingsModalBtn">Close</button>
+            <button type="submit" class="btn-primary-purple"><i class="fa-solid fa-floppy-disk"></i> Save Settings</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

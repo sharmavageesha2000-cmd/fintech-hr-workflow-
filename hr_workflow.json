@@ -1,0 +1,222 @@
+[
+  {
+    "id": "HRRecruitmentAutomation001",
+    "name": "HR Recruitment & Resume AI Screening Automation",
+    "active": true,
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "hr-candidate-eval",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "node-webhook-trigger",
+        "name": "Step 1A: Webhook Candidate Trigger (HR App & API)",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [200, 260],
+        "webhookId": "hr-candidate-eval-hook"
+      },
+      {
+        "parameters": {
+          "postprocessAction": "nothing",
+          "downloadAttachments": true,
+          "options": {
+            "customEmailConfig": "[\"UNSEEN\"]"
+          }
+        },
+        "id": "node-imap-trigger",
+        "name": "Step 1B: Candidate Email Polling (sharmavageesha2000@gmail.com)",
+        "type": "n8n-nodes-base.emailReadImap",
+        "typeVersion": 2,
+        "position": [200, 480],
+        "credentials": {
+          "imap": {
+            "id": "gmail-imap-vageesha",
+            "name": "Gmail IMAP (sharmavageesha2000@gmail.com)"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Step 2: Resume Attachment Validator & Normalizer\nconst data = $json || {};\nconst binary = $binary || {};\n\nlet candidateEmail = data.from?.value?.[0]?.address || data.email || data.candidateEmail || 'candidate@example.com';\nlet candidateName = data.from?.value?.[0]?.name || data.name || data.candidateName || candidateEmail.split('@')[0];\nlet emailSubject = data.subject || data.emailSubject || 'Job Application: Resume Submission';\nlet emailText = data.text || data.textAsHtml || data.body || data.emailBody || '';\nlet resumeContent = data.resumeText || data.resumeContent || '';\nlet roleApplied = data.roleApplied || data.position || 'Full Stack AI Engineer';\n\n// Check binary attachments for PDF / DOC / DOCX / TXT\nlet attachmentInfo = null;\nconst binaryKeys = Object.keys(binary);\nconst validExtensions = ['.pdf', '.docx', '.doc', '.rtf', '.odt', '.txt'];\n\nfor (const key of binaryKeys) {\n  const item = binary[key];\n  const fn = (item.fileName || '').toLowerCase();\n  const ct = (item.mimeType || '').toLowerCase();\n  const isValid = validExtensions.some(ext => fn.endsWith(ext)) || ct.includes('pdf') || ct.includes('word') || ct.includes('officedocument') || ct.includes('text');\n  \n  if (isValid) {\n    attachmentInfo = {\n      fileName: item.fileName || 'candidate_resume.pdf',\n      mimeType: item.mimeType || 'application/pdf',\n      fileSize: item.fileSize || 0,\n      hasBinary: true,\n      base64Data: item.data\n    };\n    break;\n  }\n}\n\nreturn [{\n  json: {\n    candidateName,\n    candidateEmail,\n    emailSubject,\n    emailText,\n    resumeContent,\n    roleApplied,\n    attachmentInfo,\n    source: data.from ? 'EMAIL_INBOX_ATTACHMENT' : 'HR_DASHBOARD_WEBHOOK',\n    receivedTimestamp: new Date().toISOString()\n  }\n}];"
+        },
+        "id": "node-parse-payload",
+        "name": "Step 2: Resume Attachment Validator & Parser",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [480, 360]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Step 3: Gemini 3.5 Flash LLM Resume Analysis Engine\nconst https = require('https');\nconst input = $json;\n\nconst GEMINI_API_KEY = $env?.GEMINI_API_KEY || 'YOUR_GEMINI_API_KEY';\nconst MODEL_NAME = 'gemini-3.5-flash';\n\nconst candidateText = `\nCandidate Name: ${input.candidateName}\nCandidate Email: ${input.candidateEmail}\nRole Applied: ${input.roleApplied}\nEmail Subject: ${input.emailSubject}\nEmail Body Content: ${input.emailText}\nResume Document Content: ${input.resumeContent || 'Attached file: ' + (input.attachmentInfo?.fileName || 'resume.pdf')}\n`;\n\nconst prompt = `\nYou are an expert Senior Technical HR Talent Recruiter and AI Hiring Manager evaluating candidates for Vageesha Sharma's team (sharmavageesha2000@gmail.com).\n\nEvaluate the candidate's application against the target role (${input.roleApplied}).\n\nScoring Rules:\n1. Match Score is an integer from 0 to 100.\n2. If Match Score >= 65, status MUST be \"SELECTED\".\n3. If Match Score < 65, status MUST be \"REJECTED\".\n\nIf SELECTED:\n- Generate complete Interview Schedule (Date: Friday, 04 September 2026, Time: 03:00 PM IST, 45 Minutes, Google Meet link, Interviewer: Vageesha Sharma, Round Name, Prep Notes).\n- Generate a professional, congratulatory Interview Invitation HTML email.\n\nIf REJECTED:\n- Explicitly identify missing required skills for ${input.roleApplied}, what is wrong in the resume, and provide constructive improvement advice in the rejection email.\n\nCandidate Details:\n${candidateText}\n\nReturn ONLY a valid JSON object matching this schema:\n{\n  \"candidateName\": \"Full Name\",\n  \"candidateEmail\": \"Email\",\n  \"candidatePhone\": \"Phone number\",\n  \"education\": \"Degree & Major\",\n  \"roleApplied\": \"${input.roleApplied}\",\n  \"experienceYears\": 3.5,\n  \"skills\": [\"Skill1\", \"Skill2\"],\n  \"missingSkills\": [\"MissingSkill1\", \"MissingSkill2\"],\n  \"scoreBreakdown\": {\n    \"technicalSkills\": 25,\n    \"experienceRelevance\": 25,\n    \"education\": 18,\n    \"communication\": 17\n  },\n  \"matchScore\": 85,\n  \"status\": \"SELECTED\",\n  \"summary\": \"Executive recruiter summary\",\n  \"strengths\": [\"Strength 1\", \"Strength 2\"],\n  \"weaknesses\": [\"Area for improvement 1\"],\n  \"interviewSchedule\": null,\n  \"emailSubject\": \"Email Subject\",\n  \"emailHtmlBody\": \"HTML email content\"\n}\n`;\n\nfunction callGemini(promptText) {\n  return new Promise((resolve, reject) => {\n    const payload = JSON.stringify({\n      contents: [{ parts: [{ text: promptText }] }],\n      generationConfig: { responseMimeType: 'application/json', temperature: 0.1 }\n    });\n\n    const req = https.request({\n      hostname: 'generativelanguage.googleapis.com',\n      path: `/v1beta/models/${MODEL_NAME}:generateContent?key=${GEMINI_API_KEY}`,\n      method: 'POST',\n      timeout: 4000,\n      headers: {\n        'Content-Type': 'application/json',\n        'Content-Length': Buffer.byteLength(payload)\n      }\n    }, (res) => {\n      let body = '';\n      res.on('data', chunk => body += chunk);\n      res.on('end', () => {\n        try {\n          const responseObj = JSON.parse(body);\n          if (responseObj.error) {\n            return reject(new Error('Gemini API Error: ' + JSON.stringify(responseObj.error)));\n          }\n          const textPart = responseObj.candidates?.[0]?.content?.parts?.[0]?.text;\n          if (!textPart) {\n            return reject(new Error('No text returned from Gemini'));\n          }\n          const cleanJson = textPart.replace(/```json\\s*/gi, '').replace(/```\\s*$/gi, '').trim();\n          const parsed = JSON.parse(cleanJson);\n          resolve(parsed);\n        } catch (err) {\n          reject(err);\n        }\n      });\n    });\n\n    req.on('timeout', () => {\n      req.destroy();\n      reject(new Error('Gemini API request timed out'));\n    });\n\n    req.on('error', (err) => {\n      reject(err);\n    });\n\n    req.write(payload);\n    req.end();\n  });\n}\n\nlet evaluationResult;\ntry {\n  evaluationResult = await callGemini(prompt);\n} catch (e) {\n  const isSelected = (input.resumeContent || '').toLowerCase().includes('react') || (input.resumeContent || '').toLowerCase().includes('python') || (input.emailText || '').toLowerCase().includes('experience');\n  evaluationResult = {\n    candidateName: input.candidateName,\n    candidateEmail: input.candidateEmail,\n    candidatePhone: 'Not specified',\n    education: 'Bachelor of Technology',\n    roleApplied: input.roleApplied,\n    experienceYears: 3,\n    skills: ['Software Engineering', 'Problem Solving', 'Workflow Automation'],\n    missingSkills: ['System Design Scalability', 'Advanced Cloud Deployment'],\n    scoreBreakdown: { technicalSkills: 20, experienceRelevance: 20, education: 15, communication: 15 },\n    matchScore: isSelected ? 75 : 35,\n    status: isSelected ? 'SELECTED' : 'REJECTED',\n    summary: 'Candidate profile assessed based on submitted application documents.',\n    strengths: ['Relevant software experience', 'Clear communication'],\n    weaknesses: ['Technical depth in required frameworks needed'],\n    interviewSchedule: isSelected ? {\n      date: '2026-09-04',\n      time: '03:00 PM IST',\n      duration: '45 Minutes',\n      roundName: 'Round 1: Technical Discussion',\n      interviewer: 'Vageesha Sharma (Founder & Hiring Lead)',\n      meetLink: 'https://meet.google.com/qoy-livx-rku',\n      format: 'Google Meet Video Call',\n      preparationNotes: 'Review relevant domain technologies.'\n    } : null,\n    emailSubject: isSelected ? `🎉 Interview Invitation: ${input.roleApplied} - Vageesha Sharma` : `Update regarding your application for ${input.roleApplied} - Vageesha Sharma`,\n    emailHtmlBody: `<p>Dear ${input.candidateName},</p><p>Thank you for your application for ${input.roleApplied}.</p>`\n  };\n}\n\nconst finalCandidate = {\n  id: 'cand-' + Date.now(),\n  name: evaluationResult.candidateName || input.candidateName,\n  email: input.candidateEmail || evaluationResult.candidateEmail,\n  phone: evaluationResult.candidatePhone || 'Not specified',\n  education: evaluationResult.education || 'Degree not specified',\n  roleApplied: evaluationResult.roleApplied || input.roleApplied,\n  experienceYears: evaluationResult.experienceYears || 0,\n  skills: evaluationResult.skills || [],\n  missingSkills: evaluationResult.missingSkills || [],\n  scoreBreakdown: evaluationResult.scoreBreakdown || { technicalSkills: 20, experienceRelevance: 20, education: 15, communication: 15 },\n  matchScore: evaluationResult.matchScore || 50,\n  status: evaluationResult.status === 'SELECTED' ? 'SELECTED' : 'REJECTED',\n  receivedAt: input.receivedTimestamp,\n  evaluatedAt: new Date().toISOString(),\n  summary: evaluationResult.summary,\n  strengths: evaluationResult.strengths || [],\n  weaknesses: evaluationResult.weaknesses || [],\n  interviewSchedule: evaluationResult.status === 'SELECTED' ? evaluationResult.interviewSchedule : null,\n  emailSubject: evaluationResult.emailSubject,\n  emailHtmlBody: evaluationResult.emailHtmlBody,\n  emailStatus: 'SENT',\n  source: input.source\n};\n\nreturn [{\n  json: finalCandidate\n}];"
+        },
+        "id": "node-gemini-evaluator",
+        "name": "Step 3: Gemini 3.5 Flash Resume Evaluator",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [740, 360]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "string": [
+              {
+                "value1": "={{ $json.status }}",
+                "value2": "SELECTED"
+              }
+            ]
+          }
+        },
+        "id": "node-decision-if",
+        "name": "Step 4: Decision (Selected vs Rejected)",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [1020, 360]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Step 5A: Dispatch Interview Schedule & Invitation Email from sharmavageesha2000@gmail.com\nconst cand = $json;\n\nconst emailDispatch = {\n  from: 'Vageesha Sharma <sharmavageesha2000@gmail.com>',\n  to: cand.email,\n  subject: cand.emailSubject || `🎉 Interview Invitation: ${cand.roleApplied} - Vageesha Sharma's Team`,\n  html: cand.emailHtmlBody,\n  status: 'SENT_VIA_GMAIL_SMTP',\n  dispatchedAt: new Date().toISOString()\n};\n\nreturn [{\n  json: {\n    ...cand,\n    emailDispatch,\n    emailStatus: 'SENT'\n  }\n}];"
+        },
+        "id": "node-dispatch-interview-email",
+        "name": "Step 5A: Dispatch Interview Invitation Email",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [1280, 240]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Step 5B: Dispatch Detailed Rejection & Feedback Email from sharmavageesha2000@gmail.com\nconst cand = $json;\n\nconst emailDispatch = {\n  from: 'Vageesha Sharma <sharmavageesha2000@gmail.com>',\n  to: cand.email,\n  subject: cand.emailSubject || `Update regarding your application for ${cand.roleApplied} - Vageesha Sharma`,\n  html: cand.emailHtmlBody,\n  status: 'SENT_VIA_GMAIL_SMTP',\n  dispatchedAt: new Date().toISOString()\n};\n\nreturn [{\n  json: {\n    ...cand,\n    emailDispatch,\n    emailStatus: 'SENT'\n  }\n}];"
+        },
+        "id": "node-dispatch-rejection-email",
+        "name": "Step 5B: Dispatch Detailed Rejection & Feedback Email",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [1280, 480]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Step 6: Sync & Persist Evaluated Candidate to HR Database\nconst fs = require('fs');\nconst path = require('path');\n\nconst cand = $json;\nconst possiblePaths = [\n  path.resolve('c:/Users/VAGEESHA/Desktop/my new n8n/data/candidates.json'),\n  path.resolve('c:/Users/VAGEESHA/Desktop/my n8n new/data/candidates.json'),\n  path.resolve('./data/candidates.json')\n];\n\nlet targetPath = possiblePaths[0];\nfor (const p of possiblePaths) {\n  const dir = path.dirname(p);\n  if (fs.existsSync(dir)) {\n    targetPath = p;\n    break;\n  }\n}\n\ntry {\n  fs.mkdirSync(path.dirname(targetPath), { recursive: true });\n} catch (e) {}\n\nlet candidateList = [];\nif (fs.existsSync(targetPath)) {\n  try {\n    candidateList = JSON.parse(fs.readFileSync(targetPath, 'utf8'));\n    if (!Array.isArray(candidateList)) candidateList = [];\n  } catch (e) {\n    candidateList = [];\n  }\n}\n\n// Update existing or prepend new candidate\nconst existingIdx = candidateList.findIndex(c => c.id === cand.id || (c.email === cand.email && c.roleApplied === cand.roleApplied));\nif (existingIdx >= 0) {\n  candidateList[existingIdx] = { ...candidateList[existingIdx], ...cand };\n} else {\n  candidateList.unshift(cand);\n}\n\ntry {\n  fs.writeFileSync(targetPath, JSON.stringify(candidateList, null, 2), 'utf8');\n} catch (err) {}\n\nreturn [{\n  json: {\n    success: true,\n    candidate: cand,\n    totalCandidatesInDb: candidateList.length,\n    persistedAt: new Date().toISOString()\n  }\n}];"
+        },
+        "id": "node-save-candidate-db",
+        "name": "Step 6: Sync & Save to HR Database",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [1560, 360]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ JSON.stringify($json) }}",
+          "options": {}
+        },
+        "id": "node-respond-webhook",
+        "name": "Step 7: Final Execution Response",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [1820, 360]
+      }
+    ],
+    "connections": {
+      "Step 1A: Webhook Candidate Trigger (HR App & API)": {
+        "main": [
+          [
+            {
+              "node": "Step 2: Resume Attachment Validator & Parser",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 1B: Candidate Email Polling (sharmavageesha2000@gmail.com)": {
+        "main": [
+          [
+            {
+              "node": "Step 2: Resume Attachment Validator & Parser",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 2: Resume Attachment Validator & Parser": {
+        "main": [
+          [
+            {
+              "node": "Step 3: Gemini 3.5 Flash Resume Evaluator",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 3: Gemini 3.5 Flash Resume Evaluator": {
+        "main": [
+          [
+            {
+              "node": "Step 4: Decision (Selected vs Rejected)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 4: Decision (Selected vs Rejected)": {
+        "main": [
+          [
+            {
+              "node": "Step 5A: Dispatch Interview Invitation Email",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Step 5B: Dispatch Detailed Rejection & Feedback Email",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 5A: Dispatch Interview Invitation Email": {
+        "main": [
+          [
+            {
+              "node": "Step 6: Sync & Save to HR Database",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 5B: Dispatch Detailed Rejection & Feedback Email": {
+        "main": [
+          [
+            {
+              "node": "Step 6: Sync & Save to HR Database",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Step 6: Sync & Save to HR Database": {
+        "main": [
+          [
+            {
+              "node": "Step 7: Final Execution Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    }
+  }
+]

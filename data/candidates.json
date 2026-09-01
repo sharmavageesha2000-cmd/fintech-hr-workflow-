@@ -1,0 +1,985 @@
+[
+  {
+    "id": "cand-1788257966719-599",
+    "name": "Arjun Iyer",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "Not specified",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Frontend Developer",
+    "experienceYears": 2.5,
+    "skills": [
+      "JavaScript",
+      "REST APIs"
+    ],
+    "missingSkills": [
+      "React.js",
+      "HTML5 & CSS3",
+      "Tailwind CSS",
+      "TypeScript",
+      "Responsive Design"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 8,
+      "experienceRelevance": 8,
+      "education": 10,
+      "communication": 8
+    },
+    "matchScore": 48,
+    "status": "REJECTED",
+    "interviewStatus": "N/A",
+    "offerStatus": "PENDING",
+    "summary": "Arjun Iyer applied for Frontend Developer. Profile does not satisfy core job requirements. Missing: React.js, HTML5 & CSS3, Tailwind CSS. Status: REJECTED.",
+    "strengths": [
+      "Clear communication and professional presentation"
+    ],
+    "weaknesses": [
+      "Missing key competencies for Frontend Developer: React.js, HTML5 & CSS3, Tailwind CSS"
+    ],
+    "interviewSchedule": null,
+    "emailSubject": "Update regarding your application for Frontend Developer - Vageesha Sharma",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04);\">\n      <div style=\"background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;\">\n        <span style=\"background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;\">APPLICATION STATUS UPDATE</span>\n        <h2 style=\"margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;\">Application Evaluation &amp; Feedback</h2>\n        <p style=\"margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;\">Role: <strong>Frontend Developer</strong> • Vageesha Sharma Talent Acquisition</p>\n      </div>\n\n      <div style=\"padding: 28px 24px;\">\n        <p style=\"font-size: 15px; line-height: 1.6; margin-top: 0;\">Dear <strong>Arjun Iyer</strong>,</p>\n        \n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Thank you for applying for the <strong>Frontend Developer</strong> position at our organization and for sharing your resume.\n        </p>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Our technical evaluation team has thoroughly reviewed your background against the active role requirements and competencies for this vacancy.\n        </p>\n\n        <!-- Evaluation Summary Card -->\n        <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 20px 0;\">\n          <div style=\"display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;\">\n            <strong style=\"color: #0f172a; font-size: 15px;\">📊 Screening Evaluation Summary</strong>\n            <span style=\"background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 99px;\">Role Match: 48%</span>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;\">Skills Identified in Your Profile:</span>\n            <div><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">JavaScript</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">REST APIs</span></div>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #991b1b; display: block; margin-bottom: 6px;\">Critical Missing Skills for \"Frontend Developer\":</span>\n            <div><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ React.js</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ HTML5 & CSS3</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Tailwind CSS</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ TypeScript</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Responsive Design</span></div>\n          </div>\n        </div>\n\n        <!-- Resume Gaps & Detailed Feedback -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 20px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #92400e; font-size: 14px; font-weight: 700;\">🔍 Identified Gaps &amp; Resume Analysis</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #78350f; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Resume lacks demonstrable proficiency in mandatory requirements for Frontend Developer: <strong>React.js, HTML5 & CSS3, Tailwind CSS, TypeScript</strong>.</li><li style=\"margin-bottom: 6px;\">Insufficient evidence of production-level project execution matching the <strong>Frontend Developer</strong> job description.</li>\n          </ul>\n        </div>\n\n        <!-- Recommendations for Future -->\n        <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px; margin-bottom: 24px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #166534; font-size: 14px; font-weight: 700;\">💡 Actionable Recommendations to Strengthen Your Profile</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #14532d; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Deepen hands-on competency in <strong>React.js, HTML5 & CSS3, Tailwind CSS</strong>.</li><li style=\"margin-bottom: 6px;\">Include live project links, portfolio dashboards, and quantifiable metrics in your resume.</li>\n          </ul>\n        </div>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          At this stage, we are moving forward with candidates whose technical stack more directly matches our immediate requirements for the <strong>Frontend Developer</strong> vacancy.\n        </p>\n\n        <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">\n          We will keep your resume on file for future openings that match your specific profile. We wish you great success in your career.\n        </p>\n\n        <div style=\"margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;\">\n          <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n          <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;\">sharmavageesha2000@gmail.com</span>\n        </div>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "c8468e9a-aca5-4d9f-9c5b-1932d36f54e1.pdf",
+      "fileSize": 77415,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788257966217-c8468e9a-aca5-4d9f-9c5b-1932d36f54e1.pdf",
+      "urlPath": "/uploads/1788257966217-c8468e9a-aca5-4d9f-9c5b-1932d36f54e1.pdf"
+    },
+    "receivedAt": "2026-09-01T10:19:18.000Z",
+    "evaluatedAt": "2026-09-01T10:19:26.719Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-09-01T10:19:29.613Z"
+  },
+  {
+    "id": "cand-1788255072216-971",
+    "name": "Ananya Verma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "Not specified",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Business Analyst",
+    "experienceYears": 2.5,
+    "skills": [
+      "Requirement Gathering (BRD/FRD)",
+      "Agile / Scrum",
+      "Jira",
+      "Process Mapping",
+      "Documentation",
+      "Business Analysis"
+    ],
+    "missingSkills": [],
+    "scoreBreakdown": {
+      "technicalSkills": 35,
+      "experienceRelevance": 25,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 90,
+    "status": "SELECTED",
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "OFFER_EXTENDED",
+    "summary": "Ananya Verma possesses 2.5 years of relevant experience aligned with Business Analyst. Strong foundation in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping. Shortlisted for technical interview.",
+    "strengths": [
+      "2.5 years of demonstrated experience in Business Analyst",
+      "Strong skills in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira"
+    ],
+    "weaknesses": [
+      "In-depth architecture to be assessed during technical interview"
+    ],
+    "interviewSchedule": {
+      "date": "Friday, 04 September 2026",
+      "time": "03:00 PM IST",
+      "duration": "45 Minutes",
+      "roundName": "Round 1: Technical Assessment",
+      "interviewer": "Vageesha Sharma (Founder & Hiring Lead)",
+      "meetLink": "https://meet.google.com/hqb-ynvv-anw",
+      "format": "Google Meet Video Call",
+      "preparationNotes": "Please be prepared to discuss past projects, core architecture, and technologies required for Business Analyst."
+    },
+    "emailSubject": "🎉 Interview Invitation: Business Analyst - Vageesha Sharma's Team",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;\">\n      <div style=\"text-align: center; margin-bottom: 20px;\">\n        <h2 style=\"color: #0f766e; margin-bottom: 4px;\">🎉 Congratulations, Ananya Verma!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 15px;\">Your application for <strong>Business Analyst</strong> has been <strong>Shortlisted</strong></p>\n      </div>\n      <p>Dear <strong>Ananya Verma</strong>,</p>\n      <p>Thank you for applying for the <strong>Business Analyst</strong> position. We thoroughly reviewed your resume and credentials. We are impressed by your <strong>2.5 years of relevant experience</strong> and strong foundation in <strong>Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping, Documentation</strong>.</p>\n      <p>We are delighted to invite you for your initial technical interview with our hiring team.</p>\n      <div style=\"background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 20px; margin: 20px 0;\">\n        <h3 style=\"margin: 0 0 12px 0; color: #0f766e; font-size: 16px;\">📅 Interview Schedule Details</h3>\n        <p style=\"margin: 6px 0;\"><strong>Position:</strong> Business Analyst</p>\n        <p style=\"margin: 6px 0;\"><strong>Date:</strong> Friday, 04 September 2026</p>\n        <p style=\"margin: 6px 0;\"><strong>Time:</strong> 03:00 PM IST (Duration: 45 Minutes)</p>\n        <p style=\"margin: 6px 0;\"><strong>Interviewer:</strong> Vageesha Sharma (Founder &amp; Hiring Lead)</p>\n        <p style=\"margin: 14px 0 0 0;\">\n          <a href=\"https://meet.google.com/hqb-ynvv-anw\" target=\"_blank\" style=\"background: #0f766e; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;\">\n            📹 Join Google Meet Interview (https://meet.google.com/hqb-ynvv-anw)\n          </a>\n        </p>\n      </div>\n      <p style=\"font-size: 14px; color: #64748b;\">Please ensure you have a quiet environment, a working camera, and microphone for the video call.</p>\n      <br/>\n      <p>Warm regards,<br/><strong>Vageesha Sharma</strong><br/>Founder &amp; Hiring Lead<br/>sharmavageesha2000@gmail.com</p>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Business_Analyst_Resume_2_to_3_Years.pdf",
+      "fileSize": 35960,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788255071577-Business_Analyst_Resume_2_to_3_Years.pdf",
+      "urlPath": "/uploads/1788255071577-Business_Analyst_Resume_2_to_3_Years.pdf"
+    },
+    "receivedAt": "2026-09-01T09:30:43.000Z",
+    "evaluatedAt": "2026-09-01T09:31:12.216Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-09-01T09:31:15.628Z",
+    "offerRefId": "HR-OFFER-2026-2986",
+    "callLetterSentAt": "2026-09-01T09:32:34.966Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹8.50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-2986",
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<be14d703-a017-28e4-102c-34a6e1aa8c53@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Business Analyst - HR SmartFlow"
+      }
+    }
+  },
+  {
+    "id": "cand-1788254986969-123",
+    "name": "Kabir Singh",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "Not specified",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "AI/ML Engineer",
+    "experienceYears": 0,
+    "skills": [
+      "Python"
+    ],
+    "missingSkills": [
+      "Machine Learning",
+      "PyTorch / TensorFlow",
+      "LLMs",
+      "Data Processing",
+      "AI Workflows"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 8,
+      "experienceRelevance": 8,
+      "education": 10,
+      "communication": 8
+    },
+    "matchScore": 20,
+    "status": "REJECTED",
+    "interviewStatus": "N/A",
+    "offerStatus": "PENDING",
+    "summary": "Kabir Singh applied for AI/ML Engineer. Profile does not satisfy core job requirements. Missing: Machine Learning, PyTorch / TensorFlow, LLMs. Status: REJECTED.",
+    "strengths": [
+      "Clear communication and professional presentation"
+    ],
+    "weaknesses": [
+      "Missing key competencies for AI/ML Engineer: Machine Learning, PyTorch / TensorFlow, LLMs"
+    ],
+    "interviewSchedule": null,
+    "emailSubject": "Update regarding your application for AI/ML Engineer - Vageesha Sharma",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04);\">\n      <div style=\"background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;\">\n        <span style=\"background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;\">APPLICATION STATUS UPDATE</span>\n        <h2 style=\"margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;\">Application Evaluation &amp; Feedback</h2>\n        <p style=\"margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;\">Role: <strong>AI/ML Engineer</strong> • Vageesha Sharma Talent Acquisition</p>\n      </div>\n\n      <div style=\"padding: 28px 24px;\">\n        <p style=\"font-size: 15px; line-height: 1.6; margin-top: 0;\">Dear <strong>Kabir Singh</strong>,</p>\n        \n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Thank you for applying for the <strong>AI/ML Engineer</strong> position at our organization and for sharing your resume.\n        </p>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Our technical evaluation team has thoroughly reviewed your background against the active role requirements and competencies for this vacancy.\n        </p>\n\n        <!-- Evaluation Summary Card -->\n        <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 20px 0;\">\n          <div style=\"display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;\">\n            <strong style=\"color: #0f172a; font-size: 15px;\">📊 Screening Evaluation Summary</strong>\n            <span style=\"background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 99px;\">Role Match: 20%</span>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;\">Skills Identified in Your Profile:</span>\n            <div><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">Python</span></div>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #991b1b; display: block; margin-bottom: 6px;\">Critical Missing Skills for \"AI/ML Engineer\":</span>\n            <div><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Machine Learning</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ PyTorch / TensorFlow</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ LLMs</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Data Processing</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ AI Workflows</span></div>\n          </div>\n        </div>\n\n        <!-- Resume Gaps & Detailed Feedback -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 20px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #92400e; font-size: 14px; font-weight: 700;\">🔍 Identified Gaps &amp; Resume Analysis</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #78350f; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Resume lacks demonstrable proficiency in mandatory requirements for AI/ML Engineer: <strong>Machine Learning, PyTorch / TensorFlow, LLMs, Data Processing</strong>.</li><li style=\"margin-bottom: 6px;\">Insufficient evidence of production-level project execution matching the <strong>AI/ML Engineer</strong> job description.</li>\n          </ul>\n        </div>\n\n        <!-- Recommendations for Future -->\n        <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px; margin-bottom: 24px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #166534; font-size: 14px; font-weight: 700;\">💡 Actionable Recommendations to Strengthen Your Profile</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #14532d; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Deepen hands-on competency in <strong>Machine Learning, PyTorch / TensorFlow, LLMs</strong>.</li><li style=\"margin-bottom: 6px;\">Include live project links, portfolio dashboards, and quantifiable metrics in your resume.</li>\n          </ul>\n        </div>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          At this stage, we are moving forward with candidates whose technical stack more directly matches our immediate requirements for the <strong>AI/ML Engineer</strong> vacancy.\n        </p>\n\n        <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">\n          We will keep your resume on file for future openings that match your specific profile. We wish you great success in your career.\n        </p>\n\n        <div style=\"margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;\">\n          <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n          <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;\">sharmavageesha2000@gmail.com</span>\n        </div>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "4_Kabir_Singh_AI_Prompt_Engineer_Fresher (1).pdf",
+      "fileSize": 24297,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788254986289-4_Kabir_Singh_AI_Prompt_Engineer_Fresher__1_.pdf",
+      "urlPath": "/uploads/1788254986289-4_Kabir_Singh_AI_Prompt_Engineer_Fresher__1_.pdf"
+    },
+    "receivedAt": "2026-09-01T09:29:35.000Z",
+    "evaluatedAt": "2026-09-01T09:29:46.969Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-09-01T09:29:50.023Z"
+  },
+  {
+    "id": "cand-1788253822777-167",
+    "name": "Kabir Singh",
+    "email": "manasvipaliwal317@gmail.com",
+    "phone": "Not specified",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "AI/ML Engineer",
+    "experienceYears": 0,
+    "skills": [
+      "Python"
+    ],
+    "missingSkills": [
+      "Machine Learning",
+      "PyTorch / TensorFlow",
+      "LLMs",
+      "Data Processing",
+      "AI Workflows"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 8,
+      "experienceRelevance": 8,
+      "education": 10,
+      "communication": 8
+    },
+    "matchScore": 20,
+    "status": "REJECTED",
+    "interviewStatus": "N/A",
+    "offerStatus": "PENDING",
+    "summary": "Kabir Singh applied for AI/ML Engineer. Profile does not satisfy core job requirements. Missing: Machine Learning, PyTorch / TensorFlow, LLMs. Status: REJECTED.",
+    "strengths": [
+      "Clear communication and professional presentation"
+    ],
+    "weaknesses": [
+      "Missing key competencies for AI/ML Engineer: Machine Learning, PyTorch / TensorFlow, LLMs"
+    ],
+    "interviewSchedule": null,
+    "emailSubject": "Update regarding your application for AI/ML Engineer - Vageesha Sharma",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04);\">\n      <div style=\"background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;\">\n        <span style=\"background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;\">APPLICATION STATUS UPDATE</span>\n        <h2 style=\"margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;\">Application Evaluation &amp; Feedback</h2>\n        <p style=\"margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;\">Role: <strong>AI/ML Engineer</strong> • Vageesha Sharma Talent Acquisition</p>\n      </div>\n\n      <div style=\"padding: 28px 24px;\">\n        <p style=\"font-size: 15px; line-height: 1.6; margin-top: 0;\">Dear <strong>Kabir Singh</strong>,</p>\n        \n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Thank you for applying for the <strong>AI/ML Engineer</strong> position at our organization and for sharing your resume.\n        </p>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Our technical evaluation team has thoroughly reviewed your background against the active role requirements and competencies for this vacancy.\n        </p>\n\n        <!-- Evaluation Summary Card -->\n        <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 20px 0;\">\n          <div style=\"display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;\">\n            <strong style=\"color: #0f172a; font-size: 15px;\">📊 Screening Evaluation Summary</strong>\n            <span style=\"background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 99px;\">Role Match: 20%</span>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;\">Skills Identified in Your Profile:</span>\n            <div><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">Python</span></div>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #991b1b; display: block; margin-bottom: 6px;\">Critical Missing Skills for \"AI/ML Engineer\":</span>\n            <div><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Machine Learning</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ PyTorch / TensorFlow</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ LLMs</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Data Processing</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ AI Workflows</span></div>\n          </div>\n        </div>\n\n        <!-- Resume Gaps & Detailed Feedback -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 20px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #92400e; font-size: 14px; font-weight: 700;\">🔍 Identified Gaps &amp; Resume Analysis</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #78350f; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Resume lacks demonstrable proficiency in mandatory requirements for AI/ML Engineer: <strong>Machine Learning, PyTorch / TensorFlow, LLMs, Data Processing</strong>.</li><li style=\"margin-bottom: 6px;\">Insufficient evidence of production-level project execution matching the <strong>AI/ML Engineer</strong> job description.</li>\n          </ul>\n        </div>\n\n        <!-- Recommendations for Future -->\n        <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px; margin-bottom: 24px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #166534; font-size: 14px; font-weight: 700;\">💡 Actionable Recommendations to Strengthen Your Profile</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #14532d; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Deepen hands-on competency in <strong>Machine Learning, PyTorch / TensorFlow, LLMs</strong>.</li><li style=\"margin-bottom: 6px;\">Include live project links, portfolio dashboards, and quantifiable metrics in your resume.</li>\n          </ul>\n        </div>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          At this stage, we are moving forward with candidates whose technical stack more directly matches our immediate requirements for the <strong>AI/ML Engineer</strong> vacancy.\n        </p>\n\n        <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">\n          We will keep your resume on file for future openings that match your specific profile. We wish you great success in your career.\n        </p>\n\n        <div style=\"margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;\">\n          <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n          <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;\">sharmavageesha2000@gmail.com</span>\n        </div>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "4_Kabir_Singh_AI_Prompt_Engineer_Fresher (1).pdf",
+      "fileSize": 24297,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788253822132-4_Kabir_Singh_AI_Prompt_Engineer_Fresher__1_.pdf",
+      "urlPath": "/uploads/1788253822132-4_Kabir_Singh_AI_Prompt_Engineer_Fresher__1_.pdf"
+    },
+    "receivedAt": "2026-09-01T09:09:59.000Z",
+    "evaluatedAt": "2026-09-01T09:10:22.777Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-09-01T09:10:25.861Z"
+  },
+  {
+    "id": "cand-1788252561967-8488",
+    "name": "Rohan Sharma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "+91 98765 43210",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Full Stack AI Engineer",
+    "experienceYears": 3,
+    "skills": [
+      "React.js",
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "REST APIs",
+      "Docker"
+    ],
+    "missingSkills": [
+      "Node.js",
+      "Gemini API / LLMs"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 26,
+      "experienceRelevance": 30,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 81,
+    "status": "SELECTED",
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "OFFER_EXTENDED",
+    "summary": "Rohan Sharma possesses 3 years of relevant experience aligned with Full Stack AI Engineer. Strong foundation in React.js, Python, FastAPI, PostgreSQL. Shortlisted for technical interview.",
+    "strengths": [
+      "3 years of demonstrated experience in Full Stack AI Engineer",
+      "Strong skills in React.js, Python, FastAPI"
+    ],
+    "weaknesses": [
+      "In-depth architecture to be assessed during technical interview"
+    ],
+    "interviewSchedule": {
+      "date": "Friday, 04 September 2026",
+      "time": "03:00 PM IST",
+      "duration": "45 Minutes",
+      "roundName": "Round 1: Technical Assessment",
+      "interviewer": "Vageesha Sharma (Founder & Hiring Lead)",
+      "meetLink": "https://meet.google.com/sbw-bulq-rpn",
+      "format": "Google Meet Video Call",
+      "preparationNotes": "Please be prepared to discuss past projects, core architecture, and technologies required for Full Stack AI Engineer."
+    },
+    "emailSubject": "🎉 Interview Invitation: Full Stack AI Engineer - Vageesha Sharma's Team",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;\">\n      <div style=\"text-align: center; margin-bottom: 20px;\">\n        <h2 style=\"color: #0f766e; margin-bottom: 4px;\">🎉 Congratulations, Rohan Sharma!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 15px;\">Your application for <strong>Full Stack AI Engineer</strong> has been <strong>Shortlisted</strong></p>\n      </div>\n      <p>Dear <strong>Rohan Sharma</strong>,</p>\n      <p>Thank you for applying for the <strong>Full Stack AI Engineer</strong> position. We thoroughly reviewed your resume and credentials. We are impressed by your <strong>3 years of relevant experience</strong> and strong foundation in <strong>React.js, Python, FastAPI, PostgreSQL, REST APIs</strong>.</p>\n      <p>We are delighted to invite you for your initial technical interview with our hiring team.</p>\n      <div style=\"background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 20px; margin: 20px 0;\">\n        <h3 style=\"margin: 0 0 12px 0; color: #0f766e; font-size: 16px;\">📅 Interview Schedule Details</h3>\n        <p style=\"margin: 6px 0;\"><strong>Position:</strong> Full Stack AI Engineer</p>\n        <p style=\"margin: 6px 0;\"><strong>Date:</strong> Friday, 04 September 2026</p>\n        <p style=\"margin: 6px 0;\"><strong>Time:</strong> 03:00 PM IST (Duration: 45 Minutes)</p>\n        <p style=\"margin: 6px 0;\"><strong>Interviewer:</strong> Vageesha Sharma (Founder &amp; Hiring Lead)</p>\n        <p style=\"margin: 14px 0 0 0;\">\n          <a href=\"https://meet.google.com/sbw-bulq-rpn\" target=\"_blank\" style=\"background: #0f766e; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;\">\n            📹 Join Google Meet Interview (https://meet.google.com/sbw-bulq-rpn)\n          </a>\n        </p>\n      </div>\n      <p style=\"font-size: 14px; color: #64748b;\">Please ensure you have a quiet environment, a working camera, and microphone for the video call.</p>\n      <br/>\n      <p>Warm regards,<br/><strong>Vageesha Sharma</strong><br/>Founder &amp; Hiring Lead<br/>sharmavageesha2000@gmail.com</p>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Full_Stack_AI_Engineer_Resume (2).pdf",
+      "fileSize": 27134,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788252554907-Full_Stack_AI_Engineer_Resume__2_.pdf",
+      "urlPath": "/uploads/1788252554907-Full_Stack_AI_Engineer_Resume__2_.pdf"
+    },
+    "receivedAt": "2026-09-01T08:34:36.000Z",
+    "evaluatedAt": "2026-09-01T08:49:21.967Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "offerRefId": "FINOVA-OFFER-2026-6955",
+    "callLetterSentAt": "2026-09-01T09:26:47.883Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "FINOVA-OFFER-2026-6955",
+      "emailDispatch": {
+        "success": true,
+        "messageId": "<95ed1b06-7e90-e031-f44e-b296ba5cc181@gmail.com>"
+      }
+    }
+  },
+  {
+    "id": "cand-1788252569210-5775",
+    "name": "Ananya Verma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "+91 98765 43210",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Backend Developer",
+    "experienceYears": 2.5,
+    "skills": [
+      "SQL / PostgreSQL"
+    ],
+    "missingSkills": [
+      "Node.js",
+      "Express",
+      "REST APIs",
+      "MongoDB",
+      "Databases",
+      "Backend Development"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 8,
+      "experienceRelevance": 8,
+      "education": 10,
+      "communication": 8
+    },
+    "matchScore": 43,
+    "status": "REJECTED",
+    "interviewStatus": "N/A",
+    "offerStatus": "PENDING",
+    "summary": "Ananya Verma applied for Backend Developer. Profile does not satisfy core job requirements. Missing: Node.js, Express, REST APIs. Status: REJECTED.",
+    "strengths": [
+      "Clear communication and professional presentation"
+    ],
+    "weaknesses": [
+      "Missing key competencies for Backend Developer: Node.js, Express, REST APIs"
+    ],
+    "interviewSchedule": null,
+    "emailSubject": "Update regarding your application for Backend Developer - Vageesha Sharma",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04);\">\n      <div style=\"background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;\">\n        <span style=\"background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;\">APPLICATION STATUS UPDATE</span>\n        <h2 style=\"margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;\">Application Evaluation &amp; Feedback</h2>\n        <p style=\"margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;\">Role: <strong>Backend Developer</strong> • Vageesha Sharma Talent Acquisition</p>\n      </div>\n\n      <div style=\"padding: 28px 24px;\">\n        <p style=\"font-size: 15px; line-height: 1.6; margin-top: 0;\">Dear <strong>Ananya Verma</strong>,</p>\n        \n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Thank you for applying for the <strong>Backend Developer</strong> position at our organization and for sharing your resume.\n        </p>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Our technical evaluation team has thoroughly reviewed your background against the active role requirements and competencies for this vacancy.\n        </p>\n\n        <!-- Evaluation Summary Card -->\n        <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 20px 0;\">\n          <div style=\"display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;\">\n            <strong style=\"color: #0f172a; font-size: 15px;\">📊 Screening Evaluation Summary</strong>\n            <span style=\"background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 99px;\">Role Match: 43%</span>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;\">Skills Identified in Your Profile:</span>\n            <div><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">SQL / PostgreSQL</span></div>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #991b1b; display: block; margin-bottom: 6px;\">Critical Missing Skills for \"Backend Developer\":</span>\n            <div><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Node.js</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Express</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ REST APIs</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ MongoDB</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Databases</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Backend Development</span></div>\n          </div>\n        </div>\n\n        <!-- Resume Gaps & Detailed Feedback -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 20px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #92400e; font-size: 14px; font-weight: 700;\">🔍 Identified Gaps &amp; Resume Analysis</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #78350f; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Resume lacks demonstrable proficiency in mandatory requirements for Backend Developer: <strong>Node.js, Express, REST APIs, MongoDB</strong>.</li><li style=\"margin-bottom: 6px;\">Insufficient evidence of production-level project execution matching the <strong>Backend Developer</strong> job description.</li>\n          </ul>\n        </div>\n\n        <!-- Recommendations for Future -->\n        <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px; margin-bottom: 24px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #166534; font-size: 14px; font-weight: 700;\">💡 Actionable Recommendations to Strengthen Your Profile</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #14532d; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Deepen hands-on competency in <strong>Node.js, Express, REST APIs</strong>.</li><li style=\"margin-bottom: 6px;\">Include live project links, portfolio dashboards, and quantifiable metrics in your resume.</li>\n          </ul>\n        </div>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          At this stage, we are moving forward with candidates whose technical stack more directly matches our immediate requirements for the <strong>Backend Developer</strong> vacancy.\n        </p>\n\n        <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">\n          We will keep your resume on file for future openings that match your specific profile. We wish you great success in your career.\n        </p>\n\n        <div style=\"margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;\">\n          <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n          <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;\">sharmavageesha2000@gmail.com</span>\n        </div>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Business_Analyst_Resume_2_to_3_Years.pdf",
+      "fileSize": 35960,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788252561985-Business_Analyst_Resume_2_to_3_Years.pdf",
+      "urlPath": "/uploads/1788252561985-Business_Analyst_Resume_2_to_3_Years.pdf"
+    },
+    "receivedAt": "2026-09-01T06:43:03.000Z",
+    "evaluatedAt": "2026-09-01T08:49:29.211Z",
+    "source": "EMAIL_INBOX_ATTACHMENT"
+  },
+  {
+    "id": "cand-1788252577281-5164",
+    "name": "Rohan Sharma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "+91 98765 43210",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "AI/ML Engineer",
+    "experienceYears": 3,
+    "skills": [
+      "Python",
+      "Machine Learning",
+      "LLMs",
+      "Data Processing",
+      "AI Workflows"
+    ],
+    "missingSkills": [
+      "PyTorch / TensorFlow"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 29,
+      "experienceRelevance": 30,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 86,
+    "status": "SELECTED",
+    "interviewStatus": "SCHEDULED",
+    "offerStatus": "PENDING",
+    "summary": "Rohan Sharma possesses 3 years of relevant experience aligned with AI/ML Engineer. Strong foundation in Python, Machine Learning, LLMs, Data Processing. Shortlisted for technical interview.",
+    "strengths": [
+      "3 years of demonstrated experience in AI/ML Engineer",
+      "Strong skills in Python, Machine Learning, LLMs"
+    ],
+    "weaknesses": [
+      "In-depth architecture to be assessed during technical interview"
+    ],
+    "interviewSchedule": {
+      "date": "Friday, 04 September 2026",
+      "time": "03:00 PM IST",
+      "duration": "45 Minutes",
+      "roundName": "Round 1: Technical Assessment",
+      "interviewer": "Vageesha Sharma (Founder & Hiring Lead)",
+      "meetLink": "https://meet.google.com/kgg-jkdo-exp",
+      "format": "Google Meet Video Call",
+      "preparationNotes": "Please be prepared to discuss past projects, core architecture, and technologies required for AI/ML Engineer."
+    },
+    "emailSubject": "🎉 Interview Invitation: AI/ML Engineer - Vageesha Sharma's Team",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;\">\n      <div style=\"text-align: center; margin-bottom: 20px;\">\n        <h2 style=\"color: #0f766e; margin-bottom: 4px;\">🎉 Congratulations, Rohan Sharma!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 15px;\">Your application for <strong>AI/ML Engineer</strong> has been <strong>Shortlisted</strong></p>\n      </div>\n      <p>Dear <strong>Rohan Sharma</strong>,</p>\n      <p>Thank you for applying for the <strong>AI/ML Engineer</strong> position. We thoroughly reviewed your resume and credentials. We are impressed by your <strong>3 years of relevant experience</strong> and strong foundation in <strong>Python, Machine Learning, LLMs, Data Processing, AI Workflows</strong>.</p>\n      <p>We are delighted to invite you for your initial technical interview with our hiring team.</p>\n      <div style=\"background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 20px; margin: 20px 0;\">\n        <h3 style=\"margin: 0 0 12px 0; color: #0f766e; font-size: 16px;\">📅 Interview Schedule Details</h3>\n        <p style=\"margin: 6px 0;\"><strong>Position:</strong> AI/ML Engineer</p>\n        <p style=\"margin: 6px 0;\"><strong>Date:</strong> Friday, 04 September 2026</p>\n        <p style=\"margin: 6px 0;\"><strong>Time:</strong> 03:00 PM IST (Duration: 45 Minutes)</p>\n        <p style=\"margin: 6px 0;\"><strong>Interviewer:</strong> Vageesha Sharma (Founder &amp; Hiring Lead)</p>\n        <p style=\"margin: 14px 0 0 0;\">\n          <a href=\"https://meet.google.com/kgg-jkdo-exp\" target=\"_blank\" style=\"background: #0f766e; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;\">\n            📹 Join Google Meet Interview (https://meet.google.com/kgg-jkdo-exp)\n          </a>\n        </p>\n      </div>\n      <p style=\"font-size: 14px; color: #64748b;\">Please ensure you have a quiet environment, a working camera, and microphone for the video call.</p>\n      <br/>\n      <p>Warm regards,<br/><strong>Vageesha Sharma</strong><br/>Founder &amp; Hiring Lead<br/>sharmavageesha2000@gmail.com</p>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Full_Stack_AI_Engineer_Resume (2).pdf",
+      "fileSize": 27134,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788252569243-Full_Stack_AI_Engineer_Resume__2_.pdf",
+      "urlPath": "/uploads/1788252569243-Full_Stack_AI_Engineer_Resume__2_.pdf"
+    },
+    "receivedAt": "2026-09-01T06:41:48.000Z",
+    "evaluatedAt": "2026-09-01T08:49:37.281Z",
+    "source": "EMAIL_INBOX_ATTACHMENT"
+  },
+  {
+    "id": "cand-1788252584252-4615",
+    "name": "Rohan Sharma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "+91 98765 43210",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Frontend Developer",
+    "experienceYears": 2,
+    "skills": [
+      "React.js",
+      "JavaScript",
+      "HTML5 & CSS3",
+      "TypeScript",
+      "Responsive Design",
+      "REST APIs"
+    ],
+    "missingSkills": [
+      "Tailwind CSS"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 30,
+      "experienceRelevance": 20,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 77,
+    "status": "SELECTED",
+    "interviewStatus": "SCHEDULED",
+    "offerStatus": "PENDING",
+    "summary": "Rohan Sharma possesses 2 years of relevant experience aligned with Frontend Developer. Strong foundation in React.js, JavaScript, HTML5 & CSS3, TypeScript. Shortlisted for technical interview.",
+    "strengths": [
+      "2 years of demonstrated experience in Frontend Developer",
+      "Strong skills in React.js, JavaScript, HTML5 & CSS3"
+    ],
+    "weaknesses": [
+      "In-depth architecture to be assessed during technical interview"
+    ],
+    "interviewSchedule": {
+      "date": "Friday, 04 September 2026",
+      "time": "03:00 PM IST",
+      "duration": "45 Minutes",
+      "roundName": "Round 1: Technical Assessment",
+      "interviewer": "Vageesha Sharma (Founder & Hiring Lead)",
+      "meetLink": "https://meet.google.com/ajv-dgen-gfo",
+      "format": "Google Meet Video Call",
+      "preparationNotes": "Please be prepared to discuss past projects, core architecture, and technologies required for Frontend Developer."
+    },
+    "emailSubject": "🎉 Interview Invitation: Frontend Developer - Vageesha Sharma's Team",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;\">\n      <div style=\"text-align: center; margin-bottom: 20px;\">\n        <h2 style=\"color: #0f766e; margin-bottom: 4px;\">🎉 Congratulations, Rohan Sharma!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 15px;\">Your application for <strong>Frontend Developer</strong> has been <strong>Shortlisted</strong></p>\n      </div>\n      <p>Dear <strong>Rohan Sharma</strong>,</p>\n      <p>Thank you for applying for the <strong>Frontend Developer</strong> position. We thoroughly reviewed your resume and credentials. We are impressed by your <strong>2 years of relevant experience</strong> and strong foundation in <strong>React.js, JavaScript, HTML5 & CSS3, TypeScript, Responsive Design</strong>.</p>\n      <p>We are delighted to invite you for your initial technical interview with our hiring team.</p>\n      <div style=\"background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 20px; margin: 20px 0;\">\n        <h3 style=\"margin: 0 0 12px 0; color: #0f766e; font-size: 16px;\">📅 Interview Schedule Details</h3>\n        <p style=\"margin: 6px 0;\"><strong>Position:</strong> Frontend Developer</p>\n        <p style=\"margin: 6px 0;\"><strong>Date:</strong> Friday, 04 September 2026</p>\n        <p style=\"margin: 6px 0;\"><strong>Time:</strong> 03:00 PM IST (Duration: 45 Minutes)</p>\n        <p style=\"margin: 6px 0;\"><strong>Interviewer:</strong> Vageesha Sharma (Founder &amp; Hiring Lead)</p>\n        <p style=\"margin: 14px 0 0 0;\">\n          <a href=\"https://meet.google.com/ajv-dgen-gfo\" target=\"_blank\" style=\"background: #0f766e; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;\">\n            📹 Join Google Meet Interview (https://meet.google.com/ajv-dgen-gfo)\n          </a>\n        </p>\n      </div>\n      <p style=\"font-size: 14px; color: #64748b;\">Please ensure you have a quiet environment, a working camera, and microphone for the video call.</p>\n      <br/>\n      <p>Warm regards,<br/><strong>Vageesha Sharma</strong><br/>Founder &amp; Hiring Lead<br/>sharmavageesha2000@gmail.com</p>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Frontend_Developer_1_3_Years_Resume.pdf",
+      "fileSize": 26794,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788252577300-Frontend_Developer_1_3_Years_Resume.pdf",
+      "urlPath": "/uploads/1788252577300-Frontend_Developer_1_3_Years_Resume.pdf"
+    },
+    "receivedAt": "2026-09-01T06:34:27.000Z",
+    "evaluatedAt": "2026-09-01T08:49:44.252Z",
+    "source": "EMAIL_INBOX_ATTACHMENT"
+  },
+  {
+    "id": "cand-1788252591681-2504",
+    "name": "Ananya Verma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "+91 98765 43210",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Business Analyst",
+    "experienceYears": 2.5,
+    "skills": [
+      "Requirement Gathering (BRD/FRD)",
+      "Agile / Scrum",
+      "Jira",
+      "Process Mapping",
+      "Documentation",
+      "Business Analysis"
+    ],
+    "missingSkills": [],
+    "scoreBreakdown": {
+      "technicalSkills": 35,
+      "experienceRelevance": 25,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 90,
+    "status": "SELECTED",
+    "interviewStatus": "SCHEDULED",
+    "offerStatus": "PENDING",
+    "summary": "Ananya Verma possesses 2.5 years of relevant experience aligned with Business Analyst. Strong foundation in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping. Shortlisted for technical interview.",
+    "strengths": [
+      "2.5 years of demonstrated experience in Business Analyst",
+      "Strong skills in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira"
+    ],
+    "weaknesses": [
+      "In-depth architecture to be assessed during technical interview"
+    ],
+    "interviewSchedule": {
+      "date": "Friday, 04 September 2026",
+      "time": "03:00 PM IST",
+      "duration": "45 Minutes",
+      "roundName": "Round 1: Technical Assessment",
+      "interviewer": "Vageesha Sharma (Founder & Hiring Lead)",
+      "meetLink": "https://meet.google.com/irg-vlju-cuq",
+      "format": "Google Meet Video Call",
+      "preparationNotes": "Please be prepared to discuss past projects, core architecture, and technologies required for Business Analyst."
+    },
+    "emailSubject": "🎉 Interview Invitation: Business Analyst - Vageesha Sharma's Team",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;\">\n      <div style=\"text-align: center; margin-bottom: 20px;\">\n        <h2 style=\"color: #0f766e; margin-bottom: 4px;\">🎉 Congratulations, Ananya Verma!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 15px;\">Your application for <strong>Business Analyst</strong> has been <strong>Shortlisted</strong></p>\n      </div>\n      <p>Dear <strong>Ananya Verma</strong>,</p>\n      <p>Thank you for applying for the <strong>Business Analyst</strong> position. We thoroughly reviewed your resume and credentials. We are impressed by your <strong>2.5 years of relevant experience</strong> and strong foundation in <strong>Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping, Documentation</strong>.</p>\n      <p>We are delighted to invite you for your initial technical interview with our hiring team.</p>\n      <div style=\"background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 20px; margin: 20px 0;\">\n        <h3 style=\"margin: 0 0 12px 0; color: #0f766e; font-size: 16px;\">📅 Interview Schedule Details</h3>\n        <p style=\"margin: 6px 0;\"><strong>Position:</strong> Business Analyst</p>\n        <p style=\"margin: 6px 0;\"><strong>Date:</strong> Friday, 04 September 2026</p>\n        <p style=\"margin: 6px 0;\"><strong>Time:</strong> 03:00 PM IST (Duration: 45 Minutes)</p>\n        <p style=\"margin: 6px 0;\"><strong>Interviewer:</strong> Vageesha Sharma (Founder &amp; Hiring Lead)</p>\n        <p style=\"margin: 14px 0 0 0;\">\n          <a href=\"https://meet.google.com/irg-vlju-cuq\" target=\"_blank\" style=\"background: #0f766e; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;\">\n            📹 Join Google Meet Interview (https://meet.google.com/irg-vlju-cuq)\n          </a>\n        </p>\n      </div>\n      <p style=\"font-size: 14px; color: #64748b;\">Please ensure you have a quiet environment, a working camera, and microphone for the video call.</p>\n      <br/>\n      <p>Warm regards,<br/><strong>Vageesha Sharma</strong><br/>Founder &amp; Hiring Lead<br/>sharmavageesha2000@gmail.com</p>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Business_Analyst_Resume_2_to_3_Years.pdf",
+      "fileSize": 35960,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788252584275-Business_Analyst_Resume_2_to_3_Years.pdf",
+      "urlPath": "/uploads/1788252584275-Business_Analyst_Resume_2_to_3_Years.pdf"
+    },
+    "receivedAt": "2026-09-01T06:28:35.000Z",
+    "evaluatedAt": "2026-09-01T08:49:51.682Z",
+    "source": "EMAIL_INBOX_ATTACHMENT"
+  },
+  {
+    "id": "cand-1788252594988-4728",
+    "name": "Candidate",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "+91 98765 43210",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Business Analyst",
+    "experienceYears": 2,
+    "skills": [
+      "General Domain Skills"
+    ],
+    "missingSkills": [
+      "Requirement Gathering (BRD/FRD)",
+      "Agile / Scrum",
+      "Jira",
+      "Process Mapping",
+      "Documentation",
+      "Business Analysis"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 8,
+      "experienceRelevance": 8,
+      "education": 10,
+      "communication": 8
+    },
+    "matchScore": 30,
+    "status": "REJECTED",
+    "interviewStatus": "N/A",
+    "offerStatus": "PENDING",
+    "summary": "Candidate applied for Business Analyst. Profile does not satisfy core job requirements. Missing: Requirement Gathering (BRD/FRD), Agile / Scrum, Jira. Status: REJECTED.",
+    "strengths": [
+      "Clear communication and professional presentation"
+    ],
+    "weaknesses": [
+      "Missing key competencies for Business Analyst: Requirement Gathering (BRD/FRD), Agile / Scrum, Jira"
+    ],
+    "interviewSchedule": null,
+    "emailSubject": "Update regarding your application for Business Analyst - Vageesha Sharma",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04);\">\n      <div style=\"background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;\">\n        <span style=\"background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;\">APPLICATION STATUS UPDATE</span>\n        <h2 style=\"margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;\">Application Evaluation &amp; Feedback</h2>\n        <p style=\"margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;\">Role: <strong>Business Analyst</strong> • Vageesha Sharma Talent Acquisition</p>\n      </div>\n\n      <div style=\"padding: 28px 24px;\">\n        <p style=\"font-size: 15px; line-height: 1.6; margin-top: 0;\">Dear <strong>Candidate</strong>,</p>\n        \n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Thank you for applying for the <strong>Business Analyst</strong> position at our organization and for sharing your resume.\n        </p>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Our technical evaluation team has thoroughly reviewed your background against the active role requirements and competencies for this vacancy.\n        </p>\n\n        <!-- Evaluation Summary Card -->\n        <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 20px 0;\">\n          <div style=\"display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;\">\n            <strong style=\"color: #0f172a; font-size: 15px;\">📊 Screening Evaluation Summary</strong>\n            <span style=\"background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 99px;\">Role Match: 30%</span>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;\">Skills Identified in Your Profile:</span>\n            <div><span style=\"color: #64748b; font-size: 13px;\">No direct core technical skills identified for this role</span></div>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #991b1b; display: block; margin-bottom: 6px;\">Critical Missing Skills for \"Business Analyst\":</span>\n            <div><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Requirement Gathering (BRD/FRD)</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Agile / Scrum</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Jira</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Process Mapping</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Documentation</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Business Analysis</span></div>\n          </div>\n        </div>\n\n        <!-- Resume Gaps & Detailed Feedback -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 20px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #92400e; font-size: 14px; font-weight: 700;\">🔍 Identified Gaps &amp; Resume Analysis</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #78350f; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Resume lacks demonstrable proficiency in mandatory requirements for Business Analyst: <strong>Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping</strong>.</li><li style=\"margin-bottom: 6px;\">Insufficient evidence of production-level project execution matching the <strong>Business Analyst</strong> job description.</li>\n          </ul>\n        </div>\n\n        <!-- Recommendations for Future -->\n        <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px; margin-bottom: 24px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #166534; font-size: 14px; font-weight: 700;\">💡 Actionable Recommendations to Strengthen Your Profile</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #14532d; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Deepen hands-on competency in <strong>Requirement Gathering (BRD/FRD), Agile / Scrum, Jira</strong>.</li><li style=\"margin-bottom: 6px;\">Include live project links, portfolio dashboards, and quantifiable metrics in your resume.</li>\n          </ul>\n        </div>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          At this stage, we are moving forward with candidates whose technical stack more directly matches our immediate requirements for the <strong>Business Analyst</strong> vacancy.\n        </p>\n\n        <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">\n          We will keep your resume on file for future openings that match your specific profile. We wish you great success in your career.\n        </p>\n\n        <div style=\"margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;\">\n          <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n          <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;\">sharmavageesha2000@gmail.com</span>\n        </div>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": null,
+    "receivedAt": "2026-09-01T06:28:06.000Z",
+    "evaluatedAt": "2026-09-01T08:49:54.988Z",
+    "source": "EMAIL_INTAKE"
+  },
+  {
+    "id": "cand-1788252598821-9743",
+    "name": "Arjun Mehta",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "+91 98765 43210",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Backend Developer",
+    "experienceYears": 4,
+    "skills": [
+      "Node.js",
+      "REST APIs",
+      "SQL / PostgreSQL",
+      "Databases"
+    ],
+    "missingSkills": [
+      "Express",
+      "MongoDB",
+      "Backend Development"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 8,
+      "experienceRelevance": 8,
+      "education": 10,
+      "communication": 8
+    },
+    "matchScore": 48,
+    "status": "REJECTED",
+    "interviewStatus": "N/A",
+    "offerStatus": "PENDING",
+    "summary": "Arjun Mehta applied for Backend Developer. Profile does not satisfy core job requirements. Missing: Express, MongoDB, Backend Development. Status: REJECTED.",
+    "strengths": [
+      "Clear communication and professional presentation"
+    ],
+    "weaknesses": [
+      "Missing key competencies for Backend Developer: Express, MongoDB, Backend Development"
+    ],
+    "interviewSchedule": null,
+    "emailSubject": "Update regarding your application for Backend Developer - Vageesha Sharma",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04);\">\n      <div style=\"background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;\">\n        <span style=\"background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;\">APPLICATION STATUS UPDATE</span>\n        <h2 style=\"margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;\">Application Evaluation &amp; Feedback</h2>\n        <p style=\"margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;\">Role: <strong>Backend Developer</strong> • Vageesha Sharma Talent Acquisition</p>\n      </div>\n\n      <div style=\"padding: 28px 24px;\">\n        <p style=\"font-size: 15px; line-height: 1.6; margin-top: 0;\">Dear <strong>Arjun Mehta</strong>,</p>\n        \n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Thank you for applying for the <strong>Backend Developer</strong> position at our organization and for sharing your resume.\n        </p>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Our technical evaluation team has thoroughly reviewed your background against the active role requirements and competencies for this vacancy.\n        </p>\n\n        <!-- Evaluation Summary Card -->\n        <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 20px 0;\">\n          <div style=\"display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;\">\n            <strong style=\"color: #0f172a; font-size: 15px;\">📊 Screening Evaluation Summary</strong>\n            <span style=\"background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 99px;\">Role Match: 48%</span>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;\">Skills Identified in Your Profile:</span>\n            <div><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">Node.js</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">REST APIs</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">SQL / PostgreSQL</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">Databases</span></div>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #991b1b; display: block; margin-bottom: 6px;\">Critical Missing Skills for \"Backend Developer\":</span>\n            <div><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Express</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ MongoDB</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Backend Development</span></div>\n          </div>\n        </div>\n\n        <!-- Resume Gaps & Detailed Feedback -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 20px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #92400e; font-size: 14px; font-weight: 700;\">🔍 Identified Gaps &amp; Resume Analysis</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #78350f; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Candidate background is focused in <strong>AI Prompt Engineering</strong> rather than <strong>Backend Developer</strong>.</li><li style=\"margin-bottom: 6px;\">Candidate profile lacks production backend server architecture, Node.js/Express, and relational database schema design required for Backend Developer.</li>\n          </ul>\n        </div>\n\n        <!-- Recommendations for Future -->\n        <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px; margin-bottom: 24px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #166534; font-size: 14px; font-weight: 700;\">💡 Actionable Recommendations to Strengthen Your Profile</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #14532d; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Apply for roles aligned with <strong>AI Prompt Engineering</strong> or build dedicated projects in <strong>Node.js, Express, REST APIs</strong>.</li><li style=\"margin-bottom: 6px;\">Include live project links, portfolio dashboards, and quantifiable metrics in your resume.</li>\n          </ul>\n        </div>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          At this stage, we are moving forward with candidates whose technical stack more directly matches our immediate requirements for the <strong>Backend Developer</strong> vacancy.\n        </p>\n\n        <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">\n          We will keep your resume on file for future openings that match your specific profile. We wish you great success in your career.\n        </p>\n\n        <div style=\"margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;\">\n          <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n          <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;\">sharmavageesha2000@gmail.com</span>\n        </div>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "AI_Workflow_Automation_Specialist_Resume.pdf",
+      "fileSize": 26930,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788252594999-AI_Workflow_Automation_Specialist_Resume.pdf",
+      "urlPath": "/uploads/1788252594999-AI_Workflow_Automation_Specialist_Resume.pdf"
+    },
+    "receivedAt": "2026-09-01T06:26:39.000Z",
+    "evaluatedAt": "2026-09-01T08:49:58.821Z",
+    "source": "EMAIL_INBOX_ATTACHMENT"
+  },
+  {
+    "id": "cand-qa-test-1788190278993",
+    "name": "Aniket Deshmukh",
+    "email": "candidate.aniket@gmail.com",
+    "phone": "+91 98765 00112",
+    "roleApplied": "AI & Workflow Automation Specialist",
+    "experienceYears": 6,
+    "skills": [
+      "Node.js",
+      "Python",
+      "n8n",
+      "Gemini AI",
+      "Docker"
+    ],
+    "matchScore": 94,
+    "status": "SELECTED",
+    "summary": "Candidate demonstrated outstanding alignment during automated testing.",
+    "interviewSchedule": {
+      "date": "2026-09-05",
+      "time": "03:00 PM IST",
+      "meetLink": "https://meet.google.com/hr-qa-test-aniket"
+    },
+    "emailStatus": "SENT",
+    "receivedAt": "2026-08-31T15:31:18.993Z",
+    "source": "AUTOMATED_QA_TEST"
+  },
+  {
+    "id": "cand-1725110001",
+    "name": "Rohan Verma",
+    "email": "rohan.verma@example.com",
+    "phone": "+91 98765 43210",
+    "roleApplied": "Senior Full Stack & AI Engineer",
+    "experienceYears": 5,
+    "education": "B.Tech in Computer Science & Engineering",
+    "skills": [
+      "Node.js",
+      "React.js",
+      "TypeScript",
+      "n8n Automation",
+      "Gemini LLM API",
+      "Docker",
+      "PostgreSQL",
+      "System Design"
+    ],
+    "matchScore": 92,
+    "scoreBreakdown": {
+      "technicalSkills": 28,
+      "experienceRelevance": 28,
+      "education": 18,
+      "communication": 18
+    },
+    "status": "SELECTED",
+    "summary": "Rohan Verma demonstrates exceptional alignment with the Senior Full Stack & AI Engineer role. With 5 years of proven experience in scalable Node.js microservices, n8n workflow automations, and LLM integrations, he exceeds the core requirements.",
+    "strengths": [
+      "Extensive 5+ years experience building production Node.js microservices and REST APIs",
+      "Deep practical expertise with n8n automated pipelines and LLM integrations",
+      "Strong computer science fundamentals and clear architectural communication"
+    ],
+    "weaknesses": [
+      "Could benefit from deeper experience in Kubernetes multi-region orchestration"
+    ],
+    "interviewSchedule": {
+      "date": "2026-09-04",
+      "time": "03:00 PM IST",
+      "duration": "45 Minutes",
+      "roundName": "Round 1: Virtual Technical & System Architecture Discussion",
+      "interviewer": "Vageesha Sharma (HR Lead) & Senior Engineering Panel",
+      "meetLink": "https://meet.google.com/hr-tech-interview-rohan",
+      "format": "Google Meet Video Call",
+      "preparationNotes": "Please be prepared to walk through past projects, n8n workflow architecture, and live problem-solving."
+    },
+    "emailSubject": "Interview Invitation: Senior Full Stack & AI Engineer - Next Steps",
+    "emailHtmlBody": "<div style='font-family: Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;'><div style='text-align: center; margin-bottom: 24px;'><h2 style='color: #0f766e; margin-bottom: 4px;'>🎉 Congratulations, Rohan!</h2><p style='color: #64748b; margin: 0;'>Your application has been shortlisted for an interview</p></div><p>Dear <strong>Rohan Verma</strong>,</p><p>Thank you for applying for the <strong>Senior Full Stack & AI Engineer</strong> position. We thoroughly reviewed your resume and background, and we are delighted to invite you for an interview with our team.</p><div style='background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px; padding: 18px; margin: 20px 0;'><h3 style='margin: 0 0 12px 0; color: #0f766e; font-size: 16px;'>📅 Scheduled Interview Details</h3><table style='width: 100%; font-size: 14px; border-collapse: collapse;'><tr><td style='padding: 6px 0; color: #64748b; width: 35%;'><strong>Date:</strong></td><td style='padding: 6px 0; color: #0f172a;'>Friday, 04 September 2026</td></tr><tr><td style='padding: 6px 0; color: #64748b;'><strong>Time:</strong></td><td style='padding: 6px 0; color: #0f172a;'>03:00 PM IST (45 Minutes)</td></tr><tr><td style='padding: 6px 0; color: #64748b;'><strong>Round:</strong></td><td style='padding: 6px 0; color: #0f172a;'>Round 1: Technical & System Architecture</td></tr><tr><td style='padding: 6px 0; color: #64748b;'><strong>Interviewer:</strong></td><td style='padding: 6px 0; color: #0f172a;'>Vageesha Sharma & Senior Engineering Panel</td></tr><tr><td style='padding: 6px 0; color: #64748b;'><strong>Meeting Link:</strong></td><td style='padding: 6px 0;'><a href='https://meet.google.com/hr-tech-interview-rohan' style='display: inline-block; background: #0f766e; color: #ffffff; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-weight: bold;'>Join Google Meet</a></td></tr></table></div><p style='font-size: 14px; color: #475569;'>Please reply to this email to confirm your availability. We look forward to speaking with you!</p><hr style='border: none; border-top: 1px solid #e2e8f0; margin: 24px 0;'/><p style='margin: 0; font-size: 13px; color: #64748b;'>Warm regards,<br/><strong>Vageesha Sharma</strong><br/>Talent Acquisition & HR Lead<br/>sharmavageesha2000@gmail.com</p></div>",
+    "emailStatus": "SENT",
+    "receivedAt": "2026-08-31T14:30:00.000Z",
+    "evaluatedAt": "2026-08-31T14:30:15.000Z",
+    "source": "EMAIL_ATTACHMENT_PDF"
+  },
+  {
+    "id": "cand-1725110002",
+    "name": "Priya Ananya Nair",
+    "email": "priya.nair@example.com",
+    "phone": "+91 91234 56789",
+    "roleApplied": "AI & Workflow Automation Specialist",
+    "experienceYears": 4,
+    "education": "M.S. in Software Systems",
+    "skills": [
+      "n8n",
+      "Python",
+      "FastAPI",
+      "Gemini AI",
+      "OpenAI APIs",
+      "Workflow Automation",
+      "JavaScript",
+      "AWS"
+    ],
+    "matchScore": 88,
+    "scoreBreakdown": {
+      "technicalSkills": 27,
+      "experienceRelevance": 26,
+      "education": 18,
+      "communication": 17
+    },
+    "status": "SELECTED",
+    "summary": "Priya Nair possesses stellar credentials in building complex n8n workflows, generative AI pipelines, and enterprise automation solutions. Her technical depth and clear domain understanding make her a strong hire.",
+    "strengths": [
+      "Proven track record building 50+ enterprise n8n workflow automations",
+      "Hands-on implementation of Google Gemini and generative AI models",
+      "Master's degree in Software Systems with top academic performance"
+    ],
+    "weaknesses": [
+      "Relatively brief tenure in current organization"
+    ],
+    "interviewSchedule": {
+      "date": "2026-09-05",
+      "time": "11:30 AM IST",
+      "duration": "45 Minutes",
+      "roundName": "Round 1: Automation Pipeline & AI Integration",
+      "interviewer": "Vageesha Sharma (HR Lead)",
+      "meetLink": "https://meet.google.com/hr-ai-interview-priya",
+      "format": "Google Meet Video Call",
+      "preparationNotes": "Walkthrough of n8n webhook nodes, error handling, and API rate-limiting strategies."
+    },
+    "emailSubject": "Interview Invitation: AI & Workflow Automation Specialist - Next Steps",
+    "emailHtmlBody": "<div style='font-family: Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;'><div style='text-align: center; margin-bottom: 24px;'><h2 style='color: #0f766e; margin-bottom: 4px;'>🎉 Congratulations, Priya!</h2><p style='color: #64748b; margin: 0;'>Your application has been shortlisted for an interview</p></div><p>Dear <strong>Priya Ananya Nair</strong>,</p><p>We are impressed by your extensive experience in workflow automation and AI integration for the <strong>AI & Workflow Automation Specialist</strong> position.</p><div style='background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px; padding: 18px; margin: 20px 0;'><h3 style='margin: 0 0 12px 0; color: #0f766e; font-size: 16px;'>📅 Scheduled Interview Details</h3><table style='width: 100%; font-size: 14px; border-collapse: collapse;'><tr><td style='padding: 6px 0; color: #64748b; width: 35%;'><strong>Date:</strong></td><td style='padding: 6px 0; color: #0f172a;'>Saturday, 05 September 2026</td></tr><tr><td style='padding: 6px 0; color: #64748b;'><strong>Time:</strong></td><td style='padding: 6px 0; color: #0f172a;'>11:30 AM IST (45 Minutes)</td></tr><tr><td style='padding: 6px 0; color: #64748b;'><strong>Meeting Link:</strong></td><td style='padding: 6px 0;'><a href='https://meet.google.com/hr-ai-interview-priya' style='display: inline-block; background: #0f766e; color: #ffffff; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-weight: bold;'>Join Google Meet</a></td></tr></table></div><hr style='border: none; border-top: 1px solid #e2e8f0; margin: 24px 0;'/><p style='margin: 0; font-size: 13px; color: #64748b;'>Warm regards,<br/><strong>Vageesha Sharma</strong><br/>sharmavageesha2000@gmail.com</p></div>",
+    "emailStatus": "SENT",
+    "receivedAt": "2026-08-31T15:10:00.000Z",
+    "evaluatedAt": "2026-08-31T15:10:18.000Z",
+    "source": "EMAIL_ATTACHMENT_DOCX"
+  },
+  {
+    "id": "cand-1725110003",
+    "name": "Amit Kumar Patel",
+    "email": "amit.patel99@example.com",
+    "phone": "+91 88776 54321",
+    "roleApplied": "DevOps & Cloud Engineer",
+    "experienceYears": 0.5,
+    "education": "Higher Secondary / Basic Certification",
+    "skills": [
+      "Data Entry",
+      "MS Word",
+      "Basic Excel",
+      "Typing"
+    ],
+    "matchScore": 22,
+    "scoreBreakdown": {
+      "technicalSkills": 5,
+      "experienceRelevance": 5,
+      "education": 7,
+      "communication": 5
+    },
+    "status": "REJECTED",
+    "summary": "Candidate's background is primarily in basic data entry and spreadsheet logging. Lacks required degree, cloud computing experience, and software engineering capabilities for a Senior Cloud & AI Architect role.",
+    "strengths": [
+      "Punctual and enthusiastic tone in application email",
+      "Basic document handling skills"
+    ],
+    "weaknesses": [
+      "No experience with cloud architecture, AWS/GCP, or microservices",
+      "Lacks programming knowledge in modern languages",
+      "Significant gap in senior-level leadership and design experience"
+    ],
+    "interviewSchedule": null,
+    "emailSubject": "Update regarding your application for Senior Cloud & AI Architect",
+    "emailHtmlBody": "<div style='font-family: Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;'><div style='text-align: center; margin-bottom: 24px;'><h2 style='color: #475569; margin-bottom: 4px;'>Application Status Update</h2><p style='color: #64748b; margin: 0;'>Thank you for your interest in our team</p></div><p>Dear <strong>Amit Kumar Patel</strong>,</p><p>Thank you for taking the time to apply for the <strong>Senior Cloud & AI Architect</strong> position and sharing your application with us.</p><p>After careful evaluation of all candidates, we have decided to move forward with applicants whose technical experience and cloud architecture background more closely align with our immediate project demands.</p><div style='background: #f8fafc; border-left: 4px solid #94a3b8; border-radius: 4px; padding: 14px; margin: 20px 0;'><p style='margin: 0; font-size: 14px; color: #475569;'><strong>Recruiter Note:</strong> We will keep your details in our talent database for future roles that match your skill set.</p></div><p style='font-size: 14px; color: #475569;'>We sincerely wish you the best in your career pursuits.</p><hr style='border: none; border-top: 1px solid #e2e8f0; margin: 24px 0;'/><p style='margin: 0; font-size: 13px; color: #64748b;'>Warm regards,<br/><strong>Vageesha Sharma</strong><br/>Talent Acquisition Team<br/>sharmavageesha2000@gmail.com</p></div>",
+    "emailStatus": "SENT",
+    "receivedAt": "2026-08-31T15:45:00.000Z",
+    "evaluatedAt": "2026-08-31T15:45:12.000Z",
+    "source": "EMAIL_ATTACHMENT_PDF"
+  },
+  {
+    "id": "cand-1725110004",
+    "name": "Devika Joshi",
+    "email": "devika.joshi@example.com",
+    "phone": "+91 97654 32198",
+    "roleApplied": "HR & Talent Operations Lead",
+    "experienceYears": 6,
+    "education": "MBA in Human Resource Management",
+    "skills": [
+      "Talent Acquisition",
+      "Technical Screening",
+      "HR Automation",
+      "Interview Scheduling",
+      "ATS Management",
+      "Employee Onboarding"
+    ],
+    "matchScore": 94,
+    "scoreBreakdown": {
+      "technicalSkills": 28,
+      "experienceRelevance": 29,
+      "education": 19,
+      "communication": 18
+    },
+    "status": "SELECTED",
+    "summary": "Devika brings 6 years of stellar HR recruitment leadership with deep familiarity in automating hiring pipelines, managing ATS workflows, and driving candidate engagement.",
+    "strengths": [
+      "Extensive experience leading talent acquisition in tech organizations",
+      "Proven capability in deploying AI-driven recruitment workflows",
+      "MBA from a premier institution with top honors"
+    ],
+    "weaknesses": [
+      "Notice period is 60 days (negotiable)"
+    ],
+    "interviewSchedule": {
+      "date": "2026-09-04",
+      "time": "04:30 PM IST",
+      "duration": "45 Minutes",
+      "roundName": "Round 1: HR Leadership & Strategic Talent Acquisition",
+      "interviewer": "Vageesha Sharma (HR Lead)",
+      "meetLink": "https://meet.google.com/hr-lead-interview-devika",
+      "format": "Google Meet Video Call",
+      "preparationNotes": "Discussion around scaling automated hiring processes and candidate satisfaction metrics."
+    },
+    "emailSubject": "Interview Invitation: HR & Talent Operations Lead - Next Steps",
+    "emailHtmlBody": "<div style='font-family: Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;'><div style='text-align: center; margin-bottom: 24px;'><h2 style='color: #0f766e; margin-bottom: 4px;'>🎉 Congratulations, Devika!</h2><p style='color: #64748b; margin: 0;'>Your application has been shortlisted for an interview</p></div><p>Dear <strong>Devika Joshi</strong>,</p><p>We are delighted to invite you for an interview for the <strong>HR & Talent Operations Lead</strong> position.</p><div style='background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px; padding: 18px; margin: 20px 0;'><h3 style='margin: 0 0 12px 0; color: #0f766e; font-size: 16px;'>📅 Scheduled Interview Details</h3><table style='width: 100%; font-size: 14px; border-collapse: collapse;'><tr><td style='padding: 6px 0; color: #64748b; width: 35%;'><strong>Date:</strong></td><td style='padding: 6px 0; color: #0f172a;'>Friday, 04 September 2026</td></tr><tr><td style='padding: 6px 0; color: #64748b;'><strong>Time:</strong></td><td style='padding: 6px 0; color: #0f172a;'>04:30 PM IST (45 Minutes)</td></tr><tr><td style='padding: 6px 0; color: #64748b;'><strong>Meeting Link:</strong></td><td style='padding: 6px 0;'><a href='https://meet.google.com/hr-lead-interview-devika' style='display: inline-block; background: #0f766e; color: #ffffff; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-weight: bold;'>Join Google Meet</a></td></tr></table></div><hr style='border: none; border-top: 1px solid #e2e8f0; margin: 24px 0;'/><p style='margin: 0; font-size: 13px; color: #64748b;'>Warm regards,<br/><strong>Vageesha Sharma</strong><br/>sharmavageesha2000@gmail.com</p></div>",
+    "emailStatus": "SENT",
+    "receivedAt": "2026-08-31T16:00:00.000Z",
+    "evaluatedAt": "2026-08-31T16:00:14.000Z",
+    "source": "EMAIL_ATTACHMENT_PDF"
+  },
+  {
+    "id": "cand-1725110005",
+    "name": "Karan Malhotra",
+    "email": "karan.malhotra@example.com",
+    "phone": "+91 93456 78901",
+    "roleApplied": "Senior Backend & Database Architect",
+    "experienceYears": 1,
+    "education": "B.A. in History",
+    "skills": [
+      "HTML",
+      "CSS",
+      "WordPress Blogging"
+    ],
+    "matchScore": 28,
+    "scoreBreakdown": {
+      "technicalSkills": 7,
+      "experienceRelevance": 6,
+      "education": 7,
+      "communication": 8
+    },
+    "status": "REJECTED",
+    "summary": "Candidate lacks necessary database indexing, query optimization, and distributed backend architecture experience needed for a Senior Database Architect role.",
+    "strengths": [
+      "Good written communication skills",
+      "Familiar with basic content management systems"
+    ],
+    "weaknesses": [
+      "No experience with relational or NoSQL database tuning",
+      "Lacks backend programming experience (Node.js, Go, Java, or Python)",
+      "Educational background is unrelated to software engineering"
+    ],
+    "interviewSchedule": null,
+    "emailSubject": "Update regarding your application for Senior Backend & Database Architect",
+    "emailHtmlBody": "<div style='font-family: Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;'><div style='text-align: center; margin-bottom: 24px;'><h2 style='color: #475569; margin-bottom: 4px;'>Application Status Update</h2><p style='color: #64748b; margin: 0;'>Thank you for your application</p></div><p>Dear <strong>Karan Malhotra</strong>,</p><p>Thank you for your interest in the <strong>Senior Backend & Database Architect</strong> position. After careful review, we are unable to advance your profile at this time due to requirements for deep database engineering experience.</p><p>We will keep your resume for future suitable openings.</p><hr style='border: none; border-top: 1px solid #e2e8f0; margin: 24px 0;'/><p style='margin: 0; font-size: 13px; color: #64748b;'>Warm regards,<br/><strong>Vageesha Sharma</strong><br/>sharmavageesha2000@gmail.com</p></div>",
+    "emailStatus": "SENT",
+    "receivedAt": "2026-08-31T16:20:00.000Z",
+    "evaluatedAt": "2026-08-31T16:20:10.000Z",
+    "source": "EMAIL_ATTACHMENT_PDF"
+  },
+  {
+    "id": "cand-kabir-singh",
+    "name": "Kabir Singh",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "+91 90123 45678",
+    "education": "B.Tech in Artificial Intelligence & Data Science",
+    "roleApplied": "Data Analyst",
+    "experienceYears": 0,
+    "skills": [
+      "SQL",
+      "Python",
+      "Analytics"
+    ],
+    "missingSkills": [
+      "Excel",
+      "Power BI / Tableau",
+      "Data Visualization"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 10,
+      "experienceRelevance": 8,
+      "education": 10,
+      "communication": 10
+    },
+    "matchScore": 38,
+    "status": "REJECTED",
+    "interviewStatus": "N/A",
+    "offerStatus": "PENDING",
+    "summary": "Candidate is an AI Prompt Engineer lacking Power BI, Tableau, and Excel data modeling required for Data Analyst.",
+    "strengths": [
+      "Clear communication and professional presentation",
+      "Python and Prompt Engineering foundation"
+    ],
+    "weaknesses": [
+      "Missing key competencies for Data Analyst: Excel, Power BI / Tableau, Data Visualization"
+    ],
+    "interviewSchedule": null,
+    "emailSubject": "Update regarding your application for Data Analyst - Vageesha Sharma",
+    "emailHtmlBody": "<p>Constructive feedback regarding Data Analyst application</p>",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "4_Kabir_Singh_AI_Prompt_Engineer_Fresher (1).pdf",
+      "fileSize": 184500,
+      "path": "/uploads/1788200567348-4_Kabir_Singh_AI_Prompt_Engineer_Fresher.pdf"
+    },
+    "receivedAt": "2026-09-01T07:50:58.232Z",
+    "evaluatedAt": "2026-09-01T08:50:58.233Z",
+    "source": "EMAIL_INBOX_ATTACHMENT"
+  },
+  {
+    "id": "cand-rishu-frontend",
+    "name": "Rishu Paliwal",
+    "email": "paliwalrishu2000@gmail.com",
+    "phone": "+91 98765 43210",
+    "education": "B.Tech in Computer Science",
+    "roleApplied": "Frontend Developer",
+    "experienceYears": 2,
+    "skills": [
+      "React.js",
+      "JavaScript",
+      "HTML5 & CSS3",
+      "TypeScript",
+      "Responsive Design"
+    ],
+    "missingSkills": [
+      "Tailwind CSS"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 30,
+      "experienceRelevance": 25,
+      "education": 12,
+      "communication": 10
+    },
+    "matchScore": 77,
+    "status": "SELECTED",
+    "interviewStatus": "SCHEDULED",
+    "offerStatus": "PENDING",
+    "summary": "Strong frontend capabilities in React.js and responsive UI design.",
+    "strengths": [
+      "2 years experience in React",
+      "Modern JavaScript and component state"
+    ],
+    "weaknesses": [
+      "Tailwind CSS to be reviewed during interview"
+    ],
+    "interviewSchedule": {
+      "date": "Friday, 04 September 2026",
+      "time": "03:00 PM IST",
+      "duration": "45 Minutes",
+      "roundName": "Round 1: Technical Assessment",
+      "interviewer": "Vageesha Sharma (Founder & Hiring Lead)",
+      "meetLink": "https://meet.google.com/qoy-livx-rku",
+      "format": "Google Meet Video Call"
+    },
+    "emailSubject": "🎉 Interview Invitation: Frontend Developer - Vageesha Sharma's Team",
+    "emailHtmlBody": "<p>Interview invitation</p>",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Frontend_Developer_1_3_Years_Resume.pdf",
+      "fileSize": 195000,
+      "path": "/uploads/1788243684117-Frontend_Developer_1_3_Years_Resume.pdf"
+    },
+    "receivedAt": "2026-09-01T06:50:58.233Z",
+    "evaluatedAt": "2026-09-01T08:50:58.233Z",
+    "source": "EMAIL_INBOX_ATTACHMENT"
+  }
+]
