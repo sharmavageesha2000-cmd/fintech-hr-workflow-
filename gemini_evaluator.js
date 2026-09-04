@@ -387,43 +387,84 @@ function generateStructuredRejectionHtml({
 }
 
 /**
- * Generate Structured Selected Interview Invitation HTML
+ * Generate Structured Selected Technical Assessment Invitation HTML (Removes Google Meet & Embeds 20-MCQ Test Link)
  */
 function generateStructuredSelectedHtml({
   candidateName = 'Candidate',
+  candidateEmail = '',
+  candidateId = '',
   roleApplied = 'Frontend Developer',
   detectedExp = 3,
   matchedSkills = [],
-  interviewDate = 'Friday, 04 September 2026',
-  interviewTime = '03:00 PM IST',
-  meetUrl = 'https://meet.google.com/qoy-livx-rku'
+  assessmentUrl = ''
 }) {
   const skillsList = matchedSkills.slice(0, 5).join(', ') || 'core technical competencies';
+  const defaultBaseUrl = process.env.BASE_URL || (process.env.NODE_ENV === 'production' ? 'https://hr-smartflow-automation.onrender.com' : 'http://localhost:3000');
+  const testLink = assessmentUrl || `${defaultBaseUrl}/assessment.html?role=${encodeURIComponent(roleApplied)}&name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&id=${encodeURIComponent(candidateId || '')}`;
 
   return `
-    <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
-      <div style="text-align: center; margin-bottom: 20px;">
-        <h2 style="color: #0f766e; margin-bottom: 4px;">🎉 Congratulations, ${candidateName}!</h2>
-        <p style="color: #64748b; margin: 0; font-size: 15px;">Your application for <strong>${roleApplied}</strong> has been <strong>Shortlisted</strong></p>
+    <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 14px; background: #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+      <div style="text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9;">
+        <span style="background: #ecfdf5; color: #047857; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 99px; display: inline-block; margin-bottom: 10px; border: 1px solid #a7f3d0;">RESUME SHORTLISTED</span>
+        <h2 style="color: #0f172a; margin: 0 0 6px 0; font-size: 22px; font-weight: 800;">🎉 Congratulations, ${candidateName}!</h2>
+        <p style="color: #64748b; margin: 0; font-size: 14.5px;">Your application for <strong>${roleApplied}</strong> has been approved for the next stage.</p>
       </div>
-      <p>Dear <strong>${candidateName}</strong>,</p>
-      <p>Thank you for applying for the <strong>${roleApplied}</strong> position. We thoroughly reviewed your resume and credentials. We are impressed by your <strong>${detectedExp} years of relevant experience</strong> and strong foundation in <strong>${skillsList}</strong>.</p>
-      <p>We are delighted to invite you for your initial technical interview with our hiring team.</p>
-      <div style="background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 20px; margin: 20px 0;">
-        <h3 style="margin: 0 0 12px 0; color: #0f766e; font-size: 16px;">📅 Interview Schedule Details</h3>
-        <p style="margin: 6px 0;"><strong>Position:</strong> ${roleApplied}</p>
-        <p style="margin: 6px 0;"><strong>Date:</strong> ${interviewDate}</p>
-        <p style="margin: 6px 0;"><strong>Time:</strong> ${interviewTime} (Duration: 45 Minutes)</p>
-        <p style="margin: 6px 0;"><strong>Interviewer:</strong> Vageesha Sharma (Founder &amp; Hiring Lead)</p>
-        <p style="margin: 14px 0 0 0;">
-          <a href="${meetUrl}" target="_blank" style="background: #0f766e; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">
-            📹 Join Google Meet Interview (${meetUrl})
+
+      <p style="font-size: 15px; line-height: 1.6; color: #334155;">Dear <strong>${candidateName}</strong>,</p>
+      <p style="font-size: 14.5px; line-height: 1.6; color: #334155;">Thank you for applying for the <strong>${roleApplied}</strong> position at Finova Technologies. We thoroughly reviewed your resume and were impressed by your <strong>${detectedExp} years of relevant experience</strong> and proficiency in <strong>${skillsList}</strong>.</p>
+      <p style="font-size: 14.5px; line-height: 1.6; color: #334155;">To finalize your selection and generate your official employment offer, you are invited to complete your <strong>Online Technical Assessment</strong>.</p>
+
+      <!-- Assessment Card -->
+      <div style="background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%); border: 1.5px solid #5eead4; border-radius: 12px; padding: 22px; margin: 24px 0;">
+        <h3 style="margin: 0 0 14px 0; color: #0f766e; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+          📝 Technical Assessment Details (${roleApplied})
+        </h3>
+        
+        <table style="width: 100%; font-size: 13.5px; color: #1e293b; border-collapse: collapse; margin-bottom: 16px;">
+          <tr>
+            <td style="padding: 6px 0; color: #64748b; width: 42%;"><strong>Role Domain:</strong></td>
+            <td style="padding: 6px 0; font-weight: 700; color: #0f766e;">${roleApplied} (20 Domain MCQs)</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 0; color: #64748b;"><strong>Time Duration:</strong></td>
+            <td style="padding: 6px 0; font-weight: 700;">25 Minutes</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 0; color: #64748b;"><strong>Passing Requirement:</strong></td>
+            <td style="padding: 6px 0; font-weight: 800; color: #047857;">80% or above (16 / 20 correct)</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 0; color: #64748b;"><strong>Automated Outcome:</strong></td>
+            <td style="padding: 6px 0; font-weight: 700; color: #4338ca;">Immediate Official Job Offer &amp; Call Letter Dispatch upon passing</td>
+          </tr>
+        </table>
+
+        <!-- Anti-Cheating & Proctoring Notice -->
+        <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; font-size: 12.5px; color: #92400e; line-height: 1.5;">
+          <strong>🛡️ Anti-Cheating &amp; Proctoring Regulations:</strong>
+          <ul style="margin: 6px 0 0 0; padding-left: 18px;">
+            <li>Copy/paste and right-click are strictly disabled in the test portal.</li>
+            <li>Do not switch browser tabs or open secondary windows on mobile or laptop. Violations will be recorded and may auto-submit your test.</li>
+          </ul>
+        </div>
+
+        <!-- CTA Button -->
+        <div style="text-align: center;">
+          <a href="${testLink}" target="_blank" style="background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: #ffffff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 15px; display: inline-block; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);">
+            🚀 Start Online Technical Assessment (20 MCQs)
           </a>
-        </p>
+        </div>
+        <p style="text-align: center; font-size: 12px; color: #64748b; margin: 10px 0 0 0;">Link: <a href="${testLink}" target="_blank" style="color: #0f766e;">${testLink}</a></p>
       </div>
-      <p style="font-size: 14px; color: #64748b;">Please ensure you have a quiet environment, a working camera, and microphone for the video call.</p>
-      <br/>
-      <p>Warm regards,<br/><strong>Vageesha Sharma</strong><br/>Founder &amp; Hiring Lead<br/>sharmavageesha2000@gmail.com</p>
+
+      <p style="font-size: 14px; color: #475569; line-height: 1.6;">Please take the test in a quiet environment on a reliable internet connection. We wish you the very best of luck!</p>
+
+      <div style="margin-top: 26px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+        <strong style="color: #0f172a; font-size: 14.5px; display: block;">Vageesha Sharma</strong>
+        <span style="color: #64748b; font-size: 13px; display: block;">Founder &amp; Hiring Lead</span>
+        <span style="color: #64748b; font-size: 13px; display: block;">Talent Acquisition Division</span>
+        <span style="color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;">sharmavageesha2000@gmail.com</span>
+      </div>
     </div>
   `;
 }
@@ -689,22 +730,21 @@ function heuristicFallbackEvaluation({
     recommendations.push(`Include live project links, portfolio dashboards, and quantifiable metrics in your resume.`);
   }
 
-  const interviewDate = 'Friday, 04 September 2026';
-  const interviewTime = '03:00 PM IST';
+  const defaultBaseUrl = process.env.BASE_URL || (process.env.NODE_ENV === 'production' ? 'https://hr-smartflow-automation.onrender.com' : 'http://localhost:3000');
+  const testAssessmentLink = `${defaultBaseUrl}/assessment.html?role=${encodeURIComponent(targetJob.title)}&name=${encodeURIComponent(resolvedName)}&email=${encodeURIComponent(candidateEmail || '')}`;
 
   const emailSubject = isSelected 
-    ? `🎉 Interview Invitation: ${targetJob.title} - Vageesha Sharma's Team` 
+    ? `📝 Technical Assessment Link: ${targetJob.title} - Finova Technologies` 
     : `Update regarding your application for ${targetJob.title} - Vageesha Sharma`;
 
   const emailHtmlBody = isSelected
     ? generateStructuredSelectedHtml({
         candidateName: resolvedName,
+        candidateEmail,
         roleApplied: targetJob.title,
         detectedExp,
         matchedSkills: matched,
-        interviewDate,
-        interviewTime,
-        meetUrl: authenticMeetUrl
+        assessmentUrl: testAssessmentLink
       })
     : generateStructuredRejectionHtml({
         candidateName: resolvedName,
@@ -734,23 +774,21 @@ function heuristicFallbackEvaluation({
     matchScore,
     status: isSelected ? 'SELECTED' : 'REJECTED',
     summary: isSelected
-      ? `${resolvedName} possesses ${detectedExp} years of relevant experience aligned with ${targetJob.title}. Strong foundation in ${matched.slice(0, 4).join(', ')}. Shortlisted for technical interview.`
+      ? `${resolvedName} possesses ${detectedExp} years of relevant experience aligned with ${targetJob.title}. Strong foundation in ${matched.slice(0, 4).join(', ')}. Shortlisted for 20-MCQ technical assessment.`
       : `${resolvedName} applied for ${targetJob.title}. Profile does not satisfy core job requirements. Missing: ${missing.slice(0, 3).join(', ')}. Status: REJECTED.`,
     strengths: isSelected
       ? [`${detectedExp} years of demonstrated experience in ${targetJob.title}`, `Strong skills in ${matched.slice(0, 3).join(', ')}`]
       : ['Clear communication and professional presentation'],
     weaknesses: isSelected
-      ? ['In-depth architecture to be assessed during technical interview']
+      ? ['To be evaluated via 20-MCQ domain technical assessment (80% passing threshold)']
       : [`Missing key competencies for ${targetJob.title}: ${missing.slice(0, 3).join(', ')}`],
     interviewSchedule: isSelected ? {
-      date: interviewDate,
-      time: interviewTime,
-      duration: '45 Minutes',
-      roundName: 'Round 1: Technical Assessment',
-      interviewer: 'Vageesha Sharma (Founder & Hiring Lead)',
-      meetLink: authenticMeetUrl,
-      format: 'Google Meet Video Call',
-      preparationNotes: `Please be prepared to discuss past projects, core architecture, and technologies required for ${targetJob.title}.`
+      roundName: 'Round 1: Online Technical Assessment (20 MCQs)',
+      format: 'Proctored Online Assessment (20 Domain MCQs)',
+      assessmentLink: testAssessmentLink,
+      duration: '25 Minutes',
+      passingScore: '80% (16 / 20 correct)',
+      preparationNotes: `Complete 20 domain-specific questions in ${targetJob.title}. Copy/paste and multi-window switching are strictly monitored.`
     } : null,
     emailSubject,
     emailHtmlBody
@@ -925,24 +963,26 @@ Return ONLY a valid JSON object matching this schema:
               }
 
               if (evalObj.status === 'SELECTED' && (evalObj.matchScore || 0) >= 65 && !domainCheck.mismatched) {
+                const defaultBaseUrl = process.env.BASE_URL || (process.env.NODE_ENV === 'production' ? 'https://hr-smartflow-automation.onrender.com' : 'http://localhost:3000');
+                const testAssessmentLink = `${defaultBaseUrl}/assessment.html?role=${encodeURIComponent(targetJob.title)}&name=${encodeURIComponent(finalName)}&email=${encodeURIComponent(candidateEmail || '')}`;
+
                 evalObj.status = 'SELECTED';
                 evalObj.interviewSchedule = {
-                  date: 'Friday, 04 September 2026',
-                  time: '03:00 PM IST',
-                  duration: '45 Minutes',
-                  roundName: 'Round 1: Technical Assessment',
-                  interviewer: 'Vageesha Sharma (Founder & Hiring Lead)',
-                  meetLink: authenticMeetUrl,
-                  format: 'Google Meet Video Call',
-                  preparationNotes: `Please be prepared to discuss past projects, core architecture, and technologies required for ${targetJob.title}.`
+                  roundName: 'Round 1: Online Technical Assessment (20 MCQs)',
+                  format: 'Proctored Online Assessment (20 Domain MCQs)',
+                  assessmentLink: testAssessmentLink,
+                  duration: '25 Minutes',
+                  passingScore: '80% (16 / 20 correct)',
+                  preparationNotes: `Complete 20 domain-specific questions in ${targetJob.title}. Copy/paste and multi-window switching are strictly monitored.`
                 };
-                evalObj.emailSubject = `🎉 Interview Invitation: ${targetJob.title} - Vageesha Sharma's Team`;
+                evalObj.emailSubject = `📝 Technical Assessment Link: ${targetJob.title} - Finova Technologies`;
                 evalObj.emailHtmlBody = generateStructuredSelectedHtml({
                   candidateName: finalName,
+                  candidateEmail,
                   roleApplied: targetJob.title,
                   detectedExp: evalObj.experienceYears || detectedExp,
                   matchedSkills: evalObj.skills || [],
-                  meetUrl: authenticMeetUrl
+                  assessmentUrl: testAssessmentLink
                 });
               } else {
                 evalObj.status = 'REJECTED';

@@ -172,7 +172,7 @@ async function runTestSuite() {
       resumeText: 'Sneha Verma | Digital Marketing Specialist | NMIMS MBA\nExperience: 4 years managing Google Ads, Facebook/Meta Ads, SEO campaigns, and Google Analytics.\nSkills: Google Ads, Meta Ads, Paid Media, Search Engine Optimization, Copywriting.'
     });
 
-    const isSelectValid = evalSelected.status === 'SELECTED' && evalSelected.matchScore >= 65 && evalSelected.interviewSchedule !== null && evalSelected.interviewSchedule.meetLink.includes('meet.google.com');
+    const isSelectValid = evalSelected.status === 'SELECTED' && evalSelected.matchScore >= 65 && evalSelected.interviewSchedule !== null && (evalSelected.interviewSchedule.assessmentLink || '').includes('assessment');
     const isRejectValid = evalRejected.status === 'REJECTED' && evalRejected.matchScore < 60 && evalRejected.emailHtmlBody.includes('Critical Missing Skills') && evalRejected.emailHtmlBody.includes('Identified Gaps');
 
     if (isSelectValid && isRejectValid) {
@@ -180,7 +180,7 @@ async function runTestSuite() {
         'TC-04',
         'Gemini 3.5 Flash Decision Engine (Selection vs Rejection)',
         'PASSED',
-        `Candidate 4A scored ${evalSelected.matchScore}/100 -> SELECTED (Interview scheduled with Google Meet). Candidate 4B scored ${evalRejected.matchScore}/100 -> REJECTED (Missing skills analysis and detailed feedback included).`
+        `Candidate 4A scored ${evalSelected.matchScore}/100 -> SELECTED (20-MCQ Technical Assessment Link dispatched). Candidate 4B scored ${evalRejected.matchScore}/100 -> REJECTED (Missing skills analysis and detailed feedback included).`
       );
     } else {
       throw new Error(`Decision logic failed. Selected: ${evalSelected.status} (${evalSelected.matchScore}), Rejected: ${evalRejected.status} (${evalRejected.matchScore})`);

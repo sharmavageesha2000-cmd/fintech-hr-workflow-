@@ -16,6 +16,7 @@ const {
   DEFAULT_MODEL 
 } = require('./gemini_evaluator');
 const { pollCandidateEmails, extractDocumentText } = require('./email_poller');
+const { getQuestionsForRole, evaluateAssessmentSubmission } = require('./assessment_questions');
 
 // Safely load PDF parser constructor
 let PDFClass = null;
@@ -74,6 +75,9 @@ app.get(['/website', '/website/*'], (req, res) => {
 });
 app.get(['/dashboard', '/dashboard/*'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+app.get(['/assessment', '/assessment/*', '/test', '/test/*'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'assessment.html'));
 });
 
 // Helper: Read Candidates (preserves valid candidate applications with attached resumes only)
@@ -503,6 +507,184 @@ app.post('/api/send-email', async (req, res) => {
   }
 
   res.json(dispatchResult);
+});
+
+// ================= ONLINE ASSESSMENT & AUTO-OFFER PIPELINE =================
+
+// 5a. Get 20 MCQs for Candidate's Domain (Strips Answer Keys for Security)
+app.get('/api/assessment/questions', (req, res) => {
+  const { role, candidateId } = req.query;
+  let targetRole = role;
+
+  if (!targetRole && candidateId) {
+    const candidates = getCandidates(true);
+    const c = candidates.find(item => item.id === candidateId);
+    if (c) targetRole = c.roleApplied;
+  }
+
+  targetRole = targetRole || 'Frontend Developer';
+  const questions = getQuestionsForRole(targetRole, true);
+
+  res.json({
+    success: true,
+    role: targetRole,
+    totalQuestions: questions.length,
+    questions
+  });
+});
+
+// 5b. Submit Assessment, Score Answers, & Auto-Dispatch Offer Letter (>= 80%)
+app.post('/api/assessment/submit', async (req, res) => {
+  try {
+    const { 
+      candidateId, 
+      candidateName, 
+      candidateEmail, 
+      roleApplied, 
+      answers, 
+      tabSwitchesCount, 
+      timeSpentSeconds, 
+      forcedByViolation 
+    } = req.body;
+
+    const effectiveRole = roleApplied || 'Frontend Developer';
+    const evalResult = evaluateAssessmentSubmission(effectiveRole, answers || {});
+
+    const candidates = getCandidates(true);
+    let candidateIdx = -1;
+
+    if (candidateId) {
+      candidateIdx = candidates.findIndex(c => c.id === candidateId);
+    }
+    if (candidateIdx === -1 && candidateEmail) {
+      candidateIdx = candidates.findIndex(c => (c.email || '').toLowerCase().trim() === candidateEmail.toLowerCase().trim());
+    }
+
+    let targetCandidate = candidateIdx !== -1 ? candidates[candidateIdx] : {
+      id: candidateId || 'cand-' + Date.now(),
+      name: candidateName || 'Candidate',
+      email: candidateEmail || '',
+      roleApplied: effectiveRole,
+      receivedAt: new Date().toISOString()
+    };
+
+    targetCandidate.assessmentDetails = {
+      completedAt: new Date().toISOString(),
+      scorePercent: evalResult.scorePercent,
+      correctCount: evalResult.correctCount,
+      totalQuestions: evalResult.totalQuestions,
+      passed: evalResult.passed,
+      tabSwitchesCount: tabSwitchesCount || 0,
+      timeSpentSeconds: timeSpentSeconds || 0,
+      forcedByViolation: Boolean(forcedByViolation)
+    };
+    targetCandidate.testScore = evalResult.scorePercent;
+    targetCandidate.testPassed = evalResult.passed;
+
+    let emailDispatch = null;
+
+    // RULE: If candidate scores 80% or above (>= 16/20), automatically send Job Offer & Call Letter
+    if (evalResult.passed) {
+      console.log(`[Assessment Engine] 🎉 Candidate "${targetCandidate.name}" PASSED assessment with ${evalResult.scorePercent}% (Threshold: 80%)! Auto-generating Official Job Offer & Call Letter...`);
+
+      const offerRefId = `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      const defaultJoining = 'Monday, 14 September 2026';
+      const defaultCtc = (effectiveRole.toLowerCase().includes('senior') || effectiveRole.toLowerCase().includes('lead'))
+        ? '₹14,50,000 per annum (Full-Time)'
+        : '₹9,50,000 per annum (Full-Time)';
+
+      const callLetterHtml = generateOfficialCallLetterHtml({
+        candidateName: targetCandidate.name,
+        roleApplied: targetCandidate.roleApplied,
+        joiningDate: defaultJoining,
+        ctcPackage: defaultCtc,
+        reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
+        workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
+        offerRefId
+      });
+
+      const subject = `🎉 Official Job Offer & Call Letter: ${targetCandidate.roleApplied} - Finova Technologies`;
+
+      if (targetCandidate.email) {
+        emailDispatch = await sendNotificationEmail({
+          to: targetCandidate.email,
+          subject,
+          htmlBody: callLetterHtml
+        });
+      }
+
+      targetCandidate.status = 'SELECTED';
+      targetCandidate.interviewStatus = 'COMPLETED';
+      targetCandidate.offerStatus = 'OFFER_EXTENDED';
+      targetCandidate.offerRefId = offerRefId;
+      targetCandidate.callLetterSentAt = new Date().toISOString();
+      targetCandidate.callLetterDetails = {
+        joiningDate: defaultJoining,
+        ctcPackage: defaultCtc,
+        offerRefId,
+        emailDispatch
+      };
+    } else {
+      console.log(`[Assessment Engine] ⚠️ Candidate "${targetCandidate.name}" scored ${evalResult.scorePercent}% (< 80% passing threshold). Withholding Offer Letter.`);
+      targetCandidate.status = 'REJECTED';
+      targetCandidate.offerStatus = 'REJECTED';
+      targetCandidate.interviewStatus = 'COMPLETED';
+
+      // Send constructive technical feedback email (NO Offer Letter)
+      if (targetCandidate.email) {
+        const feedbackSubject = `Technical Assessment Results: ${targetCandidate.roleApplied} - Finova Technologies`;
+        const feedbackHtml = `
+          <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 26px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
+            <h2 style="color: #991b1b; margin-top: 0;">Technical Assessment Outcome</h2>
+            <p>Dear <strong>${targetCandidate.name}</strong>,</p>
+            <p>Thank you for completing the online technical assessment for the <strong>${targetCandidate.roleApplied}</strong> position.</p>
+            <div style="background: #fef2f2; border: 1px solid #fecaca; padding: 16px; border-radius: 8px; margin: 18px 0;">
+              <p style="margin: 0 0 6px 0;"><strong>Score Achieved:</strong> ${evalResult.scorePercent}% (${evalResult.correctCount} / ${evalResult.totalQuestions} correct)</p>
+              <p style="margin: 0; color: #991b1b;"><strong>Passing Threshold:</strong> 80% (16 / 20 correct)</p>
+            </div>
+            <p style="color: #475569; line-height: 1.6;">
+              For this vacancy, an 80% score is required for automated offer generation. Because this threshold was not reached, an employment offer has not been issued at this stage.
+            </p>
+            <p style="color: #475569; line-height: 1.6;">
+              We encourage you to deepen your hands-on competencies in <strong>${targetCandidate.roleApplied}</strong> and reapply in future hiring cycles.
+            </p>
+            <p>We wish you great success in your career.</p>
+            <div style="margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 14px;">
+              <strong style="color: #0f172a; font-size: 14px; display: block;">Vageesha Sharma</strong>
+              <span style="color: #64748b; font-size: 12.5px; display: block;">Founder &amp; Hiring Lead</span>
+              <span style="color: #4338ca; font-size: 12.5px; font-weight: 600; display: block; margin-top: 2px;">sharmavageesha2000@gmail.com</span>
+            </div>
+          </div>
+        `;
+
+        emailDispatch = await sendNotificationEmail({
+          to: targetCandidate.email,
+          subject: feedbackSubject,
+          htmlBody: feedbackHtml
+        });
+      }
+    }
+
+    if (candidateIdx !== -1) {
+      candidates[candidateIdx] = targetCandidate;
+    } else {
+      candidates.unshift(targetCandidate);
+    }
+    saveCandidates(candidates);
+
+    res.json({
+      success: true,
+      passed: evalResult.passed,
+      scorePercent: evalResult.scorePercent,
+      correctCount: evalResult.correctCount,
+      totalQuestions: evalResult.totalQuestions,
+      candidate: targetCandidate,
+      emailDispatch
+    });
+  } catch (err) {
+    console.error('Assessment submit error:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 // 6. Complete Interview & Send Official Job Offer / Call Letter

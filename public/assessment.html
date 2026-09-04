@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Technical Assessment - Finova Technologies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --surface: #111827;
+      --surface-border: #1f2937;
+      --surface-hover: #1e293b;
+      --primary: #06b6d4;
+      --primary-glow: rgba(6, 182, 212, 0.25);
+      --accent: #3b82f6;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Top Proctoring Header */
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(17, 24, 39, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--surface-border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      color: #fff;
+      box-shadow: 0 0 16px var(--primary-glow);
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    .brand-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .proctor-stats {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--surface-border);
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .timer-badge {
+      background: rgba(6, 182, 212, 0.12);
+      border-color: rgba(6, 182, 212, 0.35);
+      color: var(--primary);
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .violation-badge {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.35);
+      color: var(--danger);
+      font-weight: 700;
+    }
+
+    /* Container Layout */
+    .main-container {
+      max-width: 900px;
+      width: 100%;
+      margin: 28px auto;
+      padding: 0 20px;
+      flex: 1;
+    }
+
+    /* Candidate Profile Card */
+    .profile-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--success));
+    }
+
+    .profile-info h1 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .profile-info p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    .passing-pill {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--success);
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* Anti-Cheating Alert Banner */
+    .warning-banner {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Question Cards */
+    .questions-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .q-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 22px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .q-card:focus-within, .q-card.answered {
+      border-color: rgba(6, 182, 212, 0.4);
+    }
+
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .q-number {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--primary);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .q-title {
+      font-size: 15.5px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .option-label {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+
+    .option-label:hover {
+      background: var(--surface-hover);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .option-label.selected {
+      background: rgba(6, 182, 212, 0.12);
+      border-color: var(--primary);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .option-radio {
+      accent-color: var(--primary);
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Submit Section */
+    .submit-section {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 32px 0 60px 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .progress-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      font-family: var(--font);
+      font-weight: 800;
+      font-size: 15px;
+      padding: 14px 32px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 18px var(--primary-glow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(6, 182, 212, 0.4);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Proctoring Violation Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      border: 1.5px solid var(--danger);
+      border-radius: 20px;
+      max-width: 500px;
+      width: 100%;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(239, 68, 68, 0.25);
+      animation: popIn 0.2s ease-out;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--danger);
+      margin-bottom: 8px;
+    }
+
+    .modal-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .btn-ack {
+      background: var(--danger);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* Result State Screen */
+    .result-container {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 20px;
+      padding: 40px 28px;
+      text-align: center;
+      margin: 40px auto;
+      max-width: 650px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+    }
+
+    .result-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    .result-title {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .score-circle {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.04);
+      border: 3px solid var(--primary);
+    }
+
+    .score-number {
+      font-size: 36px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: #fff;
+    }
+
+    .score-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+    }
+
+    .result-msg {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    .offer-alert {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: 12px;
+      padding: 18px;
+      color: #34d399;
+      font-size: 14px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .feedback-alert {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 12px;
+      padding: 18px;
+      color: #fca5a5;
+      font-size: 14px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body oncontextmenu="return false;">
+
+  <!-- Top Proctoring Header -->
+  <header class="top-header">
+    <div class="brand-section">
+      <div class="brand-logo">F</div>
+      <div>
+        <div class="brand-title">Finova Proctored Assessment</div>
+        <div class="brand-subtitle" id="headerRole">Technical Assessment (20 MCQs)</div>
+      </div>
+    </div>
+
+    <div class="proctor-stats">
+      <div class="stat-badge violation-badge" id="violationCountBadge">
+        🛡️ Violations: <span id="violationCount">0</span> / 3
+      </div>
+      <div class="stat-badge timer-badge" id="timerDisplay">
+        ⏱️ 25:00
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="main-container" id="mainApp">
+    <!-- Candidate Info Card -->
+    <section class="profile-card">
+      <div class="profile-info">
+        <h1 id="candNameDisplay">Candidate Assessment</h1>
+        <p>Candidate: <strong id="candEmailDisplay" style="color: #fff;">candidate@example.com</strong> • Domain: <strong id="candRoleDisplay" style="color: var(--primary);">Frontend Developer</strong></p>
+      </div>
+      <div class="passing-pill">
+        🎯 Passing Threshold: <strong>80% (16/20)</strong><br>
+        <span style="font-size: 11px; opacity: 0.85;">Instant Offer Letter Generation</span>
+      </div>
+    </section>
+
+    <!-- Anti-Cheating Shield Warning -->
+    <div class="warning-banner">
+      <span style="font-size: 20px;">🛡️</span>
+      <div>
+        <strong>Proctored Environment Active:</strong> Copy/paste, text selection, and right-click are disabled. Opening secondary windows or switching browser tabs is strictly prohibited and will be logged.
+      </div>
+    </div>
+
+    <!-- Questions Container -->
+    <form id="assessmentForm" class="questions-wrapper">
+      <div id="questionsList">
+        <!-- Injected via JavaScript -->
+        <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+          Loading assessment questions for your domain...
+        </div>
+      </div>
+
+      <!-- Submit Section -->
+      <div class="submit-section">
+        <div class="progress-text" id="progressStatus">
+          Answered: <span id="answeredCount">0</span> of <span id="totalCount">20</span> questions
+        </div>
+        <button type="submit" class="btn-submit" id="btnSubmitTest">
+          Submit Assessment &amp; Evaluate Score
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <!-- Result Container (Hidden Initially) -->
+  <div class="main-container" id="resultApp" style="display: none;">
+    <div class="result-container" id="resultCard">
+      <!-- Dynamic result content -->
+    </div>
+  </div>
+
+  <!-- Anti-Cheating Warning Modal -->
+  <div class="modal-overlay" id="violationModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-icon">⚠️</div>
+      <div class="modal-title">Anti-Cheating Alert</div>
+      <div class="modal-desc" id="violationModalText">
+        Window or Tab switch detected! You must remain in this window during the technical test.
+      </div>
+      <button class="btn-ack" onclick="closeViolationModal()">
+        I Understand &amp; Return to Assessment
+      </button>
+    </div>
+  </div>
+
+  <script src="/assessment.js"></script>
+</body>
+</html>
