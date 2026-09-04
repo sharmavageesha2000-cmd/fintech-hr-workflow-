@@ -76,8 +76,8 @@ app.get(['/dashboard', '/dashboard/*'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Helper: Read Candidates (preserves each distinct candidate application)
-function getCandidates() {
+// Helper: Read Candidates (preserves valid candidate applications with attached resumes only)
+function getCandidates(includeAll = false) {
   if (!fs.existsSync(CANDIDATES_FILE)) return [];
   try {
     const data = JSON.parse(fs.readFileSync(CANDIDATES_FILE, 'utf8'));
@@ -85,6 +85,20 @@ function getCandidates() {
     const seen = new Set();
     const unique = [];
     for (const c of data) {
+      if (!includeAll) {
+        // Enforce candidate has an attached resume document
+        if (!c.attachmentInfo || !c.attachmentInfo.fileName) continue;
+        
+        // Filter out non-candidate records / service alerts / invoices
+        const name = (c.name || '').toLowerCase();
+        const email = (c.email || '').toLowerCase();
+        const fn = (c.attachmentInfo.fileName || '').toLowerCase();
+        if (name === 'obj' || name.includes('invoice') || email.includes('ubi.bank') || 
+            email.includes('bookmyshow') || fn.includes('invoice') || fn.includes('receipt') || 
+            fn.includes('ticket') || fn.includes('statement')) {
+          continue;
+        }
+      }
       const uniqueKey = c.id || `${(c.email || '').toLowerCase().trim()}_${(c.roleApplied || '').toLowerCase().trim()}`;
       if (!seen.has(uniqueKey)) {
         seen.add(uniqueKey);
@@ -256,10 +270,11 @@ async function checkInboxNow() {
       password: settings.appPassword || process.env.GOOGLE_APP_PASSWORD || '',
       checkLatestCount: 20,
       onCandidateProcessed: async (newCand) => {
-        console.log(`[Auto-Processor] 🚀 Processing incoming candidate: ${newCand.name} (${newCand.email})`);
+        console.log(`[Auto-Processor] 🎯 Valid resume candidate processed: ${newCand.name} (${newCand.email}) for ${newCand.roleApplied}`);
 
-        // 1. Auto-dispatch email
+        // 1. Auto-dispatch email notification / invitation / feedback letter
         if (settings.autoDispatchEmail !== false && newCand.email) {
+          console.log(`[Auto-Processor] ✉️ Dispatching auto-reply email to: ${newCand.email} (Subject: "${newCand.emailSubject}")...`);
           const emailResult = await sendNotificationEmail({
             to: newCand.email,
             subject: newCand.emailSubject,
@@ -267,10 +282,11 @@ async function checkInboxNow() {
           });
           newCand.emailStatus = emailResult.success ? 'SENT' : 'FAILED';
           newCand.lastEmailSentAt = new Date().toISOString();
+          console.log(`[Auto-Processor] ✅ Auto-reply outcome for ${newCand.email}: ${newCand.emailStatus} ${emailResult.messageId ? `(ID: ${emailResult.messageId})` : `(Err: ${emailResult.error})`}`);
         }
 
-        // 2. Add to database (preserves all distinct applications & never overwrites history)
-        const candidates = getCandidates();
+        // 2. Add to database (preserves candidate application history)
+        const candidates = getCandidates(true);
         const duplicateIndex = candidates.findIndex(c => 
           (c.email && c.email.toLowerCase().trim() === newCand.email.toLowerCase().trim()) &&
           (c.roleApplied && c.roleApplied.toLowerCase().trim() === newCand.roleApplied.toLowerCase().trim()) &&
