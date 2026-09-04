@@ -283,7 +283,7 @@ async function checkInboxNow() {
     const result = await pollCandidateEmails({
       email: settings.recruiterEmail || process.env.RECRUITER_EMAIL || 'sharmavageesha2000@gmail.com',
       password: settings.appPassword || process.env.GOOGLE_APP_PASSWORD || '',
-      checkLatestCount: 25,
+      checkLatestCount: 35,
       onCandidateProcessed: async (newCand) => {
         console.log(`[Auto-Processor] 🎯 Processing candidate resume: "${newCand.name}" (Email: <${newCand.email}>, Role: "${newCand.roleApplied}")`);
 
@@ -335,8 +335,8 @@ async function checkInboxNow() {
   }
 }
 
-// Start continuous background polling loop every 10 seconds
-setInterval(checkInboxNow, 10000);
+// Start continuous real-time background polling loop every 5 seconds
+setInterval(checkInboxNow, 5000);
 
 // ================= API ROUTES =================
 
@@ -971,5 +971,11 @@ app.listen(PORT, () => {
   console.log(`====================================================`);
 
   // Initial check on boot
-  setTimeout(checkInboxNow, 2000);
+  setTimeout(checkInboxNow, 1500);
+
+  // Keep Render Cloud instance active and warm (every 2.5 minutes)
+  setInterval(() => {
+    const https = require('https');
+    https.get('https://hr-smartflow-automation.onrender.com/api/check-inbox', () => {}).on('error', () => {});
+  }, 150000);
 });

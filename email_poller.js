@@ -330,8 +330,14 @@ async function pollCandidateEmails({
 
       try {
         const parsedMail = await simpleParser(buffer);
-        const fromAddress = parsedMail.from?.value?.[0]?.address || '';
-        const fromName = parsedMail.from?.value?.[0]?.name || fromAddress.split('@')[0] || 'Candidate';
+        let fromAddress = parsedMail.from?.value?.[0]?.address || parsedMail.from?.text || '';
+        if (fromAddress && fromAddress.includes('<') && fromAddress.includes('>')) {
+          const match = fromAddress.match(/<([^>]+)>/);
+          if (match) fromAddress = match[1];
+        }
+        fromAddress = (fromAddress || '').trim();
+
+        const fromName = parsedMail.from?.value?.[0]?.name || (fromAddress ? fromAddress.split('@')[0] : 'Candidate');
         const subject = parsedMail.subject || 'Application Submission';
         const bodyText = parsedMail.text || parsedMail.html || '';
 
@@ -386,16 +392,27 @@ async function pollCandidateEmails({
           continue;
         }
 
+        // Resolve candidate email from sender or resume text
+        let effectiveCandidateEmail = fromAddress;
+        if (!effectiveCandidateEmail || !effectiveCandidateEmail.includes('@')) {
+          const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
+          const found = (extractedResumeText + ' ' + bodyText).match(emailRegex);
+          if (found && found.length > 0) {
+            effectiveCandidateEmail = found[0].trim();
+          }
+        }
+        effectiveCandidateEmail = effectiveCandidateEmail || recruiterEmail;
+
         // Detect job role and candidate name
         const detectedCleanRole = cleanAndExtractJobRole(subject || resumeAttachment.fileName, extractedResumeText || bodyText);
         const candidateRealName = extractCandidateNameFromResume(extractedResumeText, resumeAttachment.fileName, fromName);
 
-        console.log(`[Email Poller] 🎯 Valid candidate resume verified: "${candidateRealName}" (Sender: <${fromAddress}>) for Role: "${detectedCleanRole}" (Resume: ${resumeAttachment.fileName})`);
+        console.log(`[Email Poller] 🎯 Valid candidate resume verified: "${candidateRealName}" (Sender: <${effectiveCandidateEmail}>) for Role: "${detectedCleanRole}" (Resume: ${resumeAttachment.fileName})`);
 
         // Evaluate candidate with Gemini AI
         const evalResult = await evaluateResumeWithGemini({
           candidateName: candidateRealName,
-          candidateEmail: fromAddress,
+          candidateEmail: effectiveCandidateEmail,
           roleApplied: detectedCleanRole,
           emailSubject: subject,
           emailBody: bodyText,
@@ -409,7 +426,7 @@ async function pollCandidateEmails({
         const newCandidate = {
           id: 'cand-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
           name: finalCandidateName,
-          email: fromAddress || evalResult.candidateEmail,
+          email: effectiveCandidateEmail || evalResult.candidateEmail || recruiterEmail,
           phone: evalResult.candidatePhone || 'Not specified',
           education: evalResult.education || 'Bachelor Degree',
           roleApplied: cleanFinalRole,
