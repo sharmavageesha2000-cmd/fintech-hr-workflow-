@@ -168,7 +168,13 @@ async function fetchQuestions() {
   const container = document.getElementById('questionsList');
 
   try {
-    const res = await fetch(`/api/assessment/questions?role=${encodeURIComponent(roleApplied)}&candidateId=${encodeURIComponent(candidateId)}`);
+    const queryParams = new URLSearchParams({
+      role: roleApplied,
+      candidateId: candidateId,
+      candidateEmail: candidateEmail || '',
+      name: candidateName || ''
+    });
+    const res = await fetch(`/api/assessment/questions?${queryParams.toString()}`);
     const data = await res.json();
 
     if (data.success && Array.isArray(data.questions) && data.questions.length > 0) {

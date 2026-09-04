@@ -1,11 +1,11 @@
 [
   {
     "id": "cand-1788538210123-101",
-    "name": "Ananya Verma",
+    "name": "Vageesha Sharma",
     "email": "sharmavageesha2000@gmail.com",
     "phone": "Not specified",
     "education": "B.Tech in CS/IT",
-    "roleApplied": "Business Analyst",
+    "roleApplied": "Full Stack AI Engineer",
     "experienceYears": 2.5,
     "skills": [
       "Requirement Gathering (BRD/FRD)",
@@ -23,9 +23,9 @@
       "communication": 15
     },
     "matchScore": 90,
-    "status": "SELECTED",
-    "interviewStatus": "SCHEDULED",
-    "offerStatus": "OFFER_EXTENDED",
+    "status": "REJECTED",
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "REJECTED",
     "summary": "Ananya Verma possesses 2.5 years of relevant experience aligned with Business Analyst. Strong foundation in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping. Shortlisted for 20-MCQ technical assessment.",
     "strengths": [
       "2.5 years of demonstrated experience in Business Analyst",
@@ -68,7 +68,19 @@
         "subject": "🎉 Official Job Offer & Call Letter: Business Analyst - Finova Technologies"
       },
       "deliveredTo": "sharmavageesha2000@gmail.com"
-    }
+    },
+    "assessmentDetails": {
+      "completedAt": "2026-09-04T16:46:54.123Z",
+      "scorePercent": 10,
+      "correctCount": 2,
+      "totalQuestions": 20,
+      "passed": false,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 420,
+      "forcedByViolation": false
+    },
+    "testScore": 10,
+    "testPassed": false
   },
   {
     "id": "cand-1788538127982-638",

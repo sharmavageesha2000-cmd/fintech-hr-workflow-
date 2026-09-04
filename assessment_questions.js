@@ -1,13 +1,16 @@
 /**
  * Enterprise Assessment Question Bank & Dynamic Proctoring Engine
- * Contains 35 curated domain-specific MCQs for each recruitment role (280 total).
+ * Contains 400 curated domain-specific MCQs (50 per recruitment role).
  * 
- * Dynamic Features:
- * 1. Sampling: On each test session, randomly samples N (default 20) questions from the 35 pool without replacement.
- * 2. Question Shuffling: Shuffles the presentation order of the sampled questions.
- * 3. Option Shuffling: Fisher-Yates randomizes all 4 options per question and updates correctIndex.
- * 4. Session Answer Keys: Server caches session state in ACTIVE_ASSESSMENT_SESSIONS for secure, accurate grading.
- * 5. Threshold: >= 80% (>= 16/20 correct) triggers automated Official Job Offer & Call Letter dispatch.
+ * ADVANCED NON-REPEATING CANDIDATE ENGINE:
+ * 1. Candidate History Exclusion: Tracks previously seen question IDs for each candidate/session.
+ *    When a candidate applies or retakes a test for the same job, seen questions are filtered out first,
+ *    guaranteeing 100% fresh questions on every attempt!
+ * 2. Fisher-Yates Sampling: Samples N (default 20) questions at random from the candidate's unseen pool.
+ * 3. Question Sequence Shuffling: Shuffles the presentation order on each attempt.
+ * 4. Option Shuffling: Randomizes all 4 options per question (A, B, C, D) with balanced distribution.
+ * 5. Session Answer Key: Server caches exact session mapping for 100% accurate grading.
+ * 6. Automated Offer Letter: Score >= 80% (>= 16/20) triggers automated Call Letter email via Gmail SMTP.
  */
 
 const ROLE_QUESTIONS_BANK = {
@@ -394,6 +397,171 @@ const ROLE_QUESTIONS_BANK = {
         "Boost video playback framerates to 120Hz on high refresh displays",
         "Disable all CSS styling when battery saver mode is active",
         "Reduce image file sizes over slow 3G cellular connections"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 136,
+      "question": "In React, what is the purpose of the `useId` hook introduced in React 18?",
+      "options": [
+        "Generating unique, stable accessibility IDs that match between server-side rendering (SSR) and client hydration, preventing hydration mismatch warnings",
+        "Generating random UUIDs for database primary keys",
+        "Assigning unique CSS class names for styling",
+        "Authenticating user sessions with JWT tokens"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 137,
+      "question": "What does the `content-visibility: auto` CSS property achieve for web performance?",
+      "options": [
+        "Skips rendering and layout calculations for off-screen elements until they approach the viewport, dramatically accelerating initial page load and rendering speed",
+        "Automatically translates text content into the user's preferred language",
+        "Hides all images when the user enables dark mode",
+        "Enables responsive design without media queries"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 138,
+      "question": "In TypeScript, what does the `infer` keyword do inside conditional types?",
+      "options": [
+        "Introduces a type variable within a condition to be deduced automatically from another type (e.g. extracting the return type of a function: `T extends (...args: any[]) => infer R ? R : any`)",
+        "Forces the TypeScript compiler to ignore syntax errors",
+        "Automatically converts JavaScript code into WebAssembly",
+        "Infers the user's browser version at runtime"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 139,
+      "question": "How does the `ResizeObserver` API differ from the traditional `window.onresize` event in modern frontend development?",
+      "options": [
+        "`ResizeObserver` observes dimension changes on specific individual DOM elements (ideal for responsive components and container queries), whereas `window.onresize` only fires when the entire browser window changes size",
+        "`ResizeObserver` runs exclusively on Node.js backend servers",
+        "`window.onresize` cannot be cancelled with removeEventListener",
+        "`ResizeObserver` only detects changes in font size"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 140,
+      "question": "What is Cumulative Layout Shift (CLS) in Google Core Web Vitals and what causes high CLS?",
+      "options": [
+        "Measures the visual stability of a page by summing unexpected layout shift scores; caused by images without explicit width/height dimensions, dynamic ads, or web fonts rendering late",
+        "The time taken to establish an HTTPS connection",
+        "The percentage of users who bounce within 5 seconds",
+        "The duration of the largest JavaScript bundle download"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 141,
+      "question": "In JavaScript, what is the purpose of `Symbol.iterator`?",
+      "options": [
+        "Defines the default iteration behavior of an object, making it compatible with `for...of` loops, spread syntax `[...]`, and destructuring",
+        "Encrypts an object before saving it to localStorage",
+        "Counts the total number of keys inside an array",
+        "Generates short URL links for frontend navigation"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 142,
+      "question": "What is the key difference between `import ... from '...'` (static) and `import('...')` (dynamic) in modern JavaScript bundlers?",
+      "options": [
+        "Static imports are evaluated at build/parse time; dynamic imports return a Promise and enable on-demand code-splitting / lazy-loading at runtime",
+        "Dynamic imports only work on backend Node.js servers",
+        "Static imports can only load CSS files",
+        "Dynamic imports disable TypeScript type checking completely"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 143,
+      "question": "In modern CSS, what do Container Queries (`@container`) enable that Media Queries (`@media`) cannot do?",
+      "options": [
+        "Allow styling elements based on the size and dimensions of their nearest ancestor container rather than the overall browser viewport width",
+        "Allow styling elements based on the user's operating system battery level",
+        "Enable 3D hardware-accelerated animations on canvas",
+        "Compress stylesheet files automatically by 50%"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 144,
+      "question": "In React, what is the 'Fiber' architecture and why was it introduced?",
+      "options": [
+        "A complete rewrite of React's reconciliation engine that represents component trees as linked-list work units, enabling interruptible, priority-based asynchronous rendering",
+        "A CSS-in-JS library for styling styled-components",
+        "A hardware driver for high-speed fiber-optic web connections",
+        "A replacement for HTML5 canvas in game rendering"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 145,
+      "question": "What is the purpose of the `AbortController` API in modern frontend data fetching?",
+      "options": [
+        "Allows cleanly aborting pending HTTP `fetch()` requests or asynchronous DOM event listeners, preventing race conditions and memory leaks when components unmount",
+        "Immediately terminates the entire Node.js server process",
+        "Stops browser users from taking screenshots of the web page",
+        "Deletes expired session cookies from the client browser"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 146,
+      "question": "In CSS, what does `pointer-events: none` do to an element?",
+      "options": [
+        "Makes the element transparent to mouse and touch click/hover events, allowing interactions to pass directly through to underlying elements below it in the z-axis",
+        "Disables all keyboard navigation on the page",
+        "Hides the mouse cursor completely on the screen",
+        "Prevents the user from scrolling the document"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 147,
+      "question": "What is the purpose of `Object.is()` in JavaScript and where is it used in React?",
+      "options": [
+        "Determines whether two values are the exact same value (distinguishing `+0` vs `-0` and treating `NaN === NaN` as true); used by React to compare state updates and hook dependencies",
+        "Checks if a variable is an instance of a DOM Element",
+        "Converts JSON strings into TypeScript interfaces",
+        "Replaces `typeof` in modern V8 engines"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 148,
+      "question": "What is the `Intl` API in modern JavaScript standard library?",
+      "options": [
+        "A built-in namespace providing internationalization features such as locale-sensitive date/time formatting (`Intl.DateTimeFormat`), currency (`Intl.NumberFormat`), and plural rules",
+        "An internal debugger for Chrome Developer Tools",
+        "A network protocol for inter-server communication",
+        "A machine learning library for JavaScript"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 149,
+      "question": "In React 18, what is 'Automatic Batching'?",
+      "options": [
+        "React batches multiple state updates into a single re-render cycle automatically, even inside promises, setTimeout, and native event handlers",
+        "React automatically uploads user analytics to Google Analytics",
+        "React compiles JavaScript code into WebAssembly in the background",
+        "React deletes unused CSS rules from the HTML head"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 150,
+      "question": "What does the `will-change` CSS property inform the browser's rendering engine about?",
+      "options": [
+        "Hints to the browser which properties (e.g. `transform`, `opacity`) are likely to animate, allowing the browser to create dedicated GPU compositor layers in advance for smooth 60fps rendering",
+        "Tells the browser to refresh the page every 60 seconds",
+        "Disables CSS transitions when battery saver is active",
+        "Forces text to automatically resize on mobile screens"
       ],
       "correctIndex": 0
     }
@@ -783,6 +951,171 @@ const ROLE_QUESTIONS_BANK = {
         "There is no difference in modern Node.js fetch APIs"
       ],
       "correctIndex": 0
+    },
+    {
+      "id": 236,
+      "question": "In PostgreSQL, what is the difference between a `SERIAL` column and an `IDENTITY` column (`GENERATED ALWAYS AS IDENTITY`)?",
+      "options": [
+        "`IDENTITY` is standard SQL (ANSI/ISO) compliant and uses internal sequences that prevent accidental manual overwrites and sequence permission bugs associated with legacy `SERIAL`",
+        "`SERIAL` is 64-bit integer while `IDENTITY` is 8-bit integer",
+        "`IDENTITY` can only be used on string columns",
+        "There is no difference in modern PostgreSQL versions"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 237,
+      "question": "What is the purpose of the `Redlock` algorithm in distributed caching?",
+      "options": [
+        "Provides safe, fault-tolerant distributed mutual exclusion locks across multiple independent Redis master nodes, avoiding single-point-of-failure lock loss during failovers",
+        "Encrypts Redis databases with 512-bit keys",
+        "Compresses Redis JSON keys in RAM",
+        "A firewall rule that blocks port 6379"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 238,
+      "question": "In Node.js, what causes a 'Buffer Overflow' / 'Heap Out of Memory' error during high-throughput file streaming?",
+      "options": [
+        "Reading data from a source faster than the writable destination can consume it without implementing backpressure, causing unconsumed chunks to buffer endlessly in V8 heap RAM",
+        "Using arrow functions inside async/await handlers",
+        "Having more than 10 routes in an Express application",
+        "Connecting to a database running on a remote port"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 239,
+      "question": "What is Database Connection Starvation and how is it prevented in high-traffic APIs?",
+      "options": [
+        "When long-running or leaked database queries consume all available pool connections, blocking incoming requests; prevented with strict query timeouts, connection pool sizing, and health checks",
+        "When a database hard drive runs out of physical space",
+        "When a SQL query contains more than 10 JOINs",
+        "When an API key has reached its monthly billing quota"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 240,
+      "question": "What is the Saga Pattern in distributed transaction management?",
+      "options": [
+        "A pattern that coordinates distributed transactions across multiple microservices via a sequence of local transactions, triggering compensating transactions to roll back steps if a failure occurs",
+        "A technique for backing up MongoDB databases to AWS S3",
+        "A method to speed up React rendering using WebSockets",
+        "A CSS architecture for styling micro-frontends"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 241,
+      "question": "In PostgreSQL, what is a BRIN (Block Range Index) and when is it dramatically faster and smaller than a B-Tree?",
+      "options": [
+        "Indexes physical block ranges by storing minimum and maximum values for each range; highly compact and ultra-fast for naturally sorted, append-only time-series or sequential ID data",
+        "A full-text search index for JSON documents",
+        "An in-memory cache index that is cleared on every reboot",
+        "An index exclusively used for spatial GPS geometry coordinates"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 242,
+      "question": "What is the difference between Cache-Aside (Lazy Loading) and Write-Through caching patterns?",
+      "options": [
+        "Cache-Aside reads from cache first, and loads from DB on miss; Write-Through writes data to both cache and database simultaneously on every write operation to maintain strict consistency",
+        "Cache-Aside is only used for images; Write-Through is for text",
+        "Write-Through caches data exclusively in the client's browser local storage",
+        "Cache-Aside deletes all database records after 24 hours"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 243,
+      "question": "In REST API security, what is the purpose of PKCE (Proof Key for Code Exchange) in OAuth 2.0?",
+      "options": [
+        "Prevents authorization code interception attacks on public clients (mobile apps, SPAs) by dynamically generating a cryptographic code verifier and code challenge for token exchange",
+        "Encrypts user passwords in PostgreSQL databases",
+        "Generates QR codes for two-factor authentication",
+        "Protects backend servers from DDoS attacks"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 244,
+      "question": "What is Cache Stampede (Thundering Herd Problem) and how is it mitigated?",
+      "options": [
+        "When a popular cached key expires and hundreds of concurrent incoming requests simultaneously query the underlying database; mitigated with probabilistic early expiration (XFetch) or mutex locking",
+        "When Redis runs out of memory and crashes",
+        "When a database table has too many foreign keys",
+        "When a client sends 1,000 HTTP requests in 1 second"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 245,
+      "question": "In Node.js, what does the `cluster` module use under the hood on Linux systems to share ports across worker processes?",
+      "options": [
+        "The master process opens listening sockets and sends socket handles to worker processes, or uses round-robin load distribution across worker OS file descriptors (`SO_REUSEPORT`)",
+        "An external Nginx reverse proxy running inside Docker",
+        "A Redis Pub/Sub queue running on localhost",
+        "Shared memory RAM segments using SharedArrayBuffer"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 246,
+      "question": "What is the difference between `DELETE`, `TRUNCATE`, and `DROP` in SQL database operations?",
+      "options": [
+        "`DELETE` removes rows row-by-row with logging and triggers (can have WHERE); `TRUNCATE` rapidly deallocates all table data pages without row logging; `DROP` removes the entire table schema and data permanently",
+        "`TRUNCATE` only works on temporary tables",
+        "`DELETE` cannot be rolled back inside a transaction",
+        "All three are identical aliases in ANSI SQL"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 247,
+      "question": "In distributed systems, what is the difference between Synchronous Replication and Asynchronous Replication?",
+      "options": [
+        "Synchronous replication confirms a write only after it is committed to both primary and replica nodes (ensuring zero data loss at the cost of write latency); Asynchronous confirms write on primary immediately",
+        "Asynchronous replication requires physical fiber cables",
+        "Synchronous replication only replicates primary keys",
+        "There is no latency difference between the two"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 248,
+      "question": "What is the purpose of Database Sharding Keys and what happens if a bad sharding key creates a 'Hotspot'?",
+      "options": [
+        "The sharding key determines which physical database partition receives the data; a poor key (e.g. low cardinality or monotonically increasing timestamp) overloads a single node with all write traffic while other nodes sit idle",
+        "The sharding key encrypts the database password on disk",
+        "A hotspot causes the server CPU fan to run at maximum speed",
+        "Sharding keys are only used in SQLite databases"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 249,
+      "question": "In Node.js performance tuning, what is a Memory Leak Heap Snapshot and how is it analyzed?",
+      "options": [
+        "A memory dump taken using V8 inspector (`v8.getHeapSnapshot()`) to inspect retaining paths of objects that cannot be garbage-collected due to lingering closures, event listeners, or global caches",
+        "A screenshot of the terminal taken when an exception is thrown",
+        "A backup of the PostgreSQL database saved to a .sql file",
+        "A benchmark score measuring CPU rendering frames"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 250,
+      "question": "What is the purpose of HTTP/2 Server Push and why did modern browsers deprecate it in favor of 103 Early Hints?",
+      "options": [
+        "Server Push sent unrequested assets to clients, often wasting bandwidth on assets already in browser cache; 103 Early Hints allows servers to send `Link: <...>; rel=preload` headers while preparing main HTML response",
+        "Server Push caused database deadlocks in Node.js",
+        "103 Early Hints encrypts all image files with TLS 1.3",
+        "Server Push was only compatible with Internet Explorer 6"
+      ],
+      "correctIndex": 0
     }
   ],
   "Full Stack AI Engineer": [
@@ -1168,6 +1501,171 @@ const ROLE_QUESTIONS_BANK = {
         "Prevents users from typing more than 10 words per second",
         "Disables dark mode when battery is low",
         "Forces users to solve CAPTCHAs before every button click"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 336,
+      "question": "In AI agent frameworks (e.g. LangChain, LlamaIndex), what is ReAct (Reasoning and Acting) prompting?",
+      "options": [
+        "A paradigm where the model alternates between generating explicit reasoning thoughts (Thought: ...) and invoking external tools/actions (Action: ..., Observation: ...) to solve multi-step problems iteratively",
+        "A React.js library for rendering AI chat bubbles",
+        "A technique for fine-tuning open-source LLMs on mobile devices",
+        "A CSS styling framework for dark mode interfaces"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 337,
+      "question": "What is the purpose of Token Healing (Greedy Suffix Tokenization) in LLM inference engines?",
+      "options": [
+        "Prevents token boundary artifacts where prompt ending characters combine improperly with subsequent generation tokens, ensuring clean grammatical continuations",
+        "Translates corrupted unicode text into English",
+        "Reduces GPU temperature during long inference batches",
+        "Compresses vector database files on disk"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 338,
+      "question": "What is the difference between Cosine Distance and Euclidean (L2) Distance in high-dimensional vector search?",
+      "options": [
+        "Cosine distance measures the angular orientation between two vectors regardless of magnitude; Euclidean (L2) distance measures the straight-line geometric distance between vector endpoints in metric space",
+        "Cosine distance only works in 2D space while L2 distance works in 3D",
+        "Euclidean distance cannot be computed on normalized vectors",
+        "Cosine distance always returns negative numbers"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 339,
+      "question": "In RAG retrieval evaluation, what does the metric 'Faithfulness' measure?",
+      "options": [
+        "The extent to which all factual claims in the generated AI response can be directly inferred from and grounded by the retrieved reference context (measuring hallucination resistance)",
+        "The religious or ethical alignment of the AI model",
+        "The latency of the database query in milliseconds",
+        "The percentage of users who rate the AI response 5 stars"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 340,
+      "question": "What is Cross-Encoder vs Bi-Encoder architecture in neural search and retrieval?",
+      "options": [
+        "Bi-Encoders embed query and document independently into vector space (fast ANN search); Cross-Encoders pass query and document together through full transformer self-attention (slower, but highly accurate for reranking)",
+        "Bi-Encoders are for vision; Cross-Encoders are for audio",
+        "Cross-Encoders cannot be run on Nvidia GPUs",
+        "Bi-Encoders do not use transformer attention layers"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 341,
+      "question": "In LLM production architectures, what is TTFT (Time To First Token) and why is it a primary UX benchmark?",
+      "options": [
+        "The latency duration from when the user sends a prompt until the first streamed token appears on the client screen, directly dictating perceived responsiveness in chat UIs",
+        "The total time taken to fine-tune a model on GPUs",
+        "The time taken to embed an entire PDF document",
+        "The duration of the user's login session"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 342,
+      "question": "What is the purpose of Guardrail Delimiters and Output Canary Tokens in AI security?",
+      "options": [
+        "Canary tokens (secret random strings embedded in system prompts) alert monitoring systems if an LLM is tricked by a prompt injection attack into leaking its confidential system prompt",
+        "Canary tokens format markdown tables in HTML5",
+        "They compress JSON responses over WebSockets",
+        "They convert text prompts into speech audio"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 343,
+      "question": "What is SPLADE (Sparse Lexical and Expansion Model) in modern neural information retrieval?",
+      "options": [
+        "A neural model that learns sparse, term-expanded representations of text matching vocabulary terms with learned importance weights, outperforming classic BM25 while remaining searchable with inverted indexes",
+        "A vector database designed for mobile phones",
+        "A Python library for web scraping",
+        "A CSS grid layout for displaying search cards"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 344,
+      "question": "In Next.js AI applications, how does the Vercel AI SDK `useChat` hook manage streaming UI state?",
+      "options": [
+        "Maintains client state (messages, input, loading status), automatically handles SSE stream decoding, appends chunks incrementally to the message history, and manages abort signals",
+        "Stores chat messages permanently in the user's browser BIOS",
+        "Compiles React JSX into binary machine code",
+        "Encrypts user prompts with blockchain smart contracts"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 345,
+      "question": "What is 'Self-Consistency' prompting in reasoning tasks (Wang et al.)?",
+      "options": [
+        "Sampling multiple diverse reasoning paths from the LLM at a non-zero temperature and selecting the final answer that achieves the highest majority vote across all sampled paths",
+        "Prompting the model to repeat its answer 3 times in a row",
+        "Fine-tuning model weights until training loss equals zero",
+        "Formatting all model outputs as bulleted lists"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 346,
+      "question": "In enterprise RAG, what is Document Metadata Enrichment?",
+      "options": [
+        "Extracting and appending structured attributes (e.g. document type, department, publish date, author, access security level) to text chunks to enable hybrid semantic search + relational metadata filtering",
+        "Adding watermarks to PDF pages before printing",
+        "Translating documents into multiple spoken languages",
+        "Compressing images inside PDF files to reduce size"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 347,
+      "question": "What is the 'KV Cache' (Key-Value Cache) in autoregressive transformer inference?",
+      "options": [
+        "Stores previously computed Key and Value attention matrices for prior tokens in GPU VRAM, avoiding redundant recalculation during token-by-token sequential generation",
+        "A Redis database running on localhost port 6379",
+        "A browser cache for storing user login cookies",
+        "A file system cache for storing Python source files"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 348,
+      "question": "What is Speculative Decoding in Large Language Model acceleration?",
+      "options": [
+        "Using a small, fast draft model to generate candidate token sequences speculatively, which are then verified and accepted in parallel by a larger target model in a single forward pass",
+        "Guessing what the user will type before they press Enter",
+        "Generating random text when the API times out",
+        "Translating English prompts into C++ before execution"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 349,
+      "question": "In vector databases, what is IVFFlat (Inverted File Flat) indexing versus HNSW?",
+      "options": [
+        "IVFFlat clusters vectors into Voronoi cells and searches only nearest centroid lists (fast build time, low memory, but lower recall); HNSW builds multi-layer graphs (higher memory, but superior query recall and speed)",
+        "IVFFlat only works on 2-dimensional vectors",
+        "HNSW does not support cosine similarity",
+        "IVFFlat is stored exclusively in client browser localStorage"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 350,
+      "question": "What is the difference between Single-Turn and Multi-Turn LLM dialogue management?",
+      "options": [
+        "Single-turn treats each query as an isolated prompt without history; Multi-turn manages contextual state, conversation memory, and message roles (system, user, assistant, tool) across the dialogue session",
+        "Single-turn is for text; Multi-turn is for images",
+        "Multi-turn requires restarting the web server after every message",
+        "Single-turn is only used on mobile devices"
       ],
       "correctIndex": 0
     }
@@ -1557,6 +2055,171 @@ const ROLE_QUESTIONS_BANK = {
         "A tool that checks English grammar errors in resumes"
       ],
       "correctIndex": 0
+    },
+    {
+      "id": 436,
+      "question": "In Transformer architectures, what is Grouped-Query Attention (GQA) used in LLaMA 2/3 and Mistral?",
+      "options": [
+        "Shares key and value projection heads across multiple query heads, significantly slashing KV cache memory consumption and boosting decoding throughput with minimal quality loss",
+        "Groups training images by resolution before convolution",
+        "Combines PyTorch with TensorFlow models at runtime",
+        "Compresses model weights using ZIP compression"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 437,
+      "question": "What is the mathematical formulation of the SwiGLU activation function used in state-of-the-art LLMs?",
+      "options": [
+        "SwiGLU(x) = Swish(x * W) * (x * V), combining a gated linear unit with Swish non-linearity for superior gradient flow and representation capacity",
+        "SwiGLU(x) = max(0, x)",
+        "SwiGLU(x) = 1 / (1 + e^-x)",
+        "SwiGLU(x) = x^2 + 2x"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 438,
+      "question": "In diffusion models for generative AI (e.g. Stable Diffusion, Midjourney), what does Classifier-Free Guidance (CFG) control?",
+      "options": [
+        "Balances fidelity to the text prompt versus sample diversity by interpolating between conditionally generated and unconditionally generated noise predictions",
+        "Removes background noise from audio microphone recordings",
+        "Classifies whether an image is NSFW",
+        "Speeds up image loading on mobile websites"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 439,
+      "question": "What is QLoRA (Quantized Low-Rank Adaptation)?",
+      "options": [
+        "Quantizes base transformer weights to 4-bit NormalFloat (NF4) with double quantization and paged optimizers, allowing 65B parameter LLM fine-tuning on a single 48GB GPU",
+        "A database indexing algorithm for vector databases",
+        "A JavaScript library for React frontend routing",
+        "A data compression format for CSV spreadsheets"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 440,
+      "question": "What does the 'Perplexity' metric quantify when evaluating language models?",
+      "options": [
+        "The exponentiated cross-entropy loss over a sequence, measuring how surprised or uncertain the model is when predicting the next token (lower perplexity = better predictive power)",
+        "The physical temperature of the GPU compute cluster",
+        "The number of parameters in the neural network",
+        "The time taken to train one epoch in hours"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 441,
+      "question": "In Deep Learning, what is LayerNorm versus RMSNorm (Root Mean Square Normalization)?",
+      "options": [
+        "RMSNorm modifies LayerNorm by omitting the mean re-centering step and normalizing strictly by root mean square, reducing compute overhead by 10-50% while preserving model performance",
+        "RMSNorm is only applied to Convolutional Neural Networks",
+        "LayerNorm is only calculated on CPU threads",
+        "There is no mathematical difference between them"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 442,
+      "question": "What is Catastrophic Forgetting during sequential fine-tuning of neural networks?",
+      "options": [
+        "When a model trained on a new task experiences drastic degradation of performance on previously mastered tasks as new weight adjustments overwrite old knowledge",
+        "When a GPU runs out of VRAM memory and restarts",
+        "When dataset files are corrupted on the hard drive",
+        "When learning rate is set to exact zero"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 443,
+      "question": "What is Mixture of Experts (MoE) architecture (e.g. Mixtral 8x7B)?",
+      "options": [
+        "Replaces dense feed-forward layers with multiple specialized expert sub-networks and a learned routing gate that activates only top-k experts per token, achieving high capacity with fast active compute",
+        "Training 8 separate models in 8 different programming languages",
+        "An ensemble of linear regression models",
+        "A crowdsourced labeling platform for human data annotators"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 444,
+      "question": "In Machine Learning, what is the Difference between L1-norm (Manhattan) and L2-norm (Euclidean) distance?",
+      "options": [
+        "L1 is the sum of absolute coordinate differences (grid-like movement); L2 is the square root of the sum of squared coordinate differences (straight-line Euclidean distance)",
+        "L1 distance can only be computed on negative numbers",
+        "L2 distance requires all data features to be strings",
+        "Both are mathematically identical in all dimensions"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 445,
+      "question": "What is Contrastive Learning (e.g. SimCLR, CLIP)?",
+      "options": [
+        "A self-supervised representation technique that pulls positive paired representations (e.g. image and its text caption or augmented view) closer together in embedding space while pushing negative pairs apart",
+        "Comparing CSS dark mode contrast ratios against WCAG standards",
+        "Testing two different SQL queries for execution speed",
+        "Adjusting image brightness in Photoshop"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 446,
+      "question": "What is the purpose of Gradient Accumulation during model training?",
+      "options": [
+        "Summing gradients over multiple smaller micro-batches before executing an optimizer step, effectively simulating large batch sizes without exceeding GPU VRAM limits",
+        "Accumulating server CPU load over 24 hours",
+        "Compressing PyTorch model checkpoints into ZIP files",
+        "Preventing overfitting by resetting model weights to zero"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 447,
+      "question": "What is the Gini Impurity metric used for in Decision Tree algorithms (e.g. CART)?",
+      "options": [
+        "Measures the probability of incorrectly classifying a randomly chosen element if it were randomly labeled according to the class distribution in the node (0 = pure node)",
+        "Measures the physical depth of a decision tree in memory",
+        "Calculates the training time of a neural network",
+        "Determines the number of CPU threads to allocate"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 448,
+      "question": "In Computer Vision, what is the core architectural innovation of Vision Transformers (ViT) over CNNs?",
+      "options": [
+        "Treats an image as a sequence of non-overlapping flattened 16x16 pixel patches with positional embeddings, processing visual features with standard transformer self-attention without convolutions",
+        "Uses 3D ray tracing algorithms to render pixels",
+        "Converts images into audio waveforms before classification",
+        "Requires images to be black-and-white only"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 449,
+      "question": "What is Teacher Forcing in sequence-to-sequence model training?",
+      "options": [
+        "Feeding ground-truth tokens from prior time steps as inputs to the decoder during training, rather than feeding the model's own (potentially incorrect) generated tokens from step t-1",
+        "Having a human engineer manually supervise GPU training logs",
+        "Forcing all student models to use Adam optimizer",
+        "A method for checking code syntax in Python"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 450,
+      "question": "What is the purpose of Polyak-Ruppert Averaging (Exponential Moving Average / EMA) of model weights?",
+      "options": [
+        "Maintaining an exponential moving average of model parameters across training steps for use during validation and inference, yielding smoother generalizations and higher test accuracy",
+        "Calculating the average salary of AI engineers",
+        "Averaging database query execution times in milliseconds",
+        "A method for formatting JSON data files"
+      ],
+      "correctIndex": 0
     }
   ],
   "Data Analyst": [
@@ -1942,6 +2605,171 @@ const ROLE_QUESTIONS_BANK = {
         "A 3D pie chart showing weekly employee attendance",
         "A scatter plot used to identify GPU thermal bottlenecks",
         "A flowchart mapping corporate organizational hierarchies"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 536,
+      "question": "In SQL, what is the difference between `EXISTS` and `IN` subquery predicates?",
+      "options": [
+        "`EXISTS` terminates evaluation as soon as the first matching row is found (short-circuit boolean check) and handles NULLs cleanly; `IN` evaluates the full list of values and can yield unexpected results if subquery returns NULL",
+        "`IN` only works on integer primary keys",
+        "`EXISTS` can only be used on temporary tables",
+        "There is no performance or logical difference in modern databases"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 537,
+      "question": "What is Market Basket Analysis (Association Rule Mining) and what are Support, Confidence, and Lift?",
+      "options": [
+        "Support is item frequency; Confidence is probability of buying B given A; Lift is ratio of observed co-occurrence to expected random co-occurrence (Lift > 1 indicates strong positive affinity)",
+        "Support is customer service tickets; Confidence is marketing budget; Lift is sales revenue",
+        "A method for weighing physical shopping carts in retail stores",
+        "An algorithm for sorting database records alphabetically"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 538,
+      "question": "In data warehouses, what is a Conformed Dimension (Kimball methodology)?",
+      "options": [
+        "A single, standardized dimension table (e.g. `dim_date`, `dim_customer`) shared consistently across multiple disparate fact tables / data marts to enable cross-functional drill-across reporting",
+        "A dimension table that contains only encrypted passwords",
+        "A temporary table created during ETL execution",
+        "A table with strictly 10 columns"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 539,
+      "question": "In statistics, what is the Bonferroni Correction used for during multiple hypothesis testing?",
+      "options": [
+        "Adjusts the significance threshold alpha by dividing by total number of comparisons (alpha / m) to control the family-wise error rate and prevent false positive discoveries",
+        "Calculates compound interest over 10 years",
+        "Smooths time-series data using moving averages",
+        "Removes duplicate rows from SQL queries"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 540,
+      "question": "What is Cumulative Distribution Function (CDF) versus Probability Density Function (PDF)?",
+      "options": [
+        "PDF describes the relative likelihood of a continuous random variable taking a specific value; CDF gives the cumulative probability that the variable takes a value less than or equal to x (P(X <= x))",
+        "PDF is an Adobe document format; CDF is an Excel formula",
+        "CDF is only for discrete integers; PDF is for text",
+        "Both are identical mathematical functions"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 541,
+      "question": "In DAX (Power BI), what does the `CALCULATE()` function do?",
+      "options": [
+        "Evaluates a measure expression in a modified filter context, allowing analysts to override, add, or remove existing visual slicer and row context filters",
+        "Calculates basic addition and subtraction only",
+        "Imports CSV files from Google Drive",
+        "Exports dashboards to PDF documents"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 542,
+      "question": "What is an Upsert (`INSERT ... ON CONFLICT DO UPDATE` or `MERGE`) in SQL data pipelines?",
+      "options": [
+        "An atomic database operation that attempts to insert a new row, and if a unique/primary key violation occurs, updates the existing row instead",
+        "A command that deletes corrupted table data",
+        "An index that sorts data in ascending order",
+        "A query that joins a table to itself"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 543,
+      "question": "What is Survival Analysis (Kaplan-Meier estimator) used for in customer churn analytics?",
+      "options": [
+        "Estimating the time-to-event probability (e.g. time until a customer cancels their subscription) while appropriately handling right-censored data (active customers who haven't churned yet)",
+        "Calculating emergency medical supplies in hospitals",
+        "Measuring server CPU temperatures over 30 days",
+        "Predicting stock market crashes"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 544,
+      "question": "In Python Pandas, what is the computational difference between `df.apply()` and vectorized operations (e.g. `df['a'] + df['b']`)?",
+      "options": [
+        "Vectorized operations execute in compiled C/Cython SIMD machine instructions (100x faster); `apply()` iterates row-by-row in interpreted Python with high function-call overhead",
+        "`apply()` runs on GPUs while vectorization runs on CPUs",
+        "`apply()` modifies data on disk permanently",
+        "There is no performance difference in Pandas 2.0"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 545,
+      "question": "What is a Surrogate Key versus a Natural Key in relational database modeling?",
+      "options": [
+        "A Natural Key is a real-world business identifier (e.g. SSN, email); a Surrogate Key is an internal, system-generated artificial unique identifier (e.g. auto-incrementing integer or UUID) with no business meaning",
+        "A Surrogate Key is stored on paper; Natural Key is digital",
+        "Natural Keys can never be used as primary keys",
+        "Surrogate Keys can only contain alphabetic characters"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 546,
+      "question": "What does the Chi-Square Test of Independence evaluate in categorical data analysis?",
+      "options": [
+        "Whether there is a statistically significant association between two categorical variables by comparing observed frequencies against expected frequencies in a contingency table",
+        "The linear correlation between two continuous price variables",
+        "The average difference between two numeric sample means",
+        "The percentage of missing values in a dataset"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 547,
+      "question": "What is a Window Frame specification in SQL (e.g. `ROWS BETWEEN 6 PRECEDING AND CURRENT ROW`) used for?",
+      "options": [
+        "Defines a sliding dynamic window of rows relative to the current row, commonly used to compute rolling 7-day moving averages or running cumulative totals",
+        "Sets the width and height of the database terminal window",
+        "Limits SQL query output to exactly 6 rows",
+        "Prevents deadlocks in concurrent database writes"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 548,
+      "question": "In financial data analysis, what is EBITDA and why is it monitored?",
+      "options": [
+        "Earnings Before Interest, Taxes, Depreciation, and Amortization; measures core operational profitability and cash-generating performance independent of capital structure and accounting decisions",
+        "A database query language used for banking software",
+        "A metric measuring annual employee turnover",
+        "The total physical value of corporate office buildings"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 549,
+      "question": "What is Data Imputation and what are its standard statistical techniques for missing values?",
+      "options": [
+        "Replacing missing data points with substituted values using mean/median/mode substitution, K-Nearest Neighbors (KNN), or predictive model regression",
+        "Deleting corrupted database tables permanently",
+        "Encrypting database columns with RSA keys",
+        "Translating CSV files into JSON format"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 550,
+      "question": "In Tableau / Power BI dashboard architecture, what is the difference between DirectQuery (Live Connection) and Import Mode?",
+      "options": [
+        "Import Mode loads and compresses data into an in-memory columnar engine for ultra-fast visual interactions; DirectQuery sends live SQL queries to the underlying database on every user visual click",
+        "DirectQuery is only used for Excel spreadsheets",
+        "Import Mode does not support charts or graphs",
+        "DirectQuery caches all data in browser cookies"
       ],
       "correctIndex": 0
     }
@@ -2331,6 +3159,171 @@ const ROLE_QUESTIONS_BANK = {
         "A CSS styling wireframe for mobile application screens"
       ],
       "correctIndex": 0
+    },
+    {
+      "id": 636,
+      "question": "In enterprise software analysis, what is the difference between a Product Requirements Document (PRD) and a Business Requirements Document (BRD)?",
+      "options": [
+        "A BRD focuses on business problems, commercial goals, and ROI from leadership's perspective; a PRD defines specific product features, user flows, personas, and UX specifications for product and engineering teams",
+        "A PRD is only written for physical hardware products",
+        "A BRD is written by developers in Python code",
+        "There is no difference in modern agile frameworks"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 637,
+      "question": "What is a Capability Model (Business Capability Mapping) in enterprise architecture?",
+      "options": [
+        "A structured visual representation of what an enterprise does (its core operational abilities and competencies) to execute its business model, independent of organizational structure or technology",
+        "A resume summary of the lead software engineer",
+        "A diagram showing server rack power consumption",
+        "A chart showing employee hourly salary rates"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 638,
+      "question": "In Agile backlog management, what is the 'Definition of Ready' (DoR) versus 'Definition of Done' (DoD)?",
+      "options": [
+        "DoR defines criteria a user story must satisfy before being pulled into a sprint (clear criteria, dependencies resolved, estimated); DoD defines criteria for marking a story complete (tested, reviewed, deployed)",
+        "DoR is for marketing; DoD is for sales",
+        "DoD requires client payment; DoR requires employee signatures",
+        "Both are identical terms in Scrum guide"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 639,
+      "question": "What is Porter's Five Forces framework used for in strategic industry analysis?",
+      "options": [
+        "Assessing industry attractiveness and competitive intensity: Threat of New Entrants, Bargaining Power of Buyers, Bargaining Power of Suppliers, Threat of Substitutes, and Competitive Rivalry",
+        "Calculating server CPU core distribution",
+        "Estimating user story points in Scrum poker",
+        "Measuring software bug severity levels"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 640,
+      "question": "In UML diagramming, what is the difference between an Activity Diagram and a Sequence Diagram?",
+      "options": [
+        "An Activity Diagram models step-by-step operational workflows and business logic flows; a Sequence Diagram models chronological message exchanges and interactions between objects/systems over time",
+        "Activity diagrams are only for database schemas",
+        "Sequence diagrams cannot show system actors",
+        "There is no functional distinction in UML specifications"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 641,
+      "question": "What is a SMART Goal criteria when defining project objectives and business outcomes?",
+      "options": [
+        "Specific, Measurable, Achievable, Relevant, and Time-bound",
+        "Scalable, Modular, Agile, Responsive, and Tested",
+        "Standardized, Managed, Automated, Reliable, and Tracked",
+        "Strategic, Monetary, Actionable, Regulated, and Timely"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 642,
+      "question": "In requirements elicitation, what is the 'Shadowing' (Observation) technique?",
+      "options": [
+        "Observing end users in their actual work environment as they perform daily business tasks to identify unstated requirements, hidden pain points, and workflow bottlenecks",
+        "Working overtime without logging hours in HR software",
+        "Copying competitor source code from GitHub",
+        "Hiding behind office partitions during client meetings"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 643,
+      "question": "What is Cost-Benefit Analysis (CBA) and what is the Net Present Value (NPV)?",
+      "options": [
+        "CBA compares total expected costs against total expected benefits; NPV calculates the present value of future cash inflows discounted by cost of capital minus initial investment (NPV > 0 is profitable)",
+        "CBA measures developer typing speed; NPV measures network latency",
+        "NPV is the number of users registered on a mobile app",
+        "CBA is only calculated when a company goes bankrupt"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 644,
+      "question": "What is a SIPOC Diagram in Six Sigma process improvement?",
+      "options": [
+        "Suppliers, Inputs, Process, Outputs, and Customers: a high-level visual summary mapping process inputs and outputs before initiating detailed process re-engineering",
+        "Software, Interface, Protocol, Optimization, and Cloud",
+        "Security, IP, Permissions, Operations, and Compliance",
+        "Sales, Invoicing, Payments, Orders, and Collections"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 645,
+      "question": "In business process modeling, what is the difference between an 'As-Is' process map and a 'To-Be' process map?",
+      "options": [
+        "'As-Is' models current operational workflows with existing inefficiencies; 'To-Be' models the optimized, re-engineered future workflow incorporating new technology and elimination of waste",
+        "'As-Is' is for physical paper workflows; 'To-Be' is for digital software",
+        "'To-Be' maps cannot be modified once drawn",
+        "There is no distinction in Six Sigma methodology"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 646,
+      "question": "What is a Burndown Chart in Scrum sprint monitoring?",
+      "options": [
+        "A graphical representation of remaining work (story points) over time versus the ideal linear completion trajectory, helping teams identify if they are on track to meet sprint goals",
+        "A chart showing server hardware overheating risks",
+        "A financial ledger tracking corporate tax expenses",
+        "A graph showing company employee resignation rates"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 647,
+      "question": "What is Kano Model Analysis in product feature prioritization?",
+      "options": [
+        "Categorizes customer preferences into Basic (Must-be), Performance (Linear satisfaction), and Excitement (Delighters) attributes to understand customer reaction to feature investments",
+        "Calculates developer hourly billing rates",
+        "Measures SQL database query latency",
+        "A framework for buying corporate real estate"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 648,
+      "question": "What is the primary function of a Change Control Board (CCB) in enterprise governance?",
+      "options": [
+        "A formal committee of stakeholders that reviews, evaluates, approves, or rejects proposed changes to project scope, budget, and baseline deliverables",
+        "A team of developers who review Git pull requests",
+        "A board of directors that fires executive management",
+        "An automated bot that merges code branches"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 649,
+      "question": "What is Joint Application Development (JAD) in requirement engineering?",
+      "options": [
+        "A structured, intensive workshop bringing business stakeholders, BAs, and technical teams together in collaborative working sessions to rapidly define and agree on system requirements",
+        "Pair programming between two software engineers",
+        "Merging two mobile applications into a single app",
+        "Writing automated tests in Java and Python"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 650,
+      "question": "In business analysis, what is the 'Fishbone' (Ishikawa / Cause-and-Effect) Diagram categories (6Ms)?",
+      "options": [
+        "Manpower (People), Machine (Technology), Material, Method (Process), Measurement, and Milieu (Environment / Mother Nature) for structuring root cause investigations",
+        "Marketing, Money, Management, Metrics, Media, and Meetings",
+        "Memory, Microprocessor, Motherboard, Monitor, Modem, and Mouse",
+        "Monthly, Mid-year, Milestone, Margin, Multiplier, and Metric"
+      ],
+      "correctIndex": 0
     }
   ],
   "UI/UX Designer": [
@@ -2716,6 +3709,171 @@ const ROLE_QUESTIONS_BANK = {
         "Automated testing performed by artificial intelligence bots",
         "Security penetration testing against malicious hackers",
         "Testing software without the developers knowing"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 736,
+      "question": "In UX design psychology, what is the 'Serial Position Effect' (Primacy and Recency Effects)?",
+      "options": [
+        "Users have a propensity to best remember the first items (Primacy) and last items (Recency) in a navigation list or menu, while items in the middle are frequently overlooked",
+        "Users click buttons on the right side of the screen 80% of the time",
+        "Designers should always use serial numbers on UI cards",
+        "Dark mode screens increase memory recall by 50%"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 737,
+      "question": "What is the difference between Responsive Design and Adaptive Design in web layout strategy?",
+      "options": [
+        "Responsive uses fluid grids and flexible CSS media queries to resize content continuously across any screen; Adaptive detects device type and serves distinct, fixed layout templates for specific breakpoints",
+        "Responsive is for mobile; Adaptive is for desktop",
+        "Adaptive design requires writing code in C++",
+        "Responsive design cannot contain images"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 738,
+      "question": "What is Nielsen's Heuristic 'Recognition Rather Than Recall' in interface usability?",
+      "options": [
+        "Minimizing user memory load by making elements, actions, and options visible; users should not have to remember information from one part of the interface to another",
+        "Using facial recognition cameras for user login",
+        "Displaying user full names in bold red typography",
+        "Requiring users to type their password twice on every page"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 739,
+      "question": "In visual design, what is 'Visual Hierarchy' and what are its primary tools?",
+      "options": [
+        "The arrangement of UI elements to imply importance and guide user attention through deliberate use of scale/size, color contrast, typography weight, whitespace, and layout positioning",
+        "Sorting company employees by corporate job title",
+        "A 3D perspective wireframe created in Blender",
+        "A flowchart showing server API endpoints"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 740,
+      "question": "What is the 'Aesthetic-Usability Effect' in human-computer interaction?",
+      "options": [
+        "Users perceive aesthetically pleasing designs as significantly more usable and are more tolerant of minor usability glitches than in visually plain or cluttered designs",
+        "Beautiful websites always load faster on slow 3G networks",
+        "Users only buy products from websites that use purple themes",
+        "Designers should prioritize aesthetics over all functionality"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 741,
+      "question": "In mobile navigation, what is a 'Bottom Sheet' and when is it preferred over a centered Modal?",
+      "options": [
+        "A surface anchored to the bottom of mobile screens that slides up with contextual actions, ideal for one-handed thumb interaction without covering the entire screen context",
+        "A footer containing legal copyright text",
+        "A spreadsheet downloaded from Google Drive",
+        "A notification toast that appears at the top"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 742,
+      "question": "What is the purpose of 'Skeleton Screens' (Shimmer Placeholders) over traditional loading spinners?",
+      "options": [
+        "Reduces perceived wait time by displaying an incremental wireframe layout preview that mimics incoming content structure, creating an impression of immediate responsiveness",
+        "Animates 3D skeletons on Halloween promotional landing pages",
+        "Compresses CSS file size during network transport",
+        "Displays the user's browser version while loading"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 743,
+      "question": "What is 'Mental Model' in user experience architecture (Don Norman)?",
+      "options": [
+        "A user's internal cognitive understanding of how a system works, based on past experiences, intuitive expectations, and external real-world metaphors",
+        "A machine learning model running on neural networks",
+        "A psychological IQ test administered during job interviews",
+        "A wireframe showing database table relationships"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 744,
+      "question": "What is the difference between Kerning, Tracking, and Leading in typography?",
+      "options": [
+        "Kerning is spacing between specific character pairs (e.g. A-V); Tracking is uniform letter spacing across a whole word/paragraph; Leading is vertical line spacing (line-height)",
+        "Tracking is mouse cursor recording; Kerning is font size; Leading is font weight",
+        "Leading is only used for headlines; Kerning is only for numbers",
+        "There is no typographic distinction in CSS"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 745,
+      "question": "In accessibility standards (WCAG), what is 'Focus Management' and why is it mandatory for Modals?",
+      "options": [
+        "When a modal opens, keyboard focus must move inside the modal and be trapped within it until closed, returning focus to the triggering element when dismissed",
+        "Adjusting screen brightness when reading long text",
+        "Forcing users to look directly at the webcam during tests",
+        "Centering all text paragraphs on the screen"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 746,
+      "question": "What is Nielsen's Heuristic 'Flexibility and Efficiency of Use'?",
+      "options": [
+        "Providing accelerators (keyboard shortcuts, customizable dashboards, advanced filters) that speed up interaction for expert users while keeping interface intuitive for novices",
+        "Allowing users to resize browser window dimensions",
+        "Writing software in C++ instead of JavaScript",
+        "Making all button animations 10x faster"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 747,
+      "question": "What is 'Affinity Diagramming' in UX research synthesis?",
+      "options": [
+        "A collaborative sorting technique where qualitative research notes, observations, and user quotes are clustered on sticky notes into natural thematic categories to uncover insights",
+        "A marketing chart showing customer affinity for competitor brands",
+        "A diagram showing database foreign key relationships",
+        "A wireframe showing mobile app tab transitions"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 748,
+      "question": "What is the purpose of 'Card Sorting' in Information Architecture (IA)?",
+      "options": [
+        "Understanding how users naturally organize, label, and categorize information topics, helping designers build intuitive navigation menus and site taxonomies",
+        "Playing card games during team building exercises",
+        "Sorting customer credit cards by expiration date",
+        "Formatting product cards in CSS grid"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 749,
+      "question": "In visual UI design, what is 'Whitespace' (Negative Space) and why is it essential?",
+      "options": [
+        "Empty space surrounding and between UI elements that reduces cognitive clutter, emphasizes critical content, and enhances readability and visual elegance",
+        "A bug in CSS that leaves white backgrounds on dark mode",
+        "The margin at the bottom of printed paper documents",
+        "Space reserved exclusively for marketing banner advertisements"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 750,
+      "question": "What is a 'Tree Test' (Reverse Card Sort) in IA usability evaluation?",
+      "options": [
+        "A text-only quantitative usability technique where participants navigate a simplified textual site hierarchy without visual UI styling to test findability of items",
+        "Testing if mobile apps work in outdoor parks with trees",
+        "A tree data structure unit test written in Python",
+        "An environmental audit of corporate paper consumption"
       ],
       "correctIndex": 0
     }
@@ -3105,12 +4263,179 @@ const ROLE_QUESTIONS_BANK = {
         "Disabling customer support phone numbers"
       ],
       "correctIndex": 0
+    },
+    {
+      "id": 836,
+      "question": "In enterprise SaaS sales, what is a 'Co-Terming' agreement during contract expansion?",
+      "options": [
+        "Aligning the renewal and expiration dates of newly purchased user licenses or add-on modules with the customer's existing primary contract end date for unified billing",
+        "Co-signing an office lease agreement with a partner firm",
+        "Splitting sales commissions equally between two reps",
+        "Terminating a contract when customer violates terms"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 837,
+      "question": "What is 'Sales Enablement' in high-performance revenue organizations?",
+      "options": [
+        "The strategic practice of providing sales reps with the training, content, competitive battlecards, tools, and collateral required to close deals faster and engage buyers effectively",
+        "Enabling credit card payment processing on the company website",
+        "Giving all employees administrative access to Salesforce",
+        "Purchasing mobile phones for sales team members"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 838,
+      "question": "In enterprise negotiations, what is a 'Walk-Away Price' (Reservation Price)?",
+      "options": [
+        "The least favorable commercial terms or minimum price point a seller is willing to accept before walking away from the deal completely to preserve profit margins and contract integrity",
+        "The cost of walking to client meetings instead of taking a taxi",
+        "A discount given to customers who purchase in cash",
+        "The price listed on the public company pricing page"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 839,
+      "question": "What is 'Lead Velocity Rate' (LVR) and why is it a leading indicator of revenue growth?",
+      "options": [
+        "The percentage growth rate of qualified pipeline leads generated month-over-month (LVR predicts future revenue performance months before deals actually close)",
+        "The speed of developer typing tests during recruitment",
+        "The time taken for a marketing email to be opened in seconds",
+        "The number of cold calls made per hour by an SDR"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 840,
+      "question": "In enterprise software procurement, what is SOC 2 Type II compliance and why do enterprise buyers require it?",
+      "options": [
+        "An independent audit verifying that the vendor has established and operationalized rigorous security, availability, and confidentiality controls over an extended evaluation period (6-12 months)",
+        "A software license for Microsoft Windows servers",
+        "A tax certificate issued by corporate accountants",
+        "A resume certificate for cybersecurity engineers"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 841,
+      "question": "What is the 'Command of the Message' methodology (Force Management)?",
+      "options": [
+        "A value-based sales framework aligning product capabilities directly to customer business pains, measurable business outcomes, and quantifiable positive business impact",
+        "Speaking louder than the customer during sales calls",
+        "Sending automated SMS text messages to prospects every hour",
+        "Formatting sales emails using all capital letters"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 842,
+      "question": "In cold outbound prospecting, what is a 'Tier 1 Account List'?",
+      "options": [
+        "The top 10-20% highest-value, perfect-fit target enterprise accounts that receive bespoke, multi-threaded 1:1 hyper-personalized outreach across executives and buying committees",
+        "A list of company suppliers who provide office stationery",
+        "A spreadsheet of bank accounts with highest cash reserves",
+        "Accounts that have cancelled their subscription"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 843,
+      "question": "What is 'Churn Cohort Analysis' in customer success and account management?",
+      "options": [
+        "Tracking customer cancellation rates segmented by customer signup month, acquisition channel, or contract size to identify specific onboarding or product failure points over time",
+        "Calculating annual sales bonus commission tiers",
+        "Tracking website traffic spikes during promotional sales",
+        "Measuring employee resignation rates across quarters"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 844,
+      "question": "In B2B sales cycles, what is 'Multi-Threading' across an enterprise buying committee?",
+      "options": [
+        "Building simultaneous relationships with multiple key stakeholders across departments (e.g. End User, IT Security, Finance, Economic Buyer) to prevent single-point-of-failure deal stalls",
+        "Making 5 phone calls at the same time using automated dialers",
+        "Writing multi-threaded C++ code for backend servers",
+        "Running marketing ads on Facebook and Instagram simultaneously"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 845,
+      "question": "What is a 'Business Value Assessment' (BVA) or ROI Calculator in enterprise proposals?",
+      "options": [
+        "A formal quantitative economic model demonstrating projected financial returns, hours saved, labor cost reduction, and net payoff period resulting from software adoption",
+        "A tool that checks if employee expense receipts are authentic",
+        "A spreadsheet calculating corporate tax deductions",
+        "An online calculator for currency exchange rates"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 846,
+      "question": "In SaaS contract terms, what is a 'Non-Solicitation Clause'?",
+      "options": [
+        "A contractual covenant preventing either party from actively recruiting, soliciting, or hiring the other party's employees or contractors during and for a period after the contract term",
+        "A rule that prevents sales reps from calling customers on weekends",
+        "A prohibition against sending marketing emails without consent",
+        "A clause that prevents clients from reselling the software"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 847,
+      "question": "What is 'Buyer Remorse' and how does an elite BDE prevent post-sale churn during contract signing?",
+      "options": [
+        "Anxiety or doubt experienced by a buyer immediately after committing major budget; mitigated with immediate executive kickoff welcome calls, clear onboarding roadmaps, and early milestone wins",
+        "When a buyer files a police complaint against a sales rep",
+        "When an invoice bounces due to insufficient bank funds",
+        "A customer requesting a refund after 10 years of use"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 848,
+      "question": "What is 'Cold Outreach Deliverability Warmup' for new corporate email domains?",
+      "options": [
+        "Gradually increasing outbound email volume over several weeks with automated peer interactions to build positive domain sender reputation and prevent emails from landing in spam filters",
+        "Heating up computer servers in the office before work",
+        "Sending 10,000 cold emails on day 1 to test domain speed",
+        "Formatting email text in red color"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 849,
+      "question": "In strategic B2B partnerships, what is a Value-Added Reseller (VAR) versus a System Integrator (SI)?",
+      "options": [
+        "A VAR bundles third-party software with proprietary products/services for resale; an SI specializes in building, integrating, and customizing complex multi-vendor enterprise IT architectures",
+        "A VAR is for consumer retail; an SI is for mobile phones",
+        "An SI cannot sell software licenses under any circumstance",
+        "There is no commercial distinction in enterprise channels"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": 850,
+      "question": "What is 'Pipeline Coverage Ratio' and what ratio is typically required to ensure quarterly quota attainment?",
+      "options": [
+        "Pipeline Coverage = Total Pipeline Value / Sales Quota Target; a 3x to 4x coverage ratio is standard to account for average win rates and deal slippage",
+        "Pipeline Coverage = Total Closed Deals / Total Sales Reps",
+        "Pipeline Coverage = Marketing Ad Spend / Total Leads",
+        "A ratio of 0.5x is optimal for all enterprise SaaS companies"
+      ],
+      "correctIndex": 0
     }
   ]
 };
 
 // In-memory active session cache with 3-hour TTL
 const ACTIVE_ASSESSMENT_SESSIONS = new Map();
+// Candidate historical seen questions cache (candidateKey -> Set of question IDs)
+const CANDIDATE_SEEN_QUESTIONS = new Map();
 const SESSION_TTL_MS = 3 * 60 * 60 * 1000; // 3 hours
 
 /**
@@ -3155,8 +4480,7 @@ function cleanupExpiredSessions() {
 
 /**
  * Generates a dynamic, randomized assessment session for a candidate.
- * Randomly samples 'sampleCount' (default 20) questions from the role's 35 pool,
- * shuffles the question order, and Fisher-Yates shuffles the 4 options for each question.
+ * Guarantees fresh, non-repeating questions even for the same job and candidate.
  */
 function generateSessionAssessment(roleName, options = {}) {
   cleanupExpiredSessions();
@@ -3165,11 +4489,33 @@ function generateSessionAssessment(roleName, options = {}) {
   const pool = ROLE_QUESTIONS_BANK[key] || ROLE_QUESTIONS_BANK['Frontend Developer'];
   const sampleCount = Math.min(options.sampleCount || 20, pool.length);
 
-  // 1. Fisher-Yates sample without replacement
-  const shuffledPool = shuffleArray(pool);
-  const sampled = shuffledPool.slice(0, sampleCount);
+  // Candidate tracking key for exclusion filter
+  const candidateIdentifier = (options.candidateEmail || options.candidateId || options.name || '').toLowerCase().trim();
+  let seenSet = CANDIDATE_SEEN_QUESTIONS.get(candidateIdentifier);
+  if (!seenSet) {
+    seenSet = new Set();
+    if (candidateIdentifier) {
+      CANDIDATE_SEEN_QUESTIONS.set(candidateIdentifier, seenSet);
+    }
+  }
 
-  // 2. Further randomize question presentation order
+  // 1. Separate pool into Unseen vs Seen questions
+  let candidateUnseenPool = pool.filter(q => !seenSet.has(q.id));
+
+  // If candidate has seen almost all questions, reset their history to allow fresh cycles
+  if (candidateUnseenPool.length < sampleCount) {
+    seenSet.clear();
+    candidateUnseenPool = [...pool];
+  }
+
+  // 2. Fisher-Yates sample without replacement from unseen pool
+  const shuffledUnseen = shuffleArray(candidateUnseenPool);
+  const sampled = shuffledUnseen.slice(0, sampleCount);
+
+  // Record newly sampled questions in candidate's seen history
+  sampled.forEach(q => seenSet.add(q.id));
+
+  // 3. Further randomize question presentation order
   const presentationQuestions = shuffleArray(sampled);
 
   const sessionId = 'sess_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
@@ -3177,7 +4523,7 @@ function generateSessionAssessment(roleName, options = {}) {
   const masterQuestions = [];
   const clientQuestions = [];
 
-  // 3. For each question, shuffle options and compute new correct index
+  // 4. For each question, shuffle options and compute new correct index
   presentationQuestions.forEach((q, idx) => {
     const originalOptions = [...q.options];
     const correctOptionText = originalOptions[q.correctIndex || 0];
@@ -3216,6 +4562,7 @@ function generateSessionAssessment(roleName, options = {}) {
   ACTIVE_ASSESSMENT_SESSIONS.set(sessionId, {
     sessionId,
     role: key,
+    candidateIdentifier,
     createdAt: Date.now(),
     sampleCount,
     answerKey,
@@ -3303,6 +4650,7 @@ function getQuestionsForRole(roleName, stripAnswers = true) {
 module.exports = {
   ROLE_QUESTIONS_BANK,
   ACTIVE_ASSESSMENT_SESSIONS,
+  CANDIDATE_SEEN_QUESTIONS,
   normalizeRoleToBankKey,
   generateSessionAssessment,
   getQuestionsForRole,

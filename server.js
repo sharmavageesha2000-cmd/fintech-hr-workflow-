@@ -636,17 +636,34 @@ app.post('/api/send-email', async (req, res) => {
 
 // 5a. Get 20 MCQs for Candidate's Domain (Dynamically Sampled & Shuffled per Session)
 app.get('/api/assessment/questions', (req, res) => {
-  const { role, candidateId } = req.query;
+  const { role, candidateId, candidateEmail, name } = req.query;
   let targetRole = role;
+  let candidateRecord = null;
 
-  if (!targetRole && candidateId) {
-    const candidates = getCandidates(true);
-    const c = candidates.find(item => item.id === candidateId);
-    if (c) targetRole = c.roleApplied;
+  const candidates = getCandidates(true);
+  if (candidateId) {
+    candidateRecord = candidates.find(item => item.id === candidateId);
+  }
+  if (!candidateRecord && candidateEmail) {
+    candidateRecord = candidates.find(item => (item.email || '').toLowerCase().trim() === candidateEmail.toLowerCase().trim());
+  }
+
+  if (!targetRole && candidateRecord) {
+    targetRole = candidateRecord.roleApplied;
   }
 
   targetRole = targetRole || 'Frontend Developer';
-  const sessionData = generateSessionAssessment(targetRole, { sampleCount: 20 });
+
+  const effectiveEmail = candidateEmail || candidateRecord?.email || '';
+  const effectiveId = candidateId || candidateRecord?.id || '';
+  const effectiveName = name || candidateRecord?.name || '';
+
+  const sessionData = generateSessionAssessment(targetRole, { 
+    sampleCount: 20,
+    candidateEmail: effectiveEmail,
+    candidateId: effectiveId,
+    name: effectiveName
+  });
 
   res.json({
     success: true,
