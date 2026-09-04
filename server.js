@@ -213,7 +213,7 @@ async function extractTextFromFile(filePath) {
   }
 }
 
-// Helper: Send Email via Nodemailer (Multi-protocol: SSL 465 + STARTTLS 587 + Gmail Service)
+// Helper: Send Email via Nodemailer (Multi-protocol: Gmail Service + SSL 465 + STARTTLS 587 with IPv4 Force)
 async function sendNotificationEmail({ to, subject, htmlBody }) {
   const settings = getSettings();
   const recruiterEmail = settings.recruiterEmail || process.env.RECRUITER_EMAIL || 'sharmavageesha2000@gmail.com';
@@ -224,9 +224,37 @@ async function sendNotificationEmail({ to, subject, htmlBody }) {
   }
 
   const transportConfigs = [
-    { host: 'smtp.gmail.com', port: 465, secure: true, auth: { user: recruiterEmail, pass: appPassword }, connectionTimeout: 12000, greetingTimeout: 10000, socketTimeout: 15000 },
-    { host: 'smtp.gmail.com', port: 587, secure: false, auth: { user: recruiterEmail, pass: appPassword }, connectionTimeout: 12000, greetingTimeout: 10000, socketTimeout: 15000 },
-    { service: 'gmail', auth: { user: recruiterEmail, pass: appPassword }, connectionTimeout: 15000, greetingTimeout: 10000, socketTimeout: 20000 }
+    { 
+      service: 'gmail', 
+      family: 4, 
+      auth: { user: recruiterEmail, pass: appPassword }, 
+      tls: { rejectUnauthorized: false }, 
+      connectionTimeout: 8000, 
+      greetingTimeout: 6000, 
+      socketTimeout: 12000 
+    },
+    { 
+      host: 'smtp.gmail.com', 
+      port: 465, 
+      secure: true, 
+      family: 4, 
+      auth: { user: recruiterEmail, pass: appPassword }, 
+      tls: { rejectUnauthorized: false }, 
+      connectionTimeout: 8000, 
+      greetingTimeout: 6000, 
+      socketTimeout: 12000 
+    },
+    { 
+      host: 'smtp.gmail.com', 
+      port: 587, 
+      secure: false, 
+      family: 4, 
+      auth: { user: recruiterEmail, pass: appPassword }, 
+      tls: { rejectUnauthorized: false }, 
+      connectionTimeout: 8000, 
+      greetingTimeout: 6000, 
+      socketTimeout: 12000 
+    }
   ];
 
   let lastError = null;
@@ -252,7 +280,7 @@ async function sendNotificationEmail({ to, subject, htmlBody }) {
     } catch (error) {
       lastError = error;
       console.warn(`[Gmail SMTP Warning] Method ${i + 1} failed: ${error.message}`);
-      await new Promise(r => setTimeout(r, 600));
+      await new Promise(r => setTimeout(r, 400));
     }
   }
 

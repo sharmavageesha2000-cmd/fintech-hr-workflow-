@@ -1,5 +1,434 @@
 [
   {
+    "id": "cand-1788538210123-101",
+    "name": "Ananya Verma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "Not specified",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Business Analyst",
+    "experienceYears": 2.5,
+    "skills": [
+      "Requirement Gathering (BRD/FRD)",
+      "Agile / Scrum",
+      "Jira",
+      "Process Mapping",
+      "Documentation",
+      "Business Analysis"
+    ],
+    "missingSkills": [],
+    "scoreBreakdown": {
+      "technicalSkills": 35,
+      "experienceRelevance": 25,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 90,
+    "status": "SELECTED",
+    "interviewStatus": "SCHEDULED",
+    "offerStatus": "OFFER_EXTENDED",
+    "summary": "Ananya Verma possesses 2.5 years of relevant experience aligned with Business Analyst. Strong foundation in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping. Shortlisted for 20-MCQ technical assessment.",
+    "strengths": [
+      "2.5 years of demonstrated experience in Business Analyst",
+      "Strong skills in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira"
+    ],
+    "weaknesses": [
+      "To be evaluated via 20-MCQ domain technical assessment (80% passing threshold)"
+    ],
+    "interviewSchedule": {
+      "roundName": "Round 1: Online Technical Assessment (20 MCQs)",
+      "format": "Proctored Online Assessment (20 Domain MCQs)",
+      "assessmentLink": "https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com",
+      "duration": "25 Minutes",
+      "passingScore": "80% (16 / 20 correct)",
+      "preparationNotes": "Complete 20 domain-specific questions in Business Analyst. Copy/paste and multi-window switching are strictly monitored."
+    },
+    "emailSubject": "📝 Technical Assessment Link: Business Analyst - Finova Technologies",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 14px; background: #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.04);\">\n      <div style=\"text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9;\">\n        <span style=\"background: #ecfdf5; color: #047857; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 99px; display: inline-block; margin-bottom: 10px; border: 1px solid #a7f3d0;\">RESUME SHORTLISTED</span>\n        <h2 style=\"color: #0f172a; margin: 0 0 6px 0; font-size: 22px; font-weight: 800;\">🎉 Congratulations, Ananya Verma!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 14.5px;\">Your application for <strong>Business Analyst</strong> has been approved for the next stage.</p>\n      </div>\n\n      <p style=\"font-size: 15px; line-height: 1.6; color: #334155;\">Dear <strong>Ananya Verma</strong>,</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">Thank you for applying for the <strong>Business Analyst</strong> position at Finova Technologies. We thoroughly reviewed your resume and were impressed by your <strong>2.5 years of relevant experience</strong> and proficiency in <strong>Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping, Documentation</strong>.</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">To finalize your selection and generate your official employment offer, you are invited to complete your <strong>Online Technical Assessment</strong>.</p>\n\n      <!-- Assessment Card -->\n      <div style=\"background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%); border: 1.5px solid #5eead4; border-radius: 12px; padding: 22px; margin: 24px 0;\">\n        <h3 style=\"margin: 0 0 14px 0; color: #0f766e; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;\">\n          📝 Technical Assessment Details (Business Analyst)\n        </h3>\n        \n        <table style=\"width: 100%; font-size: 13.5px; color: #1e293b; border-collapse: collapse; margin-bottom: 16px;\">\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b; width: 42%;\"><strong>Role Domain:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #0f766e;\">Business Analyst (20 Domain MCQs)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Time Duration:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700;\">25 Minutes</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Passing Requirement:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 800; color: #047857;\">80% or above (16 / 20 correct)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Automated Outcome:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #4338ca;\">Immediate Official Job Offer &amp; Call Letter Dispatch upon passing</td>\n          </tr>\n        </table>\n\n        <!-- Anti-Cheating & Proctoring Notice -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; font-size: 12.5px; color: #92400e; line-height: 1.5;\">\n          <strong>🛡️ Anti-Cheating &amp; Proctoring Regulations:</strong>\n          <ul style=\"margin: 6px 0 0 0; padding-left: 18px;\">\n            <li>Copy/paste and right-click are strictly disabled in the test portal.</li>\n            <li>Do not switch browser tabs or open secondary windows on mobile or laptop. Violations will be recorded and may auto-submit your test.</li>\n          </ul>\n        </div>\n\n        <!-- CTA Button -->\n        <div style=\"text-align: center;\">\n          <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com\" target=\"_blank\" style=\"background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: #ffffff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 15px; display: inline-block; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);\">\n            🚀 Start Online Technical Assessment (20 MCQs)\n          </a>\n        </div>\n        <p style=\"text-align: center; font-size: 12px; color: #64748b; margin: 10px 0 0 0;\">Link: <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com\" target=\"_blank\" style=\"color: #0f766e;\">https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com</a></p>\n      </div>\n\n      <p style=\"font-size: 14px; color: #475569; line-height: 1.6;\">Please take the test in a quiet environment on a reliable internet connection. We wish you the very best of luck!</p>\n\n      <div style=\"margin-top: 26px; border-top: 1px solid #e2e8f0; padding-top: 16px;\">\n        <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n        <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;\">sharmavageesha2000@gmail.com</span>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Business_Analyst_Resume_2_to_3_Years.pdf",
+      "fileSize": 35960,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788538275577-Business_Analyst_Resume_2_to_3_Years.pdf",
+      "urlPath": "/uploads/1788538275577-Business_Analyst_Resume_2_to_3_Years.pdf"
+    },
+    "receivedAt": "2026-09-04T16:09:48.000Z",
+    "evaluatedAt": "2026-09-04T16:11:16.195Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-09-04T16:11:19.289Z",
+    "offerRefId": "HR-OFFER-2026-7577",
+    "callLetterSentAt": "2026-09-04T16:32:36.392Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-7577",
+      "emailDispatch": {
+        "success": true,
+        "messageId": "<1f803601-9b4a-15de-b039-52edb191d637@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Business Analyst - Finova Technologies"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
+  },
+  {
+    "id": "cand-1788538127982-638",
+    "name": "Ananya Verma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "Not specified",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Business Analyst",
+    "experienceYears": 2.5,
+    "skills": [
+      "Requirement Gathering (BRD/FRD)",
+      "Agile / Scrum",
+      "Jira",
+      "Process Mapping",
+      "Documentation",
+      "Business Analysis"
+    ],
+    "missingSkills": [],
+    "scoreBreakdown": {
+      "technicalSkills": 35,
+      "experienceRelevance": 25,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 90,
+    "status": "SELECTED",
+    "interviewStatus": "SCHEDULED",
+    "offerStatus": "OFFER_EXTENDED",
+    "summary": "Ananya Verma possesses 2.5 years of relevant experience aligned with Business Analyst. Strong foundation in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping. Shortlisted for 20-MCQ technical assessment.",
+    "strengths": [
+      "2.5 years of demonstrated experience in Business Analyst",
+      "Strong skills in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira"
+    ],
+    "weaknesses": [
+      "To be evaluated via 20-MCQ domain technical assessment (80% passing threshold)"
+    ],
+    "interviewSchedule": {
+      "roundName": "Round 1: Online Technical Assessment (20 MCQs)",
+      "format": "Proctored Online Assessment (20 Domain MCQs)",
+      "assessmentLink": "https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com",
+      "duration": "25 Minutes",
+      "passingScore": "80% (16 / 20 correct)",
+      "preparationNotes": "Complete 20 domain-specific questions in Business Analyst. Copy/paste and multi-window switching are strictly monitored."
+    },
+    "emailSubject": "📝 Technical Assessment Link: Business Analyst - Finova Technologies",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 14px; background: #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.04);\">\n      <div style=\"text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9;\">\n        <span style=\"background: #ecfdf5; color: #047857; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 99px; display: inline-block; margin-bottom: 10px; border: 1px solid #a7f3d0;\">RESUME SHORTLISTED</span>\n        <h2 style=\"color: #0f172a; margin: 0 0 6px 0; font-size: 22px; font-weight: 800;\">🎉 Congratulations, Ananya Verma!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 14.5px;\">Your application for <strong>Business Analyst</strong> has been approved for the next stage.</p>\n      </div>\n\n      <p style=\"font-size: 15px; line-height: 1.6; color: #334155;\">Dear <strong>Ananya Verma</strong>,</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">Thank you for applying for the <strong>Business Analyst</strong> position at Finova Technologies. We thoroughly reviewed your resume and were impressed by your <strong>2.5 years of relevant experience</strong> and proficiency in <strong>Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping, Documentation</strong>.</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">To finalize your selection and generate your official employment offer, you are invited to complete your <strong>Online Technical Assessment</strong>.</p>\n\n      <!-- Assessment Card -->\n      <div style=\"background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%); border: 1.5px solid #5eead4; border-radius: 12px; padding: 22px; margin: 24px 0;\">\n        <h3 style=\"margin: 0 0 14px 0; color: #0f766e; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;\">\n          📝 Technical Assessment Details (Business Analyst)\n        </h3>\n        \n        <table style=\"width: 100%; font-size: 13.5px; color: #1e293b; border-collapse: collapse; margin-bottom: 16px;\">\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b; width: 42%;\"><strong>Role Domain:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #0f766e;\">Business Analyst (20 Domain MCQs)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Time Duration:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700;\">25 Minutes</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Passing Requirement:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 800; color: #047857;\">80% or above (16 / 20 correct)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Automated Outcome:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #4338ca;\">Immediate Official Job Offer &amp; Call Letter Dispatch upon passing</td>\n          </tr>\n        </table>\n\n        <!-- Anti-Cheating & Proctoring Notice -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; font-size: 12.5px; color: #92400e; line-height: 1.5;\">\n          <strong>🛡️ Anti-Cheating &amp; Proctoring Regulations:</strong>\n          <ul style=\"margin: 6px 0 0 0; padding-left: 18px;\">\n            <li>Copy/paste and right-click are strictly disabled in the test portal.</li>\n            <li>Do not switch browser tabs or open secondary windows on mobile or laptop. Violations will be recorded and may auto-submit your test.</li>\n          </ul>\n        </div>\n\n        <!-- CTA Button -->\n        <div style=\"text-align: center;\">\n          <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com\" target=\"_blank\" style=\"background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: #ffffff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 15px; display: inline-block; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);\">\n            🚀 Start Online Technical Assessment (20 MCQs)\n          </a>\n        </div>\n        <p style=\"text-align: center; font-size: 12px; color: #64748b; margin: 10px 0 0 0;\">Link: <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com\" target=\"_blank\" style=\"color: #0f766e;\">https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com</a></p>\n      </div>\n\n      <p style=\"font-size: 14px; color: #475569; line-height: 1.6;\">Please take the test in a quiet environment on a reliable internet connection. We wish you the very best of luck!</p>\n\n      <div style=\"margin-top: 26px; border-top: 1px solid #e2e8f0; padding-top: 16px;\">\n        <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n        <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;\">sharmavageesha2000@gmail.com</span>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Business_Analyst_Resume_2_to_3_Years.pdf",
+      "fileSize": 35960,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788538127205-Business_Analyst_Resume_2_to_3_Years.pdf",
+      "urlPath": "/uploads/1788538127205-Business_Analyst_Resume_2_to_3_Years.pdf"
+    },
+    "receivedAt": "2026-09-04T16:08:13.000Z",
+    "evaluatedAt": "2026-09-04T16:08:47.982Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-09-04T16:08:51.988Z",
+    "offerRefId": "HR-OFFER-2026-4034",
+    "callLetterSentAt": "2026-09-04T16:32:39.688Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-4034",
+      "emailDispatch": {
+        "success": true,
+        "messageId": "<a6e6676d-87b1-3057-60c4-9a0963407d2e@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Business Analyst - Finova Technologies"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
+  },
+  {
+    "id": "cand-1788534836627-132",
+    "name": "Vageesha Sharma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "Not specified",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Full Stack AI Engineer",
+    "experienceYears": 2.5,
+    "skills": [
+      "Requirement Gathering (BRD/FRD)",
+      "Agile / Scrum",
+      "Jira",
+      "Process Mapping",
+      "Documentation",
+      "Business Analysis"
+    ],
+    "missingSkills": [],
+    "scoreBreakdown": {
+      "technicalSkills": 35,
+      "experienceRelevance": 25,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 90,
+    "status": "SELECTED",
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "OFFER_EXTENDED",
+    "summary": "Ananya Verma possesses 2.5 years of relevant experience aligned with Business Analyst. Strong foundation in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping. Shortlisted for 20-MCQ technical assessment.",
+    "strengths": [
+      "2.5 years of demonstrated experience in Business Analyst",
+      "Strong skills in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira"
+    ],
+    "weaknesses": [
+      "To be evaluated via 20-MCQ domain technical assessment (80% passing threshold)"
+    ],
+    "interviewSchedule": {
+      "roundName": "Round 1: Online Technical Assessment (20 MCQs)",
+      "format": "Proctored Online Assessment (20 Domain MCQs)",
+      "assessmentLink": "https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com",
+      "duration": "25 Minutes",
+      "passingScore": "80% (16 / 20 correct)",
+      "preparationNotes": "Complete 20 domain-specific questions in Business Analyst. Copy/paste and multi-window switching are strictly monitored."
+    },
+    "emailSubject": "📝 Technical Assessment Link: Business Analyst - Finova Technologies",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 14px; background: #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.04);\">\n      <div style=\"text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9;\">\n        <span style=\"background: #ecfdf5; color: #047857; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 99px; display: inline-block; margin-bottom: 10px; border: 1px solid #a7f3d0;\">RESUME SHORTLISTED</span>\n        <h2 style=\"color: #0f172a; margin: 0 0 6px 0; font-size: 22px; font-weight: 800;\">🎉 Congratulations, Ananya Verma!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 14.5px;\">Your application for <strong>Business Analyst</strong> has been approved for the next stage.</p>\n      </div>\n\n      <p style=\"font-size: 15px; line-height: 1.6; color: #334155;\">Dear <strong>Ananya Verma</strong>,</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">Thank you for applying for the <strong>Business Analyst</strong> position at Finova Technologies. We thoroughly reviewed your resume and were impressed by your <strong>2.5 years of relevant experience</strong> and proficiency in <strong>Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping, Documentation</strong>.</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">To finalize your selection and generate your official employment offer, you are invited to complete your <strong>Online Technical Assessment</strong>.</p>\n\n      <!-- Assessment Card -->\n      <div style=\"background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%); border: 1.5px solid #5eead4; border-radius: 12px; padding: 22px; margin: 24px 0;\">\n        <h3 style=\"margin: 0 0 14px 0; color: #0f766e; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;\">\n          📝 Technical Assessment Details (Business Analyst)\n        </h3>\n        \n        <table style=\"width: 100%; font-size: 13.5px; color: #1e293b; border-collapse: collapse; margin-bottom: 16px;\">\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b; width: 42%;\"><strong>Role Domain:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #0f766e;\">Business Analyst (20 Domain MCQs)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Time Duration:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700;\">25 Minutes</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Passing Requirement:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 800; color: #047857;\">80% or above (16 / 20 correct)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Automated Outcome:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #4338ca;\">Immediate Official Job Offer &amp; Call Letter Dispatch upon passing</td>\n          </tr>\n        </table>\n\n        <!-- Anti-Cheating & Proctoring Notice -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; font-size: 12.5px; color: #92400e; line-height: 1.5;\">\n          <strong>🛡️ Anti-Cheating &amp; Proctoring Regulations:</strong>\n          <ul style=\"margin: 6px 0 0 0; padding-left: 18px;\">\n            <li>Copy/paste and right-click are strictly disabled in the test portal.</li>\n            <li>Do not switch browser tabs or open secondary windows on mobile or laptop. Violations will be recorded and may auto-submit your test.</li>\n          </ul>\n        </div>\n\n        <!-- CTA Button -->\n        <div style=\"text-align: center;\">\n          <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com\" target=\"_blank\" style=\"background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: #ffffff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 15px; display: inline-block; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);\">\n            🚀 Start Online Technical Assessment (20 MCQs)\n          </a>\n        </div>\n        <p style=\"text-align: center; font-size: 12px; color: #64748b; margin: 10px 0 0 0;\">Link: <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com\" target=\"_blank\" style=\"color: #0f766e;\">https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com</a></p>\n      </div>\n\n      <p style=\"font-size: 14px; color: #475569; line-height: 1.6;\">Please take the test in a quiet environment on a reliable internet connection. We wish you the very best of luck!</p>\n\n      <div style=\"margin-top: 26px; border-top: 1px solid #e2e8f0; padding-top: 16px;\">\n        <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n        <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;\">sharmavageesha2000@gmail.com</span>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Business_Analyst_Resume_2_to_3_Years.pdf",
+      "fileSize": 35960,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788534835872-Business_Analyst_Resume_2_to_3_Years.pdf",
+      "urlPath": "/uploads/1788534835872-Business_Analyst_Resume_2_to_3_Years.pdf"
+    },
+    "receivedAt": "2026-09-04T15:13:36.000Z",
+    "evaluatedAt": "2026-09-04T15:13:56.627Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-09-04T15:13:59.841Z",
+    "assessmentDetails": {
+      "completedAt": "2026-09-04T15:56:06.716Z",
+      "scorePercent": 95,
+      "correctCount": 19,
+      "totalQuestions": 20,
+      "passed": true,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 540,
+      "forcedByViolation": false
+    },
+    "testScore": 95,
+    "testPassed": true,
+    "offerRefId": "HR-OFFER-2026-8136",
+    "callLetterSentAt": "2026-09-04T16:32:44.566Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-8136",
+      "emailDispatch": {
+        "success": true,
+        "messageId": "<ae1d3a98-edd8-1a9b-3c56-758a178805e6@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Full Stack AI Engineer - Finova Technologies"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
+  },
+  {
+    "id": "cand-1788534652429-888",
+    "name": "Rohan Sharma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "Not specified",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Full Stack AI Engineer",
+    "experienceYears": 3,
+    "skills": [
+      "React.js",
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "REST APIs",
+      "Docker"
+    ],
+    "missingSkills": [
+      "Node.js",
+      "Gemini API / LLMs"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 26,
+      "experienceRelevance": 30,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 81,
+    "status": "SELECTED",
+    "interviewStatus": "SCHEDULED",
+    "offerStatus": "OFFER_EXTENDED",
+    "summary": "Rohan Sharma possesses 3 years of relevant experience aligned with Full Stack AI Engineer. Strong foundation in React.js, Python, FastAPI, PostgreSQL. Shortlisted for 20-MCQ technical assessment.",
+    "strengths": [
+      "3 years of demonstrated experience in Full Stack AI Engineer",
+      "Strong skills in React.js, Python, FastAPI"
+    ],
+    "weaknesses": [
+      "To be evaluated via 20-MCQ domain technical assessment (80% passing threshold)"
+    ],
+    "interviewSchedule": {
+      "roundName": "Round 1: Online Technical Assessment (20 MCQs)",
+      "format": "Proctored Online Assessment (20 Domain MCQs)",
+      "assessmentLink": "https://hr-smartflow-automation.onrender.com/assessment.html?role=Full%20Stack%20AI%20Engineer&name=Rohan%20Sharma&email=sharmavageesha2000%40gmail.com",
+      "duration": "25 Minutes",
+      "passingScore": "80% (16 / 20 correct)",
+      "preparationNotes": "Complete 20 domain-specific questions in Full Stack AI Engineer. Copy/paste and multi-window switching are strictly monitored."
+    },
+    "emailSubject": "📝 Technical Assessment Link: Full Stack AI Engineer - Finova Technologies",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 14px; background: #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.04);\">\n      <div style=\"text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9;\">\n        <span style=\"background: #ecfdf5; color: #047857; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 99px; display: inline-block; margin-bottom: 10px; border: 1px solid #a7f3d0;\">RESUME SHORTLISTED</span>\n        <h2 style=\"color: #0f172a; margin: 0 0 6px 0; font-size: 22px; font-weight: 800;\">🎉 Congratulations, Rohan Sharma!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 14.5px;\">Your application for <strong>Full Stack AI Engineer</strong> has been approved for the next stage.</p>\n      </div>\n\n      <p style=\"font-size: 15px; line-height: 1.6; color: #334155;\">Dear <strong>Rohan Sharma</strong>,</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">Thank you for applying for the <strong>Full Stack AI Engineer</strong> position at Finova Technologies. We thoroughly reviewed your resume and were impressed by your <strong>3 years of relevant experience</strong> and proficiency in <strong>React.js, Python, FastAPI, PostgreSQL, REST APIs</strong>.</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">To finalize your selection and generate your official employment offer, you are invited to complete your <strong>Online Technical Assessment</strong>.</p>\n\n      <!-- Assessment Card -->\n      <div style=\"background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%); border: 1.5px solid #5eead4; border-radius: 12px; padding: 22px; margin: 24px 0;\">\n        <h3 style=\"margin: 0 0 14px 0; color: #0f766e; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;\">\n          📝 Technical Assessment Details (Full Stack AI Engineer)\n        </h3>\n        \n        <table style=\"width: 100%; font-size: 13.5px; color: #1e293b; border-collapse: collapse; margin-bottom: 16px;\">\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b; width: 42%;\"><strong>Role Domain:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #0f766e;\">Full Stack AI Engineer (20 Domain MCQs)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Time Duration:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700;\">25 Minutes</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Passing Requirement:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 800; color: #047857;\">80% or above (16 / 20 correct)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Automated Outcome:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #4338ca;\">Immediate Official Job Offer &amp; Call Letter Dispatch upon passing</td>\n          </tr>\n        </table>\n\n        <!-- Anti-Cheating & Proctoring Notice -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; font-size: 12.5px; color: #92400e; line-height: 1.5;\">\n          <strong>🛡️ Anti-Cheating &amp; Proctoring Regulations:</strong>\n          <ul style=\"margin: 6px 0 0 0; padding-left: 18px;\">\n            <li>Copy/paste and right-click are strictly disabled in the test portal.</li>\n            <li>Do not switch browser tabs or open secondary windows on mobile or laptop. Violations will be recorded and may auto-submit your test.</li>\n          </ul>\n        </div>\n\n        <!-- CTA Button -->\n        <div style=\"text-align: center;\">\n          <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Full%20Stack%20AI%20Engineer&name=Rohan%20Sharma&email=sharmavageesha2000%40gmail.com\" target=\"_blank\" style=\"background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: #ffffff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 15px; display: inline-block; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);\">\n            🚀 Start Online Technical Assessment (20 MCQs)\n          </a>\n        </div>\n        <p style=\"text-align: center; font-size: 12px; color: #64748b; margin: 10px 0 0 0;\">Link: <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Full%20Stack%20AI%20Engineer&name=Rohan%20Sharma&email=sharmavageesha2000%40gmail.com\" target=\"_blank\" style=\"color: #0f766e;\">https://hr-smartflow-automation.onrender.com/assessment.html?role=Full%20Stack%20AI%20Engineer&name=Rohan%20Sharma&email=sharmavageesha2000%40gmail.com</a></p>\n      </div>\n\n      <p style=\"font-size: 14px; color: #475569; line-height: 1.6;\">Please take the test in a quiet environment on a reliable internet connection. We wish you the very best of luck!</p>\n\n      <div style=\"margin-top: 26px; border-top: 1px solid #e2e8f0; padding-top: 16px;\">\n        <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n        <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;\">sharmavageesha2000@gmail.com</span>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Full_Stack_AI_Engineer_Resume.pdf",
+      "fileSize": 27134,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788534651656-Full_Stack_AI_Engineer_Resume.pdf",
+      "urlPath": "/uploads/1788534651656-Full_Stack_AI_Engineer_Resume.pdf"
+    },
+    "receivedAt": "2026-09-04T15:10:32.000Z",
+    "evaluatedAt": "2026-09-04T15:10:52.429Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-09-04T15:10:55.931Z",
+    "offerRefId": "HR-OFFER-2026-6158",
+    "callLetterSentAt": "2026-09-04T16:32:49.043Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-6158",
+      "emailDispatch": {
+        "success": true,
+        "messageId": "<133cdf73-74f2-65ea-a073-11682ece392b@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Full Stack AI Engineer - Finova Technologies"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
+  },
+  {
+    "id": "cand-1788532585864-412",
+    "name": "Vageesha Sharma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "Not specified",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Frontend Developer",
+    "experienceYears": 2,
+    "skills": [
+      "React.js",
+      "JavaScript",
+      "HTML5 & CSS3",
+      "TypeScript",
+      "Responsive Design",
+      "REST APIs"
+    ],
+    "missingSkills": [
+      "Tailwind CSS"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 30,
+      "experienceRelevance": 20,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 77,
+    "status": "SELECTED",
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "OFFER_EXTENDED",
+    "summary": "Rohan Sharma possesses 2 years of relevant experience aligned with Frontend Developer. Strong foundation in React.js, JavaScript, HTML5 & CSS3, TypeScript. Shortlisted for 20-MCQ technical assessment.",
+    "strengths": [
+      "2 years of demonstrated experience in Frontend Developer",
+      "Strong skills in React.js, JavaScript, HTML5 & CSS3"
+    ],
+    "weaknesses": [
+      "To be evaluated via 20-MCQ domain technical assessment (80% passing threshold)"
+    ],
+    "interviewSchedule": {
+      "roundName": "Round 1: Online Technical Assessment (20 MCQs)",
+      "format": "Proctored Online Assessment (20 Domain MCQs)",
+      "assessmentLink": "https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Rohan%20Sharma&email=sharmavageesha2000%40gmail.com",
+      "duration": "25 Minutes",
+      "passingScore": "80% (16 / 20 correct)",
+      "preparationNotes": "Complete 20 domain-specific questions in Frontend Developer. Copy/paste and multi-window switching are strictly monitored."
+    },
+    "emailSubject": "📝 Technical Assessment Link: Frontend Developer - Finova Technologies",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 14px; background: #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.04);\">\n      <div style=\"text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9;\">\n        <span style=\"background: #ecfdf5; color: #047857; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 99px; display: inline-block; margin-bottom: 10px; border: 1px solid #a7f3d0;\">RESUME SHORTLISTED</span>\n        <h2 style=\"color: #0f172a; margin: 0 0 6px 0; font-size: 22px; font-weight: 800;\">🎉 Congratulations, Rohan Sharma!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 14.5px;\">Your application for <strong>Frontend Developer</strong> has been approved for the next stage.</p>\n      </div>\n\n      <p style=\"font-size: 15px; line-height: 1.6; color: #334155;\">Dear <strong>Rohan Sharma</strong>,</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">Thank you for applying for the <strong>Frontend Developer</strong> position at Finova Technologies. We thoroughly reviewed your resume and were impressed by your <strong>2 years of relevant experience</strong> and proficiency in <strong>React.js, JavaScript, HTML5 & CSS3, TypeScript, Responsive Design</strong>.</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">To finalize your selection and generate your official employment offer, you are invited to complete your <strong>Online Technical Assessment</strong>.</p>\n\n      <!-- Assessment Card -->\n      <div style=\"background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%); border: 1.5px solid #5eead4; border-radius: 12px; padding: 22px; margin: 24px 0;\">\n        <h3 style=\"margin: 0 0 14px 0; color: #0f766e; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;\">\n          📝 Technical Assessment Details (Frontend Developer)\n        </h3>\n        \n        <table style=\"width: 100%; font-size: 13.5px; color: #1e293b; border-collapse: collapse; margin-bottom: 16px;\">\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b; width: 42%;\"><strong>Role Domain:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #0f766e;\">Frontend Developer (20 Domain MCQs)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Time Duration:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700;\">25 Minutes</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Passing Requirement:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 800; color: #047857;\">80% or above (16 / 20 correct)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Automated Outcome:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #4338ca;\">Immediate Official Job Offer &amp; Call Letter Dispatch upon passing</td>\n          </tr>\n        </table>\n\n        <!-- Anti-Cheating & Proctoring Notice -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; font-size: 12.5px; color: #92400e; line-height: 1.5;\">\n          <strong>🛡️ Anti-Cheating &amp; Proctoring Regulations:</strong>\n          <ul style=\"margin: 6px 0 0 0; padding-left: 18px;\">\n            <li>Copy/paste and right-click are strictly disabled in the test portal.</li>\n            <li>Do not switch browser tabs or open secondary windows on mobile or laptop. Violations will be recorded and may auto-submit your test.</li>\n          </ul>\n        </div>\n\n        <!-- CTA Button -->\n        <div style=\"text-align: center;\">\n          <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Rohan%20Sharma&email=sharmavageesha2000%40gmail.com\" target=\"_blank\" style=\"background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: #ffffff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 15px; display: inline-block; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);\">\n            🚀 Start Online Technical Assessment (20 MCQs)\n          </a>\n        </div>\n        <p style=\"text-align: center; font-size: 12px; color: #64748b; margin: 10px 0 0 0;\">Link: <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Rohan%20Sharma&email=sharmavageesha2000%40gmail.com\" target=\"_blank\" style=\"color: #0f766e;\">https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Rohan%20Sharma&email=sharmavageesha2000%40gmail.com</a></p>\n      </div>\n\n      <p style=\"font-size: 14px; color: #475569; line-height: 1.6;\">Please take the test in a quiet environment on a reliable internet connection. We wish you the very best of luck!</p>\n\n      <div style=\"margin-top: 26px; border-top: 1px solid #e2e8f0; padding-top: 16px;\">\n        <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n        <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;\">sharmavageesha2000@gmail.com</span>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Frontend_Developer_1_3_Years_Resume.pdf",
+      "fileSize": 26794,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788532584871-Frontend_Developer_1_3_Years_Resume.pdf",
+      "urlPath": "/uploads/1788532584871-Frontend_Developer_1_3_Years_Resume.pdf"
+    },
+    "receivedAt": "2026-09-04T14:36:09.000Z",
+    "evaluatedAt": "2026-09-04T14:36:25.864Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-09-04T14:36:29.051Z",
+    "assessmentDetails": {
+      "completedAt": "2026-09-04T15:01:29.296Z",
+      "scorePercent": 90,
+      "correctCount": 18,
+      "totalQuestions": 20,
+      "passed": true,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 0,
+      "forcedByViolation": false
+    },
+    "testScore": 90,
+    "testPassed": true,
+    "offerRefId": "HR-OFFER-2026-3039",
+    "callLetterSentAt": "2026-09-04T16:32:52.323Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-3039",
+      "emailDispatch": {
+        "success": true,
+        "messageId": "<2e484cd3-09ad-a0a5-ddef-4babc93e8c76@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Frontend Developer - Finova Technologies"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
+  },
+  {
+    "id": "cand-1788532371656",
+    "name": "Aditya Mehta",
+    "email": "aditya.mehta.ai2026@gmail.com",
+    "phone": "Not specified",
+    "education": "Bachelor Degree",
+    "roleApplied": "Frontend Developer",
+    "experienceYears": 6,
+    "skills": [
+      "General Domain Skills"
+    ],
+    "missingSkills": [
+      "React.js",
+      "JavaScript",
+      "HTML5 & CSS3",
+      "Tailwind CSS",
+      "TypeScript",
+      "Responsive Design",
+      "REST APIs"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 8,
+      "experienceRelevance": 8,
+      "education": 10,
+      "communication": 8
+    },
+    "matchScore": 45,
+    "status": "REJECTED",
+    "summary": "Aditya Mehta applied for Frontend Developer. Profile does not satisfy core job requirements. Missing: React.js, JavaScript, HTML5 & CSS3. Status: REJECTED.",
+    "strengths": [
+      "Clear communication and professional presentation"
+    ],
+    "weaknesses": [
+      "Missing key competencies for Frontend Developer: React.js, JavaScript, HTML5 & CSS3"
+    ],
+    "interviewSchedule": null,
+    "emailSubject": "Update regarding your application for Frontend Developer - Vageesha Sharma",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04);\">\n      <div style=\"background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;\">\n        <span style=\"background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;\">APPLICATION STATUS UPDATE</span>\n        <h2 style=\"margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;\">Application Evaluation &amp; Feedback</h2>\n        <p style=\"margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;\">Role: <strong>Frontend Developer</strong> • Vageesha Sharma Talent Acquisition</p>\n      </div>\n\n      <div style=\"padding: 28px 24px;\">\n        <p style=\"font-size: 15px; line-height: 1.6; margin-top: 0;\">Dear <strong>Aditya Mehta</strong>,</p>\n        \n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Thank you for applying for the <strong>Frontend Developer</strong> position at our organization and for sharing your resume.\n        </p>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Our technical evaluation team has thoroughly reviewed your background against the active role requirements and competencies for this vacancy.\n        </p>\n\n        <!-- Evaluation Summary Card -->\n        <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 20px 0;\">\n          <div style=\"display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;\">\n            <strong style=\"color: #0f172a; font-size: 15px;\">📊 Screening Evaluation Summary</strong>\n            <span style=\"background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 99px;\">Role Match: 45%</span>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;\">Skills Identified in Your Profile:</span>\n            <div><span style=\"color: #64748b; font-size: 13px;\">No direct core technical skills identified for this role</span></div>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #991b1b; display: block; margin-bottom: 6px;\">Critical Missing Skills for \"Frontend Developer\":</span>\n            <div><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ React.js</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ JavaScript</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ HTML5 & CSS3</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Tailwind CSS</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ TypeScript</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Responsive Design</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ REST APIs</span></div>\n          </div>\n        </div>\n\n        <!-- Resume Gaps & Detailed Feedback -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 20px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #92400e; font-size: 14px; font-weight: 700;\">🔍 Identified Gaps &amp; Resume Analysis</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #78350f; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Resume lacks demonstrable proficiency in mandatory requirements for Frontend Developer: <strong>React.js, JavaScript, HTML5 & CSS3, Tailwind CSS</strong>.</li><li style=\"margin-bottom: 6px;\">Insufficient evidence of production-level project execution matching the <strong>Frontend Developer</strong> job description.</li>\n          </ul>\n        </div>\n\n        <!-- Recommendations for Future -->\n        <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px; margin-bottom: 24px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #166534; font-size: 14px; font-weight: 700;\">💡 Actionable Recommendations to Strengthen Your Profile</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #14532d; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Deepen hands-on competency in <strong>React.js, JavaScript, HTML5 & CSS3</strong>.</li><li style=\"margin-bottom: 6px;\">Include live project links, portfolio dashboards, and quantifiable metrics in your resume.</li>\n          </ul>\n        </div>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          At this stage, we are moving forward with candidates whose technical stack more directly matches our immediate requirements for the <strong>Frontend Developer</strong> vacancy.\n        </p>\n\n        <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">\n          We will keep your resume on file for future openings that match your specific profile. We wish you great success in your career.\n        </p>\n\n        <div style=\"margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;\">\n          <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n          <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;\">sharmavageesha2000@gmail.com</span>\n        </div>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": null,
+    "receivedAt": "2026-09-04T14:32:51.656Z",
+    "evaluatedAt": "2026-09-04T14:32:51.656Z",
+    "source": "EMAIL_INTAKE",
+    "lastEmailSentAt": "2026-09-04T14:32:55.623Z"
+  },
+  {
     "id": "cand-1788258584399-318",
     "name": "Rohan Sharma",
     "email": "sharmavageesha2000@gmail.com",
@@ -27,7 +456,7 @@
     "matchScore": 77,
     "status": "SELECTED",
     "interviewStatus": "SCHEDULED",
-    "offerStatus": "PENDING",
+    "offerStatus": "OFFER_EXTENDED",
     "summary": "Rohan Sharma possesses 2 years of relevant experience aligned with Frontend Developer. Strong foundation in React.js, JavaScript, HTML5 & CSS3, TypeScript. Shortlisted for technical interview.",
     "strengths": [
       "2 years of demonstrated experience in Frontend Developer",
@@ -58,7 +487,21 @@
     "receivedAt": "2026-09-01T10:29:34.000Z",
     "evaluatedAt": "2026-09-01T10:29:44.399Z",
     "source": "EMAIL_INBOX_ATTACHMENT",
-    "lastEmailSentAt": "2026-09-01T10:29:47.230Z"
+    "lastEmailSentAt": "2026-09-01T10:29:47.230Z",
+    "offerRefId": "HR-OFFER-2026-2284",
+    "callLetterSentAt": "2026-09-04T16:32:55.597Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-2284",
+      "emailDispatch": {
+        "success": true,
+        "messageId": "<b3b3b42d-da5c-4c2b-8076-a08d11214761@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Frontend Developer - Finova Technologies"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
   },
   {
     "id": "cand-1788257966719-599",
@@ -170,18 +613,18 @@
     "source": "EMAIL_INBOX_ATTACHMENT",
     "lastEmailSentAt": "2026-09-01T09:31:15.628Z",
     "offerRefId": "HR-OFFER-2026-2986",
-    "callLetterSentAt": "2026-09-01T09:32:34.966Z",
+    "callLetterSentAt": "2026-09-04T16:33:02.328Z",
     "callLetterDetails": {
       "joiningDate": "Monday, 14 September 2026",
-      "ctcPackage": "₹8.50,000 per annum (Full-Time)",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
       "offerRefId": "HR-OFFER-2026-2986",
       "emailDispatch": {
         "success": true,
-        "simulated": false,
-        "messageId": "<be14d703-a017-28e4-102c-34a6e1aa8c53@gmail.com>",
+        "messageId": "<45a011db-9e76-23cf-6124-ad97075fdfe7@gmail.com>",
         "to": "sharmavageesha2000@gmail.com",
-        "subject": "🎉 Official Job Offer & Call Letter: Business Analyst - HR SmartFlow"
-      }
+        "subject": "🎉 Official Job Offer & Call Letter: Business Analyst - Finova Technologies"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
     }
   },
   {
@@ -345,15 +788,18 @@
     "evaluatedAt": "2026-09-01T08:49:21.967Z",
     "source": "EMAIL_INBOX_ATTACHMENT",
     "offerRefId": "FINOVA-OFFER-2026-6955",
-    "callLetterSentAt": "2026-09-01T09:26:47.883Z",
+    "callLetterSentAt": "2026-09-04T16:33:05.843Z",
     "callLetterDetails": {
       "joiningDate": "Monday, 14 September 2026",
       "ctcPackage": "₹9,50,000 per annum (Full-Time)",
       "offerRefId": "FINOVA-OFFER-2026-6955",
       "emailDispatch": {
         "success": true,
-        "messageId": "<95ed1b06-7e90-e031-f44e-b296ba5cc181@gmail.com>"
-      }
+        "messageId": "<746eb3ff-ecac-a988-3c13-125d09f8d90e@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Full Stack AI Engineer - Finova Technologies"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
     }
   },
   {
@@ -433,7 +879,7 @@
     "matchScore": 86,
     "status": "SELECTED",
     "interviewStatus": "SCHEDULED",
-    "offerStatus": "PENDING",
+    "offerStatus": "OFFER_EXTENDED",
     "summary": "Rohan Sharma possesses 3 years of relevant experience aligned with AI/ML Engineer. Strong foundation in Python, Machine Learning, LLMs, Data Processing. Shortlisted for technical interview.",
     "strengths": [
       "3 years of demonstrated experience in AI/ML Engineer",
@@ -463,7 +909,21 @@
     },
     "receivedAt": "2026-09-01T06:41:48.000Z",
     "evaluatedAt": "2026-09-01T08:49:37.281Z",
-    "source": "EMAIL_INBOX_ATTACHMENT"
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "offerRefId": "HR-OFFER-2026-4302",
+    "callLetterSentAt": "2026-09-04T16:33:15.532Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-4302",
+      "emailDispatch": {
+        "success": true,
+        "messageId": "<efb3fa0c-94eb-67b7-64c6-b83788180837@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: AI/ML Engineer - Finova Technologies"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
   },
   {
     "id": "cand-1788252584252-4615",
@@ -493,7 +953,7 @@
     "matchScore": 77,
     "status": "SELECTED",
     "interviewStatus": "SCHEDULED",
-    "offerStatus": "PENDING",
+    "offerStatus": "OFFER_EXTENDED",
     "summary": "Rohan Sharma possesses 2 years of relevant experience aligned with Frontend Developer. Strong foundation in React.js, JavaScript, HTML5 & CSS3, TypeScript. Shortlisted for technical interview.",
     "strengths": [
       "2 years of demonstrated experience in Frontend Developer",
@@ -523,7 +983,21 @@
     },
     "receivedAt": "2026-09-01T06:34:27.000Z",
     "evaluatedAt": "2026-09-01T08:49:44.252Z",
-    "source": "EMAIL_INBOX_ATTACHMENT"
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "offerRefId": "HR-OFFER-2026-4608",
+    "callLetterSentAt": "2026-09-04T16:33:19.170Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-4608",
+      "emailDispatch": {
+        "success": true,
+        "messageId": "<b8961ed1-4689-a727-f29a-358df1524990@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Frontend Developer - Finova Technologies"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
   },
   {
     "id": "cand-1788252591681-2504",
@@ -551,7 +1025,7 @@
     "matchScore": 90,
     "status": "SELECTED",
     "interviewStatus": "SCHEDULED",
-    "offerStatus": "PENDING",
+    "offerStatus": "OFFER_EXTENDED",
     "summary": "Ananya Verma possesses 2.5 years of relevant experience aligned with Business Analyst. Strong foundation in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping. Shortlisted for technical interview.",
     "strengths": [
       "2.5 years of demonstrated experience in Business Analyst",
@@ -581,7 +1055,21 @@
     },
     "receivedAt": "2026-09-01T06:28:35.000Z",
     "evaluatedAt": "2026-09-01T08:49:51.682Z",
-    "source": "EMAIL_INBOX_ATTACHMENT"
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "offerRefId": "HR-OFFER-2026-6100",
+    "callLetterSentAt": "2026-09-04T16:33:25.896Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-6100",
+      "emailDispatch": {
+        "success": true,
+        "messageId": "<fc549ccc-ea2a-39b7-49cb-e0259f93edf7@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Business Analyst - Finova Technologies"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
   },
   {
     "id": "cand-1788252598821-9743",
@@ -709,7 +1197,7 @@
     "matchScore": 77,
     "status": "SELECTED",
     "interviewStatus": "SCHEDULED",
-    "offerStatus": "PENDING",
+    "offerStatus": "OFFER_EXTENDED",
     "summary": "Strong frontend capabilities in React.js and responsive UI design.",
     "strengths": [
       "2 years experience in React",
@@ -737,6 +1225,20 @@
     },
     "receivedAt": "2026-09-01T06:50:58.233Z",
     "evaluatedAt": "2026-09-01T08:50:58.233Z",
-    "source": "EMAIL_INBOX_ATTACHMENT"
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "offerRefId": "HR-OFFER-2026-9411",
+    "callLetterSentAt": "2026-09-04T16:33:29.344Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-9411",
+      "emailDispatch": {
+        "success": true,
+        "messageId": "<f23f5a40-1d2a-5d68-dd79-ef1d6f81f28e@gmail.com>",
+        "to": "paliwalrishu2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Frontend Developer - Finova Technologies"
+      },
+      "deliveredTo": "paliwalrishu2000@gmail.com"
+    }
   }
 ]
