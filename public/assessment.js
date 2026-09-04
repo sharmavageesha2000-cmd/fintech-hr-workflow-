@@ -177,6 +177,24 @@ async function fetchQuestions() {
     const res = await fetch(`/api/assessment/questions?${queryParams.toString()}`);
     const data = await res.json();
 
+    if (data.alreadySubmitted) {
+      isSubmitted = true;
+      if (timerInterval) clearInterval(timerInterval);
+
+      // Disable timer and violation counters in header
+      const timerDisplay = document.getElementById('timerDisplay');
+      if (timerDisplay) {
+        timerDisplay.textContent = '🔒 Assessment Closed';
+        timerDisplay.style.color = '#10b981';
+        timerDisplay.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+      }
+      const violBadge = document.getElementById('violationCountBadge');
+      if (violBadge) violBadge.style.display = 'none';
+
+      renderAlreadySubmittedScreen(data.candidate || {});
+      return;
+    }
+
     if (data.success && Array.isArray(data.questions) && data.questions.length > 0) {
       assessmentSessionId = data.sessionId || null;
       assessmentQuestions = data.questions;
@@ -410,6 +428,117 @@ function renderResultScreen(result) {
 
       <p class="result-msg">
         We appreciate your dedication and time taking this assessment. Your score and responses have been logged in our recruitment records.
+      </p>
+    `;
+  }
+}
+
+function renderAlreadySubmittedScreen(cand) {
+  document.getElementById('mainApp').style.display = 'none';
+  const modal = document.getElementById('violationModal');
+  if (modal) modal.style.display = 'none';
+
+  const resultApp = document.getElementById('resultApp');
+  resultApp.style.display = 'block';
+
+  const isPassed = cand.passed !== undefined ? cand.passed : ((cand.scorePercent || 0) >= 80);
+  const score = cand.scorePercent !== undefined ? cand.scorePercent : (cand.testScore || 0);
+  const correct = cand.correctCount !== undefined ? cand.correctCount : Math.round((score / 100) * 20);
+  const total = cand.totalQuestions || 20;
+  const targetEmail = cand.email || candidateEmail || '';
+  const resolvedName = cand.name || candidateName || 'Candidate';
+  const resolvedRole = cand.roleApplied || roleApplied;
+  const completedDate = cand.completedAt ? new Date(cand.completedAt).toLocaleString('en-US', {
+    dateStyle: 'medium',
+    timeStyle: 'short'
+  }) : 'Recorded in Portal';
+
+  const resultCard = document.getElementById('resultCard');
+
+  if (isPassed) {
+    const offerDetails = cand.callLetterDetails || {};
+    const refId = cand.offerRefId || offerDetails.offerRefId || 'HR-OFFER-2026';
+    const ctc = offerDetails.ctcPackage || '₹9,50,000 per annum (Full-Time)';
+    const joining = offerDetails.joiningDate || 'Monday, 14 September 2026';
+
+    resultCard.innerHTML = `
+      <div class="result-icon">🔒</div>
+      <div style="display: inline-block; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; font-size: 11.5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 4px 14px; border-radius: 99px; margin-bottom: 12px;">
+        ASSESSMENT ALREADY SUBMITTED
+      </div>
+      <h2 class="result-title" style="color: #10b981; margin-top: 4px;">Test Completed &amp; Recorded</h2>
+      <p style="color: #9ca3af; font-size: 14.5px;">
+        Dear <strong>${escapeHtml(resolvedName)}</strong>, you have already completed the technical assessment for <strong>${escapeHtml(resolvedRole)}</strong>.
+      </p>
+
+      <div class="score-circle" style="border-color: #10b981; box-shadow: 0 0 24px rgba(16, 185, 129, 0.25); margin: 20px auto;">
+        <span class="score-number">${score}%</span>
+        <span class="score-label" style="color: #34d399;">Achieved (${correct}/${total})</span>
+      </div>
+
+      <div class="offer-alert" style="background: rgba(16, 185, 129, 0.12); border: 1.5px solid rgba(16, 185, 129, 0.4); border-radius: 14px; padding: 22px; margin: 20px 0; text-align: left;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid rgba(16, 185, 129, 0.25); padding-bottom: 10px;">
+          <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: #10b981;">📜 Official Job Offer Extended &amp; Sent</h3>
+          <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px;">REF: ${escapeHtml(refId)}</span>
+        </div>
+
+        <table style="width: 100%; font-size: 13.5px; color: #e2e8f0; border-collapse: collapse; margin-bottom: 16px;">
+          <tr>
+            <td style="padding: 5px 0; color: #9ca3af; width: 35%;"><strong>Position:</strong></td>
+            <td style="padding: 5px 0; font-weight: 700; color: #fff;">${escapeHtml(resolvedRole)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 0; color: #9ca3af;"><strong>Package (CTC):</strong></td>
+            <td style="padding: 5px 0; font-weight: 700; color: #34d399;">${escapeHtml(ctc)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 0; color: #9ca3af;"><strong>Joining Date:</strong></td>
+            <td style="padding: 5px 0; font-weight: 700; color: #fff;">${escapeHtml(joining)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 0; color: #9ca3af;"><strong>Delivered To:</strong></td>
+            <td style="padding: 5px 0; font-weight: 700; color: #38bdf8;">${escapeHtml(targetEmail || 'Registered Candidate Email')}</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 0; color: #9ca3af;"><strong>Submitted At:</strong></td>
+            <td style="padding: 5px 0; font-weight: 700; color: #cbd5e1;">${escapeHtml(completedDate)}</td>
+          </tr>
+        </table>
+
+        <p style="margin: 0; line-height: 1.6; font-size: 13.5px; color: #d1fae5;">
+          Your official job offer and call letter have already been dispatched to your email address. Re-opening or re-taking questions is locked.
+        </p>
+      </div>
+
+      <p class="result-msg" style="color: #64748b; font-size: 13px;">
+        🛡️ For security and proctoring compliance, assessment links cannot be reused after submission.
+      </p>
+    `;
+  } else {
+    resultCard.innerHTML = `
+      <div class="result-icon">🔒</div>
+      <div style="display: inline-block; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: #fbbf24; font-size: 11.5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 4px 14px; border-radius: 99px; margin-bottom: 12px;">
+        ASSESSMENT ALREADY SUBMITTED
+      </div>
+      <h2 class="result-title" style="color: #f59e0b; margin-top: 4px;">Test Response Recorded</h2>
+      <p style="color: #9ca3af; font-size: 14.5px;">
+        Technical Evaluation for <strong>${escapeHtml(resolvedRole)}</strong>
+      </p>
+
+      <div class="score-circle" style="border-color: #f59e0b; box-shadow: 0 0 24px rgba(245, 158, 11, 0.2); margin: 20px auto;">
+        <span class="score-number">${score}%</span>
+        <span class="score-label" style="color: #fbbf24;">Score (${correct}/${total})</span>
+      </div>
+
+      <div class="feedback-alert" style="text-align: left; margin: 20px 0;">
+        <h3 style="margin: 0 0 8px 0; font-size: 15px; font-weight: 800; color: #ef4444;">Assessment Already Completed</h3>
+        <p style="margin: 0; line-height: 1.5; color: #fee2e2; font-size: 13.5px;">
+          Dear <strong>${escapeHtml(resolvedName)}</strong>, you completed and submitted this assessment on <strong>${escapeHtml(completedDate)}</strong> with a score of <strong>${score}%</strong>. Your results are already logged in our hiring database.
+        </p>
+      </div>
+
+      <p class="result-msg" style="color: #64748b; font-size: 13px;">
+        🛡️ Test questions are closed and cannot be re-opened for an already submitted assessment link.
       </p>
     `;
   }

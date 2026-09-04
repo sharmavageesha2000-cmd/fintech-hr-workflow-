@@ -647,6 +647,50 @@ app.get('/api/assessment/questions', (req, res) => {
   if (!candidateRecord && candidateEmail) {
     candidateRecord = candidates.find(item => (item.email || '').toLowerCase().trim() === candidateEmail.toLowerCase().trim());
   }
+  if (!candidateRecord && name && role) {
+    candidateRecord = candidates.find(item => (item.name || '').toLowerCase().trim() === name.toLowerCase().trim() && (item.roleApplied || '').toLowerCase().includes(role.toLowerCase()));
+  }
+
+  // Check if candidate has ALREADY completed / submitted their assessment test
+  const isAlreadySubmitted = Boolean(
+    candidateRecord && (
+      candidateRecord.assessmentCompleted === true ||
+      candidateRecord.testSubmitted === true ||
+      (candidateRecord.assessmentDetails && candidateRecord.assessmentDetails.completedAt) ||
+      (candidateRecord.testScore !== undefined && candidateRecord.testScore !== null && candidateRecord.interviewStatus === 'COMPLETED')
+    )
+  );
+
+  if (isAlreadySubmitted) {
+    console.log(`[Assessment Engine] 🔒 Candidate "${candidateRecord.name}" (${candidateRecord.email}) opened test link again, but assessment is ALREADY SUBMITTED. Refusing question access.`);
+    const passed = candidateRecord.assessmentDetails?.passed !== undefined 
+      ? candidateRecord.assessmentDetails.passed 
+      : (candidateRecord.testPassed || candidateRecord.status === 'SELECTED' || (candidateRecord.testScore || 0) >= 80);
+
+    return res.json({
+      success: true,
+      alreadySubmitted: true,
+      message: 'Assessment has already been submitted and evaluated. Reopening test questions is restricted.',
+      candidate: {
+        id: candidateRecord.id,
+        name: candidateRecord.name,
+        email: candidateRecord.email,
+        roleApplied: candidateRecord.roleApplied || targetRole || 'Frontend Developer',
+        scorePercent: candidateRecord.assessmentDetails?.scorePercent !== undefined 
+          ? candidateRecord.assessmentDetails.scorePercent 
+          : (candidateRecord.testScore || 0),
+        correctCount: candidateRecord.assessmentDetails?.correctCount !== undefined
+          ? candidateRecord.assessmentDetails.correctCount
+          : Math.round(((candidateRecord.testScore || 0) / 100) * 20),
+        totalQuestions: candidateRecord.assessmentDetails?.totalQuestions || 20,
+        passed,
+        completedAt: candidateRecord.assessmentDetails?.completedAt || candidateRecord.callLetterSentAt || new Date().toISOString(),
+        status: candidateRecord.status || (passed ? 'SELECTED' : 'REJECTED'),
+        offerRefId: candidateRecord.offerRefId,
+        callLetterDetails: candidateRecord.callLetterDetails
+      }
+    });
+  }
 
   if (!targetRole && candidateRecord) {
     targetRole = candidateRecord.roleApplied;
@@ -667,6 +711,7 @@ app.get('/api/assessment/questions', (req, res) => {
 
   res.json({
     success: true,
+    alreadySubmitted: false,
     sessionId: sessionData.sessionId,
     role: sessionData.role,
     totalQuestions: sessionData.totalQuestions,
@@ -731,6 +776,8 @@ app.post('/api/assessment/submit', async (req, res) => {
     };
     targetCandidate.testScore = evalResult.scorePercent;
     targetCandidate.testPassed = evalResult.passed;
+    targetCandidate.assessmentCompleted = true;
+    targetCandidate.testSubmitted = true;
 
     let emailDispatch = null;
     const targetEmail = (targetCandidate.email || candidateEmail || '').trim();

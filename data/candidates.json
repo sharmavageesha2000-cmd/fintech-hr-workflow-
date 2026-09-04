@@ -1,5 +1,29 @@
 [
   {
+    "id": "cand-1788540944533",
+    "name": "Pooja Verma",
+    "email": "single_attempt_candidate_1788540944492@finovatech.com",
+    "roleApplied": "UI/UX Designer",
+    "receivedAt": "2026-09-04T16:55:44.533Z",
+    "assessmentDetails": {
+      "completedAt": "2026-09-04T16:55:44.533Z",
+      "scorePercent": 30,
+      "correctCount": 6,
+      "totalQuestions": 20,
+      "passed": false,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 300,
+      "forcedByViolation": false
+    },
+    "testScore": 30,
+    "testPassed": false,
+    "assessmentCompleted": true,
+    "testSubmitted": true,
+    "status": "REJECTED",
+    "offerStatus": "REJECTED",
+    "interviewStatus": "COMPLETED"
+  },
+  {
     "id": "cand-1788538210123-101",
     "name": "Vageesha Sharma",
     "email": "sharmavageesha2000@gmail.com",
