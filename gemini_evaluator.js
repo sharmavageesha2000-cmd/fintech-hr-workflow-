@@ -399,7 +399,8 @@ function generateStructuredSelectedHtml({
   assessmentUrl = ''
 }) {
   const skillsList = matchedSkills.slice(0, 5).join(', ') || 'core technical competencies';
-  const defaultBaseUrl = process.env.BASE_URL || (process.env.NODE_ENV === 'production' ? 'https://hr-smartflow-automation.onrender.com' : 'http://localhost:3000');
+  const LIVE_BASE_URL = 'https://hr-smartflow-automation.onrender.com';
+  const defaultBaseUrl = process.env.BASE_URL || LIVE_BASE_URL;
   const testLink = assessmentUrl || `${defaultBaseUrl}/assessment.html?role=${encodeURIComponent(roleApplied)}&name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&id=${encodeURIComponent(candidateId || '')}`;
 
   return `
@@ -730,7 +731,8 @@ function heuristicFallbackEvaluation({
     recommendations.push(`Include live project links, portfolio dashboards, and quantifiable metrics in your resume.`);
   }
 
-  const defaultBaseUrl = process.env.BASE_URL || (process.env.NODE_ENV === 'production' ? 'https://hr-smartflow-automation.onrender.com' : 'http://localhost:3000');
+  const LIVE_BASE_URL = 'https://hr-smartflow-automation.onrender.com';
+  const defaultBaseUrl = process.env.BASE_URL || LIVE_BASE_URL;
   const testAssessmentLink = `${defaultBaseUrl}/assessment.html?role=${encodeURIComponent(targetJob.title)}&name=${encodeURIComponent(resolvedName)}&email=${encodeURIComponent(candidateEmail || '')}`;
 
   const emailSubject = isSelected 
@@ -963,7 +965,8 @@ Return ONLY a valid JSON object matching this schema:
               }
 
               if (evalObj.status === 'SELECTED' && (evalObj.matchScore || 0) >= 65 && !domainCheck.mismatched) {
-                const defaultBaseUrl = process.env.BASE_URL || (process.env.NODE_ENV === 'production' ? 'https://hr-smartflow-automation.onrender.com' : 'http://localhost:3000');
+                const LIVE_BASE_URL = 'https://hr-smartflow-automation.onrender.com';
+                const defaultBaseUrl = process.env.BASE_URL || LIVE_BASE_URL;
                 const testAssessmentLink = `${defaultBaseUrl}/assessment.html?role=${encodeURIComponent(targetJob.title)}&name=${encodeURIComponent(finalName)}&email=${encodeURIComponent(candidateEmail || '')}`;
 
                 evalObj.status = 'SELECTED';
