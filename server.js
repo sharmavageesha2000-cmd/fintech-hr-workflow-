@@ -379,11 +379,15 @@ async function checkAndDispatchPendingOfferLetters() {
     let updated = false;
 
     for (const c of candidates) {
-      const isPassed = c.status === 'SELECTED' || (c.assessmentDetails && c.assessmentDetails.passed) || c.testPassed;
+      // STRICT RULE: Offer letter must ONLY and STRICTLY be sent when the candidate has taken and PASSED the assessment test (score >= 80%)
+      const hasPassedAssessment = Boolean(
+        (c.testPassed === true || (c.assessmentDetails && c.assessmentDetails.passed === true)) &&
+        ((c.testScore !== undefined && c.testScore >= 80) || (c.assessmentDetails && c.assessmentDetails.scorePercent >= 80))
+      );
       const targetEmail = (c.email || '').trim();
       const hasDelivered = c.callLetterDetails && c.callLetterDetails.emailDispatch && c.callLetterDetails.emailDispatch.success;
 
-      if (isPassed && targetEmail && targetEmail.includes('@') && !hasDelivered) {
+      if (hasPassedAssessment && targetEmail && targetEmail.includes('@') && !hasDelivered) {
         const role = c.roleApplied || 'Software Engineer';
         const offerRefId = c.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
         const defaultJoining = 'Monday, 14 September 2026';

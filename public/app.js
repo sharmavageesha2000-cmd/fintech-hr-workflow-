@@ -789,15 +789,19 @@ function renderCandidatesTable() {
 
   candidatesTableBody.innerHTML = displayedCandidates.map(c => {
     const isSelected = c.status === 'SELECTED';
+    const isShortlisted = c.status === 'SHORTLISTED';
     const isOfferExtended = c.offerStatus === 'OFFER_EXTENDED';
-    const isInterviewDone = c.interviewStatus === 'COMPLETED';
+    const hasPassedAssessment = Boolean(
+      (c.testPassed === true || (c.assessmentDetails && c.assessmentDetails.passed === true)) &&
+      ((c.testScore !== undefined && c.testScore >= 80) || (c.assessmentDetails && c.assessmentDetails.scorePercent >= 80))
+    );
     const score = c.matchScore || 0;
     const scoreClass = score >= 60 ? 'high' : 'low';
     const initials = (c.name || 'CN').split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
 
     // Authentic Google Meet link display
     const meetUrl = c.interviewSchedule?.meetLink || 'https://meet.google.com/qoy-livx-rku';
-    const meetDisplay = isSelected
+    const meetDisplay = (isSelected || isShortlisted)
       ? `<a href="${meetUrl}" target="_blank" style="color:var(--primary-purple); font-weight:700; text-decoration:none; font-size:0.8rem; display:inline-flex; align-items:center; gap:4px;" title="Open Authentic Google Meet Call"><i class="fa-solid fa-video"></i> ${meetUrl.replace('https://', '')}</a>`
       : `<span style="color:#94a3b8; font-size:0.8rem;">N/A</span>`;
 
@@ -805,23 +809,21 @@ function renderCandidatesTable() {
     let interviewStatusHtml = '';
     if (isOfferExtended) {
       interviewStatusHtml = `<span class="badge-pill green" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0;"><i class="fa-solid fa-award"></i> Offer Extended</span>`;
-    } else if (isInterviewDone) {
+    } else if (hasPassedAssessment) {
+      interviewStatusHtml = `<span class="badge-pill green" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0;"><i class="fa-solid fa-circle-check"></i> Test Passed (${c.testScore || c.assessmentDetails?.scorePercent}%)</span>`;
+    } else if (c.testScore !== undefined && c.testScore < 80) {
+      interviewStatusHtml = `<span class="badge-pill red" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca;"><i class="fa-solid fa-circle-xmark"></i> Test Failed (${c.testScore}%)</span>`;
+    } else if (isSelected || isShortlisted) {
       interviewStatusHtml = `
-        <button class="btn-secondary-light" style="padding:0.25rem 0.65rem; font-size:0.75rem; color:#059669; border-color:#86efac;" onclick="toggleInterviewStatus('${c.id}')" title="Click to toggle status">
-          <i class="fa-solid fa-circle-check"></i> Interview Done
-        </button>
-      `;
-    } else if (isSelected) {
-      interviewStatusHtml = `
-        <button class="btn-secondary-light" style="padding:0.25rem 0.65rem; font-size:0.75rem; color:#6366f1; border-color:#c7d2fe;" onclick="toggleInterviewStatus('${c.id}')" title="Click to mark interview as completed">
-          <i class="fa-solid fa-calendar-check"></i> Scheduled (Click when Done)
-        </button>
+        <span class="badge-pill blue" style="background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe; font-size:0.75rem; padding:0.25rem 0.65rem; border-radius:99px;">
+          <i class="fa-solid fa-clock"></i> Assessment Pending
+        </span>
       `;
     } else {
       interviewStatusHtml = `<span style="color:#94a3b8; font-size:0.78rem;">Not Shortlisted</span>`;
     }
 
-    // Call Letter Action Button
+    // Call Letter Action Button: STRICTLY available only after passing test
     let callLetterActionHtml = '';
     if (isOfferExtended) {
       callLetterActionHtml = `
@@ -829,14 +831,14 @@ function renderCandidatesTable() {
           <i class="fa-solid fa-envelope-circle-check"></i> Call Letter Sent
         </button>
       `;
-    } else if (isSelected) {
+    } else if (hasPassedAssessment) {
       callLetterActionHtml = `
         <button class="btn-primary-purple" style="padding:0.3rem 0.65rem; font-size:0.75rem;" onclick="openOfferModal('${c.id}')" title="Send Official Job Offer & Call Letter Email">
           <i class="fa-solid fa-award"></i> Issue Call Letter
         </button>
       `;
     } else {
-      callLetterActionHtml = `<span style="color:#94a3b8; font-size:0.78rem;">N/A</span>`;
+      callLetterActionHtml = `<span style="color:#94a3b8; font-size:0.78rem;" title="Offer letters are only generated after passing technical test (>= 80%)"><i class="fa-solid fa-lock"></i> Test Required</span>`;
     }
 
     const expDisplay = c.experienceYears !== undefined
@@ -851,11 +853,23 @@ function renderCandidatesTable() {
         </div>`
       : '';
 
+    let statusClass = 'rejected';
+    let statusIcon = 'fa-circle-xmark';
+    let statusText = c.status || 'REJECTED';
+
+    if (isSelected) {
+      statusClass = 'selected';
+      statusIcon = 'fa-circle-check';
+    } else if (isShortlisted) {
+      statusClass = 'shortlisted';
+      statusIcon = 'fa-clock';
+    }
+
     return `
       <tr>
         <td>
           <div style="display:flex; align-items:center; gap:0.75rem;">
-            <div class="candidate-mini-avatar" style="background:${isSelected ? '#dcfce7' : '#fee2e2'}; color:${isSelected ? '#15803d' : '#b91c1c'};">
+            <div class="candidate-mini-avatar" style="background:${isSelected ? '#dcfce7' : (isShortlisted ? '#eff6ff' : '#fee2e2')}; color:${isSelected ? '#15803d' : (isShortlisted ? '#2563eb' : '#b91c1c')};">
               ${initials}
             </div>
             <div>
@@ -880,9 +894,9 @@ function renderCandidatesTable() {
           </div>
         </td>
         <td>
-          <span class="status-pill-badge ${isSelected ? 'selected' : 'rejected'}">
-            <i class="fa-solid ${isSelected ? 'fa-circle-check' : 'fa-circle-xmark'}"></i>
-            ${c.status}
+          <span class="status-pill-badge ${statusClass}">
+            <i class="fa-solid ${statusIcon}"></i>
+            ${statusText}
           </span>
         </td>
         <td>

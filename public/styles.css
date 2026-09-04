@@ -721,6 +721,12 @@ body {
   border: 1px solid #a7f3d0;
 }
 
+.status-pill-badge.shortlisted {
+  background-color: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+
 .status-pill-badge.rejected {
   background-color: #fef2f2;
   color: #dc2626;
