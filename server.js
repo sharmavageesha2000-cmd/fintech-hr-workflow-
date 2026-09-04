@@ -959,23 +959,37 @@ app.get('/api/export/json', (req, res) => {
   res.send(JSON.stringify(candidates, null, 2));
 });
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`====================================================`);
-  console.log(`  HR Recruitment AI Automation & Dashboard Live!   `);
-  console.log(`  URL: http://localhost:${PORT}                      `);
-  console.log(`  Recruiter Email: sharmavageesha2000@gmail.com    `);
-  console.log(`  Gmail SMTP & IMAP: CONNECTED & AUTHENTICATED     `);
-  console.log(`  Auto-Scanner Daemon: ACTIVE (Polling every 10s)  `);
-  console.log(`  Gemini Model: ${DEFAULT_MODEL} (Connected)       `);
-  console.log(`====================================================`);
+function startServerWithFallback(portToTry) {
+  const server = app.listen(portToTry, () => {
+    console.log(`====================================================`);
+    console.log(`  HR Recruitment AI Automation & Dashboard Live!   `);
+    console.log(`  Local URL:  http://localhost:${portToTry}           `);
+    console.log(`  Live Cloud: https://hr-smartflow-automation.onrender.com`);
+    console.log(`  Recruiter:  sharmavageesha2000@gmail.com           `);
+    console.log(`  Gmail SMTP & IMAP: CONNECTED & AUTHENTICATED      `);
+    console.log(`  Auto-Scanner Daemon: ACTIVE (Polling every 5s)    `);
+    console.log(`  Gemini Model: ${DEFAULT_MODEL} (Connected)        `);
+    console.log(`====================================================`);
 
-  // Initial check on boot
-  setTimeout(checkInboxNow, 1500);
+    // Initial check on boot
+    setTimeout(checkInboxNow, 1500);
 
-  // Keep Render Cloud instance active and warm (every 2.5 minutes)
-  setInterval(() => {
-    const https = require('https');
-    https.get('https://hr-smartflow-automation.onrender.com/api/check-inbox', () => {}).on('error', () => {});
-  }, 150000);
-});
+    // Keep Render Cloud instance active and warm (every 2.5 minutes)
+    setInterval(() => {
+      const https = require('https');
+      https.get('https://hr-smartflow-automation.onrender.com/api/check-inbox', () => {}).on('error', () => {});
+    }, 150000);
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE' && portToTry < 3010) {
+      console.warn(`[Server Notice] Port ${portToTry} is in use, automatically trying port ${portToTry + 1}...`);
+      startServerWithFallback(portToTry + 1);
+    } else {
+      console.error('[Server Error] Failed to start server:', err.message);
+    }
+  });
+}
+
+startServerWithFallback(Number(PORT));
+
