@@ -494,7 +494,11 @@
     <section class="profile-card">
       <div class="profile-info">
         <h1 id="candNameDisplay">Candidate Assessment</h1>
-        <p>Candidate: <strong id="candEmailDisplay" style="color: #fff;">candidate@example.com</strong> • Domain: <strong id="candRoleDisplay" style="color: var(--primary);">Frontend Developer</strong></p>
+        <p>
+          Candidate: <strong id="candEmailDisplay" style="color: #38bdf8;">candidate@example.com</strong>
+          <button type="button" onclick="editCandidateEmail()" style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; font-size: 11px; padding: 2px 8px; border-radius: 6px; cursor: pointer; margin-left: 6px;" title="Confirm or change the email address for receiving your offer letter">✏️ Edit Email</button>
+          • Domain: <strong id="candRoleDisplay" style="color: var(--primary);">Frontend Developer</strong>
+        </p>
       </div>
       <div class="passing-pill">
         🎯 Passing Threshold: <strong>80% (16/20)</strong><br>

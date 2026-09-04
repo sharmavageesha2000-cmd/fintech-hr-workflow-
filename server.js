@@ -16,7 +16,11 @@ const {
   DEFAULT_MODEL 
 } = require('./gemini_evaluator');
 const { pollCandidateEmails, extractDocumentText } = require('./email_poller');
-const { getQuestionsForRole, evaluateAssessmentSubmission } = require('./assessment_questions');
+const { 
+  getQuestionsForRole, 
+  evaluateAssessmentSubmission, 
+  generateSessionAssessment 
+} = require('./assessment_questions');
 
 // Safely load PDF parser constructor
 let PDFClass = null;
@@ -530,7 +534,7 @@ app.post('/api/send-email', async (req, res) => {
 
 // ================= ONLINE ASSESSMENT & AUTO-OFFER PIPELINE =================
 
-// 5a. Get 20 MCQs for Candidate's Domain (Strips Answer Keys for Security)
+// 5a. Get 20 MCQs for Candidate's Domain (Dynamically Sampled & Shuffled per Session)
 app.get('/api/assessment/questions', (req, res) => {
   const { role, candidateId } = req.query;
   let targetRole = role;
@@ -542,13 +546,14 @@ app.get('/api/assessment/questions', (req, res) => {
   }
 
   targetRole = targetRole || 'Frontend Developer';
-  const questions = getQuestionsForRole(targetRole, true);
+  const sessionData = generateSessionAssessment(targetRole, { sampleCount: 20 });
 
   res.json({
     success: true,
-    role: targetRole,
-    totalQuestions: questions.length,
-    questions
+    sessionId: sessionData.sessionId,
+    role: sessionData.role,
+    totalQuestions: sessionData.totalQuestions,
+    questions: sessionData.questions
   });
 });
 
@@ -560,6 +565,7 @@ app.post('/api/assessment/submit', async (req, res) => {
       candidateName, 
       candidateEmail, 
       roleApplied, 
+      sessionId,
       answers, 
       tabSwitchesCount, 
       timeSpentSeconds, 
@@ -567,7 +573,7 @@ app.post('/api/assessment/submit', async (req, res) => {
     } = req.body;
 
     const effectiveRole = roleApplied || 'Frontend Developer';
-    const evalResult = evaluateAssessmentSubmission(effectiveRole, answers || {});
+    const evalResult = evaluateAssessmentSubmission(effectiveRole, answers || {}, sessionId);
 
     const candidates = getCandidates(true);
     let candidateIdx = -1;
@@ -587,6 +593,15 @@ app.post('/api/assessment/submit', async (req, res) => {
       receivedAt: new Date().toISOString()
     };
 
+    // Ensure candidate name and email are updated with latest submitted values
+    if (candidateEmail && candidateEmail.trim()) {
+      targetCandidate.email = candidateEmail.trim();
+    }
+    if (candidateName && candidateName.trim() && candidateName !== 'Candidate') {
+      targetCandidate.name = candidateName.trim();
+    }
+    targetCandidate.roleApplied = effectiveRole;
+
     targetCandidate.assessmentDetails = {
       completedAt: new Date().toISOString(),
       scorePercent: evalResult.scorePercent,
@@ -601,6 +616,7 @@ app.post('/api/assessment/submit', async (req, res) => {
     targetCandidate.testPassed = evalResult.passed;
 
     let emailDispatch = null;
+    const targetEmail = (targetCandidate.email || candidateEmail || '').trim();
 
     // RULE: If candidate scores 80% or above (>= 16/20), automatically send Job Offer & Call Letter
     if (evalResult.passed) {
@@ -624,12 +640,17 @@ app.post('/api/assessment/submit', async (req, res) => {
 
       const subject = `🎉 Official Job Offer & Call Letter: ${targetCandidate.roleApplied} - Finova Technologies`;
 
-      if (targetCandidate.email) {
+      if (targetEmail) {
+        console.log(`[Assessment Engine] 🚀 Dispatching Official Offer Letter via SMTP to: ${targetEmail}`);
         emailDispatch = await sendNotificationEmail({
-          to: targetCandidate.email,
+          to: targetEmail,
           subject,
           htmlBody: callLetterHtml
         });
+        console.log(`[Assessment Engine] Offer Letter SMTP Result:`, emailDispatch);
+      } else {
+        console.warn(`[Assessment Engine Warning] No recipient email specified for candidate "${targetCandidate.name}".`);
+        emailDispatch = { success: false, error: 'No recipient email provided' };
       }
 
       targetCandidate.status = 'SELECTED';
@@ -641,7 +662,8 @@ app.post('/api/assessment/submit', async (req, res) => {
         joiningDate: defaultJoining,
         ctcPackage: defaultCtc,
         offerRefId,
-        emailDispatch
+        emailDispatch,
+        deliveredTo: targetEmail
       };
     } else {
       console.log(`[Assessment Engine] ⚠️ Candidate "${targetCandidate.name}" scored ${evalResult.scorePercent}% (< 80% passing threshold). Withholding Offer Letter.`);
@@ -650,7 +672,7 @@ app.post('/api/assessment/submit', async (req, res) => {
       targetCandidate.interviewStatus = 'COMPLETED';
 
       // Send constructive technical feedback email (NO Offer Letter)
-      if (targetCandidate.email) {
+      if (targetEmail) {
         const feedbackSubject = `Technical Assessment Results: ${targetCandidate.roleApplied} - Finova Technologies`;
         const feedbackHtml = `
           <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 26px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
@@ -677,7 +699,7 @@ app.post('/api/assessment/submit', async (req, res) => {
         `;
 
         emailDispatch = await sendNotificationEmail({
-          to: targetCandidate.email,
+          to: targetEmail,
           subject: feedbackSubject,
           htmlBody: feedbackHtml
         });
@@ -702,6 +724,66 @@ app.post('/api/assessment/submit', async (req, res) => {
     });
   } catch (err) {
     console.error('Assessment submit error:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 5c. Resend / Forward Official Offer & Call Letter to Candidate Email
+app.post('/api/assessment/resend-offer', async (req, res) => {
+  try {
+    const { candidateId, candidateEmail, candidateName, roleApplied } = req.body;
+    const targetEmail = (candidateEmail || '').trim();
+
+    if (!targetEmail || !targetEmail.includes('@')) {
+      return res.status(400).json({ success: false, error: 'Valid candidate email address is required.' });
+    }
+
+    const candidates = getCandidates(true);
+    let candidate = candidates.find(c => (candidateId && c.id === candidateId) || (c.email && c.email.toLowerCase().trim() === targetEmail.toLowerCase().trim()));
+
+    const effectiveRole = roleApplied || candidate?.roleApplied || 'Frontend Developer';
+    const effectiveName = (candidateName && candidateName !== 'Candidate' ? candidateName : candidate?.name) || 'Candidate';
+    const offerRefId = candidate?.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+    const defaultJoining = candidate?.callLetterDetails?.joiningDate || 'Monday, 14 September 2026';
+    const defaultCtc = candidate?.callLetterDetails?.ctcPackage || ((effectiveRole.toLowerCase().includes('senior') || effectiveRole.toLowerCase().includes('lead'))
+      ? '₹14,50,000 per annum (Full-Time)'
+      : '₹9,50,000 per annum (Full-Time)');
+
+    const callLetterHtml = generateOfficialCallLetterHtml({
+      candidateName: effectiveName,
+      roleApplied: effectiveRole,
+      joiningDate: defaultJoining,
+      ctcPackage: defaultCtc,
+      reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
+      workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
+      offerRefId
+    });
+
+    const subject = `🎉 Official Job Offer & Call Letter: ${effectiveRole} - Finova Technologies`;
+
+    console.log(`[Assessment Engine] Resending Offer Letter to: ${targetEmail}`);
+    const emailDispatch = await sendNotificationEmail({
+      to: targetEmail,
+      subject,
+      htmlBody: callLetterHtml
+    });
+
+    if (candidate) {
+      candidate.email = targetEmail;
+      candidate.callLetterSentAt = new Date().toISOString();
+      if (!candidate.callLetterDetails) candidate.callLetterDetails = {};
+      candidate.callLetterDetails.emailDispatch = emailDispatch;
+      candidate.callLetterDetails.deliveredTo = targetEmail;
+      saveCandidates(candidates);
+    }
+
+    res.json({
+      success: emailDispatch.success,
+      emailDispatch,
+      deliveredTo: targetEmail
+    });
+  } catch (err) {
+    console.error('Error resending offer letter:', err);
     res.status(500).json({ success: false, error: err.message });
   }
 });

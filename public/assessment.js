@@ -5,6 +5,7 @@
  */
 
 // State
+let assessmentSessionId = null;
 let assessmentQuestions = [];
 let answeredAnswers = {};
 let violationCount = 0;
@@ -15,10 +16,10 @@ let isSubmitted = false;
 
 // URL Parameters
 const urlParams = new URLSearchParams(window.location.search);
-const candidateId = urlParams.get('id') || 'cand-' + Date.now();
-const candidateName = urlParams.get('name') || 'Candidate';
-const candidateEmail = urlParams.get('email') || '';
-const roleApplied = urlParams.get('role') || 'Frontend Developer';
+let candidateId = urlParams.get('id') || 'cand-' + Date.now();
+let candidateName = urlParams.get('name') || 'Candidate';
+let candidateEmail = (urlParams.get('email') || '').trim();
+let roleApplied = urlParams.get('role') || 'Frontend Developer';
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -32,9 +33,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function setupCandidateHeader() {
   document.getElementById('candNameDisplay').textContent = `${candidateName}'s Technical Assessment`;
-  document.getElementById('candEmailDisplay').textContent = candidateEmail || 'candidate@finova.com';
+  document.getElementById('candEmailDisplay').textContent = candidateEmail || 'Not set (Click ✏️ Edit Email)';
   document.getElementById('candRoleDisplay').textContent = roleApplied;
   document.getElementById('headerRole').textContent = `${roleApplied} (20 Domain MCQs)`;
+}
+
+function editCandidateEmail() {
+  const current = candidateEmail || '';
+  const entered = prompt('Please enter your valid email address where your Official Job Offer & Call Letter will be dispatched upon scoring >= 80%:', current);
+  if (entered !== null) {
+    const trimmed = entered.trim();
+    if (trimmed && trimmed.includes('@')) {
+      candidateEmail = trimmed;
+      const disp = document.getElementById('candEmailDisplay');
+      if (disp) disp.textContent = candidateEmail;
+    } else if (trimmed) {
+      alert('Please enter a valid email address (e.g. yourname@gmail.com).');
+    }
+  }
 }
 
 // -------------------------------------------------------------
@@ -156,6 +172,7 @@ async function fetchQuestions() {
     const data = await res.json();
 
     if (data.success && Array.isArray(data.questions) && data.questions.length > 0) {
+      assessmentSessionId = data.sessionId || null;
       assessmentQuestions = data.questions;
       renderQuestions(data.questions);
       document.getElementById('totalCount').textContent = data.questions.length;
@@ -241,6 +258,19 @@ async function handleFormSubmit(e) {
     if (!proceed) return;
   }
 
+  // Ensure candidate email is verified so offer letter can be delivered
+  if (!candidateEmail || !candidateEmail.includes('@') || candidateEmail.includes('example.com') || candidateEmail.includes('finova.com')) {
+    const entered = prompt('Please enter your email address where your Official Job Offer & Call Letter will be dispatched upon scoring >= 80%:', candidateEmail || '');
+    if (entered && entered.trim().includes('@')) {
+      candidateEmail = entered.trim();
+      const disp = document.getElementById('candEmailDisplay');
+      if (disp) disp.textContent = candidateEmail;
+    } else {
+      alert('A valid email address is required so the recruitment system can dispatch your Official Call Letter.');
+      return;
+    }
+  }
+
   submitAssessmentDirectly(false);
 }
 
@@ -260,6 +290,7 @@ async function submitAssessmentDirectly(forcedByViolation = false) {
     candidateName,
     candidateEmail,
     roleApplied,
+    sessionId: assessmentSessionId,
     answers: answeredAnswers,
     tabSwitchesCount: violationCount,
     forcedByViolation,
@@ -295,13 +326,21 @@ function renderResultScreen(result) {
   const score = result.scorePercent;
   const correct = result.correctCount;
   const total = result.totalQuestions;
+  const emailSent = result.emailDispatch && result.emailDispatch.success;
+  const targetEmail = (result.candidate && result.candidate.email) || candidateEmail || '';
+  const resolvedName = (result.candidate && result.candidate.name) || candidateName || 'Candidate';
 
   const resultCard = document.getElementById('resultCard');
 
   if (isPassed) {
+    const offerDetails = result.candidate?.callLetterDetails || {};
+    const refId = result.candidate?.offerRefId || offerDetails.offerRefId || 'HR-OFFER-2026';
+    const ctc = offerDetails.ctcPackage || '₹9,50,000 per annum (Full-Time)';
+    const joining = offerDetails.joiningDate || 'Monday, 14 September 2026';
+
     resultCard.innerHTML = `
       <div class="result-icon">🎉</div>
-      <h2 class="result-title" style="color: #10b981;">Congratulations, ${escapeHtml(candidateName)}!</h2>
+      <h2 class="result-title" style="color: #10b981;">Congratulations, ${escapeHtml(resolvedName)}!</h2>
       <p style="color: #9ca3af; font-size: 15px;">You have successfully passed the Technical Assessment for <strong>${escapeHtml(roleApplied)}</strong>.</p>
       
       <div class="score-circle" style="border-color: #10b981; box-shadow: 0 0 24px rgba(16, 185, 129, 0.25);">
@@ -309,20 +348,66 @@ function renderResultScreen(result) {
         <span class="score-label" style="color: #34d399;">Score (${correct}/${total})</span>
       </div>
 
-      <div class="offer-alert">
-        <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: 800; color: #10b981;">📜 Official Job Offer &amp; Call Letter Extended!</h3>
-        <p style="margin: 0; line-height: 1.5; color: #d1fae5;">
-          Because you scored <strong>${score}%</strong> (passing threshold: 80%), our automated recruitment system has generated and dispatched your <strong>Official Job Offer &amp; Call Letter</strong> to <strong>${escapeHtml(candidateEmail || 'your email')}</strong>.
+      <div class="offer-alert" style="background: rgba(16, 185, 129, 0.12); border: 1.5px solid rgba(16, 185, 129, 0.4); border-radius: 14px; padding: 22px; margin: 20px 0; text-align: left;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid rgba(16, 185, 129, 0.25); padding-bottom: 10px;">
+          <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: #10b981;">📜 Official Job Offer &amp; Call Letter Extended!</h3>
+          <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px;">REF: ${escapeHtml(refId)}</span>
+        </div>
+        
+        <table style="width: 100%; font-size: 13.5px; color: #e2e8f0; border-collapse: collapse; margin-bottom: 16px;">
+          <tr>
+            <td style="padding: 5px 0; color: #9ca3af; width: 35%;"><strong>Position:</strong></td>
+            <td style="padding: 5px 0; font-weight: 700; color: #fff;">${escapeHtml(roleApplied)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 0; color: #9ca3af;"><strong>Package (CTC):</strong></td>
+            <td style="padding: 5px 0; font-weight: 700; color: #34d399;">${escapeHtml(ctc)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 0; color: #9ca3af;"><strong>Joining Date:</strong></td>
+            <td style="padding: 5px 0; font-weight: 700; color: #fff;">${escapeHtml(joining)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 0; color: #9ca3af;"><strong>Dispatch Destination:</strong></td>
+            <td style="padding: 5px 0; font-weight: 700; color: #38bdf8;">${escapeHtml(targetEmail || 'Registered Candidate Email')}</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 0; color: #9ca3af;"><strong>Email Delivery Status:</strong></td>
+            <td style="padding: 5px 0; font-weight: 700; color: ${emailSent ? '#34d399' : '#fbbf24'};">
+              ${emailSent ? `✅ Dispatched &amp; Delivered via Gmail SMTP` : (targetEmail ? `🚀 Dispatched to ${escapeHtml(targetEmail)}` : '⚠️ Please enter email below')}
+            </td>
+          </tr>
+        </table>
+
+        <p style="margin: 0; line-height: 1.5; font-size: 13.5px; color: #d1fae5;">
+          Because you achieved <strong>${score}%</strong> (passing threshold: 80%), your official employment offer, full compensation structure, joining guidelines, and call letter have been generated and dispatched to <strong>${escapeHtml(targetEmail || 'your email')}</strong>.
         </p>
       </div>
 
-      <p class="result-msg">
-        Please check your email inbox for your offer letter with full package compensation, joining dates, and next steps.
-      </p>
-
-      <a href="/website" style="background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 10px; font-weight: 700; display: inline-block;">
-        Return to Finova Home
-      </a>
+      <!-- Resend / Forward Offer Letter Section -->
+      <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid #1f2937; border-radius: 12px; padding: 18px; margin-top: 18px; text-align: left;">
+        <label style="display: block; font-size: 13px; font-weight: 700; color: #cbd5e1; margin-bottom: 8px;">
+          📩 Resend or Forward Call Letter to an Email:
+        </label>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <input 
+            type="email" 
+            id="resendEmailInput" 
+            value="${escapeHtml(targetEmail)}" 
+            placeholder="Enter destination email address" 
+            style="flex: 1; min-width: 220px; padding: 10px 14px; background: #0b0f19; border: 1px solid #374151; border-radius: 8px; color: #fff; font-size: 13.5px;"
+          >
+          <button 
+            type="button" 
+            onclick="resendOfferLetter()" 
+            id="btnResendOffer" 
+            style="background: #10b981; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13.5px; cursor: pointer; transition: all 0.2s;"
+          >
+            Send Offer Letter Now
+          </button>
+        </div>
+        <div id="resendStatus" style="font-size: 12.5px; margin-top: 8px; font-weight: 600;"></div>
+      </div>
     `;
   } else {
     resultCard.innerHTML = `
@@ -338,18 +423,80 @@ function renderResultScreen(result) {
       <div class="feedback-alert">
         <h3 style="margin: 0 0 8px 0; font-size: 15px; font-weight: 800; color: #ef4444;">Threshold Not Reached (Passing Score: 80%)</h3>
         <p style="margin: 0; line-height: 1.5; color: #fee2e2;">
-          You scored <strong>${score}%</strong> (${correct} of ${total} correct). For this opening, an 80% score is required for automated offer generation. Therefore, an offer letter has not been issued.
+          You scored <strong>${score}%</strong> (${correct} of ${total} correct). For this opening, an 80% score is required for automated offer generation. Therefore, an employment offer has not been issued.
         </p>
       </div>
 
       <p class="result-msg">
-        We appreciate your dedication and time taking this assessment. We encourage you to strengthen your core technical domain fundamentals and apply again in the future.
+        We appreciate your dedication and time taking this assessment. Your score and responses have been logged in our recruitment records.
       </p>
-
-      <a href="/website" style="background: #374151; color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 10px; font-weight: 700; display: inline-block;">
-        Back to Careers
-      </a>
     `;
+  }
+}
+
+async function resendOfferLetter() {
+  const emailInput = document.getElementById('resendEmailInput');
+  const statusDiv = document.getElementById('resendStatus');
+  const btn = document.getElementById('btnResendOffer');
+  const email = emailInput ? emailInput.value.trim() : '';
+
+  if (!email || !email.includes('@')) {
+    if (statusDiv) {
+      statusDiv.style.color = '#ef4444';
+      statusDiv.textContent = 'Please enter a valid email address.';
+    }
+    return;
+  }
+
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Dispatching via SMTP...';
+  }
+  if (statusDiv) {
+    statusDiv.style.color = '#38bdf8';
+    statusDiv.textContent = 'Dispatching Official Offer Letter via Gmail SMTP...';
+  }
+
+  try {
+    const res = await fetch('/api/assessment/resend-offer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        candidateId,
+        candidateName,
+        candidateEmail: email,
+        roleApplied
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      if (statusDiv) {
+        statusDiv.style.color = '#34d399';
+        statusDiv.textContent = `✅ Official Job Offer & Call Letter dispatched successfully to ${email}! Please check your inbox (and spam/promotions folder).`;
+      }
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Delivered Successfully ✅';
+      }
+    } else {
+      if (statusDiv) {
+        statusDiv.style.color = '#ef4444';
+        statusDiv.textContent = `Failed to deliver: ${data.error || 'Please check SMTP settings'}`;
+      }
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Retry Dispatch';
+      }
+    }
+  } catch (err) {
+    if (statusDiv) {
+      statusDiv.style.color = '#ef4444';
+      statusDiv.textContent = 'Network error while dispatching offer letter.';
+    }
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = 'Retry Dispatch';
+    }
   }
 }
 
