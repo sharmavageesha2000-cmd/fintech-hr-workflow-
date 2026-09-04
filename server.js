@@ -830,44 +830,17 @@ app.post('/api/assessment/submit', async (req, res) => {
         deliveredTo: targetEmail
       };
     } else {
-      console.log(`[Assessment Engine] ⚠️ Candidate "${targetCandidate.name}" scored ${evalResult.scorePercent}% (< 80% passing threshold). Withholding Offer Letter.`);
+      console.log(`[Assessment Engine] ⚠️ Candidate "${targetCandidate.name}" scored ${evalResult.scorePercent}% (< 80% passing threshold). Withholding all emails as requested (NO mail sent on failed assessment).`);
       targetCandidate.status = 'REJECTED';
       targetCandidate.offerStatus = 'REJECTED';
       targetCandidate.interviewStatus = 'COMPLETED';
 
-      // Send constructive technical feedback email (NO Offer Letter)
-      if (targetEmail) {
-        const feedbackSubject = `Technical Assessment Results: ${targetCandidate.roleApplied} - Finova Technologies`;
-        const feedbackHtml = `
-          <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 600px; margin: auto; padding: 26px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
-            <h2 style="color: #991b1b; margin-top: 0;">Technical Assessment Outcome</h2>
-            <p>Dear <strong>${targetCandidate.name}</strong>,</p>
-            <p>Thank you for completing the online technical assessment for the <strong>${targetCandidate.roleApplied}</strong> position.</p>
-            <div style="background: #fef2f2; border: 1px solid #fecaca; padding: 16px; border-radius: 8px; margin: 18px 0;">
-              <p style="margin: 0 0 6px 0;"><strong>Score Achieved:</strong> ${evalResult.scorePercent}% (${evalResult.correctCount} / ${evalResult.totalQuestions} correct)</p>
-              <p style="margin: 0; color: #991b1b;"><strong>Passing Threshold:</strong> 80% (16 / 20 correct)</p>
-            </div>
-            <p style="color: #475569; line-height: 1.6;">
-              For this vacancy, an 80% score is required for automated offer generation. Because this threshold was not reached, an employment offer has not been issued at this stage.
-            </p>
-            <p style="color: #475569; line-height: 1.6;">
-              We encourage you to deepen your hands-on competencies in <strong>${targetCandidate.roleApplied}</strong> and reapply in future hiring cycles.
-            </p>
-            <p>We wish you great success in your career.</p>
-            <div style="margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 14px;">
-              <strong style="color: #0f172a; font-size: 14px; display: block;">Vageesha Sharma</strong>
-              <span style="color: #64748b; font-size: 12.5px; display: block;">Founder &amp; Hiring Lead</span>
-              <span style="color: #4338ca; font-size: 12.5px; font-weight: 600; display: block; margin-top: 2px;">sharmavageesha2000@gmail.com</span>
-            </div>
-          </div>
-        `;
-
-        emailDispatch = await sendNotificationEmail({
-          to: targetEmail,
-          subject: feedbackSubject,
-          htmlBody: feedbackHtml
-        });
-      }
+      // Do NOT send mail to candidate who could not pass the test
+      emailDispatch = {
+        success: false,
+        skipped: true,
+        reason: 'Candidate did not reach 80% passing threshold. Email dispatch suppressed.'
+      };
     }
 
     if (candidateIdx !== -1) {

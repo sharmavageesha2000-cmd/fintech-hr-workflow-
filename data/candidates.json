@@ -1,5 +1,29 @@
 [
   {
+    "id": "cand-1788541751732",
+    "name": "Rahul Verma",
+    "email": "failed_candidate_1788541751704@finovatech.com",
+    "roleApplied": "Frontend Developer",
+    "receivedAt": "2026-09-04T17:09:11.732Z",
+    "assessmentDetails": {
+      "completedAt": "2026-09-04T17:09:11.732Z",
+      "scorePercent": 35,
+      "correctCount": 7,
+      "totalQuestions": 20,
+      "passed": false,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 200,
+      "forcedByViolation": false
+    },
+    "testScore": 35,
+    "testPassed": false,
+    "assessmentCompleted": true,
+    "testSubmitted": true,
+    "status": "REJECTED",
+    "offerStatus": "REJECTED",
+    "interviewStatus": "COMPLETED"
+  },
+  {
     "id": "cand-1788540944533",
     "name": "Pooja Verma",
     "email": "single_attempt_candidate_1788540944492@finovatech.com",
@@ -29,7 +53,7 @@
     "email": "sharmavageesha2000@gmail.com",
     "phone": "Not specified",
     "education": "B.Tech in CS/IT",
-    "roleApplied": "Full Stack AI Engineer",
+    "roleApplied": "Frontend Developer",
     "experienceYears": 2.5,
     "skills": [
       "Requirement Gathering (BRD/FRD)",
@@ -94,17 +118,19 @@
       "deliveredTo": "sharmavageesha2000@gmail.com"
     },
     "assessmentDetails": {
-      "completedAt": "2026-09-04T16:46:54.123Z",
-      "scorePercent": 10,
-      "correctCount": 2,
+      "completedAt": "2026-09-04T17:09:11.744Z",
+      "scorePercent": 0,
+      "correctCount": 0,
       "totalQuestions": 20,
       "passed": false,
       "tabSwitchesCount": 0,
-      "timeSpentSeconds": 420,
+      "timeSpentSeconds": 400,
       "forcedByViolation": false
     },
-    "testScore": 10,
-    "testPassed": false
+    "testScore": 0,
+    "testPassed": false,
+    "assessmentCompleted": true,
+    "testSubmitted": true
   },
   {
     "id": "cand-1788538127982-638",
