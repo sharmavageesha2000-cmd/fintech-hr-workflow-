@@ -379,34 +379,9 @@ function renderResultScreen(result) {
           </tr>
         </table>
 
-        <p style="margin: 0; line-height: 1.5; font-size: 13.5px; color: #d1fae5;">
-          Because you achieved <strong>${score}%</strong> (passing threshold: 80%), your official employment offer, full compensation structure, joining guidelines, and call letter have been generated and dispatched to <strong>${escapeHtml(targetEmail || 'your email')}</strong>.
+        <p style="margin: 0; line-height: 1.6; font-size: 13.5px; color: #d1fae5;">
+          Because you achieved <strong>${score}%</strong> (passing threshold: 80%), your official employment offer, full compensation structure, joining guidelines, and call letter have been <strong>automatically generated and dispatched</strong> to <strong>${escapeHtml(targetEmail || 'your email')}</strong>. Please check your inbox (and spam/promotions folder).
         </p>
-      </div>
-
-      <!-- Resend / Forward Offer Letter Section -->
-      <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid #1f2937; border-radius: 12px; padding: 18px; margin-top: 18px; text-align: left;">
-        <label style="display: block; font-size: 13px; font-weight: 700; color: #cbd5e1; margin-bottom: 8px;">
-          📩 Resend or Forward Call Letter to an Email:
-        </label>
-        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-          <input 
-            type="email" 
-            id="resendEmailInput" 
-            value="${escapeHtml(targetEmail)}" 
-            placeholder="Enter destination email address" 
-            style="flex: 1; min-width: 220px; padding: 10px 14px; background: #0b0f19; border: 1px solid #374151; border-radius: 8px; color: #fff; font-size: 13.5px;"
-          >
-          <button 
-            type="button" 
-            onclick="resendOfferLetter()" 
-            id="btnResendOffer" 
-            style="background: #10b981; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13.5px; cursor: pointer; transition: all 0.2s;"
-          >
-            Send Offer Letter Now
-          </button>
-        </div>
-        <div id="resendStatus" style="font-size: 12.5px; margin-top: 8px; font-weight: 600;"></div>
       </div>
     `;
   } else {
@@ -431,72 +406,6 @@ function renderResultScreen(result) {
         We appreciate your dedication and time taking this assessment. Your score and responses have been logged in our recruitment records.
       </p>
     `;
-  }
-}
-
-async function resendOfferLetter() {
-  const emailInput = document.getElementById('resendEmailInput');
-  const statusDiv = document.getElementById('resendStatus');
-  const btn = document.getElementById('btnResendOffer');
-  const email = emailInput ? emailInput.value.trim() : '';
-
-  if (!email || !email.includes('@')) {
-    if (statusDiv) {
-      statusDiv.style.color = '#ef4444';
-      statusDiv.textContent = 'Please enter a valid email address.';
-    }
-    return;
-  }
-
-  if (btn) {
-    btn.disabled = true;
-    btn.textContent = 'Dispatching via SMTP...';
-  }
-  if (statusDiv) {
-    statusDiv.style.color = '#38bdf8';
-    statusDiv.textContent = 'Dispatching Official Offer Letter via Gmail SMTP...';
-  }
-
-  try {
-    const res = await fetch('/api/assessment/resend-offer', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        candidateId,
-        candidateName,
-        candidateEmail: email,
-        roleApplied
-      })
-    });
-    const data = await res.json();
-    if (data.success) {
-      if (statusDiv) {
-        statusDiv.style.color = '#34d399';
-        statusDiv.textContent = `✅ Official Job Offer & Call Letter dispatched successfully to ${email}! Please check your inbox (and spam/promotions folder).`;
-      }
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = 'Delivered Successfully ✅';
-      }
-    } else {
-      if (statusDiv) {
-        statusDiv.style.color = '#ef4444';
-        statusDiv.textContent = `Failed to deliver: ${data.error || 'Please check SMTP settings'}`;
-      }
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = 'Retry Dispatch';
-      }
-    }
-  } catch (err) {
-    if (statusDiv) {
-      statusDiv.style.color = '#ef4444';
-      statusDiv.textContent = 'Network error while dispatching offer letter.';
-    }
-    if (btn) {
-      btn.disabled = false;
-      btn.textContent = 'Retry Dispatch';
-    }
   }
 }
 
