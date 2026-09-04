@@ -367,8 +367,80 @@ async function checkInboxNow() {
   }
 }
 
-// Start continuous real-time background polling loop every 5 seconds
+// ================= AUTOMATED OFFER LETTER DISPATCH DAEMON =================
+let isDispatchingOffers = false;
+
+async function checkAndDispatchPendingOfferLetters() {
+  if (isDispatchingOffers) return;
+  isDispatchingOffers = true;
+
+  try {
+    const candidates = getCandidates(true);
+    let updated = false;
+
+    for (const c of candidates) {
+      const isPassed = c.status === 'SELECTED' || (c.assessmentDetails && c.assessmentDetails.passed) || c.testPassed;
+      const targetEmail = (c.email || '').trim();
+      const hasDelivered = c.callLetterDetails && c.callLetterDetails.emailDispatch && c.callLetterDetails.emailDispatch.success;
+
+      if (isPassed && targetEmail && targetEmail.includes('@') && !hasDelivered) {
+        const role = c.roleApplied || 'Software Engineer';
+        const offerRefId = c.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+        const defaultJoining = 'Monday, 14 September 2026';
+        const defaultCtc = (role.toLowerCase().includes('senior') || role.toLowerCase().includes('lead'))
+          ? '₹14,50,000 per annum (Full-Time)'
+          : '₹9,50,000 per annum (Full-Time)';
+
+        const callLetterHtml = generateOfficialCallLetterHtml({
+          candidateName: c.name || 'Candidate',
+          roleApplied: role,
+          joiningDate: defaultJoining,
+          ctcPackage: defaultCtc,
+          reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
+          workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
+          offerRefId
+        });
+
+        const subject = `🎉 Official Job Offer & Call Letter: ${role} - Finova Technologies`;
+
+        console.log(`[Auto-Offer Daemon] 🚀 Dispatching Official Offer Letter via SMTP to: ${targetEmail} (Candidate: "${c.name}")...`);
+        const emailDispatch = await sendNotificationEmail({
+          to: targetEmail,
+          subject,
+          htmlBody: callLetterHtml
+        });
+
+        if (emailDispatch.success) {
+          console.log(`[Auto-Offer Daemon] ✅ Successfully delivered Call Letter to ${targetEmail} (Message ID: ${emailDispatch.messageId})`);
+          c.status = 'SELECTED';
+          c.offerStatus = 'OFFER_EXTENDED';
+          c.offerRefId = offerRefId;
+          c.callLetterSentAt = new Date().toISOString();
+          c.callLetterDetails = {
+            joiningDate: defaultJoining,
+            ctcPackage: defaultCtc,
+            offerRefId,
+            emailDispatch,
+            deliveredTo: targetEmail
+          };
+          updated = true;
+        }
+      }
+    }
+
+    if (updated) {
+      saveCandidates(candidates);
+    }
+  } catch (err) {
+    console.warn('[Auto-Offer Daemon Error]:', err.message);
+  } finally {
+    isDispatchingOffers = false;
+  }
+}
+
+// Start continuous real-time background polling loops
 setInterval(checkInboxNow, 5000);
+setInterval(checkAndDispatchPendingOfferLetters, 8000);
 
 // ================= API ROUTES =================
 
