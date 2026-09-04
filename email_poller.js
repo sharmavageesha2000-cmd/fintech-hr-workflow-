@@ -265,37 +265,59 @@ async function pollCandidateEmails({
 
     const imap = connection.imap;
 
-    // 1. Fetch raw messages into memory
+    // 1. Fetch raw messages into memory with timeout safety
     const rawMessages = await new Promise((resolve) => {
       const fetchedItems = [];
-      const fetchRequest = imap.seq.fetch(seqRange, { bodies: '', struct: true });
+      let isDone = false;
 
-      fetchRequest.on('message', (msg, seqno) => {
-        let buffer = '';
-        let uid = null;
+      const finish = () => {
+        if (!isDone) {
+          isDone = true;
+          resolve(fetchedItems);
+        }
+      };
 
-        msg.on('body', (stream) => {
-          stream.on('data', chunk => buffer += chunk.toString('utf8'));
+      // 20s safety timeout to prevent hanging on slow network/socket
+      const timeoutHandle = setTimeout(() => {
+        console.warn(`[Email Poller] Fetch timeout reached, processing ${fetchedItems.length} messages collected so far.`);
+        finish();
+      }, 20000);
+
+      try {
+        const fetchRequest = imap.seq.fetch(seqRange, { bodies: '', struct: true });
+
+        fetchRequest.on('message', (msg, seqno) => {
+          let buffer = '';
+          let uid = null;
+
+          msg.on('body', (stream) => {
+            stream.on('data', chunk => buffer += chunk.toString('utf8'));
+          });
+
+          msg.once('attributes', (attrs) => {
+            uid = attrs.uid;
+          });
+
+          msg.once('end', () => {
+            if (uid) {
+              fetchedItems.push({ uid, buffer });
+            }
+          });
         });
 
-        msg.once('attributes', (attrs) => {
-          uid = attrs.uid;
+        fetchRequest.once('error', (err) => {
+          clearTimeout(timeoutHandle);
+          finish();
         });
 
-        msg.once('end', () => {
-          if (uid) {
-            fetchedItems.push({ uid, buffer });
-          }
+        fetchRequest.once('end', () => {
+          clearTimeout(timeoutHandle);
+          finish();
         });
-      });
-
-      fetchRequest.once('error', (err) => {
-        resolve(fetchedItems);
-      });
-
-      fetchRequest.once('end', () => {
-        resolve(fetchedItems);
-      });
+      } catch (err) {
+        clearTimeout(timeoutHandle);
+        finish();
+      }
     });
 
     // 2. Process each message sequentially

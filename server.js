@@ -262,21 +262,32 @@ async function sendNotificationEmail({ to, subject, htmlBody }) {
 
 // ================= CONTINUOUS EMAIL SCANNING DAEMON =================
 let isPollingActive = false;
+let lastPollStartTime = 0;
 
 async function checkInboxNow() {
-  if (isPollingActive) return;
+  // Watchdog reset: if polling has been active for over 45 seconds, force-clear lock
+  if (isPollingActive) {
+    if (Date.now() - lastPollStartTime > 45000) {
+      console.warn('[Email Daemon] ⚠️ Polling lock watchdog expired (>45s). Resetting lock to resume scanning.');
+      isPollingActive = false;
+    } else {
+      return;
+    }
+  }
+
   isPollingActive = true;
+  lastPollStartTime = Date.now();
 
   try {
     const settings = getSettings();
-    await pollCandidateEmails({
+    const result = await pollCandidateEmails({
       email: settings.recruiterEmail || process.env.RECRUITER_EMAIL || 'sharmavageesha2000@gmail.com',
       password: settings.appPassword || process.env.GOOGLE_APP_PASSWORD || '',
-      checkLatestCount: 20,
+      checkLatestCount: 25,
       onCandidateProcessed: async (newCand) => {
-        console.log(`[Auto-Processor] 🎯 Valid resume candidate processed: ${newCand.name} (${newCand.email}) for ${newCand.roleApplied}`);
+        console.log(`[Auto-Processor] 🎯 Processing candidate resume: "${newCand.name}" (Email: <${newCand.email}>, Role: "${newCand.roleApplied}")`);
 
-        // 1. Auto-dispatch email notification / invitation / feedback letter
+        // 1. Auto-dispatch personalized email notification / 20-MCQ assessment invitation / feedback
         if (settings.autoDispatchEmail !== false && newCand.email) {
           console.log(`[Auto-Processor] ✉️ Dispatching auto-reply email to: ${newCand.email} (Subject: "${newCand.emailSubject}")...`);
           const emailResult = await sendNotificationEmail({
@@ -287,13 +298,15 @@ async function checkInboxNow() {
           newCand.emailStatus = emailResult.success ? 'SENT' : 'FAILED';
           newCand.lastEmailSentAt = new Date().toISOString();
           console.log(`[Auto-Processor] ✅ Auto-reply outcome for ${newCand.email}: ${newCand.emailStatus} ${emailResult.messageId ? `(ID: ${emailResult.messageId})` : `(Err: ${emailResult.error})`}`);
+        } else {
+          console.warn(`[Auto-Processor] ⚠️ Auto-reply skipped: autoDispatchEmail=${settings.autoDispatchEmail}, email=${newCand.email}`);
         }
 
         // 2. Add to database (preserves candidate application history)
         const candidates = getCandidates(true);
         const duplicateIndex = candidates.findIndex(c => 
-          (c.email && c.email.toLowerCase().trim() === newCand.email.toLowerCase().trim()) &&
-          (c.roleApplied && c.roleApplied.toLowerCase().trim() === newCand.roleApplied.toLowerCase().trim()) &&
+          (c.email && c.email.toLowerCase().trim() === (newCand.email || '').toLowerCase().trim()) &&
+          (c.roleApplied && c.roleApplied.toLowerCase().trim() === (newCand.roleApplied || '').toLowerCase().trim()) &&
           (Math.abs(new Date(newCand.receivedAt || 0) - new Date(c.receivedAt || 0)) < 60000)
         );
 
@@ -309,8 +322,14 @@ async function checkInboxNow() {
         saveCandidates(candidates);
       }
     });
+
+    if (result && result.newlyProcessedCount > 0) {
+      console.log(`[Email Daemon] 📥 Completed inbox cycle: ${result.newlyProcessedCount} new candidate applications processed & auto-replied!`);
+    }
+    return result;
   } catch (err) {
     console.error('[Email Daemon] Error during check:', err.message);
+    return { success: false, error: err.message };
   } finally {
     isPollingActive = false;
   }
@@ -763,15 +782,21 @@ app.post('/api/candidates/:id/toggle-interview', (req, res) => {
   res.json({ success: true, candidate, interviewStatus: candidate.interviewStatus });
 });
 
-// 8. Check Inbox Now On-Demand
-app.post('/api/check-inbox', async (req, res) => {
-  await checkInboxNow();
-  const candidates = getCandidates();
-  res.json({
-    success: true,
-    totalCandidates: candidates.length,
-    message: 'Inbox checked and synchronized.'
-  });
+// 8. Check Inbox Now On-Demand (Supports GET / POST & /api/poll alias)
+app.all(['/api/check-inbox', '/api/poll', '/api/sync-emails'], async (req, res) => {
+  try {
+    const pollResult = await checkInboxNow();
+    const candidates = getCandidates();
+    res.json({
+      success: true,
+      pollResult: pollResult || { newlyProcessedCount: 0 },
+      totalCandidates: candidates.length,
+      latestCandidates: candidates.slice(0, 5),
+      message: 'Inbox checked and synchronized successfully.'
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 // 9. Analytics Statistics
