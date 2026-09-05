@@ -9957,9 +9957,43 @@ function evaluateAssessmentSubmission(roleName, candidateAnswers = {}, sessionId
     masterQuestions = session.masterQuestions;
     answerKey = session.answerKey;
   } else {
-    // Fallback: evaluate against default role bank
+    // Robust fallback: match against the exact question IDs submitted in candidateAnswers
     const defaultPool = ROLE_QUESTIONS_BANK[key] || ROLE_QUESTIONS_BANK['Frontend Developer'];
-    masterQuestions = defaultPool.slice(0, 20).map((q, idx) => {
+    const answeredIds = Object.keys(candidateAnswers).map(id => parseInt(id, 10)).filter(id => !isNaN(id));
+    
+    // Find matching questions from the primary role bank
+    const matchedQuestions = [];
+    answeredIds.forEach(id => {
+      const qFound = defaultPool.find(q => q.id === id);
+      if (qFound) matchedQuestions.push(qFound);
+    });
+
+    // If candidate answered questions from another role or extra pool, search across all roles
+    if (matchedQuestions.length < answeredIds.length) {
+      Object.keys(ROLE_QUESTIONS_BANK).forEach(r => {
+        if (matchedQuestions.length >= answeredIds.length) return;
+        ROLE_QUESTIONS_BANK[r].forEach(q => {
+          if (answeredIds.includes(q.id) && !matchedQuestions.find(m => m.id === q.id)) {
+            matchedQuestions.push(q);
+          }
+        });
+      });
+    }
+
+    // Fill remaining up to 20 from default pool if fewer than 20 questions were answered
+    const remainingCount = Math.max(0, 20 - matchedQuestions.length);
+    if (remainingCount > 0) {
+      const usedIds = new Set(matchedQuestions.map(q => q.id));
+      for (const q of defaultPool) {
+        if (!usedIds.has(q.id)) {
+          matchedQuestions.push(q);
+          usedIds.add(q.id);
+          if (matchedQuestions.length >= 20) break;
+        }
+      }
+    }
+
+    masterQuestions = matchedQuestions.slice(0, 20).map((q, idx) => {
       const secIdx = Math.min(Math.floor(idx / 5), SYSTEMATIC_SECTIONS.length - 1);
       const sectionMeta = SYSTEMATIC_SECTIONS[secIdx];
       const category = extractQuestionCategory(q.question, key);
@@ -9976,6 +10010,7 @@ function evaluateAssessmentSubmission(roleName, candidateAnswers = {}, sessionId
         explanation: q.explanation || `Option ${String.fromCharCode(65 + (q.correctIndex || 0))} is correct as it follows standard industry best practices for ${category}.`
       };
     });
+
     masterQuestions.forEach(q => {
       answerKey[q.id] = q.correctIndex || 0;
     });
@@ -10001,9 +10036,14 @@ function evaluateAssessmentSubmission(roleName, candidateAnswers = {}, sessionId
   });
 
   masterQuestions.forEach(q => {
-    const userSelected = candidateAnswers[q.id] !== undefined ? parseInt(candidateAnswers[q.id], 10) : null;
+    let userSelected = null;
+    if (candidateAnswers[q.id] !== undefined && candidateAnswers[q.id] !== null && !isNaN(candidateAnswers[q.id])) {
+      userSelected = parseInt(candidateAnswers[q.id], 10);
+    } else if (candidateAnswers[String(q.id)] !== undefined && candidateAnswers[String(q.id)] !== null && !isNaN(candidateAnswers[String(q.id)])) {
+      userSelected = parseInt(candidateAnswers[String(q.id)], 10);
+    }
     const correctIdx = answerKey[q.id] !== undefined ? answerKey[q.id] : (q.correctIndex || 0);
-    const isCorrect = userSelected === correctIdx;
+    const isCorrect = userSelected !== null && userSelected === correctIdx;
 
     if (isCorrect) {
       correctCount++;

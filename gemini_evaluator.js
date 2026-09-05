@@ -586,91 +586,173 @@ function generateOfficialCallLetterHtml({
 function generateAssessmentOutcomeFeedbackHtml({
   candidateName = 'Candidate',
   roleApplied = 'Frontend Developer',
-  scorePercent = 45,
+  scorePercent = 65,
   passingThreshold = 80,
-  correctCount = 9,
+  correctCount = 13,
   totalQuestions = 20,
   sectionBreakdown = {}
 }) {
+  // Determine performance tier & color theme
+  let tierLabel = 'Foundational Level';
+  let tierColor = '#64748b';
+  let tierBg = 'rgba(100, 116, 139, 0.12)';
+  let tierBorder = 'rgba(100, 116, 139, 0.35)';
+  let tierAdvice = `You demonstrated an initial baseline understanding. We recommend strengthening core syntax fundamentals, execution lifecycles, and hands-on coding exercises before reapplying.`;
+
+  if (scorePercent >= 70) {
+    tierLabel = '⭐ High Competitive Performance';
+    tierColor = '#059669';
+    tierBg = 'rgba(16, 185, 129, 0.12)';
+    tierBorder = 'rgba(16, 185, 129, 0.35)';
+    tierAdvice = `You performed exceptionally well, falling just shy of our rigorous 80% passing threshold! Your grasp of domain concepts is commendable. Reviewing high-load edge cases and deep architecture patterns will make you an elite candidate.`;
+  } else if (scorePercent >= 55) {
+    tierLabel = '📊 Strong Solid Performance';
+    tierColor = '#d97706';
+    tierBg = 'rgba(245, 158, 11, 0.12)';
+    tierBorder = 'rgba(245, 158, 11, 0.35)';
+    tierAdvice = `You displayed strong competency in key domain areas with ${correctCount} out of ${totalQuestions} questions answered accurately. Focus on advanced problem solving and production-grade best practices to reach the 80%+ threshold.`;
+  } else if (scorePercent >= 35) {
+    tierLabel = '📐 Developing Competency';
+    tierColor = '#2563eb';
+    tierBg = 'rgba(37, 99, 235, 0.12)';
+    tierBorder = 'rgba(37, 99, 235, 0.35)';
+    tierAdvice = `You showed good understanding of fundamental concepts. Further practical project experience and real-world system design exercises will substantially boost your technical mastery.`;
+  }
+
   let sectionScoresHtml = '';
   if (sectionBreakdown && Object.keys(sectionBreakdown).length > 0) {
     sectionScoresHtml = Object.keys(sectionBreakdown).map(k => {
       const s = sectionBreakdown[k];
+      const secPct = s.scorePercent !== undefined ? s.scorePercent : (s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0);
+      const isSecStrong = secPct >= 80;
+      const statusPill = isSecStrong
+        ? '<span style="color: #059669; font-weight: 700; font-size: 11.5px; background: #ecfdf5; padding: 2px 8px; border-radius: 4px; border: 1px solid #a7f3d0;">Proficient</span>'
+        : (secPct >= 50 
+            ? '<span style="color: #d97706; font-weight: 700; font-size: 11.5px; background: #fffbeb; padding: 2px 8px; border-radius: 4px; border: 1px solid #fde68a;">Competent</span>'
+            : '<span style="color: #64748b; font-weight: 700; font-size: 11.5px; background: #f1f5f9; padding: 2px 8px; border-radius: 4px; border: 1px solid #e2e8f0;">Developing</span>');
+
       return `
-        <tr>
-          <td style="padding: 6px 0; color: #475569;"><strong>${s.icon || '📌'} ${s.shortName || s.name}:</strong></td>
-          <td style="padding: 6px 0; color: #0f172a; text-align: right; font-weight: 700;">${s.correct}/${s.total} (${s.scorePercent}%)</td>
+        <tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 8px 0; color: #334155; font-size: 13px;"><strong>${s.icon || '📌'} ${s.shortName || s.name}</strong></td>
+          <td style="padding: 8px 10px; color: #0f172a; text-align: center; font-weight: 700; font-size: 13px;">${s.correct}/${s.total} (${secPct}%)</td>
+          <td style="padding: 8px 0; text-align: right;">${statusPill}</td>
         </tr>
       `;
     }).join('');
   }
 
   return `
-    <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+    <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.05);">
       
       <!-- Header -->
-      <div style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;">
-        <span style="background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;">ASSESSMENT OUTCOME UPDATE</span>
-        <h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;">Technical Assessment Evaluation &amp; Feedback</h2>
-        <p style="margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;">Role: <strong>${roleApplied}</strong> • Finova Technologies</p>
+      <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 30px 24px; text-align: center; color: #ffffff;">
+        <span style="background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 14px; border-radius: 99px; display: inline-block; margin-bottom: 8px; color: #94a3b8;">ASSESSMENT PERFORMANCE REPORT</span>
+        <h2 style="margin: 0; font-size: 21px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px;">Technical Assessment Evaluation &amp; Feedback</h2>
+        <p style="margin: 6px 0 0 0; color: #94a3b8; font-size: 13.5px;">Domain: <strong style="color: #38bdf8;">${roleApplied}</strong> • Finova Technologies</p>
       </div>
 
       <!-- Body -->
-      <div style="padding: 28px 24px;">
-        <p style="font-size: 15px; line-height: 1.6; margin-top: 0;">Dear <strong>${candidateName}</strong>,</p>
+      <div style="padding: 30px 24px;">
+        <p style="font-size: 15px; line-height: 1.6; margin-top: 0; color: #0f172a;">Dear <strong>${candidateName}</strong>,</p>
         
         <p style="font-size: 14.5px; line-height: 1.6; color: #334155;">
-          Thank you for taking the time to complete the <strong>Proctored Technical Assessment</strong> for the <strong>${roleApplied}</strong> position at Finova Technologies.
+          Thank you for taking the <strong>Proctored Systematic Technical Assessment</strong> for the <strong>${roleApplied}</strong> position at Finova Technologies.
         </p>
 
         <p style="font-size: 14.5px; line-height: 1.6; color: #334155;">
-          Our automated evaluation engine has thoroughly scored your assessment submission across all domain competency areas.
+          Our automated evaluation engine has thoroughly scored your submission against our domain question key. Below is your detailed performance breakdown and percentage obtained:
         </p>
 
         <!-- Score Breakdown Card -->
-        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; margin: 22px 0;">
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;">
-            <strong style="color: #0f172a; font-size: 15px;">📊 Assessment Score Summary</strong>
-            <span style="background: rgba(239, 68, 68, 0.1); color: #b91c1c; font-weight: 800; font-size: 13px; padding: 4px 12px; border-radius: 99px; border: 1px solid rgba(239, 68, 68, 0.3);">
-              Score: ${scorePercent}% (${correctCount}/${totalQuestions})
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 22px; margin: 24px 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span style="font-size: 12px; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.5px; display: block;">Performance Status</span>
+              <strong style="color: #0f172a; font-size: 16px;">Score: ${scorePercent}% (${correctCount}/${totalQuestions} Correct)</strong>
+            </div>
+            <span style="background: ${tierBg}; color: ${tierColor}; font-weight: 800; font-size: 12.5px; padding: 5px 14px; border-radius: 99px; border: 1px solid ${tierBorder};">
+              ${tierLabel}
             </span>
           </div>
 
-          <table style="width: 100%; font-size: 13.5px; border-collapse: collapse; margin-bottom: 12px;">
+          <!-- Visual Progress Bar -->
+          <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; color: #64748b; margin-bottom: 5px; font-weight: 600;">
+              <span>Score Achieved: <strong style="color: ${tierColor}; font-size: 13px;">${scorePercent}%</strong></span>
+              <span>Qualifying Benchmark: <strong style="color: #059669;">${passingThreshold}% (16/20)</strong></span>
+            </div>
+            <div style="background: #e2e8f0; border-radius: 99px; height: 10px; width: 100%; overflow: hidden; position: relative;">
+              <div style="background: linear-gradient(90deg, #3b82f6, ${tierColor}); height: 100%; width: ${Math.min(100, Math.max(4, scorePercent))}%; border-radius: 99px;"></div>
+            </div>
+          </div>
+
+          <table style="width: 100%; font-size: 13.5px; border-collapse: collapse; margin-top: 14px;">
             <tr>
-              <td style="padding: 5px 0; color: #64748b;"><strong>Role Evaluated:</strong></td>
-              <td style="padding: 5px 0; color: #0f172a; text-align: right; font-weight: 700;">${roleApplied}</td>
+              <td style="padding: 6px 0; color: #64748b;"><strong>Role Domain:</strong></td>
+              <td style="padding: 6px 0; color: #0f172a; text-align: right; font-weight: 700;">${roleApplied}</td>
             </tr>
             <tr>
-              <td style="padding: 5px 0; color: #64748b;"><strong>Required Qualifying Threshold:</strong></td>
-              <td style="padding: 5px 0; color: #059669; text-align: right; font-weight: 800;">${passingThreshold}% (16 / 20 correct)</td>
+              <td style="padding: 6px 0; color: #64748b;"><strong>Questions Attempted:</strong></td>
+              <td style="padding: 6px 0; color: #0f172a; text-align: right; font-weight: 700;">${totalQuestions} Domain MCQs</td>
             </tr>
             <tr>
-              <td style="padding: 5px 0; color: #64748b;"><strong>Candidate Score:</strong></td>
-              <td style="padding: 5px 0; color: #b91c1c; text-align: right; font-weight: 800;">${scorePercent}%</td>
+              <td style="padding: 6px 0; color: #64748b;"><strong>Correct Responses:</strong></td>
+              <td style="padding: 6px 0; color: #0f172a; text-align: right; font-weight: 800;">${correctCount} of ${totalQuestions}</td>
             </tr>
-            ${sectionScoresHtml ? `<tr><td colspan="2" style="padding: 10px 0 6px 0; border-top: 1px solid #e2e8f0; color: #0f172a; font-weight: 700;">Section Competency Breakdown:</td></tr>` + sectionScoresHtml : ''}
+            <tr>
+              <td style="padding: 6px 0; color: #64748b;"><strong>Percentage Obtained:</strong></td>
+              <td style="padding: 6px 0; color: ${tierColor}; text-align: right; font-weight: 800; font-size: 15px;">${scorePercent}%</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px 0; color: #64748b;"><strong>Qualifying Threshold:</strong></td>
+              <td style="padding: 6px 0; color: #059669; text-align: right; font-weight: 800;">${passingThreshold}% (16/20)</td>
+            </tr>
           </table>
+
+          ${sectionScoresHtml ? `
+            <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid #e2e8f0;">
+              <span style="font-size: 12.5px; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">
+                📊 4-Section Competency Matrix:
+              </span>
+              <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
+                <thead>
+                  <tr style="border-bottom: 1px solid #cbd5e1; color: #64748b; font-size: 11.5px; text-transform: uppercase;">
+                    <th style="text-align: left; padding: 4px 0;">Competency Section</th>
+                    <th style="text-align: center; padding: 4px 10px;">Score</th>
+                    <th style="text-align: right; padding: 4px 0;">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${sectionScoresHtml}
+                </tbody>
+              </table>
+            </div>
+          ` : ''}
         </div>
 
         <!-- Constructive Feedback & Next Steps -->
-        <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 22px;">
-          <h4 style="margin: 0 0 8px 0; color: #92400e; font-size: 14px; font-weight: 700;">💡 Constructive Feedback &amp; Next Steps</h4>
-          <p style="margin: 0; font-size: 13px; color: #78350f; line-height: 1.6;">
-            While your submission demonstrated valuable foundational knowledge, the score achieved was below our qualifying threshold of <strong>${passingThreshold}%</strong> for this immediate vacancy. We encourage you to continue refining your practical architecture and problem-solving skills in <strong>${roleApplied}</strong>.
+        <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+          <h4 style="margin: 0 0 8px 0; color: #92400e; font-size: 14.5px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+            💡 Personalized Diagnostic Feedback
+          </h4>
+          <p style="margin: 0 0 10px 0; font-size: 13.5px; color: #78350f; line-height: 1.6;">
+            ${tierAdvice}
+          </p>
+          <p style="margin: 0; font-size: 12.5px; color: #92400e; line-height: 1.5;">
+            Our hiring threshold requires achieving at least <strong>${passingThreshold}% (16/20)</strong> for an automated offer letter dispatch. You achieved <strong>${scorePercent}%</strong>, which reflects meaningful technical knowledge.
           </p>
         </div>
 
         <p style="font-size: 14px; line-height: 1.6; color: #475569;">
-          We will keep your candidate profile active in our database for future engineering opportunities that align with your background. We sincerely appreciate your enthusiasm and effort throughout the selection process and wish you the very best in your career pursuits.
+          We will keep your candidate profile active in our talent pool for future openings and upcoming hiring drives. We sincerely appreciate your effort, time, and participation!
         </p>
 
         <!-- Recruiter Signature -->
-        <div style="margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;">
-          <strong style="color: #0f172a; font-size: 14.5px; display: block;">Vageesha Sharma</strong>
+        <div style="margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+          <strong style="color: #0f172a; font-size: 15px; display: block;">Vageesha Sharma</strong>
           <span style="color: #64748b; font-size: 13px; display: block;">Founder &amp; Hiring Lead</span>
           <span style="color: #64748b; font-size: 13px; display: block;">Finova Technologies Pvt. Ltd.</span>
-          <span style="color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;">sharmavageesha2000@gmail.com</span>
+          <span style="color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;">sharmavageesha2000@gmail.com</span>
         </div>
       </div>
     </div>

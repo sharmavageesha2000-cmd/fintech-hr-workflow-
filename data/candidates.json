@@ -1,5 +1,82 @@
 [
   {
+    "id": "cand-live-feedback-1788621493401",
+    "name": "Priya Verma",
+    "email": "paliwalrishu2000@gmail.com",
+    "roleApplied": "Data Analyst",
+    "receivedAt": "2026-09-05T15:18:13.408Z",
+    "assessmentDetails": {
+      "completedAt": "2026-09-05T15:18:13.408Z",
+      "scorePercent": 65,
+      "correctCount": 13,
+      "totalQuestions": 20,
+      "passed": false,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 500,
+      "forcedByViolation": false
+    },
+    "testScore": 65,
+    "testPassed": false,
+    "assessmentCompleted": true,
+    "testSubmitted": true,
+    "status": "REJECTED",
+    "offerStatus": "REJECTED",
+    "interviewStatus": "COMPLETED",
+    "feedbackSentAt": "2026-09-05T15:18:19.427Z",
+    "feedbackDetails": {
+      "scorePercent": 65,
+      "correctCount": 13,
+      "totalQuestions": 20,
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<bbe4c440-1af0-07ac-8333-a0325fc6d6de@gmail.com>",
+        "to": "paliwalrishu2000@gmail.com",
+        "subject": "Update regarding your Technical Assessment: Data Analyst - Finova Technologies"
+      },
+      "deliveredTo": "paliwalrishu2000@gmail.com"
+    }
+  },
+  {
+    "id": "cand-live-pass-1788621487608",
+    "name": "Rohan Sharma",
+    "email": "paliwalrishu2000@gmail.com",
+    "roleApplied": "Full Stack AI Engineer",
+    "receivedAt": "2026-09-05T15:18:07.656Z",
+    "assessmentDetails": {
+      "completedAt": "2026-09-05T15:18:07.656Z",
+      "scorePercent": 100,
+      "correctCount": 20,
+      "totalQuestions": 20,
+      "passed": true,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 650,
+      "forcedByViolation": false
+    },
+    "testScore": 100,
+    "testPassed": true,
+    "assessmentCompleted": true,
+    "testSubmitted": true,
+    "status": "SELECTED",
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "OFFER_EXTENDED",
+    "offerRefId": "HR-OFFER-2026-5241",
+    "callLetterSentAt": "2026-09-05T15:18:13.389Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-5241",
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<6faa348d-b5c3-45aa-12a8-13a9145e4e47@gmail.com>",
+        "to": "paliwalrishu2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Full Stack AI Engineer - Finova Technologies"
+      },
+      "deliveredTo": "paliwalrishu2000@gmail.com"
+    }
+  },
+  {
     "id": "cand-iso-1-1788620515381",
     "name": "Rohan Mehta",
     "email": "multi_candidate_tester_1788620515381@gmail.com",
