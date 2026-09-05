@@ -785,6 +785,8 @@ function heuristicFallbackEvaluation({
   resumeText = '',
   emailBody = '',
   fileName = '',
+  candidateId = '',
+  assessmentToken = '',
   customMeetLink = ''
 }) {
   const combined = `${resumeText || ''} ${emailBody || ''}`;
@@ -795,6 +797,8 @@ function heuristicFallbackEvaluation({
 
   // Extract actual candidate name from resume document
   const resolvedName = extractCandidateNameFromResume(resumeText, fileName, candidateName);
+  const finalCandidateId = candidateId || `cand-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+  const finalToken = assessmentToken || `tkn_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 
   // Check mandatory skills
   const mandatoryOverlap = targetJob.mandatorySkills.filter(s => matched.includes(s));
@@ -830,7 +834,7 @@ function heuristicFallbackEvaluation({
 
   const LIVE_BASE_URL = 'https://hr-smartflow-automation.onrender.com';
   const defaultBaseUrl = process.env.BASE_URL || LIVE_BASE_URL;
-  const testAssessmentLink = `${defaultBaseUrl}/assessment.html?role=${encodeURIComponent(targetJob.title)}&name=${encodeURIComponent(resolvedName)}&email=${encodeURIComponent(candidateEmail || '')}`;
+  const testAssessmentLink = `${defaultBaseUrl}/assessment.html?role=${encodeURIComponent(targetJob.title)}&name=${encodeURIComponent(resolvedName)}&email=${encodeURIComponent(candidateEmail || '')}&id=${encodeURIComponent(finalCandidateId)}&token=${encodeURIComponent(finalToken)}`;
 
   const emailSubject = isSelected 
     ? `📝 Technical Assessment Link: ${targetJob.title} - Finova Technologies` 
@@ -840,6 +844,7 @@ function heuristicFallbackEvaluation({
     ? generateStructuredSelectedHtml({
         candidateName: resolvedName,
         candidateEmail,
+        candidateId: finalCandidateId,
         roleApplied: targetJob.title,
         detectedExp,
         matchedSkills: matched,
@@ -906,6 +911,8 @@ async function evaluateResumeWithGemini({
   emailBody = '',
   resumeText = '',
   fileName = '',
+  candidateId = '',
+  assessmentToken = '',
   customMeetLink = '',
   apiKey = DEFAULT_GEMINI_KEY
 }) {
@@ -919,6 +926,8 @@ async function evaluateResumeWithGemini({
 
   // Extract real candidate name strictly from resume document text
   const resolvedCandidateName = extractCandidateNameFromResume(resumeText, fileName, candidateName);
+  const finalCandidateId = candidateId || `cand-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+  const finalToken = assessmentToken || `tkn_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 
   const prompt = `
 You are an expert Chief Human Resources Officer and Senior Technical Hiring Manager evaluating a candidate for Finova Technologies (Recruiter: Vageesha Sharma <sharmavageesha2000@gmail.com>).
@@ -928,73 +937,69 @@ OPEN JOB VACANCY: "${targetJob.title}" (${targetJob.department})
 ==================================================
 - Experience Required: "${targetJob.experienceRequired}"
 - Required Core Skills: ${JSON.stringify(targetJob.requiredSkills)}
-- Mandatory Core Competencies: ${JSON.stringify(targetJob.mandatorySkills)}
-- Job Description: "${targetJob.description}"
+- Mandatory Requirements (Must have >= ${targetJob.minMandatory}): ${JSON.stringify(targetJob.mandatorySkills)}
+- Job Description & Responsibilities: "${targetJob.description}"
 
 ==================================================
-CANDIDATE APPLICATION:
+CANDIDATE APPLICATION DOSSIER:
 ==================================================
-- Candidate Full Name: "${resolvedCandidateName}" (Extract the exact candidate name from the top header of the resume text below).
-- Candidate Email: "${candidateEmail || 'Extract from resume'}"
-- Applied Role: "${targetJob.title}"
-- Resume Filename: "${fileName}"
+- Candidate Name: "${resolvedCandidateName || candidateName || 'Candidate'}"
+- Candidate Email: "${candidateEmail}"
+- Candidate Phone: "${candidatePhone}"
+- Target Role Applied: "${targetCleanRole}"
+- Email Subject: "${emailSubject}"
+- Email Cover Letter / Notes: "${emailBody}"
+- Resume Document Attachment: "${fileName}"
 - Extracted Resume Text:
+"""
 ${(resumeText || emailBody || 'No resume text provided').slice(0, 4500)}
+"""
 
 ==================================================
-STRICT EVALUATION RULES:
+CRITICAL DOMAIN GUARD RULES (CHIEF HR DIRECTIVE):
 ==================================================
-1. CANDIDATE NAME RULE:
-   - Always extract the job applicant's REAL name from the top of the resume (e.g., "Rohan Sharma", "Ananya Verma", "Kabir Singh", "Sneha Verma"). Do NOT output the recruiter's name ("Vageesha Sharma").
+1. DOMAIN MISMATCH CHECK:
+   - If candidate's background/skills belong to an entirely unrelated field (e.g. Prompt Engineering, Fashion/Retail, Digital Marketing) applying for a technical development or analytical role, you MUST set "status": "REJECTED" and "matchScore" <= 45.
+2. MANDATORY SKILLS CHECK:
+   - Candidate MUST demonstrate hands-on experience in at least ${targetJob.minMandatory} mandatory skills: ${JSON.stringify(targetJob.mandatorySkills)}. If not, status MUST be "REJECTED".
+3. ONLY IF candidate meets domain qualifications and mandatory skills:
+   - Set "status": "SELECTED" (matchScore >= 65).
+   - "interviewSchedule": {
+       "roundName": "Round 1: Online Technical Assessment (20 MCQs)",
+       "format": "Proctored Online Assessment (20 Domain MCQs)",
+       "duration": "25 Minutes",
+       "passingScore": "80% (16 / 20 correct)",
+       "preparationNotes": "Complete 20 domain-specific questions in ${targetJob.title}."
+     }
 
-2. DOMAIN & ROLE MISMATCH RULE:
-   - If candidate is an "AI Prompt Engineer" / "Prompt Design Fresher" applying for "Data Analyst", you MUST REJECT.
-   - If candidate is a "Fashion Stylist", "Graphic Designer", or "Digital Marketer" applying for technical software roles (Backend, Frontend, Full Stack, Data Analyst), you MUST REJECT (Score < 45).
-   - If candidate lacks Mandatory Core Competencies (${JSON.stringify(targetJob.mandatorySkills)}), you MUST REJECT (Score < 60).
+4. IF REJECTED:
+   - Set "status": "REJECTED", "matchScore" <= 55, "interviewSchedule": null.
+   - Provide concrete, respectful feedback in "weaknesses" detailing why the profile does not match ${targetJob.title}.
 
-3. QUALIFIED SELECTION RULE:
-   - Candidate MUST have genuine, hands-on production experience in the Required Core Skills for "${targetJob.title}".
-   - Match Score >= 65 is REQUIRED for "SELECTED".
-
-4. OUTPUT REQUIREMENTS:
-   - If SELECTED:
-     * status: "SELECTED"
-     * candidateName: "${resolvedCandidateName}"
-     * interviewSchedule with meetLink "${authenticMeetUrl}", date "Friday, 04 September 2026", time "03:00 PM IST".
-     * emailSubject: "🎉 Interview Invitation: ${targetJob.title} - Vageesha Sharma's Team"
-   - If REJECTED:
-     * status: "REJECTED"
-     * candidateName: "${resolvedCandidateName}"
-     * matchScore: integer between 20 and 50
-     * missingSkills: list the exact missing skills from ${JSON.stringify(targetJob.requiredSkills)}
-     * weaknesses: explain why their resume/background does not match the "${targetJob.title}" job vacancy.
-     * interviewSchedule: null
-     * emailSubject: "Update regarding your application for ${targetJob.title} - Vageesha Sharma"
-
-Return ONLY a valid JSON object matching this schema:
+==================================================
+OUTPUT FORMAT:
+Return a strictly valid JSON object matching this schema:
 {
-  "candidateName": "${resolvedCandidateName}",
-  "candidateEmail": "Candidate Email",
+  "candidateName": "First Last",
+  "candidateEmail": "email@example.com",
   "candidatePhone": "Phone",
   "education": "Degree",
   "roleApplied": "${targetJob.title}",
-  "experienceYears": ${detectedExp},
-  "skills": ["MatchedSkill1"],
-  "missingSkills": ["MissingSkill1", "MissingSkill2"],
+  "experienceYears": 3,
+  "skills": ["Skill1", "Skill2"],
+  "missingSkills": ["MissingSkill1"],
   "scoreBreakdown": {
-    "technicalSkills": 10,
-    "experienceRelevance": 10,
-    "education": 10,
-    "communication": 8
+    "technicalSkills": 25,
+    "experienceRelevance": 20,
+    "education": 15,
+    "communication": 15
   },
-  "matchScore": 38,
-  "status": "REJECTED",
-  "summary": "Evaluation summary",
-  "strengths": ["Clear communication"],
-  "weaknesses": ["Candidate lacks required competencies for this vacancy."],
-  "interviewSchedule": null,
-  "emailSubject": "Email Subject",
-  "emailHtmlBody": "Email HTML"
+  "matchScore": 75,
+  "status": "SELECTED",
+  "summary": "2-3 concise sentences evaluating candidate suitability.",
+  "strengths": ["Strength 1", "Strength 2"],
+  "weaknesses": ["Area for growth 1"],
+  "interviewSchedule": null
 }
 `;
 
@@ -1017,7 +1022,7 @@ Return ONLY a valid JSON object matching this schema:
         'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(postData)
       },
-      timeout: 3800
+      timeout: 15000
     };
 
     const fallback = () => heuristicFallbackEvaluation({
@@ -1028,6 +1033,8 @@ Return ONLY a valid JSON object matching this schema:
       resumeText,
       emailBody,
       fileName,
+      candidateId: finalCandidateId,
+      assessmentToken: finalToken,
       customMeetLink: authenticMeetUrl
     });
 
@@ -1048,6 +1055,8 @@ Return ONLY a valid JSON object matching this schema:
               const evalObj = JSON.parse(cleanedText);
               evalObj.roleApplied = targetJob.title;
               evalObj.candidateEmail = candidateEmail || evalObj.candidateEmail || 'applicant@example.com';
+              evalObj.candidateId = finalCandidateId;
+              evalObj.assessmentToken = finalToken;
               
               // Validate extracted candidate name
               const finalName = evalObj.candidateName && !evalObj.candidateName.toLowerCase().includes('vageesha') && !evalObj.candidateName.toLowerCase().includes('candidate')
@@ -1064,7 +1073,7 @@ Return ONLY a valid JSON object matching this schema:
               if (evalObj.status === 'SELECTED' && (evalObj.matchScore || 0) >= 65 && !domainCheck.mismatched) {
                 const LIVE_BASE_URL = 'https://hr-smartflow-automation.onrender.com';
                 const defaultBaseUrl = process.env.BASE_URL || LIVE_BASE_URL;
-                const testAssessmentLink = `${defaultBaseUrl}/assessment.html?role=${encodeURIComponent(targetJob.title)}&name=${encodeURIComponent(finalName)}&email=${encodeURIComponent(candidateEmail || '')}`;
+                const testAssessmentLink = `${defaultBaseUrl}/assessment.html?role=${encodeURIComponent(targetJob.title)}&name=${encodeURIComponent(finalName)}&email=${encodeURIComponent(candidateEmail || '')}&id=${encodeURIComponent(finalCandidateId)}&token=${encodeURIComponent(finalToken)}`;
 
                 evalObj.status = 'SELECTED';
                 evalObj.interviewSchedule = {
@@ -1079,6 +1088,7 @@ Return ONLY a valid JSON object matching this schema:
                 evalObj.emailHtmlBody = generateStructuredSelectedHtml({
                   candidateName: finalName,
                   candidateEmail,
+                  candidateId: finalCandidateId,
                   roleApplied: targetJob.title,
                   detectedExp: evalObj.experienceYears || detectedExp,
                   matchedSkills: evalObj.skills || [],

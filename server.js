@@ -556,9 +556,11 @@ app.post('/api/evaluate', upload.single('resumeFile'), async (req, res) => {
 
     console.log(`[Gemini AI] Evaluating candidate: "${candidateRealName || 'Anonymous'}" for Role: "${cleanTargetRole}"...`);
 
+    const candidateUniqueId = 'cand-' + Date.now() + '-' + Math.floor(1000 + Math.random() * 9000);
     const evalResult = await evaluateResumeWithGemini({
       candidateName: candidateRealName,
       candidateEmail,
+      candidateId: candidateUniqueId,
       candidatePhone: body.candidatePhone || '',
       roleApplied: cleanTargetRole,
       emailSubject,
@@ -572,7 +574,7 @@ app.post('/api/evaluate', upload.single('resumeFile'), async (req, res) => {
     const finalCandidateName = evalResult.candidateName || candidateRealName || 'Candidate';
 
     const finalCandidate = {
-      id: 'cand-' + Date.now(),
+      id: evalResult.candidateId || candidateUniqueId,
       name: finalCandidateName,
       email: candidateEmail || evalResult.candidateEmail || 'candidate@example.com',
       phone: evalResult.candidatePhone || body.candidatePhone || 'Not specified',
@@ -664,14 +666,12 @@ app.get('/api/assessment/questions', (req, res) => {
   let candidateRecord = null;
 
   const candidates = getCandidates(true);
-  if (candidateId) {
-    candidateRecord = candidates.find(item => item.id === candidateId);
+  // Strictly match candidate by explicit candidateId or verified email (NEVER by name alone!)
+  if (candidateId && candidateId.trim() && candidateId !== 'null' && candidateId !== 'undefined') {
+    candidateRecord = candidates.find(item => item.id === candidateId.trim());
   }
-  if (!candidateRecord && candidateEmail) {
+  if (!candidateRecord && candidateEmail && candidateEmail.includes('@') && !candidateEmail.includes('example.com')) {
     candidateRecord = candidates.find(item => (item.email || '').toLowerCase().trim() === candidateEmail.toLowerCase().trim());
-  }
-  if (!candidateRecord && name && role) {
-    candidateRecord = candidates.find(item => (item.name || '').toLowerCase().trim() === name.toLowerCase().trim() && (item.roleApplied || '').toLowerCase().includes(role.toLowerCase()));
   }
 
   // Check if candidate has ALREADY completed / submitted their assessment test

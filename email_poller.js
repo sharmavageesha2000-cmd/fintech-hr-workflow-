@@ -244,7 +244,7 @@ async function pollCandidateEmails({
     }
   };
 
-  const processedList = getProcessedUids();
+  const processedSet = new Set(getProcessedUids().map(String));
   const newlyProcessed = [];
 
   let connection = null;
@@ -277,9 +277,10 @@ async function pollCandidateEmails({
       const bodyPart = msgItem.parts.find(p => p.which === '');
       const buffer = bodyPart ? bodyPart.body : '';
 
-      if (!uid || processedList.includes(String(uid)) || CURRENTLY_PROCESSING_UIDS.has(String(uid))) {
+      if (!uid || processedSet.has(String(uid)) || CURRENTLY_PROCESSING_UIDS.has(String(uid))) {
         continue; // Already processed or in-flight
       }
+      processedSet.add(String(uid));
       CURRENTLY_PROCESSING_UIDS.add(String(uid));
 
       try {
@@ -366,9 +367,11 @@ async function pollCandidateEmails({
         console.log(`[Email Poller] 🎯 Valid candidate resume verified: "${candidateRealName}" (Sender: <${effectiveCandidateEmail}>) for Role: "${detectedCleanRole}" (Resume: ${resumeAttachment.fileName})`);
 
         // Evaluate candidate with Gemini AI
+        const candUniqueId = 'cand-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
         const evalResult = await evaluateResumeWithGemini({
           candidateName: candidateRealName,
           candidateEmail: effectiveCandidateEmail,
+          candidateId: candUniqueId,
           roleApplied: detectedCleanRole,
           emailSubject: subject,
           emailBody: bodyText,
@@ -380,7 +383,7 @@ async function pollCandidateEmails({
         const finalCandidateName = evalResult.candidateName || candidateRealName;
 
         const newCandidate = {
-          id: 'cand-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+          id: evalResult.candidateId || candUniqueId,
           name: finalCandidateName,
           email: effectiveCandidateEmail || evalResult.candidateEmail || recruiterEmail,
           phone: evalResult.candidatePhone || 'Not specified',

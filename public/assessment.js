@@ -48,6 +48,44 @@ function setupInitialUI() {
   if (obEmail) obEmail.textContent = candidateEmail || 'Not set (Click ✏️ Edit)';
 }
 
+function editCandidateName() {
+  const current = candidateName === 'Candidate' ? '' : candidateName;
+  const entered = prompt('Please enter your full name:', current);
+  if (entered !== null && entered.trim()) {
+    candidateName = entered.trim();
+    const disp = document.getElementById('onboardCandName');
+    if (disp) disp.textContent = candidateName;
+  }
+}
+
+function editCandidateRole() {
+  const availableRoles = [
+    'Frontend Developer',
+    'Backend Developer',
+    'Full Stack AI Engineer',
+    'AI/ML Engineer',
+    'Data Analyst',
+    'Business Analyst',
+    'UI/UX Designer',
+    'Business Development Executive'
+  ];
+  const roleListPrompt = 'Select your target job domain by number:\n' + 
+    availableRoles.map((r, i) => `${i + 1}. ${r}`).join('\n');
+  const chosen = prompt(roleListPrompt, '1');
+  if (chosen !== null) {
+    const idx = parseInt(chosen, 10) - 1;
+    if (idx >= 0 && idx < availableRoles.length) {
+      roleApplied = availableRoles[idx];
+    } else if (chosen.trim()) {
+      roleApplied = chosen.trim();
+    }
+    const headerRole = document.getElementById('headerRolePill');
+    if (headerRole) headerRole.textContent = roleApplied;
+    const obRole = document.getElementById('onboardCandRole');
+    if (obRole) obRole.textContent = roleApplied;
+  }
+}
+
 function editCandidateEmail() {
   const current = candidateEmail || '';
   const entered = prompt('Please enter your valid email address where your Official Job Offer & Call Letter will be dispatched upon scoring >= 80%:', current);
@@ -781,13 +819,22 @@ function renderAlreadySubmittedScreen(cand) {
       <p style="font-size: 14.5px; color: var(--text-muted); margin-bottom: 20px;">
         Candidate: <strong style="color: #fff;">${cand.name || candidateName}</strong> • Domain: <strong style="color: var(--primary);">${cand.roleApplied || roleApplied}</strong>
       </p>
-      <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 14px; padding: 20px; max-width: 500px; margin: 0 auto; color: #fff; text-align: left;">
+      <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 14px; padding: 20px; max-width: 500px; margin: 0 auto 24px auto; color: #fff; text-align: left;">
         <div style="font-size: 13.5px; margin-bottom: 6px;">Score Achieved: <strong style="color: #34d399; font-size: 18px; font-family: var(--font-mono);">${cand.scorePercent || 0}%</strong></div>
         <div style="font-size: 13.5px; margin-bottom: 6px;">Evaluation Status: <strong style="color: #38bdf8;">${cand.status || 'EVALUATED'}</strong></div>
         <div style="font-size: 13.5px;">Offer Reference: <strong style="color: #a78bfa; font-family: var(--font-mono);">${cand.offerRefId || 'N/A'}</strong></div>
       </div>
+      <button type="button" onclick="startFreshCandidateTest()" style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; border: none; padding: 12px 28px; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px var(--primary-glow);">
+        🚀 Take Assessment as a New Candidate
+      </button>
     </div>
   `;
+}
+
+function startFreshCandidateTest() {
+  const newId = 'cand-' + Date.now();
+  const newToken = 'tkn_' + Date.now();
+  window.location.href = `/assessment.html?id=${newId}&token=${newToken}&role=Frontend Developer&name=New Candidate`;
 }
 
 // -------------------------------------------------------------
