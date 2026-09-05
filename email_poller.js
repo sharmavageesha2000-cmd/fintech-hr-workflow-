@@ -21,6 +21,8 @@ const PROCESSED_EMAILS_FILE = path.join(DATA_DIR, 'processed_emails.json');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 
+const CURRENTLY_PROCESSING_UIDS = new Set();
+
 /**
  * Load list of already processed email UIDs to prevent duplicate ingestion
  */
@@ -41,8 +43,9 @@ function getProcessedUids() {
  */
 function saveProcessedUid(uid) {
   if (!uid) return;
-  const list = getProcessedUids();
   const strUid = String(uid);
+  CURRENTLY_PROCESSING_UIDS.add(strUid);
+  const list = getProcessedUids();
   if (!list.includes(strUid)) {
     list.push(strUid);
     // Keep list bounded to last 3000 UIDs
@@ -244,8 +247,9 @@ async function pollCandidateEmails({
   const processedList = getProcessedUids();
   const newlyProcessed = [];
 
+  let connection = null;
   try {
-    const connection = await imaps.connect(config);
+    connection = await imaps.connect(config);
 
     if (!connection) {
       return { success: false, error: 'Could not connect to Gmail IMAP server' };
@@ -255,78 +259,28 @@ async function pollCandidateEmails({
     const total = box.messages.total || 0;
 
     if (total === 0) {
-      try { connection.end(); } catch (e) {}
       return { success: true, newlyProcessed: 0, candidates: [] };
     }
 
     // Target sequence range for latest messages
     const startSeq = Math.max(1, total - checkLatestCount + 1);
-    const seqRange = `${startSeq}:${total}`;
+    const searchCriteria = [`${startSeq}:${total}`];
+    const fetchOptions = { bodies: [''], struct: true, markSeen: false };
 
-    const imap = connection.imap;
-
-    // 1. Fetch raw messages into memory with timeout safety
-    const rawMessages = await new Promise((resolve) => {
-      const fetchedItems = [];
-      let isDone = false;
-
-      const finish = () => {
-        if (!isDone) {
-          isDone = true;
-          resolve(fetchedItems);
-        }
-      };
-
-      // 20s safety timeout to prevent hanging on slow network/socket
-      const timeoutHandle = setTimeout(() => {
-        console.warn(`[Email Poller] Fetch timeout reached, processing ${fetchedItems.length} messages collected so far.`);
-        finish();
-      }, 20000);
-
-      try {
-        const fetchRequest = imap.seq.fetch(seqRange, { bodies: '', struct: true });
-
-        fetchRequest.on('message', (msg, seqno) => {
-          let buffer = '';
-          let uid = null;
-
-          msg.on('body', (stream) => {
-            stream.on('data', chunk => buffer += chunk.toString('utf8'));
-          });
-
-          msg.once('attributes', (attrs) => {
-            uid = attrs.uid;
-          });
-
-          msg.once('end', () => {
-            if (uid) {
-              fetchedItems.push({ uid, buffer });
-            }
-          });
-        });
-
-        fetchRequest.once('error', (err) => {
-          clearTimeout(timeoutHandle);
-          finish();
-        });
-
-        fetchRequest.once('end', () => {
-          clearTimeout(timeoutHandle);
-          finish();
-        });
-      } catch (err) {
-        clearTimeout(timeoutHandle);
-        finish();
-      }
-    });
+    console.log(`[Email Poller] Fetching sequence range ${startSeq}:${total} from INBOX (${total} total)...`);
+    const rawMessages = await connection.search(searchCriteria, fetchOptions);
+    console.log(`[Email Poller] Successfully retrieved ${rawMessages.length} messages from inbox.`);
 
     // 2. Process each message sequentially
     for (const msgItem of rawMessages) {
-      const { uid, buffer } = msgItem;
+      const uid = msgItem.attributes.uid;
+      const bodyPart = msgItem.parts.find(p => p.which === '');
+      const buffer = bodyPart ? bodyPart.body : '';
 
-      if (!uid || processedList.includes(String(uid))) {
-        continue; // Already processed
+      if (!uid || processedList.includes(String(uid)) || CURRENTLY_PROCESSING_UIDS.has(String(uid))) {
+        continue; // Already processed or in-flight
       }
+      CURRENTLY_PROCESSING_UIDS.add(String(uid));
 
       try {
         const parsedMail = await simpleParser(buffer);
@@ -345,6 +299,7 @@ async function pollCandidateEmails({
         if (!parsedMail.attachments || parsedMail.attachments.length === 0) {
           // Skip email without attachments and mark processed
           saveProcessedUid(uid);
+          CURRENTLY_PROCESSING_UIDS.delete(String(uid));
           continue;
         }
 
@@ -389,6 +344,7 @@ async function pollCandidateEmails({
         // If NO valid resume attachment was found, SKIP this email entirely
         if (!resumeAttachment) {
           saveProcessedUid(uid);
+          CURRENTLY_PROCESSING_UIDS.delete(String(uid));
           continue;
         }
 
@@ -484,10 +440,10 @@ async function pollCandidateEmails({
       } catch (err) {
         console.error(`[Email Poller] Error processing message UID ${uid}:`, err.message);
         saveProcessedUid(uid);
+      } finally {
+        CURRENTLY_PROCESSING_UIDS.delete(String(uid));
       }
     }
-
-    try { connection.end(); } catch (e) {}
 
     return {
       success: true,
@@ -501,6 +457,10 @@ async function pollCandidateEmails({
       success: false,
       error: error.message
     };
+  } finally {
+    if (connection) {
+      try { connection.end(); } catch (e) {}
+    }
   }
 }
 

@@ -12,6 +12,7 @@ const {
   extractCandidateNameFromResume,
   generateAuthenticGoogleMeetLink,
   generateOfficialCallLetterHtml,
+  generateAssessmentOutcomeFeedbackHtml,
   DEFAULT_GEMINI_KEY,
   DEFAULT_MODEL 
 } = require('./gemini_evaluator');
@@ -213,6 +214,9 @@ async function extractTextFromFile(filePath) {
   }
 }
 
+// Deduplication cache to prevent sending duplicate emails to the same recipient within 5 minutes
+const DISPATCHED_EMAILS_CACHE = new Map();
+
 // Helper: Send Email via Nodemailer (Multi-protocol: Gmail Service + SSL 465 + STARTTLS 587 with IPv4 Force)
 async function sendNotificationEmail({ to, subject, htmlBody }) {
   const settings = getSettings();
@@ -222,6 +226,21 @@ async function sendNotificationEmail({ to, subject, htmlBody }) {
   if (!to || !appPassword) {
     return { success: false, error: 'Missing destination email or app password' };
   }
+
+  // Deduplication Check: Prevent sending the exact same email to the same recipient more than once within 5 minutes
+  const dedupKey = `${(to || '').toLowerCase().trim()}__${(subject || '').toLowerCase().trim()}`;
+  const lastSentTime = DISPATCHED_EMAILS_CACHE.get(dedupKey);
+  if (lastSentTime && (Date.now() - lastSentTime < 300000)) {
+    console.log(`[Gmail Gatekeeper] 🛡️ Suppressed duplicate email dispatch to: ${to} (Subject: "${subject}")`);
+    return {
+      success: true,
+      deduplicated: true,
+      messageId: 'DEDUP_SUPPRESSED',
+      to,
+      subject
+    };
+  }
+  DISPATCHED_EMAILS_CACHE.set(dedupKey, Date.now());
 
   const transportConfigs = [
     { 
@@ -835,16 +854,43 @@ app.post('/api/assessment/submit', async (req, res) => {
         deliveredTo: targetEmail
       };
     } else {
-      console.log(`[Assessment Engine] ⚠️ Candidate "${targetCandidate.name}" scored ${evalResult.scorePercent}% (< 80% passing threshold). Withholding all emails as requested (NO mail sent on failed assessment).`);
+      console.log(`[Assessment Engine] ⚠️ Candidate "${targetCandidate.name}" scored ${evalResult.scorePercent}% (< 80% passing threshold). Auto-dispatching Assessment Outcome & Performance Feedback email...`);
+
+      const feedbackHtml = generateAssessmentOutcomeFeedbackHtml({
+        candidateName: targetCandidate.name,
+        roleApplied: targetCandidate.roleApplied,
+        scorePercent: evalResult.scorePercent,
+        passingThreshold: 80,
+        correctCount: evalResult.correctCount,
+        totalQuestions: evalResult.totalQuestions,
+        sectionBreakdown: evalResult.sectionBreakdown
+      });
+
+      const subject = `Update regarding your Technical Assessment: ${targetCandidate.roleApplied} - Finova Technologies`;
+
+      if (targetEmail) {
+        console.log(`[Assessment Engine] 🚀 Dispatching Assessment Feedback email via SMTP to: ${targetEmail}`);
+        emailDispatch = await sendNotificationEmail({
+          to: targetEmail,
+          subject,
+          htmlBody: feedbackHtml
+        });
+        console.log(`[Assessment Engine] Assessment Feedback SMTP Result:`, emailDispatch);
+      } else {
+        console.warn(`[Assessment Engine Warning] No recipient email specified for candidate "${targetCandidate.name}".`);
+        emailDispatch = { success: false, error: 'No recipient email provided' };
+      }
+
       targetCandidate.status = 'REJECTED';
       targetCandidate.offerStatus = 'REJECTED';
       targetCandidate.interviewStatus = 'COMPLETED';
-
-      // Do NOT send mail to candidate who could not pass the test
-      emailDispatch = {
-        success: false,
-        skipped: true,
-        reason: 'Candidate did not reach 80% passing threshold. Email dispatch suppressed.'
+      targetCandidate.feedbackSentAt = new Date().toISOString();
+      targetCandidate.feedbackDetails = {
+        scorePercent: evalResult.scorePercent,
+        correctCount: evalResult.correctCount,
+        totalQuestions: evalResult.totalQuestions,
+        emailDispatch,
+        deliveredTo: targetEmail
       };
     }
 

@@ -581,6 +581,103 @@ function generateOfficialCallLetterHtml({
 }
 
 /**
+ * Generate Post-Assessment Constructive Feedback HTML for candidates who did not achieve >= 80% passing threshold
+ */
+function generateAssessmentOutcomeFeedbackHtml({
+  candidateName = 'Candidate',
+  roleApplied = 'Frontend Developer',
+  scorePercent = 45,
+  passingThreshold = 80,
+  correctCount = 9,
+  totalQuestions = 20,
+  sectionBreakdown = {}
+}) {
+  let sectionScoresHtml = '';
+  if (sectionBreakdown && Object.keys(sectionBreakdown).length > 0) {
+    sectionScoresHtml = Object.keys(sectionBreakdown).map(k => {
+      const s = sectionBreakdown[k];
+      return `
+        <tr>
+          <td style="padding: 6px 0; color: #475569;"><strong>${s.icon || '📌'} ${s.shortName || s.name}:</strong></td>
+          <td style="padding: 6px 0; color: #0f172a; text-align: right; font-weight: 700;">${s.correct}/${s.total} (${s.scorePercent}%)</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  return `
+    <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+      
+      <!-- Header -->
+      <div style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;">
+        <span style="background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;">ASSESSMENT OUTCOME UPDATE</span>
+        <h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;">Technical Assessment Evaluation &amp; Feedback</h2>
+        <p style="margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;">Role: <strong>${roleApplied}</strong> • Finova Technologies</p>
+      </div>
+
+      <!-- Body -->
+      <div style="padding: 28px 24px;">
+        <p style="font-size: 15px; line-height: 1.6; margin-top: 0;">Dear <strong>${candidateName}</strong>,</p>
+        
+        <p style="font-size: 14.5px; line-height: 1.6; color: #334155;">
+          Thank you for taking the time to complete the <strong>Proctored Technical Assessment</strong> for the <strong>${roleApplied}</strong> position at Finova Technologies.
+        </p>
+
+        <p style="font-size: 14.5px; line-height: 1.6; color: #334155;">
+          Our automated evaluation engine has thoroughly scored your assessment submission across all domain competency areas.
+        </p>
+
+        <!-- Score Breakdown Card -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; margin: 22px 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;">
+            <strong style="color: #0f172a; font-size: 15px;">📊 Assessment Score Summary</strong>
+            <span style="background: rgba(239, 68, 68, 0.1); color: #b91c1c; font-weight: 800; font-size: 13px; padding: 4px 12px; border-radius: 99px; border: 1px solid rgba(239, 68, 68, 0.3);">
+              Score: ${scorePercent}% (${correctCount}/${totalQuestions})
+            </span>
+          </div>
+
+          <table style="width: 100%; font-size: 13.5px; border-collapse: collapse; margin-bottom: 12px;">
+            <tr>
+              <td style="padding: 5px 0; color: #64748b;"><strong>Role Evaluated:</strong></td>
+              <td style="padding: 5px 0; color: #0f172a; text-align: right; font-weight: 700;">${roleApplied}</td>
+            </tr>
+            <tr>
+              <td style="padding: 5px 0; color: #64748b;"><strong>Required Qualifying Threshold:</strong></td>
+              <td style="padding: 5px 0; color: #059669; text-align: right; font-weight: 800;">${passingThreshold}% (16 / 20 correct)</td>
+            </tr>
+            <tr>
+              <td style="padding: 5px 0; color: #64748b;"><strong>Candidate Score:</strong></td>
+              <td style="padding: 5px 0; color: #b91c1c; text-align: right; font-weight: 800;">${scorePercent}%</td>
+            </tr>
+            ${sectionScoresHtml ? `<tr><td colspan="2" style="padding: 10px 0 6px 0; border-top: 1px solid #e2e8f0; color: #0f172a; font-weight: 700;">Section Competency Breakdown:</td></tr>` + sectionScoresHtml : ''}
+          </table>
+        </div>
+
+        <!-- Constructive Feedback & Next Steps -->
+        <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 22px;">
+          <h4 style="margin: 0 0 8px 0; color: #92400e; font-size: 14px; font-weight: 700;">💡 Constructive Feedback &amp; Next Steps</h4>
+          <p style="margin: 0; font-size: 13px; color: #78350f; line-height: 1.6;">
+            While your submission demonstrated valuable foundational knowledge, the score achieved was below our qualifying threshold of <strong>${passingThreshold}%</strong> for this immediate vacancy. We encourage you to continue refining your practical architecture and problem-solving skills in <strong>${roleApplied}</strong>.
+          </p>
+        </div>
+
+        <p style="font-size: 14px; line-height: 1.6; color: #475569;">
+          We will keep your candidate profile active in our database for future engineering opportunities that align with your background. We sincerely appreciate your enthusiasm and effort throughout the selection process and wish you the very best in your career pursuits.
+        </p>
+
+        <!-- Recruiter Signature -->
+        <div style="margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;">
+          <strong style="color: #0f172a; font-size: 14.5px; display: block;">Vageesha Sharma</strong>
+          <span style="color: #64748b; font-size: 13px; display: block;">Founder &amp; Hiring Lead</span>
+          <span style="color: #64748b; font-size: 13px; display: block;">Finova Technologies Pvt. Ltd.</span>
+          <span style="color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;">sharmavageesha2000@gmail.com</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/**
  * Robust Skill Matcher: Compares candidate text against required skills accurately
  */
 function evaluateSkillOverlap(candidateText, requiredSkills) {
@@ -1038,6 +1135,7 @@ module.exports = {
   generateStructuredRejectionHtml,
   generateStructuredSelectedHtml,
   generateOfficialCallLetterHtml,
+  generateAssessmentOutcomeFeedbackHtml,
   DEFAULT_MODEL,
   DEFAULT_GEMINI_KEY
 };
