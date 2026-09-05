@@ -4479,8 +4479,73 @@ function cleanupExpiredSessions() {
 }
 
 /**
+ * Extract an intelligent domain competency category tag from question text and role
+ */
+function extractQuestionCategory(questionText = '', role = '') {
+  const q = questionText.toLowerCase();
+  
+  if (q.includes('react') || q.includes('hook') || q.includes('virtual dom') || q.includes('usestate') || q.includes('useeffect')) return 'React.js & Component Lifecycle';
+  if (q.includes('css') || q.includes('flex') || q.includes('grid') || q.includes('stacking') || q.includes('tailwind')) return 'Modern CSS & Layout Systems';
+  if (q.includes('typescript') || q.includes('type') || q.includes('interface') || q.includes('generics')) return 'TypeScript & Type Safety';
+  if (q.includes('event') || q.includes('closure') || q.includes('async') || q.includes('promise') || q.includes('prototype')) return 'JavaScript Core & Async Runtimes';
+  if (q.includes('node') || q.includes('express') || q.includes('middleware') || q.includes('event loop')) return 'Node.js Internals & Middleware';
+  if (q.includes('sql') || q.includes('database') || q.includes('postgres') || q.includes('index') || q.includes('acid')) return 'Database Architecture & Indexing';
+  if (q.includes('jwt') || q.includes('cors') || q.includes('csrf') || q.includes('xss') || q.includes('security') || q.includes('auth')) return 'Security Protocols & Authentication';
+  if (q.includes('cache') || q.includes('redis') || q.includes('cdn') || q.includes('performance') || q.includes('latency')) return 'Caching & Performance Optimization';
+  if (q.includes('transformer') || q.includes('llm') || q.includes('attention') || q.includes('prompt') || q.includes('lora')) return 'LLM Reasoning & Fine-Tuning';
+  if (q.includes('embedding') || q.includes('vector') || q.includes('rag') || q.includes('similarity')) return 'Vector Databases & RAG Architecture';
+  if (q.includes('figma') || q.includes('wireframe') || q.includes('heuristic') || q.includes('typography')) return 'UX Design Systems & Usability';
+  if (q.includes('sales') || q.includes('pipeline') || q.includes('lead') || q.includes('deal') || q.includes('cac') || q.includes('mrr')) return 'B2B Strategy & Sales Economics';
+  if (q.includes('regression') || q.includes('hypothesis') || q.includes('correlation') || q.includes('p-value') || q.includes('tableau')) return 'Statistical Modeling & Analytics';
+  
+  return `${role} Competency`;
+}
+
+/**
+ * Assign systematic sections based on index
+ */
+const SYSTEMATIC_SECTIONS = [
+  {
+    index: 1,
+    key: "sec_1",
+    name: "Section 1: Core Fundamentals & Principles",
+    shortName: "Core Fundamentals",
+    icon: "📐",
+    difficulty: "Core / Intermediate",
+    description: "Fundamental paradigms, syntax internals, execution lifecycles, and language mechanics."
+  },
+  {
+    index: 2,
+    key: "sec_2",
+    name: "Section 2: Architecture & System Design",
+    shortName: "System Architecture",
+    icon: "🏛️",
+    difficulty: "Advanced",
+    description: "Component hierarchy, distributed state, concurrency, design patterns, and scalability."
+  },
+  {
+    index: 3,
+    key: "sec_3",
+    name: "Section 3: Practical Problem Solving & Code Scenarios",
+    shortName: "Problem Solving",
+    icon: "⚡",
+    difficulty: "Advanced",
+    description: "Debugging realistic edge cases, output prediction, runtime analysis, and algorithm efficiency."
+  },
+  {
+    index: 4,
+    key: "sec_4",
+    name: "Section 4: Production Best Practices, Security & Performance",
+    shortName: "Best Practices & Security",
+    icon: "🛡️",
+    difficulty: "Expert",
+    description: "Vulnerability mitigation, memory optimization, cloud resilience, and high-load caching."
+  }
+];
+
+/**
  * Generates a dynamic, randomized assessment session for a candidate.
- * Guarantees fresh, non-repeating questions even for the same job and candidate.
+ * Guarantees fresh, non-repeating questions organized into 4 systematic sections.
  */
 function generateSessionAssessment(roleName, options = {}) {
   cleanupExpiredSessions();
@@ -4523,10 +4588,18 @@ function generateSessionAssessment(roleName, options = {}) {
   const masterQuestions = [];
   const clientQuestions = [];
 
-  // 4. For each question, shuffle options and compute new correct index
+  const questionsPerSection = Math.max(1, Math.ceil(sampleCount / 4));
+
+  // 4. For each question, attach systematic section, category, difficulty & shuffle options
   presentationQuestions.forEach((q, idx) => {
     const originalOptions = [...q.options];
     const correctOptionText = originalOptions[q.correctIndex || 0];
+
+    // Systematic Section Assignment (Q1-5 = Sec 1, Q6-10 = Sec 2, Q11-15 = Sec 3, Q16-20 = Sec 4)
+    const secIdx = Math.min(Math.floor(idx / questionsPerSection), SYSTEMATIC_SECTIONS.length - 1);
+    const sectionMeta = SYSTEMATIC_SECTIONS[secIdx];
+    const category = extractQuestionCategory(q.question, key);
+    const difficulty = sectionMeta.difficulty;
 
     // Create array of option objects to track after shuffle
     const optionObjs = originalOptions.map((opt, i) => ({
@@ -4541,20 +4614,37 @@ function generateSessionAssessment(roleName, options = {}) {
     // Save session answer key
     answerKey[q.id] = newCorrectIndex;
 
+    const explanation = `Correct answer is Option ${String.fromCharCode(65 + newCorrectIndex)}: "${finalOptionTexts[newCorrectIndex]}". This satisfies the core requirements of ${category} in high-performance ${key} production environments.`;
+
     masterQuestions.push({
       id: q.id,
       questionNumber: idx + 1,
       question: q.question,
       options: finalOptionTexts,
       correctIndex: newCorrectIndex,
-      originalId: q.id
+      originalId: q.id,
+      sectionIndex: sectionMeta.index,
+      sectionKey: sectionMeta.key,
+      sectionName: sectionMeta.name,
+      sectionShortName: sectionMeta.shortName,
+      sectionIcon: sectionMeta.icon,
+      category,
+      difficulty,
+      explanation
     });
 
     clientQuestions.push({
       id: q.id,
       questionNumber: idx + 1,
       question: q.question,
-      options: finalOptionTexts
+      options: finalOptionTexts,
+      sectionIndex: sectionMeta.index,
+      sectionKey: sectionMeta.key,
+      sectionName: sectionMeta.name,
+      sectionShortName: sectionMeta.shortName,
+      sectionIcon: sectionMeta.icon,
+      category,
+      difficulty
     });
   });
 
@@ -4566,13 +4656,15 @@ function generateSessionAssessment(roleName, options = {}) {
     createdAt: Date.now(),
     sampleCount,
     answerKey,
-    masterQuestions
+    masterQuestions,
+    sections: SYSTEMATIC_SECTIONS
   });
 
   return {
     sessionId,
     role: key,
     totalQuestions: clientQuestions.length,
+    sections: SYSTEMATIC_SECTIONS,
     questions: clientQuestions
   };
 }
@@ -4580,6 +4672,7 @@ function generateSessionAssessment(roleName, options = {}) {
 /**
  * Evaluates candidate submission answers against the session answer key (or fallback bank).
  * Passing Threshold: 80% (>= 16 / 20).
+ * Generates systematic section-by-section scoring breakdown and solution review.
  */
 function evaluateAssessmentSubmission(roleName, candidateAnswers = {}, sessionId = null) {
   const key = normalizeRoleToBankKey(roleName);
@@ -4593,7 +4686,23 @@ function evaluateAssessmentSubmission(roleName, candidateAnswers = {}, sessionId
   } else {
     // Fallback: evaluate against default role bank
     const defaultPool = ROLE_QUESTIONS_BANK[key] || ROLE_QUESTIONS_BANK['Frontend Developer'];
-    masterQuestions = defaultPool.slice(0, 20);
+    masterQuestions = defaultPool.slice(0, 20).map((q, idx) => {
+      const secIdx = Math.min(Math.floor(idx / 5), SYSTEMATIC_SECTIONS.length - 1);
+      const sectionMeta = SYSTEMATIC_SECTIONS[secIdx];
+      const category = extractQuestionCategory(q.question, key);
+      return {
+        ...q,
+        questionNumber: idx + 1,
+        sectionIndex: sectionMeta.index,
+        sectionKey: sectionMeta.key,
+        sectionName: sectionMeta.name,
+        sectionShortName: sectionMeta.shortName,
+        sectionIcon: sectionMeta.icon,
+        category,
+        difficulty: sectionMeta.difficulty,
+        explanation: `Option ${String.fromCharCode(65 + (q.correctIndex || 0))} is correct as it follows standard engineering best practices for ${category}.`
+      };
+    });
     masterQuestions.forEach(q => {
       answerKey[q.id] = q.correctIndex || 0;
     });
@@ -4602,6 +4711,21 @@ function evaluateAssessmentSubmission(roleName, candidateAnswers = {}, sessionId
   const totalQuestions = masterQuestions.length;
   let correctCount = 0;
   const details = [];
+
+  // Section score tracking
+  const sectionScores = {};
+  SYSTEMATIC_SECTIONS.forEach(sec => {
+    sectionScores[sec.key] = {
+      sectionIndex: sec.index,
+      name: sec.name,
+      shortName: sec.shortName,
+      icon: sec.icon,
+      difficulty: sec.difficulty,
+      total: 0,
+      correct: 0,
+      scorePercent: 0
+    };
+  });
 
   masterQuestions.forEach(q => {
     const userSelected = candidateAnswers[q.id] !== undefined ? parseInt(candidateAnswers[q.id], 10) : null;
@@ -4612,14 +4736,47 @@ function evaluateAssessmentSubmission(roleName, candidateAnswers = {}, sessionId
       correctCount++;
     }
 
+    const secKey = q.sectionKey || 'sec_1';
+    if (!sectionScores[secKey]) {
+      sectionScores[secKey] = {
+        sectionIndex: q.sectionIndex || 1,
+        name: q.sectionName || 'Core Section',
+        shortName: q.sectionShortName || 'Core',
+        icon: q.sectionIcon || '📐',
+        difficulty: q.difficulty || 'Intermediate',
+        total: 0,
+        correct: 0,
+        scorePercent: 0
+      };
+    }
+    sectionScores[secKey].total += 1;
+    if (isCorrect) {
+      sectionScores[secKey].correct += 1;
+    }
+
     details.push({
       questionId: q.id,
+      questionNumber: q.questionNumber,
       question: q.question,
       options: q.options,
+      sectionIndex: q.sectionIndex,
+      sectionKey: q.sectionKey,
+      sectionName: q.sectionName,
+      sectionShortName: q.sectionShortName,
+      sectionIcon: q.sectionIcon,
+      category: q.category,
+      difficulty: q.difficulty,
       userSelected,
       correctIndex: correctIdx,
-      isCorrect
+      isCorrect,
+      explanation: q.explanation || `Option ${String.fromCharCode(65 + correctIdx)} provides the verified accurate solution for this question.`
     });
+  });
+
+  // Calculate percentage per section
+  Object.keys(sectionScores).forEach(k => {
+    const s = sectionScores[k];
+    s.scorePercent = s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0;
   });
 
   const scorePercent = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
@@ -4635,6 +4792,8 @@ function evaluateAssessmentSubmission(roleName, candidateAnswers = {}, sessionId
     passingThreshold: 80,
     passed,
     verdict: passed ? 'PASSED_OFFER_QUALIFIED' : 'FAILED_BELOW_THRESHOLD',
+    sectionBreakdown: sectionScores,
+    sections: SYSTEMATIC_SECTIONS,
     details
   };
 }
@@ -4651,8 +4810,11 @@ module.exports = {
   ROLE_QUESTIONS_BANK,
   ACTIVE_ASSESSMENT_SESSIONS,
   CANDIDATE_SEEN_QUESTIONS,
+  SYSTEMATIC_SECTIONS,
+  extractQuestionCategory,
   normalizeRoleToBankKey,
   generateSessionAssessment,
   getQuestionsForRole,
   evaluateAssessmentSubmission
 };
+

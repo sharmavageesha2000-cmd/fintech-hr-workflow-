@@ -1,27 +1,181 @@
 [
   {
-    "id": "cand-1788543442208",
+    "id": "cand-1788582000120",
     "name": "Failed Candidate",
-    "email": "fail_test_1788543442173@finovatech.com",
+    "email": "fail_test_1788582000093@finovatech.com",
     "roleApplied": "Backend Developer",
-    "receivedAt": "2026-09-04T17:37:22.208Z",
+    "receivedAt": "2026-09-05T04:20:00.120Z",
     "assessmentDetails": {
-      "completedAt": "2026-09-04T17:37:22.208Z",
-      "scorePercent": 35,
-      "correctCount": 7,
+      "completedAt": "2026-09-05T04:20:00.120Z",
+      "scorePercent": 30,
+      "correctCount": 6,
       "totalQuestions": 20,
       "passed": false,
       "tabSwitchesCount": 0,
       "timeSpentSeconds": 120,
       "forcedByViolation": false
     },
-    "testScore": 35,
+    "testScore": 30,
     "testPassed": false,
     "assessmentCompleted": true,
     "testSubmitted": true,
     "status": "REJECTED",
     "offerStatus": "REJECTED",
     "interviewStatus": "COMPLETED"
+  },
+  {
+    "id": "cand-1788581961879",
+    "name": "Devashish Sen",
+    "email": "devashish.sen.cloud@gmail.com",
+    "phone": "Not specified",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Frontend Developer",
+    "experienceYears": 3.5,
+    "skills": [
+      "React.js",
+      "HTML5 & CSS3",
+      "Tailwind CSS",
+      "TypeScript",
+      "Responsive Design",
+      "REST APIs"
+    ],
+    "missingSkills": [
+      "JavaScript"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 30,
+      "experienceRelevance": 35,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 92,
+    "status": "SELECTED",
+    "summary": "Devashish Sen possesses 3.5 years of relevant experience aligned with Frontend Developer. Strong foundation in React.js, HTML5 & CSS3, Tailwind CSS, TypeScript. Shortlisted for 20-MCQ technical assessment.",
+    "strengths": [
+      "3.5 years of demonstrated experience in Frontend Developer",
+      "Strong skills in React.js, HTML5 & CSS3, Tailwind CSS"
+    ],
+    "weaknesses": [
+      "To be evaluated via 20-MCQ domain technical assessment (80% passing threshold)"
+    ],
+    "interviewSchedule": {
+      "roundName": "Round 1: Online Technical Assessment (20 MCQs)",
+      "format": "Proctored Online Assessment (20 Domain MCQs)",
+      "assessmentLink": "https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Devashish%20Sen&email=devashish.sen.cloud%40gmail.com",
+      "duration": "25 Minutes",
+      "passingScore": "80% (16 / 20 correct)",
+      "preparationNotes": "Complete 20 domain-specific questions in Frontend Developer. Copy/paste and multi-window switching are strictly monitored."
+    },
+    "emailSubject": "📝 Technical Assessment Link: Frontend Developer - Finova Technologies",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 14px; background: #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.04);\">\n      <div style=\"text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9;\">\n        <span style=\"background: #ecfdf5; color: #047857; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 99px; display: inline-block; margin-bottom: 10px; border: 1px solid #a7f3d0;\">RESUME SHORTLISTED</span>\n        <h2 style=\"color: #0f172a; margin: 0 0 6px 0; font-size: 22px; font-weight: 800;\">🎉 Congratulations, Devashish Sen!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 14.5px;\">Your application for <strong>Frontend Developer</strong> has been approved for the next stage.</p>\n      </div>\n\n      <p style=\"font-size: 15px; line-height: 1.6; color: #334155;\">Dear <strong>Devashish Sen</strong>,</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">Thank you for applying for the <strong>Frontend Developer</strong> position at Finova Technologies. We thoroughly reviewed your resume and were impressed by your <strong>3.5 years of relevant experience</strong> and proficiency in <strong>React.js, HTML5 & CSS3, Tailwind CSS, TypeScript, Responsive Design</strong>.</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">To finalize your selection and generate your official employment offer, you are invited to complete your <strong>Online Technical Assessment</strong>.</p>\n\n      <!-- Assessment Card -->\n      <div style=\"background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%); border: 1.5px solid #5eead4; border-radius: 12px; padding: 22px; margin: 24px 0;\">\n        <h3 style=\"margin: 0 0 14px 0; color: #0f766e; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;\">\n          📝 Technical Assessment Details (Frontend Developer)\n        </h3>\n        \n        <table style=\"width: 100%; font-size: 13.5px; color: #1e293b; border-collapse: collapse; margin-bottom: 16px;\">\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b; width: 42%;\"><strong>Role Domain:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #0f766e;\">Frontend Developer (20 Domain MCQs)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Time Duration:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700;\">25 Minutes</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Passing Requirement:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 800; color: #047857;\">80% or above (16 / 20 correct)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Automated Outcome:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #4338ca;\">Immediate Official Job Offer &amp; Call Letter Dispatch upon passing</td>\n          </tr>\n        </table>\n\n        <!-- Anti-Cheating & Proctoring Notice -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; font-size: 12.5px; color: #92400e; line-height: 1.5;\">\n          <strong>🛡️ Anti-Cheating &amp; Proctoring Regulations:</strong>\n          <ul style=\"margin: 6px 0 0 0; padding-left: 18px;\">\n            <li>Copy/paste and right-click are strictly disabled in the test portal.</li>\n            <li>Do not switch browser tabs or open secondary windows on mobile or laptop. Violations will be recorded and may auto-submit your test.</li>\n          </ul>\n        </div>\n\n        <!-- CTA Button -->\n        <div style=\"text-align: center;\">\n          <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Devashish%20Sen&email=devashish.sen.cloud%40gmail.com\" target=\"_blank\" style=\"background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: #ffffff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 15px; display: inline-block; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);\">\n            🚀 Start Online Technical Assessment (20 MCQs)\n          </a>\n        </div>\n        <p style=\"text-align: center; font-size: 12px; color: #64748b; margin: 10px 0 0 0;\">Link: <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Devashish%20Sen&email=devashish.sen.cloud%40gmail.com\" target=\"_blank\" style=\"color: #0f766e;\">https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Devashish%20Sen&email=devashish.sen.cloud%40gmail.com</a></p>\n      </div>\n\n      <p style=\"font-size: 14px; color: #475569; line-height: 1.6;\">Please take the test in a quiet environment on a reliable internet connection. We wish you the very best of luck!</p>\n\n      <div style=\"margin-top: 26px; border-top: 1px solid #e2e8f0; padding-top: 16px;\">\n        <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n        <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;\">sharmavageesha2000@gmail.com</span>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": null,
+    "receivedAt": "2026-09-05T04:19:21.879Z",
+    "evaluatedAt": "2026-09-05T04:19:21.879Z",
+    "source": "EMAIL_INTAKE",
+    "lastEmailSentAt": "2026-09-05T04:19:25.567Z",
+    "assessmentDetails": {
+      "completedAt": "2026-09-05T04:19:25.581Z",
+      "scorePercent": 90,
+      "correctCount": 18,
+      "totalQuestions": 20,
+      "passed": true,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 740,
+      "forcedByViolation": false
+    },
+    "testScore": 90,
+    "testPassed": true,
+    "assessmentCompleted": true,
+    "testSubmitted": true,
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "OFFER_EXTENDED",
+    "offerRefId": "HR-OFFER-2026-7240",
+    "callLetterSentAt": "2026-09-05T04:19:31.261Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-7240",
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<6510836b-e3ce-aa0d-d720-b24e33fbeb52@gmail.com>",
+        "to": "devashish.sen.cloud@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Frontend Developer - Finova Technologies"
+      },
+      "deliveredTo": "devashish.sen.cloud@gmail.com"
+    }
+  },
+  {
+    "id": "cand-1788543693114-760",
+    "name": "Vageesha Sharma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "Not specified",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Full Stack AI Engineer",
+    "experienceYears": 4,
+    "skills": [
+      "SQL",
+      "Excel",
+      "Power BI / Tableau",
+      "Python",
+      "Data Visualization",
+      "Analytics"
+    ],
+    "missingSkills": [],
+    "scoreBreakdown": {
+      "technicalSkills": 35,
+      "experienceRelevance": 35,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 100,
+    "status": "REJECTED",
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "REJECTED",
+    "summary": "Rohan Mehta possesses 4 years of relevant experience aligned with Data Analyst. Strong foundation in SQL, Excel, Power BI / Tableau, Python. Shortlisted for 20-MCQ technical assessment.",
+    "strengths": [
+      "4 years of demonstrated experience in Data Analyst",
+      "Strong skills in SQL, Excel, Power BI / Tableau"
+    ],
+    "weaknesses": [
+      "To be evaluated via 20-MCQ domain technical assessment (80% passing threshold)"
+    ],
+    "interviewSchedule": {
+      "roundName": "Round 1: Online Technical Assessment (20 MCQs)",
+      "format": "Proctored Online Assessment (20 Domain MCQs)",
+      "assessmentLink": "https://hr-smartflow-automation.onrender.com/assessment.html?role=Data%20Analyst&name=Rohan%20Mehta&email=sharmavageesha2000%40gmail.com",
+      "duration": "25 Minutes",
+      "passingScore": "80% (16 / 20 correct)",
+      "preparationNotes": "Complete 20 domain-specific questions in Data Analyst. Copy/paste and multi-window switching are strictly monitored."
+    },
+    "emailSubject": "📝 Technical Assessment Link: Data Analyst - Finova Technologies",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 14px; background: #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.04);\">\n      <div style=\"text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9;\">\n        <span style=\"background: #ecfdf5; color: #047857; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 99px; display: inline-block; margin-bottom: 10px; border: 1px solid #a7f3d0;\">RESUME SHORTLISTED</span>\n        <h2 style=\"color: #0f172a; margin: 0 0 6px 0; font-size: 22px; font-weight: 800;\">🎉 Congratulations, Rohan Mehta!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 14.5px;\">Your application for <strong>Data Analyst</strong> has been approved for the next stage.</p>\n      </div>\n\n      <p style=\"font-size: 15px; line-height: 1.6; color: #334155;\">Dear <strong>Rohan Mehta</strong>,</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">Thank you for applying for the <strong>Data Analyst</strong> position at Finova Technologies. We thoroughly reviewed your resume and were impressed by your <strong>4 years of relevant experience</strong> and proficiency in <strong>SQL, Excel, Power BI / Tableau, Python, Data Visualization</strong>.</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">To finalize your selection and generate your official employment offer, you are invited to complete your <strong>Online Technical Assessment</strong>.</p>\n\n      <!-- Assessment Card -->\n      <div style=\"background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%); border: 1.5px solid #5eead4; border-radius: 12px; padding: 22px; margin: 24px 0;\">\n        <h3 style=\"margin: 0 0 14px 0; color: #0f766e; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;\">\n          📝 Technical Assessment Details (Data Analyst)\n        </h3>\n        \n        <table style=\"width: 100%; font-size: 13.5px; color: #1e293b; border-collapse: collapse; margin-bottom: 16px;\">\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b; width: 42%;\"><strong>Role Domain:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #0f766e;\">Data Analyst (20 Domain MCQs)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Time Duration:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700;\">25 Minutes</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Passing Requirement:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 800; color: #047857;\">80% or above (16 / 20 correct)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Automated Outcome:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #4338ca;\">Immediate Official Job Offer &amp; Call Letter Dispatch upon passing</td>\n          </tr>\n        </table>\n\n        <!-- Anti-Cheating & Proctoring Notice -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; font-size: 12.5px; color: #92400e; line-height: 1.5;\">\n          <strong>🛡️ Anti-Cheating &amp; Proctoring Regulations:</strong>\n          <ul style=\"margin: 6px 0 0 0; padding-left: 18px;\">\n            <li>Copy/paste and right-click are strictly disabled in the test portal.</li>\n            <li>Do not switch browser tabs or open secondary windows on mobile or laptop. Violations will be recorded and may auto-submit your test.</li>\n          </ul>\n        </div>\n\n        <!-- CTA Button -->\n        <div style=\"text-align: center;\">\n          <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Data%20Analyst&name=Rohan%20Mehta&email=sharmavageesha2000%40gmail.com\" target=\"_blank\" style=\"background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: #ffffff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 15px; display: inline-block; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);\">\n            🚀 Start Online Technical Assessment (20 MCQs)\n          </a>\n        </div>\n        <p style=\"text-align: center; font-size: 12px; color: #64748b; margin: 10px 0 0 0;\">Link: <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Data%20Analyst&name=Rohan%20Mehta&email=sharmavageesha2000%40gmail.com\" target=\"_blank\" style=\"color: #0f766e;\">https://hr-smartflow-automation.onrender.com/assessment.html?role=Data%20Analyst&name=Rohan%20Mehta&email=sharmavageesha2000%40gmail.com</a></p>\n      </div>\n\n      <p style=\"font-size: 14px; color: #475569; line-height: 1.6;\">Please take the test in a quiet environment on a reliable internet connection. We wish you the very best of luck!</p>\n\n      <div style=\"margin-top: 26px; border-top: 1px solid #e2e8f0; padding-top: 16px;\">\n        <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n        <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;\">sharmavageesha2000@gmail.com</span>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Data_Analyst_Resume_3_to_5_Years.pdf",
+      "fileSize": 39530,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788543701586-Data_Analyst_Resume_3_to_5_Years.pdf",
+      "urlPath": "/uploads/1788543701586-Data_Analyst_Resume_3_to_5_Years.pdf"
+    },
+    "receivedAt": "2026-09-04T17:41:03.000Z",
+    "evaluatedAt": "2026-09-04T17:41:42.424Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-09-04T17:41:46.359Z",
+    "assessmentDetails": {
+      "completedAt": "2026-09-05T04:19:47.817Z",
+      "scorePercent": 35,
+      "correctCount": 7,
+      "totalQuestions": 20,
+      "passed": false,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 420,
+      "forcedByViolation": false
+    },
+    "testScore": 35,
+    "testPassed": false,
+    "assessmentCompleted": true,
+    "testSubmitted": true
   },
   {
     "id": "cand-1788542966826-342",
@@ -82,54 +236,6 @@
     "offerRefId": null,
     "callLetterSentAt": null,
     "callLetterDetails": null
-  },
-  {
-    "id": "cand-1788541751732",
-    "name": "Rahul Verma",
-    "email": "failed_candidate_1788541751704@finovatech.com",
-    "roleApplied": "Frontend Developer",
-    "receivedAt": "2026-09-04T17:09:11.732Z",
-    "assessmentDetails": {
-      "completedAt": "2026-09-04T17:09:11.732Z",
-      "scorePercent": 35,
-      "correctCount": 7,
-      "totalQuestions": 20,
-      "passed": false,
-      "tabSwitchesCount": 0,
-      "timeSpentSeconds": 200,
-      "forcedByViolation": false
-    },
-    "testScore": 35,
-    "testPassed": false,
-    "assessmentCompleted": true,
-    "testSubmitted": true,
-    "status": "REJECTED",
-    "offerStatus": "REJECTED",
-    "interviewStatus": "COMPLETED"
-  },
-  {
-    "id": "cand-1788540944533",
-    "name": "Pooja Verma",
-    "email": "single_attempt_candidate_1788540944492@finovatech.com",
-    "roleApplied": "UI/UX Designer",
-    "receivedAt": "2026-09-04T16:55:44.533Z",
-    "assessmentDetails": {
-      "completedAt": "2026-09-04T16:55:44.533Z",
-      "scorePercent": 30,
-      "correctCount": 6,
-      "totalQuestions": 20,
-      "passed": false,
-      "tabSwitchesCount": 0,
-      "timeSpentSeconds": 300,
-      "forcedByViolation": false
-    },
-    "testScore": 30,
-    "testPassed": false,
-    "assessmentCompleted": true,
-    "testSubmitted": true,
-    "status": "REJECTED",
-    "offerStatus": "REJECTED",
-    "interviewStatus": "COMPLETED"
   },
   {
     "id": "cand-1788538210123-101",
@@ -495,51 +601,6 @@
       },
       "deliveredTo": "sharmavageesha2000@gmail.com"
     }
-  },
-  {
-    "id": "cand-1788532371656",
-    "name": "Aditya Mehta",
-    "email": "aditya.mehta.ai2026@gmail.com",
-    "phone": "Not specified",
-    "education": "Bachelor Degree",
-    "roleApplied": "Frontend Developer",
-    "experienceYears": 6,
-    "skills": [
-      "General Domain Skills"
-    ],
-    "missingSkills": [
-      "React.js",
-      "JavaScript",
-      "HTML5 & CSS3",
-      "Tailwind CSS",
-      "TypeScript",
-      "Responsive Design",
-      "REST APIs"
-    ],
-    "scoreBreakdown": {
-      "technicalSkills": 8,
-      "experienceRelevance": 8,
-      "education": 10,
-      "communication": 8
-    },
-    "matchScore": 45,
-    "status": "REJECTED",
-    "summary": "Aditya Mehta applied for Frontend Developer. Profile does not satisfy core job requirements. Missing: React.js, JavaScript, HTML5 & CSS3. Status: REJECTED.",
-    "strengths": [
-      "Clear communication and professional presentation"
-    ],
-    "weaknesses": [
-      "Missing key competencies for Frontend Developer: React.js, JavaScript, HTML5 & CSS3"
-    ],
-    "interviewSchedule": null,
-    "emailSubject": "Update regarding your application for Frontend Developer - Vageesha Sharma",
-    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04);\">\n      <div style=\"background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;\">\n        <span style=\"background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;\">APPLICATION STATUS UPDATE</span>\n        <h2 style=\"margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;\">Application Evaluation &amp; Feedback</h2>\n        <p style=\"margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;\">Role: <strong>Frontend Developer</strong> • Vageesha Sharma Talent Acquisition</p>\n      </div>\n\n      <div style=\"padding: 28px 24px;\">\n        <p style=\"font-size: 15px; line-height: 1.6; margin-top: 0;\">Dear <strong>Aditya Mehta</strong>,</p>\n        \n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Thank you for applying for the <strong>Frontend Developer</strong> position at our organization and for sharing your resume.\n        </p>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Our technical evaluation team has thoroughly reviewed your background against the active role requirements and competencies for this vacancy.\n        </p>\n\n        <!-- Evaluation Summary Card -->\n        <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 20px 0;\">\n          <div style=\"display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;\">\n            <strong style=\"color: #0f172a; font-size: 15px;\">📊 Screening Evaluation Summary</strong>\n            <span style=\"background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 99px;\">Role Match: 45%</span>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;\">Skills Identified in Your Profile:</span>\n            <div><span style=\"color: #64748b; font-size: 13px;\">No direct core technical skills identified for this role</span></div>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #991b1b; display: block; margin-bottom: 6px;\">Critical Missing Skills for \"Frontend Developer\":</span>\n            <div><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ React.js</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ JavaScript</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ HTML5 & CSS3</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Tailwind CSS</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ TypeScript</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Responsive Design</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ REST APIs</span></div>\n          </div>\n        </div>\n\n        <!-- Resume Gaps & Detailed Feedback -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 20px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #92400e; font-size: 14px; font-weight: 700;\">🔍 Identified Gaps &amp; Resume Analysis</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #78350f; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Resume lacks demonstrable proficiency in mandatory requirements for Frontend Developer: <strong>React.js, JavaScript, HTML5 & CSS3, Tailwind CSS</strong>.</li><li style=\"margin-bottom: 6px;\">Insufficient evidence of production-level project execution matching the <strong>Frontend Developer</strong> job description.</li>\n          </ul>\n        </div>\n\n        <!-- Recommendations for Future -->\n        <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px; margin-bottom: 24px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #166534; font-size: 14px; font-weight: 700;\">💡 Actionable Recommendations to Strengthen Your Profile</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #14532d; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Deepen hands-on competency in <strong>React.js, JavaScript, HTML5 & CSS3</strong>.</li><li style=\"margin-bottom: 6px;\">Include live project links, portfolio dashboards, and quantifiable metrics in your resume.</li>\n          </ul>\n        </div>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          At this stage, we are moving forward with candidates whose technical stack more directly matches our immediate requirements for the <strong>Frontend Developer</strong> vacancy.\n        </p>\n\n        <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">\n          We will keep your resume on file for future openings that match your specific profile. We wish you great success in your career.\n        </p>\n\n        <div style=\"margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;\">\n          <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n          <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;\">sharmavageesha2000@gmail.com</span>\n        </div>\n      </div>\n    </div>\n  ",
-    "emailStatus": "SENT",
-    "attachmentInfo": null,
-    "receivedAt": "2026-09-04T14:32:51.656Z",
-    "evaluatedAt": "2026-09-04T14:32:51.656Z",
-    "source": "EMAIL_INTAKE",
-    "lastEmailSentAt": "2026-09-04T14:32:55.623Z"
   },
   {
     "id": "cand-1788258584399-318",

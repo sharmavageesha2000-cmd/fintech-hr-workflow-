@@ -719,6 +719,7 @@ app.get('/api/assessment/questions', (req, res) => {
     sessionId: sessionData.sessionId,
     role: sessionData.role,
     totalQuestions: sessionData.totalQuestions,
+    sections: sessionData.sections,
     questions: sessionData.questions
   });
 });
@@ -860,6 +861,7 @@ app.post('/api/assessment/submit', async (req, res) => {
       scorePercent: evalResult.scorePercent,
       correctCount: evalResult.correctCount,
       totalQuestions: evalResult.totalQuestions,
+      result: evalResult,
       candidate: targetCandidate,
       emailDispatch
     });
