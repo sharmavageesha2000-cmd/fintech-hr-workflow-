@@ -1,61 +1,77 @@
-require('dotenv').config();
 const imaps = require('imap-simple');
 const { simpleParser } = require('mailparser');
+const { isLegitimateResumeDocument, extractDocumentText, getProcessedUids } = require('./email_poller');
 const fs = require('fs');
+require('dotenv').config();
 
-async function diagnose() {
-  console.log('Connecting to IMAP using imap-simple...');
-  const connection = await imaps.connect({
+async function run() {
+  const settings = JSON.parse(fs.readFileSync('./data/settings.json', 'utf8'));
+  const recruiterEmail = settings.recruiterEmail || process.env.RECRUITER_EMAIL || 'sharmavageesha2000@gmail.com';
+  const recruiterPass = (settings.appPassword || process.env.GOOGLE_APP_PASSWORD || 'qoyolivxrkuqxmkx').replace(/\s+/g, '');
+
+  console.log(`Connecting IMAP for: ${recruiterEmail}...`);
+  const config = {
     imap: {
-      user: 'sharmavageesha2000@gmail.com',
-      password: 'qoyolivxrkuqxmkx',
+      user: recruiterEmail,
+      password: recruiterPass,
       host: 'imap.gmail.com',
       port: 993,
       tls: true,
+      tlsOptions: { rejectUnauthorized: false },
       authTimeout: 10000,
-      tlsOptions: { rejectUnauthorized: false }
+      connTimeout: 10000
     }
-  });
-
-  await connection.openBox('INBOX');
-
-  const searchCriteria = ['ALL'];
-  const fetchOptions = {
-    bodies: ['HEADER', 'TEXT', ''],
-    struct: true
   };
 
-  const results = await connection.search(searchCriteria, fetchOptions);
-  console.log(`Total messages in INBOX: ${results.length}`);
+  const connection = await imaps.connect(config);
+  const box = await connection.openBox('INBOX');
+  const total = box.messages.total;
+  console.log(`Total messages in INBOX: ${total}`);
 
-  const recent = results.slice(-10).reverse();
+  const processedUids = getProcessedUids();
+  console.log(`Total processed UIDs recorded: ${processedUids.length}`);
 
-  console.log('\n======================================================');
-  console.log('📬 RECENT 10 MESSAGES IN INBOX:');
-  console.log('======================================================');
+  // Fetch last 10 messages
+  const count = 10;
+  const startSeq = Math.max(1, total - count + 1);
+  const messages = await connection.search([['ALL']], { bodies: '', struct: true });
+  
+  // Sort by UID desc
+  messages.sort((a, b) => b.attributes.uid - a.attributes.uid);
+  const latest10 = messages.slice(0, 10);
 
-  for (let i = 0; i < recent.length; i++) {
-    const item = recent[i];
-    const allPart = item.parts.find(p => p.which === '');
-    const rawSource = allPart ? allPart.body : '';
-    let parsed = null;
-    if (rawSource) {
-      parsed = await simpleParser(rawSource);
+  console.log(`\nInspecting latest ${latest10.length} emails:`);
+  for (const msg of latest10) {
+    const uid = msg.attributes.uid;
+    const allParts = msg.parts.find(p => p.which === '');
+    const rawBody = allParts ? allParts.body : '';
+    const parsed = await simpleParser(rawBody);
+
+    const from = parsed.from?.text || parsed.from?.value?.[0]?.address || 'Unknown';
+    const subject = parsed.subject || 'No Subject';
+    const date = parsed.date;
+    const attachments = parsed.attachments || [];
+    const isProcessed = processedUids.includes(String(uid));
+
+    console.log(`\n------------------------------------------------------------`);
+    console.log(`UID: ${uid} | Processed: ${isProcessed} | Date: ${date}`);
+    console.log(`From: ${from}`);
+    console.log(`Subject: "${subject}"`);
+    console.log(`Attachments count: ${attachments.length}`);
+
+    if (attachments.length > 0) {
+      for (const att of attachments) {
+        console.log(`  📎 Attachment: "${att.filename}" (${att.contentType}, ${att.size} bytes)`);
+        const text = await extractDocumentText(att.content, att.filename, att.contentType);
+        console.log(`     Text length: ${text.length} characters`);
+        const fromAddress = parsed.from?.value?.[0]?.address || from;
+        const isLegit = isLegitimateResumeDocument(att.filename, text, fromAddress, subject);
+        console.log(`     isLegitimateResumeDocument: ${isLegit}`);
+      }
     }
-    const headerPart = item.parts.find(p => p.which === 'HEADER');
-    const subject = parsed ? parsed.subject : headerPart?.body?.subject?.[0];
-    const from = parsed ? (parsed.from?.text || parsed.from?.value?.[0]?.address) : headerPart?.body?.from?.[0];
-    const date = parsed ? parsed.date : headerPart?.body?.date?.[0];
-    const attachments = parsed?.attachments?.map(a => `${a.filename} (${a.contentType}, ${a.size}b)`) || [];
-
-    console.log(`[${i + 1}] UID: ${item.attributes?.uid} | Date: ${date} | From: ${from}`);
-    console.log(`    Subject: "${subject}"`);
-    console.log(`    Attachments: ${attachments.length > 0 ? attachments.join(', ') : 'None'}`);
-    console.log(`    Text snippet: "${(parsed?.text || '').slice(0, 150).replace(/\n/g, ' ')}"`);
-    console.log('------------------------------------------------------');
   }
 
   connection.end();
 }
 
-diagnose().catch(console.error);
+run().catch(console.error);
