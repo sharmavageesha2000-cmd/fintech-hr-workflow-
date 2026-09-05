@@ -861,6 +861,8 @@ function heuristicFallbackEvaluation({
       });
 
   return {
+    candidateId: finalCandidateId,
+    assessmentToken: finalToken,
     candidateName: resolvedName,
     candidateEmail,
     candidatePhone,

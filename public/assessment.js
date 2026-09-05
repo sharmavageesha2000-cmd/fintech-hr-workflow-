@@ -29,9 +29,28 @@ let roleApplied = urlParams.get('role') || 'Frontend Developer';
 // DOM Elements
 document.addEventListener('DOMContentLoaded', () => {
   setupInitialUI();
+  checkInitialSubmissionStatus();
   setupAntiCheatingShield();
   setupKeyboardShortcuts();
 });
+
+async function checkInitialSubmissionStatus() {
+  if (!candidateId || candidateId === 'null' || candidateId === 'undefined') return;
+  try {
+    const res = await fetch(`/api/assessment/status?candidateId=${encodeURIComponent(candidateId)}`);
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.alreadySubmitted) {
+        isSubmitted = true;
+        const ob = document.getElementById('onboardingScreen');
+        if (ob) ob.style.display = 'none';
+        renderAlreadySubmittedScreen(data.candidate || {});
+      }
+    }
+  } catch (e) {
+    // Silently continue if status check is unavailable
+  }
+}
 
 function setupInitialUI() {
   // Update Header & Onboarding metadata

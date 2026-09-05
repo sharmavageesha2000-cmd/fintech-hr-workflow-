@@ -362,12 +362,12 @@ async function checkInboxNow() {
         );
 
         if (duplicateIndex !== -1) {
-          newCand.id = candidates[duplicateIndex].id;
+          // Update duplicate application record while preserving newCand.id so it matches the sent email link
           candidates[duplicateIndex] = newCand;
-          console.log(`[Auto-Processor] 🔄 Refreshed duplicate candidate record: ${newCand.name} (${newCand.roleApplied})`);
+          console.log(`[Auto-Processor] 🔄 Refreshed duplicate candidate record: ${newCand.name} (${newCand.roleApplied}) [ID: ${newCand.id}]`);
         } else {
           candidates.unshift(newCand);
-          console.log(`[Auto-Processor] ✅ Added new candidate application: ${newCand.name} (${newCand.roleApplied}) (Total records: ${candidates.length})`);
+          console.log(`[Auto-Processor] ✅ Added new candidate application: ${newCand.name} (${newCand.roleApplied}) [ID: ${newCand.id}] (Total records: ${candidates.length})`);
         }
 
         saveCandidates(candidates);
@@ -659,6 +659,47 @@ app.post('/api/send-email', async (req, res) => {
 
 // ================= ONLINE ASSESSMENT & AUTO-OFFER PIPELINE =================
 
+// 5. Quick Check Assessment Status by Candidate ID (For Page-Load Guard)
+app.get('/api/assessment/status', (req, res) => {
+  const { candidateId } = req.query;
+  if (!candidateId || candidateId === 'null' || candidateId === 'undefined') {
+    return res.json({ alreadySubmitted: false });
+  }
+
+  const candidates = getCandidates(true);
+  const candidateRecord = candidates.find(item => item.id === candidateId.trim());
+
+  if (candidateRecord && (
+    candidateRecord.assessmentCompleted === true ||
+    candidateRecord.testSubmitted === true ||
+    (candidateRecord.assessmentDetails && candidateRecord.assessmentDetails.completedAt) ||
+    (candidateRecord.testScore !== undefined && candidateRecord.testScore !== null && candidateRecord.interviewStatus === 'COMPLETED')
+  )) {
+    const passed = candidateRecord.assessmentDetails?.passed !== undefined
+      ? candidateRecord.assessmentDetails.passed
+      : ((candidateRecord.testScore || 0) >= 80);
+
+    return res.json({
+      alreadySubmitted: true,
+      candidate: {
+        id: candidateRecord.id,
+        name: candidateRecord.name,
+        email: candidateRecord.email,
+        roleApplied: candidateRecord.roleApplied,
+        scorePercent: candidateRecord.assessmentDetails?.scorePercent ?? candidateRecord.testScore ?? 0,
+        correctCount: candidateRecord.assessmentDetails?.correctCount ?? Math.round(((candidateRecord.testScore || 0) / 100) * 20),
+        totalQuestions: candidateRecord.assessmentDetails?.totalQuestions || 20,
+        passed,
+        status: candidateRecord.status || (passed ? 'SELECTED' : 'REJECTED'),
+        offerRefId: candidateRecord.offerRefId,
+        callLetterDetails: candidateRecord.callLetterDetails
+      }
+    });
+  }
+
+  res.json({ alreadySubmitted: false });
+});
+
 // 5a. Get 20 MCQs for Candidate's Domain (Dynamically Sampled & Shuffled per Session)
 app.get('/api/assessment/questions', (req, res) => {
   const { role, candidateId, candidateEmail, name } = req.query;
@@ -666,15 +707,12 @@ app.get('/api/assessment/questions', (req, res) => {
   let candidateRecord = null;
 
   const candidates = getCandidates(true);
-  // Strictly match candidate by explicit candidateId or verified email (NEVER by name alone!)
+  // Match candidate STRICTLY by explicit candidateId (NEVER by email/name fallback across candidates!)
   if (candidateId && candidateId.trim() && candidateId !== 'null' && candidateId !== 'undefined') {
     candidateRecord = candidates.find(item => item.id === candidateId.trim());
   }
-  if (!candidateRecord && candidateEmail && candidateEmail.includes('@') && !candidateEmail.includes('example.com')) {
-    candidateRecord = candidates.find(item => (item.email || '').toLowerCase().trim() === candidateEmail.toLowerCase().trim());
-  }
 
-  // Check if candidate has ALREADY completed / submitted their assessment test
+  // Check if THIS specific candidate attempt has ALREADY completed / submitted their assessment test
   const isAlreadySubmitted = Boolean(
     candidateRecord && (
       candidateRecord.assessmentCompleted === true ||
@@ -685,7 +723,7 @@ app.get('/api/assessment/questions', (req, res) => {
   );
 
   if (isAlreadySubmitted) {
-    console.log(`[Assessment Engine] 🔒 Candidate "${candidateRecord.name}" (${candidateRecord.email}) opened test link again, but assessment is ALREADY SUBMITTED. Refusing question access.`);
+    console.log(`[Assessment Engine] 🔒 Candidate "${candidateRecord.name}" (${candidateRecord.email}) opened test link again, but assessment is ALREADY SUBMITTED [ID: ${candidateRecord.id}]. Refusing question access.`);
     const passed = candidateRecord.assessmentDetails?.passed !== undefined 
       ? candidateRecord.assessmentDetails.passed 
       : (candidateRecord.testPassed || candidateRecord.status === 'SELECTED' || (candidateRecord.testScore || 0) >= 80);
@@ -764,11 +802,9 @@ app.post('/api/assessment/submit', async (req, res) => {
     const candidates = getCandidates(true);
     let candidateIdx = -1;
 
-    if (candidateId) {
-      candidateIdx = candidates.findIndex(c => c.id === candidateId);
-    }
-    if (candidateIdx === -1 && candidateEmail) {
-      candidateIdx = candidates.findIndex(c => (c.email || '').toLowerCase().trim() === candidateEmail.toLowerCase().trim());
+    // Match strictly by candidateId to ensure this candidate's record is updated
+    if (candidateId && candidateId !== 'null' && candidateId !== 'undefined') {
+      candidateIdx = candidates.findIndex(c => c.id === candidateId.trim());
     }
 
     let targetCandidate = candidateIdx !== -1 ? candidates[candidateIdx] : {
