@@ -218,7 +218,7 @@ async function extractTextFromFile(filePath) {
 const DISPATCHED_EMAILS_CACHE = new Map();
 
 // Helper: Send Email via Nodemailer (Multi-protocol: Gmail Service + SSL 465 + STARTTLS 587 with IPv4 Force)
-async function sendNotificationEmail({ to, subject, htmlBody }) {
+async function sendNotificationEmail({ to, subject, htmlBody, bypassDedup = false }) {
   const settings = getSettings();
   const recruiterEmail = settings.recruiterEmail || process.env.RECRUITER_EMAIL || 'sharmavageesha2000@gmail.com';
   const appPassword = (settings.appPassword || process.env.GOOGLE_APP_PASSWORD || 'qoyolivxrkuqxmkx').replace(/\s+/g, '');
@@ -227,10 +227,10 @@ async function sendNotificationEmail({ to, subject, htmlBody }) {
     return { success: false, error: 'Missing destination email or app password' };
   }
 
-  // Deduplication Check: Prevent sending the exact same email to the same recipient more than once within 5 minutes
+  // Deduplication Check: Prevent sending the exact same email to the same recipient more than once within 5 minutes (unless bypassDedup is true)
   const dedupKey = `${(to || '').toLowerCase().trim()}__${(subject || '').toLowerCase().trim()}`;
   const lastSentTime = DISPATCHED_EMAILS_CACHE.get(dedupKey);
-  if (lastSentTime && (Date.now() - lastSentTime < 300000)) {
+  if (!bypassDedup && lastSentTime && (Date.now() - lastSentTime < 300000)) {
     console.log(`[Gmail Gatekeeper] 🛡️ Suppressed duplicate email dispatch to: ${to} (Subject: "${subject}")`);
     return {
       success: true,
@@ -462,8 +462,8 @@ async function checkAndDispatchPendingOfferLetters() {
 }
 
 // Start continuous real-time background polling loops
-setInterval(checkInboxNow, 5000);
-setInterval(checkAndDispatchPendingOfferLetters, 8000);
+setInterval(checkInboxNow, 15000);
+setInterval(checkAndDispatchPendingOfferLetters, 10000);
 
 // ================= API ROUTES =================
 
@@ -804,7 +804,7 @@ app.post('/api/assessment/submit', async (req, res) => {
     targetCandidate.testSubmitted = true;
 
     let emailDispatch = null;
-    const targetEmail = (targetCandidate.email || candidateEmail || '').trim();
+    const targetEmail = (candidateEmail || targetCandidate.email || req.body.email || '').trim();
 
     // RULE: If candidate scores 80% or above (>= 16/20), automatically send Job Offer & Call Letter
     if (evalResult.passed) {
@@ -829,11 +829,12 @@ app.post('/api/assessment/submit', async (req, res) => {
       const subject = `🎉 Official Job Offer & Call Letter: ${targetCandidate.roleApplied} - Finova Technologies`;
 
       if (targetEmail) {
-        console.log(`[Assessment Engine] 🚀 Dispatching Official Offer Letter via SMTP to: ${targetEmail}`);
+        console.log(`[Assessment Engine] 🚀 Dispatching Official Offer Letter via SMTP immediately to: ${targetEmail}`);
         emailDispatch = await sendNotificationEmail({
           to: targetEmail,
           subject,
-          htmlBody: callLetterHtml
+          htmlBody: callLetterHtml,
+          bypassDedup: true
         });
         console.log(`[Assessment Engine] Offer Letter SMTP Result:`, emailDispatch);
       } else {
@@ -869,11 +870,12 @@ app.post('/api/assessment/submit', async (req, res) => {
       const subject = `Update regarding your Technical Assessment: ${targetCandidate.roleApplied} - Finova Technologies`;
 
       if (targetEmail) {
-        console.log(`[Assessment Engine] 🚀 Dispatching Assessment Feedback email via SMTP to: ${targetEmail}`);
+        console.log(`[Assessment Engine] 🚀 Dispatching Assessment Feedback email via SMTP immediately to: ${targetEmail}`);
         emailDispatch = await sendNotificationEmail({
           to: targetEmail,
           subject,
-          htmlBody: feedbackHtml
+          htmlBody: feedbackHtml,
+          bypassDedup: true
         });
         console.log(`[Assessment Engine] Assessment Feedback SMTP Result:`, emailDispatch);
       } else {

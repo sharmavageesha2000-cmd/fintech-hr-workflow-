@@ -87,16 +87,18 @@ function editCandidateRole() {
 }
 
 function editCandidateEmail() {
-  const current = candidateEmail || '';
-  const entered = prompt('Please enter your valid email address where your Official Job Offer & Call Letter will be dispatched upon scoring >= 80%:', current);
+  const current = candidateEmail === 'candidate@example.com' ? '' : (candidateEmail || '');
+  const entered = prompt('Please enter your valid email address where your Official Job Offer & Call Letter / Assessment Results will be dispatched immediately:', current);
   if (entered !== null) {
     const trimmed = entered.trim();
     if (trimmed && trimmed.includes('@')) {
       candidateEmail = trimmed;
-      const disp = document.getElementById('onboardCandEmail');
-      if (disp) disp.textContent = candidateEmail;
+      const disp1 = document.getElementById('onboardCandEmail');
+      if (disp1) disp1.textContent = candidateEmail;
+      const disp2 = document.getElementById('modalCandidateEmail');
+      if (disp2) disp2.textContent = candidateEmail;
     } else if (trimmed) {
-      alert('Please enter a valid email address (e.g. name@gmail.com).');
+      alert('Please enter a valid email address (e.g. yourname@gmail.com).');
     }
   }
 }
@@ -206,6 +208,16 @@ function closeViolationModal() {
 // ASSESSMENT LAUNCH & QUESTION FETCH
 // -------------------------------------------------------------
 async function startAssessmentSession() {
+  // Ensure candidate has entered a valid email address before test begins
+  if (!candidateEmail || !candidateEmail.includes('@') || candidateEmail === 'candidate@example.com') {
+    const entered = prompt('Please enter your email address to receive your Official Job Offer / Assessment Results immediately after the test:', candidateEmail === 'candidate@example.com' ? '' : candidateEmail);
+    if (entered && entered.trim() && entered.includes('@')) {
+      candidateEmail = entered.trim();
+      const disp = document.getElementById('onboardCandEmail');
+      if (disp) disp.textContent = candidateEmail;
+    }
+  }
+
   const btn = document.getElementById('btnStartAssessment');
   if (btn) {
     btn.disabled = true;
@@ -551,6 +563,11 @@ function openSubmissionSummaryModal() {
   document.getElementById('modalFlaggedCount').textContent = flagged;
   document.getElementById('modalUnansweredCount').textContent = unanswered;
 
+  const emailDisp = document.getElementById('modalCandidateEmail');
+  if (emailDisp) {
+    emailDisp.textContent = candidateEmail || '⚠️ No email set (Click Change Email)';
+  }
+
   const warn = document.getElementById('unansweredWarning');
   if (warn) {
     warn.style.display = unanswered > 0 ? 'block' : 'none';
@@ -567,6 +584,14 @@ function closeSubmissionSummaryModal() {
 // CONFIRM FINAL SUBMISSION & SERVER EVALUATION
 // -------------------------------------------------------------
 async function confirmFinalSubmission(forcedByViolation = false) {
+  // Validate email address before final submission
+  if (!candidateEmail || !candidateEmail.includes('@') || candidateEmail === 'candidate@example.com') {
+    const entered = prompt('Please enter your email address so your immediate test result / offer letter email can be delivered to you:', '');
+    if (entered && entered.trim() && entered.includes('@')) {
+      candidateEmail = entered.trim();
+    }
+  }
+
   closeSubmissionSummaryModal();
   isSubmitted = true;
   if (timerInterval) clearInterval(timerInterval);
@@ -581,7 +606,7 @@ async function confirmFinalSubmission(forcedByViolation = false) {
           Evaluating Systematic Assessment...
         </h2>
         <p style="font-size: 14.5px; color: var(--text-muted); max-width: 500px; margin: 0 auto;">
-          Analyzing your responses against the enterprise domain key, calculating multi-section competency breakdown, and checking qualifying threshold.
+          Analyzing your responses against the enterprise domain key, calculating multi-section competency breakdown, and dispatching your auto-reply outcome email immediately via SMTP.
         </p>
       </div>
     `;
@@ -699,6 +724,24 @@ function renderSystematicResultDashboard(result, candidate) {
       </div>
     `;
     container.appendChild(offerCard);
+  } else {
+    // Assessment Outcome & Feedback Dispatched Banner
+    const feedbackDetails = candidate?.feedbackDetails || {};
+    const feedbackCard = document.createElement('div');
+    feedbackCard.style.cssText = 'background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 14px; padding: 20px; margin-top: 20px; color: #fff; text-align: left;';
+    feedbackCard.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+        <span style="font-size: 22px;">📊</span>
+        <h3 style="color: #fbbf24; margin: 0; font-size: 16px; font-weight: 800;">Assessment Outcome &amp; Performance Feedback Dispatched</h3>
+      </div>
+      <p style="margin: 0 0 12px 0; font-size: 13.5px; color: #fde68a; line-height: 1.5;">
+        An automated evaluation email detailing your overall score (${scorePct}%), 4-section competency breakdown, and actionable growth areas has been dispatched via Gmail SMTP.
+      </p>
+      <div style="font-size: 12.5px; color: #cbd5e1;">
+        Delivered To: <strong style="color: #38bdf8;">${feedbackDetails.deliveredTo || candidateEmail || candidate?.email || 'Registered Email'}</strong>
+      </div>
+    `;
+    container.appendChild(feedbackCard);
   }
 
   // Section Breakdown Matrix
