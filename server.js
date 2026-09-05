@@ -386,67 +386,120 @@ async function checkInboxNow() {
   }
 }
 
-// ================= AUTOMATED OFFER LETTER DISPATCH DAEMON =================
-let isDispatchingOffers = false;
+// ================= AUTOMATED OUTCOME EMAIL DISPATCH WATCHDOG =================
+let isDispatchingOutcomes = false;
 
-async function checkAndDispatchPendingOfferLetters() {
-  if (isDispatchingOffers) return;
-  isDispatchingOffers = true;
+async function checkAndDispatchPendingOutcomeEmails() {
+  if (isDispatchingOutcomes) return;
+  isDispatchingOutcomes = true;
 
   try {
     const candidates = getCandidates(true);
     let updated = false;
 
     for (const c of candidates) {
-      // STRICT RULE: Offer letter must ONLY and STRICTLY be sent when the candidate has taken and PASSED the assessment test (score >= 80%)
-      const hasPassedAssessment = Boolean(
-        (c.testPassed === true || (c.assessmentDetails && c.assessmentDetails.passed === true)) &&
-        ((c.testScore !== undefined && c.testScore >= 80) || (c.assessmentDetails && c.assessmentDetails.scorePercent >= 80))
+      const isCompleted = Boolean(
+        c.assessmentCompleted === true ||
+        c.testSubmitted === true ||
+        (c.assessmentDetails && c.assessmentDetails.completedAt) ||
+        (c.testScore !== undefined && c.testScore !== null && c.interviewStatus === 'COMPLETED')
       );
+
+      if (!isCompleted) continue;
+
       const targetEmail = (c.email || '').trim();
-      const hasDelivered = c.callLetterDetails && c.callLetterDetails.emailDispatch && c.callLetterDetails.emailDispatch.success;
+      if (!targetEmail || !targetEmail.includes('@') || targetEmail === 'candidate@example.com') continue;
 
-      if (hasPassedAssessment && targetEmail && targetEmail.includes('@') && !hasDelivered) {
-        const role = c.roleApplied || 'Software Engineer';
-        const offerRefId = c.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-        const defaultJoining = 'Monday, 14 September 2026';
-        const defaultCtc = (role.toLowerCase().includes('senior') || role.toLowerCase().includes('lead'))
-          ? '₹14,50,000 per annum (Full-Time)'
-          : '₹9,50,000 per annum (Full-Time)';
+      const scorePercent = c.assessmentDetails?.scorePercent ?? c.testScore ?? 0;
+      const passed = Boolean(
+        (c.testPassed === true || (c.assessmentDetails && c.assessmentDetails.passed === true) || c.status === 'SELECTED') &&
+        scorePercent >= 80
+      );
 
-        const callLetterHtml = generateOfficialCallLetterHtml({
-          candidateName: c.name || 'Candidate',
-          roleApplied: role,
-          joiningDate: defaultJoining,
-          ctcPackage: defaultCtc,
-          reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
-          workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
-          offerRefId
-        });
+      const role = c.roleApplied || 'Frontend Developer';
 
-        const subject = `🎉 Official Job Offer & Call Letter: ${role} - Finova Technologies`;
+      if (passed) {
+        const hasDelivered = Boolean(c.callLetterDetails?.emailDispatch?.success);
+        if (!hasDelivered) {
+          const offerRefId = c.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+          const defaultJoining = c.callLetterDetails?.joiningDate || 'Monday, 14 September 2026';
+          const defaultCtc = c.callLetterDetails?.ctcPackage || ((role.toLowerCase().includes('senior') || role.toLowerCase().includes('lead'))
+            ? '₹14,50,000 per annum (Full-Time)'
+            : '₹9,50,000 per annum (Full-Time)');
 
-        console.log(`[Auto-Offer Daemon] 🚀 Dispatching Official Offer Letter via SMTP to: ${targetEmail} (Candidate: "${c.name}")...`);
-        const emailDispatch = await sendNotificationEmail({
-          to: targetEmail,
-          subject,
-          htmlBody: callLetterHtml
-        });
-
-        if (emailDispatch.success) {
-          console.log(`[Auto-Offer Daemon] ✅ Successfully delivered Call Letter to ${targetEmail} (Message ID: ${emailDispatch.messageId})`);
-          c.status = 'SELECTED';
-          c.offerStatus = 'OFFER_EXTENDED';
-          c.offerRefId = offerRefId;
-          c.callLetterSentAt = new Date().toISOString();
-          c.callLetterDetails = {
+          const callLetterHtml = generateOfficialCallLetterHtml({
+            candidateName: c.name || 'Candidate',
+            roleApplied: role,
             joiningDate: defaultJoining,
             ctcPackage: defaultCtc,
-            offerRefId,
-            emailDispatch,
-            deliveredTo: targetEmail
-          };
-          updated = true;
+            reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
+            workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
+            offerRefId
+          });
+
+          const subject = `🎉 Official Job Offer & Call Letter: ${role} - Finova Technologies`;
+
+          console.log(`[Outcome Watchdog] 🚀 Auto-dispatching Official Offer Letter via SMTP to: ${targetEmail} (Candidate: "${c.name}")...`);
+          const emailDispatch = await sendNotificationEmail({
+            to: targetEmail,
+            subject,
+            htmlBody: callLetterHtml,
+            bypassDedup: true
+          });
+
+          if (emailDispatch.success) {
+            console.log(`[Outcome Watchdog] ✅ Successfully delivered Call Letter to ${targetEmail} (Message ID: ${emailDispatch.messageId})`);
+            c.status = 'SELECTED';
+            c.offerStatus = 'OFFER_EXTENDED';
+            c.offerRefId = offerRefId;
+            c.callLetterSentAt = new Date().toISOString();
+            c.callLetterDetails = {
+              joiningDate: defaultJoining,
+              ctcPackage: defaultCtc,
+              offerRefId,
+              emailDispatch,
+              deliveredTo: targetEmail
+            };
+            updated = true;
+          }
+        }
+      } else {
+        const hasDeliveredFeedback = Boolean(c.feedbackDetails?.emailDispatch?.success);
+        if (!hasDeliveredFeedback) {
+          const feedbackHtml = generateAssessmentOutcomeFeedbackHtml({
+            candidateName: c.name || 'Candidate',
+            roleApplied: role,
+            scorePercent,
+            passingThreshold: 80,
+            correctCount: c.assessmentDetails?.correctCount ?? Math.round((scorePercent / 100) * 20),
+            totalQuestions: c.assessmentDetails?.totalQuestions ?? 20,
+            sectionBreakdown: c.assessmentDetails?.sectionBreakdown
+          });
+
+          const subject = `Update regarding your Technical Assessment: ${role} - Finova Technologies`;
+
+          console.log(`[Outcome Watchdog] 🚀 Auto-dispatching Assessment Feedback email via SMTP to: ${targetEmail} (Candidate: "${c.name}")...`);
+          const emailDispatch = await sendNotificationEmail({
+            to: targetEmail,
+            subject,
+            htmlBody: feedbackHtml,
+            bypassDedup: true
+          });
+
+          if (emailDispatch.success) {
+            console.log(`[Outcome Watchdog] ✅ Successfully delivered Feedback email to ${targetEmail} (Message ID: ${emailDispatch.messageId})`);
+            c.status = 'REJECTED';
+            c.offerStatus = 'REJECTED';
+            c.feedbackSentAt = new Date().toISOString();
+            c.feedbackDetails = {
+              scorePercent,
+              correctCount: c.assessmentDetails?.correctCount ?? Math.round((scorePercent / 100) * 20),
+              totalQuestions: c.assessmentDetails?.totalQuestions ?? 20,
+              emailDispatch,
+              deliveredTo: targetEmail
+            };
+            updated = true;
+          }
         }
       }
     }
@@ -455,15 +508,15 @@ async function checkAndDispatchPendingOfferLetters() {
       saveCandidates(candidates);
     }
   } catch (err) {
-    console.warn('[Auto-Offer Daemon Error]:', err.message);
+    console.warn('[Outcome Watchdog Error]:', err.message);
   } finally {
-    isDispatchingOffers = false;
+    isDispatchingOutcomes = false;
   }
 }
 
 // Start continuous real-time background polling loops
 setInterval(checkInboxNow, 15000);
-setInterval(checkAndDispatchPendingOfferLetters, 10000);
+setInterval(checkAndDispatchPendingOutcomeEmails, 10000);
 
 // ================= API ROUTES =================
 

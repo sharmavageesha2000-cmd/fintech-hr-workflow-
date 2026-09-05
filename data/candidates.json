@@ -1,5 +1,177 @@
 [
   {
+    "id": "cand-iso-1-1788620515381",
+    "name": "Rohan Mehta",
+    "email": "multi_candidate_tester_1788620515381@gmail.com",
+    "roleApplied": "Data Analyst",
+    "receivedAt": "2026-09-05T15:01:55.412Z",
+    "assessmentDetails": {
+      "completedAt": "2026-09-05T15:01:55.412Z",
+      "scorePercent": 40,
+      "correctCount": 8,
+      "totalQuestions": 20,
+      "passed": false,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 400,
+      "forcedByViolation": false
+    },
+    "testScore": 40,
+    "testPassed": false,
+    "assessmentCompleted": true,
+    "testSubmitted": true,
+    "status": "REJECTED",
+    "offerStatus": "REJECTED",
+    "interviewStatus": "COMPLETED",
+    "feedbackSentAt": "2026-09-05T15:01:59.502Z",
+    "feedbackDetails": {
+      "scorePercent": 40,
+      "correctCount": 8,
+      "totalQuestions": 20,
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<77943ef0-4925-ab3b-cbc8-d1a9ee4effce@gmail.com>",
+        "to": "multi_candidate_tester_1788620515381@gmail.com",
+        "subject": "Update regarding your Technical Assessment: Data Analyst - Finova Technologies"
+      },
+      "deliveredTo": "multi_candidate_tester_1788620515381@gmail.com"
+    }
+  },
+  {
+    "id": "cand-live-feedback-1788620429542",
+    "name": "Priya Verma",
+    "email": "paliwalrishu2000@gmail.com",
+    "roleApplied": "Data Analyst",
+    "receivedAt": "2026-09-05T15:00:29.554Z",
+    "assessmentDetails": {
+      "completedAt": "2026-09-05T15:00:29.554Z",
+      "scorePercent": 0,
+      "correctCount": 0,
+      "totalQuestions": 20,
+      "passed": false,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 500,
+      "forcedByViolation": false
+    },
+    "testScore": 0,
+    "testPassed": false,
+    "assessmentCompleted": true,
+    "testSubmitted": true,
+    "status": "REJECTED",
+    "offerStatus": "REJECTED",
+    "interviewStatus": "COMPLETED",
+    "feedbackSentAt": "2026-09-05T15:00:36.518Z",
+    "feedbackDetails": {
+      "scorePercent": 0,
+      "correctCount": 0,
+      "totalQuestions": 20,
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<f78a526e-b4b2-8472-3094-e1b1e3b05514@gmail.com>",
+        "to": "paliwalrishu2000@gmail.com",
+        "subject": "Update regarding your Technical Assessment: Data Analyst - Finova Technologies"
+      },
+      "deliveredTo": "paliwalrishu2000@gmail.com"
+    }
+  },
+  {
+    "id": "cand-live-pass-1788620422574",
+    "name": "Rohan Sharma",
+    "email": "paliwalrishu2000@gmail.com",
+    "roleApplied": "Full Stack AI Engineer",
+    "receivedAt": "2026-09-05T15:00:22.620Z",
+    "assessmentDetails": {
+      "completedAt": "2026-09-05T15:00:22.620Z",
+      "scorePercent": 100,
+      "correctCount": 20,
+      "totalQuestions": 20,
+      "passed": true,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 650,
+      "forcedByViolation": false
+    },
+    "testScore": 100,
+    "testPassed": true,
+    "assessmentCompleted": true,
+    "testSubmitted": true,
+    "status": "SELECTED",
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "OFFER_EXTENDED",
+    "offerRefId": "HR-OFFER-2026-3291",
+    "callLetterSentAt": "2026-09-05T15:00:29.533Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 14 September 2026",
+      "ctcPackage": "₹9,50,000 per annum (Full-Time)",
+      "offerRefId": "HR-OFFER-2026-3291",
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<d367da2d-6bea-5c0d-bcc7-2ba59ff51d17@gmail.com>",
+        "to": "paliwalrishu2000@gmail.com",
+        "subject": "🎉 Official Job Offer & Call Letter: Full Stack AI Engineer - Finova Technologies"
+      },
+      "deliveredTo": "paliwalrishu2000@gmail.com"
+    }
+  },
+  {
+    "id": "cand-1788615032452-3005",
+    "name": "Ananya Verma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "Not specified",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Business Analyst",
+    "experienceYears": 2.5,
+    "skills": [
+      "Requirement Gathering (BRD/FRD)",
+      "Agile / Scrum",
+      "Jira",
+      "Process Mapping",
+      "Documentation",
+      "Business Analysis"
+    ],
+    "missingSkills": [],
+    "scoreBreakdown": {
+      "technicalSkills": 35,
+      "experienceRelevance": 25,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 90,
+    "status": "SELECTED",
+    "interviewStatus": "SCHEDULED",
+    "offerStatus": "PENDING",
+    "summary": "Ananya Verma possesses 2.5 years of relevant experience aligned with Business Analyst. Strong foundation in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping. Shortlisted for 20-MCQ technical assessment.",
+    "strengths": [
+      "2.5 years of demonstrated experience in Business Analyst",
+      "Strong skills in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira"
+    ],
+    "weaknesses": [
+      "To be evaluated via 20-MCQ domain technical assessment (80% passing threshold)"
+    ],
+    "interviewSchedule": {
+      "roundName": "Round 1: Online Technical Assessment (20 MCQs)",
+      "format": "Proctored Online Assessment (20 Domain MCQs)",
+      "assessmentLink": "https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com&id=cand-1788615032452-3005&token=tkn_1788615032454_jz41jr0",
+      "duration": "25 Minutes",
+      "passingScore": "80% (16 / 20 correct)",
+      "preparationNotes": "Complete 20 domain-specific questions in Business Analyst. Copy/paste and multi-window switching are strictly monitored."
+    },
+    "emailSubject": "📝 Technical Assessment Link: Business Analyst - Finova Technologies",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 14px; background: #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.04);\">\n      <div style=\"text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9;\">\n        <span style=\"background: #ecfdf5; color: #047857; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 99px; display: inline-block; margin-bottom: 10px; border: 1px solid #a7f3d0;\">RESUME SHORTLISTED</span>\n        <h2 style=\"color: #0f172a; margin: 0 0 6px 0; font-size: 22px; font-weight: 800;\">🎉 Congratulations, Ananya Verma!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 14.5px;\">Your application for <strong>Business Analyst</strong> has been approved for the next stage.</p>\n      </div>\n\n      <p style=\"font-size: 15px; line-height: 1.6; color: #334155;\">Dear <strong>Ananya Verma</strong>,</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">Thank you for applying for the <strong>Business Analyst</strong> position at Finova Technologies. We thoroughly reviewed your resume and were impressed by your <strong>2.5 years of relevant experience</strong> and proficiency in <strong>Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping, Documentation</strong>.</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">To finalize your selection and generate your official employment offer, you are invited to complete your <strong>Online Technical Assessment</strong>.</p>\n\n      <!-- Assessment Card -->\n      <div style=\"background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%); border: 1.5px solid #5eead4; border-radius: 12px; padding: 22px; margin: 24px 0;\">\n        <h3 style=\"margin: 0 0 14px 0; color: #0f766e; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;\">\n          📝 Technical Assessment Details (Business Analyst)\n        </h3>\n        \n        <table style=\"width: 100%; font-size: 13.5px; color: #1e293b; border-collapse: collapse; margin-bottom: 16px;\">\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b; width: 42%;\"><strong>Role Domain:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #0f766e;\">Business Analyst (20 Domain MCQs)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Time Duration:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700;\">25 Minutes</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Passing Requirement:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 800; color: #047857;\">80% or above (16 / 20 correct)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Automated Outcome:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #4338ca;\">Immediate Official Job Offer &amp; Call Letter Dispatch upon passing</td>\n          </tr>\n        </table>\n\n        <!-- Anti-Cheating & Proctoring Notice -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; font-size: 12.5px; color: #92400e; line-height: 1.5;\">\n          <strong>🛡️ Anti-Cheating &amp; Proctoring Regulations:</strong>\n          <ul style=\"margin: 6px 0 0 0; padding-left: 18px;\">\n            <li>Copy/paste and right-click are strictly disabled in the test portal.</li>\n            <li>Do not switch browser tabs or open secondary windows on mobile or laptop. Violations will be recorded and may auto-submit your test.</li>\n          </ul>\n        </div>\n\n        <!-- CTA Button -->\n        <div style=\"text-align: center;\">\n          <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com&id=cand-1788615032452-3005&token=tkn_1788615032454_jz41jr0\" target=\"_blank\" style=\"background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: #ffffff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 15px; display: inline-block; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);\">\n            🚀 Start Online Technical Assessment (20 MCQs)\n          </a>\n        </div>\n        <p style=\"text-align: center; font-size: 12px; color: #64748b; margin: 10px 0 0 0;\">Link: <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com&id=cand-1788615032452-3005&token=tkn_1788615032454_jz41jr0\" target=\"_blank\" style=\"color: #0f766e;\">https://hr-smartflow-automation.onrender.com/assessment.html?role=Business%20Analyst&name=Ananya%20Verma&email=sharmavageesha2000%40gmail.com&id=cand-1788615032452-3005&token=tkn_1788615032454_jz41jr0</a></p>\n      </div>\n\n      <p style=\"font-size: 14px; color: #475569; line-height: 1.6;\">Please take the test in a quiet environment on a reliable internet connection. We wish you the very best of luck!</p>\n\n      <div style=\"margin-top: 26px; border-top: 1px solid #e2e8f0; padding-top: 16px;\">\n        <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n        <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;\">sharmavageesha2000@gmail.com</span>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Business_Analyst_Resume_2_to_3_Years.pdf",
+      "fileSize": 35960,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788615032449-Business_Analyst_Resume_2_to_3_Years.pdf",
+      "urlPath": "/uploads/1788615032449-Business_Analyst_Resume_2_to_3_Years.pdf"
+    },
+    "receivedAt": "2026-09-05T13:29:53.000Z",
+    "evaluatedAt": "2026-09-05T13:30:34.266Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-09-05T13:30:39.476Z"
+  },
+  {
     "id": "cand-live-feedback-1788614484647",
     "name": "Priya Verma",
     "email": "paliwalrishu2000@gmail.com",
@@ -626,7 +798,21 @@
     "testSubmitted": true,
     "status": "REJECTED",
     "offerStatus": "REJECTED",
-    "interviewStatus": "COMPLETED"
+    "interviewStatus": "COMPLETED",
+    "feedbackSentAt": "2026-09-05T15:00:43.037Z",
+    "feedbackDetails": {
+      "scorePercent": 30,
+      "correctCount": 6,
+      "totalQuestions": 20,
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<19d13a74-e045-38ac-f63d-993066335ffc@gmail.com>",
+        "to": "fail_test_1788582000093@finovatech.com",
+        "subject": "Update regarding your Technical Assessment: Backend Developer - Finova Technologies"
+      },
+      "deliveredTo": "fail_test_1788582000093@finovatech.com"
+    }
   },
   {
     "id": "cand-1788581961879",
@@ -780,7 +966,21 @@
     "testScore": 35,
     "testPassed": false,
     "assessmentCompleted": true,
-    "testSubmitted": true
+    "testSubmitted": true,
+    "feedbackSentAt": "2026-09-05T15:00:59.997Z",
+    "feedbackDetails": {
+      "scorePercent": 35,
+      "correctCount": 7,
+      "totalQuestions": 20,
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<dffc8360-145d-131f-b2f3-5e19bee2d9fb@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "Update regarding your Technical Assessment: Full Stack AI Engineer - Finova Technologies"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
   },
   {
     "id": "cand-1788542966826-342",
@@ -914,7 +1114,21 @@
     "testScore": 0,
     "testPassed": false,
     "assessmentCompleted": true,
-    "testSubmitted": true
+    "testSubmitted": true,
+    "feedbackSentAt": "2026-09-05T15:01:05.655Z",
+    "feedbackDetails": {
+      "scorePercent": 0,
+      "correctCount": 0,
+      "totalQuestions": 20,
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<96bfd017-54fb-ec9c-1fab-d49ee8d98487@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "Update regarding your Technical Assessment: Frontend Developer - Finova Technologies"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
   },
   {
     "id": "cand-1788538127982-638",
