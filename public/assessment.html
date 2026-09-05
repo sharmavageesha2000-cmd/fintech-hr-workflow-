@@ -1082,25 +1082,31 @@
       </div>
 
       <!-- Candidate Verified Meta -->
-      <div class="candidate-identity-box">
+      <div class="candidate-identity-box" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
         <div class="id-field">
-          <label>Candidate Name</label>
-          <span id="onboardCandName">Candidate</span>
-          <button type="button" onclick="editCandidateName()" style="background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); color: #06b6d4; font-size: 11px; padding: 2px 8px; border-radius: 6px; cursor: pointer; margin-left: 6px;">✏️ Edit</button>
+          <label for="onboardCandNameInput" style="font-weight: 700; font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Candidate Name</label>
+          <input type="text" id="onboardCandNameInput" class="onboard-input" placeholder="e.g. Rohan Sharma" value="Candidate" style="background: rgba(255,255,255,0.05); border: 1px solid var(--surface-border); border-radius: 8px; padding: 10px 12px; color: #fff; font-size: 14px; width: 100%; font-family: inherit; margin-top: 4px;">
         </div>
         <div class="id-field">
-          <label>Target Domain / Role</label>
-          <span id="onboardCandRole" style="color: var(--primary);">Frontend Developer</span>
-          <button type="button" onclick="editCandidateRole()" style="background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); color: #06b6d4; font-size: 11px; padding: 2px 8px; border-radius: 6px; cursor: pointer; margin-left: 6px;">✏️ Change Role</button>
+          <label for="onboardCandEmailInput" style="font-weight: 700; font-size: 12px; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px;">Candidate Email (Instant Result / Offer Sent Here)</label>
+          <input type="email" id="onboardCandEmailInput" class="onboard-input" placeholder="yourname@gmail.com" value="" style="background: rgba(56, 189, 248, 0.08); border: 1.5px solid #0284c7; border-radius: 8px; padding: 10px 12px; color: #38bdf8; font-size: 14px; width: 100%; font-family: inherit; font-weight: 700; margin-top: 4px;">
         </div>
         <div class="id-field">
-          <label>Delivery Email (Offer Letter)</label>
-          <span id="onboardCandEmail" style="color: #38bdf8;">candidate@example.com</span>
-          <button type="button" onclick="editCandidateEmail()" style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; font-size: 11px; padding: 2px 8px; border-radius: 6px; cursor: pointer; margin-left: 6px;">✏️ Edit</button>
+          <label for="onboardCandRoleSelect" style="font-weight: 700; font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Target Job Domain</label>
+          <select id="onboardCandRoleSelect" class="onboard-input" style="background: var(--surface-elevated); border: 1px solid var(--surface-border); border-radius: 8px; padding: 10px 12px; color: #fff; font-size: 14px; width: 100%; font-family: inherit; margin-top: 4px;">
+            <option value="Frontend Developer">Frontend Developer</option>
+            <option value="Backend Developer">Backend Developer</option>
+            <option value="Full Stack AI Engineer">Full Stack AI Engineer</option>
+            <option value="AI/ML Engineer">AI/ML Engineer</option>
+            <option value="Data Analyst">Data Analyst</option>
+            <option value="Business Analyst">Business Analyst</option>
+            <option value="UI/UX Designer">UI/UX Designer</option>
+            <option value="Business Development Executive">Business Development Executive</option>
+          </select>
         </div>
         <div class="id-field">
-          <label>Assessment Duration</label>
-          <span>25 Minutes (20 MCQs)</span>
+          <label style="font-weight: 700; font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Assessment Duration</label>
+          <div style="padding-top: 12px; font-weight: 800; font-size: 14.5px; color: #34d399;">⏱️ 25 Minutes (20 MCQs)</div>
         </div>
       </div>
 

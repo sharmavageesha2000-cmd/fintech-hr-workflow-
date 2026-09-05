@@ -840,7 +840,12 @@ app.post('/api/assessment/submit', async (req, res) => {
     targetCandidate.testSubmitted = true;
 
     let emailDispatch = null;
-    const targetEmail = (candidateEmail || targetCandidate.email || req.body.email || '').trim();
+    let targetEmail = (candidateEmail || targetCandidate.email || req.body.email || '').trim();
+    if (!targetEmail || targetEmail === 'candidate@example.com' || !targetEmail.includes('@')) {
+      if (targetCandidate.email && targetCandidate.email.includes('@') && targetCandidate.email !== 'candidate@example.com') {
+        targetEmail = targetCandidate.email.trim();
+      }
+    }
 
     // RULE: If candidate scores 80% or above (>= 16/20), automatically send Job Offer & Call Letter
     if (evalResult.passed) {
@@ -864,7 +869,7 @@ app.post('/api/assessment/submit', async (req, res) => {
 
       const subject = `🎉 Official Job Offer & Call Letter: ${targetCandidate.roleApplied} - Finova Technologies`;
 
-      if (targetEmail) {
+      if (targetEmail && targetEmail.includes('@')) {
         console.log(`[Assessment Engine] 🚀 Dispatching Official Offer Letter via SMTP immediately to: ${targetEmail}`);
         emailDispatch = await sendNotificationEmail({
           to: targetEmail,
@@ -905,7 +910,7 @@ app.post('/api/assessment/submit', async (req, res) => {
 
       const subject = `Update regarding your Technical Assessment: ${targetCandidate.roleApplied} - Finova Technologies`;
 
-      if (targetEmail) {
+      if (targetEmail && targetEmail.includes('@')) {
         console.log(`[Assessment Engine] 🚀 Dispatching Assessment Feedback email via SMTP immediately to: ${targetEmail}`);
         emailDispatch = await sendNotificationEmail({
           to: targetEmail,
@@ -947,7 +952,8 @@ app.post('/api/assessment/submit', async (req, res) => {
       totalQuestions: evalResult.totalQuestions,
       result: evalResult,
       candidate: targetCandidate,
-      emailDispatch
+      emailDispatch,
+      deliveredTo: targetEmail
     });
   } catch (err) {
     console.error('Assessment submit error:', err);
@@ -992,7 +998,8 @@ app.post('/api/assessment/resend-offer', async (req, res) => {
     const emailDispatch = await sendNotificationEmail({
       to: targetEmail,
       subject,
-      htmlBody: callLetterHtml
+      htmlBody: callLetterHtml,
+      bypassDedup: true
     });
 
     if (candidate) {
@@ -1011,6 +1018,82 @@ app.post('/api/assessment/resend-offer', async (req, res) => {
     });
   } catch (err) {
     console.error('Error resending offer letter:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 5d. Resend / Forward Assessment Outcome Email (Offer Letter if passed >= 80%, Feedback if < 80%)
+app.post('/api/assessment/resend-outcome', async (req, res) => {
+  try {
+    const { candidateId, candidateEmail, candidateName, roleApplied, scorePercent } = req.body;
+    const targetEmail = (candidateEmail || '').trim();
+
+    if (!targetEmail || !targetEmail.includes('@')) {
+      return res.status(400).json({ success: false, error: 'Valid candidate email address is required.' });
+    }
+
+    const candidates = getCandidates(true);
+    let candidate = candidates.find(c => (candidateId && c.id === candidateId.trim()) || (c.email && c.email.toLowerCase().trim() === targetEmail.toLowerCase().trim()));
+
+    const effectiveRole = roleApplied || candidate?.roleApplied || 'Frontend Developer';
+    const effectiveName = (candidateName && candidateName !== 'Candidate' ? candidateName : candidate?.name) || 'Candidate';
+    const effectiveScore = scorePercent !== undefined ? scorePercent : (candidate?.testScore ?? candidate?.assessmentDetails?.scorePercent ?? 0);
+    const passed = effectiveScore >= 80 || candidate?.status === 'SELECTED' || candidate?.testPassed === true;
+
+    let subject = '';
+    let htmlBody = '';
+
+    if (passed) {
+      const offerRefId = candidate?.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      const defaultJoining = candidate?.callLetterDetails?.joiningDate || 'Monday, 14 September 2026';
+      const defaultCtc = candidate?.callLetterDetails?.ctcPackage || ((effectiveRole.toLowerCase().includes('senior') || effectiveRole.toLowerCase().includes('lead'))
+        ? '₹14,50,000 per annum (Full-Time)'
+        : '₹9,50,000 per annum (Full-Time)');
+
+      htmlBody = generateOfficialCallLetterHtml({
+        candidateName: effectiveName,
+        roleApplied: effectiveRole,
+        joiningDate: defaultJoining,
+        ctcPackage: defaultCtc,
+        reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
+        workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
+        offerRefId
+      });
+      subject = `🎉 Official Job Offer & Call Letter: ${effectiveRole} - Finova Technologies`;
+    } else {
+      htmlBody = generateAssessmentOutcomeFeedbackHtml({
+        candidateName: effectiveName,
+        roleApplied: effectiveRole,
+        scorePercent: effectiveScore,
+        passingThreshold: 80,
+        correctCount: candidate?.assessmentDetails?.correctCount ?? Math.round((effectiveScore / 100) * 20),
+        totalQuestions: candidate?.assessmentDetails?.totalQuestions ?? 20,
+        sectionBreakdown: candidate?.assessmentDetails?.sectionBreakdown
+      });
+      subject = `Update regarding your Technical Assessment: ${effectiveRole} - Finova Technologies`;
+    }
+
+    console.log(`[Assessment Engine] 🚀 Dispatching assessment outcome email to: ${targetEmail} (Passed: ${passed}, Subject: "${subject}")`);
+    const emailDispatch = await sendNotificationEmail({
+      to: targetEmail,
+      subject,
+      htmlBody,
+      bypassDedup: true
+    });
+
+    if (candidate) {
+      candidate.email = targetEmail;
+      saveCandidates(candidates);
+    }
+
+    res.json({
+      success: emailDispatch.success,
+      emailDispatch,
+      deliveredTo: targetEmail,
+      passed
+    });
+  } catch (err) {
+    console.error('Error resending assessment outcome email:', err);
     res.status(500).json({ success: false, error: err.message });
   }
 });
