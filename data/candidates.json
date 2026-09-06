@@ -1,5 +1,97 @@
 [
   {
+    "id": "cand-live-offer-1788692785312",
+    "name": "Ananya Verma",
+    "email": "sharmavageesha2000@gmail.com",
+    "roleApplied": "Business Analyst",
+    "status": "SELECTED",
+    "receivedAt": "2026-09-06T11:06:25.315Z",
+    "attachmentInfo": {
+      "fileName": "Business_Analyst_Resume.pdf",
+      "urlPath": "/uploads/dummy.pdf"
+    },
+    "assessmentDetails": {
+      "completedAt": "2026-09-06T11:06:25.355Z",
+      "scorePercent": 90,
+      "correctCount": 18,
+      "totalQuestions": 20,
+      "passed": true,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 410,
+      "forcedByViolation": false
+    },
+    "testScore": 90,
+    "testPassed": true,
+    "assessmentCompleted": true,
+    "testSubmitted": true,
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "OFFER_EXTENDED",
+    "offerRefId": "HR-OFFER-2026-1792",
+    "callLetterSentAt": "2026-09-06T11:06:38.912Z",
+    "pendingEmailSync": false,
+    "callLetterDetails": {
+      "joiningDate": "Monday, 28 September 2026",
+      "ctcPackage": "₹9,00,000 per annum (Standard Full-Time) (Full-Time)",
+      "reportingTo": "Pooja Mehta (VP of Talent Acquisition)",
+      "workMode": "Remote / Hybrid (Flexible Work Arrangements)",
+      "offerRefId": "HR-OFFER-2026-1792",
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<b1a9f060-b02f-b242-2b74-6ec18e333e39@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "🎉 Congratulations! Job Offer & Selection Intent: Business Analyst - Finova Technologies",
+        "transport": "smtp.gmail.com:465 (Standard Direct SSL)"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com",
+      "type": "SELECTION_INTENT_OFFER"
+    }
+  },
+  {
+    "id": "cand-demo-live-1788692766650",
+    "name": "Ananya Verma",
+    "email": "sharmavageesha2000@gmail.com",
+    "roleApplied": "Business Analyst",
+    "status": "REJECTED",
+    "receivedAt": "2026-09-06T11:06:06.654Z",
+    "attachmentInfo": {
+      "fileName": "Business_Analyst_Resume.pdf",
+      "urlPath": "/uploads/dummy.pdf"
+    },
+    "assessmentDetails": {
+      "completedAt": "2026-09-06T11:06:06.703Z",
+      "scorePercent": 0,
+      "correctCount": 0,
+      "totalQuestions": 20,
+      "passed": false,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 360,
+      "forcedByViolation": false
+    },
+    "testScore": 0,
+    "testPassed": false,
+    "assessmentCompleted": true,
+    "testSubmitted": true,
+    "offerStatus": "REJECTED",
+    "interviewStatus": "COMPLETED",
+    "feedbackSentAt": "2026-09-06T11:06:12.572Z",
+    "pendingEmailSync": false,
+    "feedbackDetails": {
+      "scorePercent": 0,
+      "correctCount": 0,
+      "totalQuestions": 20,
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<d4b98e49-2cfe-63f4-effa-2dae18db7a74@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "📊 Technical Assessment Result & Performance Feedback: Business Analyst - Finova Technologies",
+        "transport": "smtp.gmail.com:465 (Standard Direct SSL)"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
+  },
+  {
     "id": "cand-reject-flow-1788692691934",
     "name": "Kavita Patel",
     "email": "sharmavageesha2000@gmail.com",
