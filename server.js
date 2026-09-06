@@ -760,6 +760,18 @@ app.get('/api/assessment/status', (req, res) => {
     });
   }
 
+  if (candidateRecord) {
+    return res.json({
+      alreadySubmitted: false,
+      candidate: {
+        id: candidateRecord.id,
+        name: candidateRecord.name,
+        email: candidateRecord.email,
+        roleApplied: candidateRecord.roleApplied
+      }
+    });
+  }
+
   res.json({ alreadySubmitted: false });
 });
 
@@ -924,8 +936,8 @@ app.post('/api/assessment/submit', async (req, res) => {
       receivedAt: new Date().toISOString()
     };
 
-    // Ensure candidate name and email are updated with latest submitted values
-    if (candidateEmail && candidateEmail.trim()) {
+    // Ensure candidate name and email are preserved from resume, and never overwritten by placeholder values
+    if (candidateEmail && candidateEmail.trim() && candidateEmail.includes('@') && candidateEmail.trim().toLowerCase() !== 'candidate@example.com') {
       targetCandidate.email = candidateEmail.trim();
     }
     if (candidateName && candidateName.trim() && candidateName !== 'Candidate') {
@@ -949,11 +961,13 @@ app.post('/api/assessment/submit', async (req, res) => {
     targetCandidate.testSubmitted = true;
 
     let emailDispatch = null;
-    let targetEmail = (candidateEmail || targetCandidate.email || req.body.email || '').trim();
-    if (!targetEmail || targetEmail === 'candidate@example.com' || !targetEmail.includes('@')) {
-      if (targetCandidate.email && targetCandidate.email.includes('@') && targetCandidate.email !== 'candidate@example.com') {
-        targetEmail = targetCandidate.email.trim();
-      }
+    let targetEmail = '';
+    if (targetCandidate.email && targetCandidate.email.includes('@') && targetCandidate.email.toLowerCase() !== 'candidate@example.com') {
+      targetEmail = targetCandidate.email.trim();
+    } else if (candidateEmail && candidateEmail.includes('@') && candidateEmail.toLowerCase() !== 'candidate@example.com') {
+      targetEmail = candidateEmail.trim();
+    } else if (req.body.email && req.body.email.includes('@') && req.body.email.toLowerCase() !== 'candidate@example.com') {
+      targetEmail = req.body.email.trim();
     }
 
     // RULE: If candidate scores 80% or above (>= 16/20), automatically send Job Offer & Call Letter
@@ -1017,7 +1031,7 @@ app.post('/api/assessment/submit', async (req, res) => {
         sectionBreakdown: evalResult.sectionBreakdown
       });
 
-      const subject = `Update regarding your Technical Assessment: ${targetCandidate.roleApplied} - Finova Technologies`;
+      const subject = `📊 Technical Assessment Result & Performance Feedback: ${targetCandidate.roleApplied} - Finova Technologies`;
 
       if (targetEmail && targetEmail.includes('@')) {
         console.log(`[Assessment Engine] 🚀 Dispatching Assessment Feedback email via SMTP immediately to: ${targetEmail}`);

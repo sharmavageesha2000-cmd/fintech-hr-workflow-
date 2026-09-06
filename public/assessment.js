@@ -22,9 +22,9 @@ let isSubmitted = false;
 // URL Query Parameters
 const urlParams = new URLSearchParams(window.location.search);
 let candidateId = urlParams.get('id') || urlParams.get('candidateId') || 'cand-' + Date.now();
-let candidateName = urlParams.get('name') || 'Candidate';
-let candidateEmail = (urlParams.get('email') || '').trim();
-let roleApplied = urlParams.get('role') || 'Frontend Developer';
+let candidateName = urlParams.get('name') || urlParams.get('candidateName') || 'Candidate';
+let candidateEmail = (urlParams.get('email') || urlParams.get('candidateEmail') || '').trim();
+let roleApplied = urlParams.get('role') || urlParams.get('targetRole') || 'Frontend Developer';
 
 // DOM Elements
 document.addEventListener('DOMContentLoaded', () => {
@@ -40,11 +40,27 @@ async function checkInitialSubmissionStatus() {
     const res = await fetch(`/api/assessment/status?candidateId=${encodeURIComponent(candidateId)}`);
     if (res.ok) {
       const data = await res.json();
-      if (data && data.alreadySubmitted) {
-        isSubmitted = true;
-        const ob = document.getElementById('onboardingScreen');
-        if (ob) ob.style.display = 'none';
-        renderAlreadySubmittedScreen(data.candidate || {});
+      if (data) {
+        // Sync verified resume identity from server candidate record
+        if (data.candidate) {
+          if (data.candidate.name && data.candidate.name !== 'Candidate') {
+            candidateName = data.candidate.name;
+          }
+          if (data.candidate.email && data.candidate.email.includes('@') && data.candidate.email !== 'candidate@example.com') {
+            candidateEmail = data.candidate.email;
+          }
+          if (data.candidate.roleApplied) {
+            roleApplied = data.candidate.roleApplied;
+          }
+          setupInitialUI();
+        }
+
+        if (data.alreadySubmitted) {
+          isSubmitted = true;
+          const ob = document.getElementById('onboardingScreen');
+          if (ob) ob.style.display = 'none';
+          renderAlreadySubmittedScreen(data.candidate || {});
+        }
       }
     }
   } catch (e) {
@@ -53,81 +69,31 @@ async function checkInitialSubmissionStatus() {
 }
 
 function setupInitialUI() {
-  // Update Header & Onboarding metadata
+  // Update Header & Domain Pill
   const headerRole = document.getElementById('headerRolePill');
   if (headerRole) headerRole.textContent = roleApplied;
 
+  // Display locked candidate name (Non-editable from resume)
+  const nameText = document.getElementById('onboardCandNameText');
+  if (nameText) nameText.textContent = candidateName !== 'Candidate' ? candidateName : 'Registered Candidate';
   const nameInput = document.getElementById('onboardCandNameInput');
-  if (nameInput) nameInput.value = candidateName !== 'Candidate' ? candidateName : '';
+  if (nameInput) nameInput.value = candidateName;
 
-  const roleSelect = document.getElementById('onboardCandRoleSelect');
-  if (roleSelect) {
-    roleSelect.value = roleApplied;
-    roleSelect.addEventListener('change', (e) => {
-      roleApplied = e.target.value;
-      if (headerRole) headerRole.textContent = roleApplied;
-    });
-  }
-
+  // Display locked candidate email (Non-editable from resume)
+  const emailText = document.getElementById('onboardCandEmailText');
+  if (emailText) emailText.textContent = (candidateEmail && candidateEmail !== 'candidate@example.com') ? candidateEmail : 'Email on File';
   const emailInput = document.getElementById('onboardCandEmailInput');
-  if (emailInput) {
-    emailInput.value = (candidateEmail && candidateEmail !== 'candidate@example.com') ? candidateEmail : '';
-  }
-}
+  if (emailInput) emailInput.value = candidateEmail;
 
-function editCandidateName() {
-  const current = candidateName === 'Candidate' ? '' : candidateName;
-  const entered = prompt('Please enter your full name:', current);
-  if (entered !== null && entered.trim()) {
-    candidateName = entered.trim();
-    const nameInput = document.getElementById('onboardCandNameInput');
-    if (nameInput) nameInput.value = candidateName;
-  }
-}
+  // Display locked target job domain (Non-editable from resume)
+  const roleText = document.getElementById('onboardCandRoleText');
+  if (roleText) roleText.textContent = roleApplied;
+  const roleSelect = document.getElementById('onboardCandRoleSelect');
+  if (roleSelect) roleSelect.value = roleApplied;
 
-function editCandidateRole() {
-  const availableRoles = [
-    'Frontend Developer',
-    'Backend Developer',
-    'Full Stack AI Engineer',
-    'AI/ML Engineer',
-    'Data Analyst',
-    'Business Analyst',
-    'UI/UX Designer',
-    'Business Development Executive'
-  ];
-  const roleListPrompt = 'Select your target job domain by number:\n' + 
-    availableRoles.map((r, i) => `${i + 1}. ${r}`).join('\n');
-  const chosen = prompt(roleListPrompt, '1');
-  if (chosen !== null) {
-    const idx = parseInt(chosen, 10) - 1;
-    if (idx >= 0 && idx < availableRoles.length) {
-      roleApplied = availableRoles[idx];
-    } else if (chosen.trim()) {
-      roleApplied = chosen.trim();
-    }
-    const headerRole = document.getElementById('headerRolePill');
-    if (headerRole) headerRole.textContent = roleApplied;
-    const roleSelect = document.getElementById('onboardCandRoleSelect');
-    if (roleSelect) roleSelect.value = roleApplied;
-  }
-}
-
-function editCandidateEmail() {
-  const current = candidateEmail === 'candidate@example.com' ? '' : (candidateEmail || '');
-  const entered = prompt('Please enter your valid email address where your Official Job Offer & Call Letter / Assessment Results will be dispatched immediately:', current);
-  if (entered !== null) {
-    const trimmed = entered.trim();
-    if (trimmed && trimmed.includes('@')) {
-      candidateEmail = trimmed;
-      const emailInput = document.getElementById('onboardCandEmailInput');
-      if (emailInput) emailInput.value = candidateEmail;
-      const disp2 = document.getElementById('modalCandidateEmail');
-      if (disp2) disp2.textContent = candidateEmail;
-    } else if (trimmed) {
-      alert('Please enter a valid email address (e.g. yourname@gmail.com).');
-    }
-  }
+  // Confirmation modal recipient display (Non-editable)
+  const modalEmail = document.getElementById('modalCandidateEmail');
+  if (modalEmail) modalEmail.textContent = (candidateEmail && candidateEmail !== 'candidate@example.com') ? candidateEmail : 'Registered Email';
 }
 
 // -------------------------------------------------------------
@@ -235,36 +201,8 @@ function closeViolationModal() {
 // ASSESSMENT LAUNCH & QUESTION FETCH
 // -------------------------------------------------------------
 async function startAssessmentSession() {
-  const nameInput = document.getElementById('onboardCandNameInput');
-  if (nameInput && nameInput.value.trim()) {
-    candidateName = nameInput.value.trim();
-  }
-
-  const roleSelect = document.getElementById('onboardCandRoleSelect');
-  if (roleSelect && roleSelect.value) {
-    roleApplied = roleSelect.value;
-  }
-
-  const emailInput = document.getElementById('onboardCandEmailInput');
-  if (emailInput && emailInput.value.trim()) {
-    candidateEmail = emailInput.value.trim();
-  }
-
-  // Ensure candidate has entered a valid email address before test begins
-  if (!candidateEmail || !candidateEmail.includes('@') || candidateEmail === 'candidate@example.com') {
-    if (emailInput) {
-      emailInput.style.border = '2px solid #ef4444';
-      emailInput.focus();
-    }
-    const entered = prompt('Please enter your valid email address to receive your Official Job Offer / Assessment Results immediately after the test:', candidateEmail === 'candidate@example.com' ? '' : candidateEmail);
-    if (entered && entered.trim() && entered.includes('@')) {
-      candidateEmail = entered.trim();
-      if (emailInput) emailInput.value = candidateEmail;
-    } else {
-      alert('A valid email address is required so your assessment results and job offer can be emailed to you immediately.');
-      return;
-    }
-  }
+  // Ensure verified resume parameters are locked
+  setupInitialUI();
 
   const btn = document.getElementById('btnStartAssessment');
   if (btn) {
