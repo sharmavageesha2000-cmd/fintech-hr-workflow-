@@ -21,7 +21,7 @@ let isSubmitted = false;
 
 // URL Query Parameters
 const urlParams = new URLSearchParams(window.location.search);
-let candidateId = urlParams.get('id') || 'cand-' + Date.now();
+let candidateId = urlParams.get('id') || urlParams.get('candidateId') || 'cand-' + Date.now();
 let candidateName = urlParams.get('name') || 'Candidate';
 let candidateEmail = (urlParams.get('email') || '').trim();
 let roleApplied = urlParams.get('role') || 'Frontend Developer';
@@ -750,7 +750,7 @@ function renderSystematicResultDashboard(result, candidate) {
     offerCard.innerHTML = `
       <h3>🎉 Official Job Offer &amp; Call Letter Dispatched!</h3>
       <p style="font-size: 14.5px; color: #e2e8f0; line-height: 1.6; margin-bottom: 16px;">
-        Congratulations! Scoring <strong>${scorePct}%</strong> has satisfied all technical criteria for <strong>${roleApplied}</strong>. Your official appointment letter has been automatically generated and dispatched via SMTP.
+        Congratulations! Scoring <strong>${scorePct}%</strong> has satisfied all technical criteria for <strong>${roleApplied}</strong>. Your official appointment letter has been automatically generated and dispatched to your email.
       </p>
       <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; font-size: 13.5px;">
         <div>
@@ -783,7 +783,7 @@ function renderSystematicResultDashboard(result, candidate) {
         <h3 style="color: #fbbf24; margin: 0; font-size: 16px; font-weight: 800;">Assessment Outcome &amp; Performance Feedback Dispatched</h3>
       </div>
       <p style="margin: 0 0 12px 0; font-size: 13.5px; color: #fde68a; line-height: 1.5;">
-        An automated evaluation email detailing your overall score (${scorePct}%), 4-section competency breakdown, and actionable growth areas has been dispatched via Gmail SMTP.
+        An automated evaluation email detailing your overall score (${scorePct}%), 4-section competency breakdown, and actionable growth areas has been dispatched to your email.
       </p>
       <div style="font-size: 12.5px; color: #cbd5e1;">
         Delivered To: <strong style="color: #38bdf8;">${feedbackDetails.deliveredTo || candidateEmail || candidate?.email || 'Registered Email'}</strong>
@@ -791,22 +791,6 @@ function renderSystematicResultDashboard(result, candidate) {
     `;
     container.appendChild(feedbackCard);
   }
-
-  // Live Auto-Reply Email Confirmation Banner
-  const deliveredEmail = candidate?.callLetterDetails?.deliveredTo || candidate?.feedbackDetails?.deliveredTo || candidateEmail || candidate?.email || '';
-  const emailDispatchBanner = document.createElement('div');
-  emailDispatchBanner.style.cssText = 'background: rgba(6, 182, 212, 0.1); border: 1.5px solid var(--primary); border-radius: 12px; padding: 16px 20px; margin: 16px 0 20px 0; display: flex; align-items: center; gap: 12px; color: #fff; text-align: left; width: 100%; box-sizing: border-box;';
-  emailDispatchBanner.innerHTML = `
-    <div>
-      <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 14.5px; color: #38bdf8;">
-        <span>✉️</span> Auto-Reply Notification Dispatched Immediately via Gmail SMTP
-      </div>
-      <div style="font-size: 13px; color: #cbd5e1; margin-top: 4px;">
-        Sent to: <strong style="color: #fff;">${escapeHtml(deliveredEmail || 'Candidate Email')}</strong> • Verification status: <span style="color: #34d399; font-weight: 700;">Delivered ✔</span>
-      </div>
-    </div>
-  `;
-  container.appendChild(emailDispatchBanner);
 
   // Section Breakdown Matrix
   const secMatrix = document.createElement('div');
@@ -916,32 +900,62 @@ function renderSystematicResultDashboard(result, candidate) {
 
 function renderAlreadySubmittedScreen(cand) {
   const container = document.getElementById('resultDashboard');
+  const onboarding = document.getElementById('onboardingScreen');
+  const workspace = document.getElementById('assessmentWorkspace');
+  const proctorControls = document.querySelector('.proctor-controls');
+
+  if (onboarding) onboarding.style.display = 'none';
+  if (workspace) workspace.style.display = 'none';
+  if (proctorControls) proctorControls.style.display = 'none';
+
+  if (!container) return;
   container.style.display = 'flex';
   container.innerHTML = `
     <div class="result-hero-card" style="margin-top: 40px;">
-      <div style="font-size: 48px; margin-bottom: 12px;">🔒</div>
-      <h2 style="font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 8px;">
-        Assessment Already Completed
+      <div style="font-size: 52px; margin-bottom: 14px;">🔒</div>
+      <h2 style="font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 8px;">
+        Response Has Been Submitted
       </h2>
-      <p style="font-size: 14.5px; color: var(--text-muted); margin-bottom: 20px;">
-        Candidate: <strong style="color: #fff;">${cand.name || candidateName}</strong> • Domain: <strong style="color: var(--primary);">${cand.roleApplied || roleApplied}</strong>
+      <p style="font-size: 14.5px; color: var(--text-muted); margin-bottom: 24px; max-width: 540px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+        Your assessment response has already been submitted and recorded. Each test invitation link is valid for a single attempt only and cannot be reopened.
       </p>
-      <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 14px; padding: 20px; max-width: 500px; margin: 0 auto 24px auto; color: #fff; text-align: left;">
-        <div style="font-size: 13.5px; margin-bottom: 6px;">Score Achieved: <strong style="color: #34d399; font-size: 18px; font-family: var(--font-mono);">${cand.scorePercent || 0}%</strong></div>
-        <div style="font-size: 13.5px; margin-bottom: 6px;">Evaluation Status: <strong style="color: #38bdf8;">${cand.status || 'EVALUATED'}</strong></div>
-        <div style="font-size: 13.5px;">Offer Reference: <strong style="color: #a78bfa; font-family: var(--font-mono);">${cand.offerRefId || 'N/A'}</strong></div>
+      
+      <div style="background: rgba(16, 185, 129, 0.08); border: 1.5px solid rgba(16, 185, 129, 0.35); border-radius: 16px; padding: 22px 26px; max-width: 520px; margin: 0 auto 24px auto; color: #fff; text-align: left;">
+        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px; margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; gap: 8px; color: #34d399; font-weight: 800; font-size: 14px;">
+            <span>✔</span> Assessment Submission Recorded
+          </div>
+          <span style="font-size: 11px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 3px 8px; border-radius: 6px; font-weight: 700; text-transform: uppercase;">1-Time Pass Used</span>
+        </div>
+
+        <div style="font-size: 13.5px; margin-bottom: 8px; display: flex; justify-content: space-between;">
+          <span style="color: var(--text-muted);">Candidate:</span>
+          <strong style="color: #fff;">${escapeHtml(cand.name || candidateName)}</strong>
+        </div>
+        <div style="font-size: 13.5px; margin-bottom: 8px; display: flex; justify-content: space-between;">
+          <span style="color: var(--text-muted);">Domain:</span>
+          <strong style="color: var(--primary);">${escapeHtml(cand.roleApplied || roleApplied)}</strong>
+        </div>
+        <div style="font-size: 13.5px; margin-bottom: 8px; display: flex; justify-content: space-between;">
+          <span style="color: var(--text-muted);">Score Achieved:</span>
+          <strong style="color: #34d399; font-size: 16px; font-family: var(--font-mono);">${cand.scorePercent !== undefined ? cand.scorePercent : (cand.testScore || 0)}%</strong>
+        </div>
+        <div style="font-size: 13.5px; margin-bottom: 8px; display: flex; justify-content: space-between;">
+          <span style="color: var(--text-muted);">Evaluation Status:</span>
+          <strong style="color: #38bdf8;">${escapeHtml(cand.status || (cand.passed ? 'SELECTED' : 'EVALUATED'))}</strong>
+        </div>
+        ${cand.offerRefId ? `
+        <div style="font-size: 13.5px; display: flex; justify-content: space-between;">
+          <span style="color: var(--text-muted);">Offer Reference:</span>
+          <strong style="color: #a78bfa; font-family: var(--font-mono);">${escapeHtml(cand.offerRefId)}</strong>
+        </div>` : ''}
       </div>
-      <button type="button" onclick="startFreshCandidateTest()" style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; border: none; padding: 12px 28px; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px var(--primary-glow);">
-        🚀 Take Assessment as a New Candidate
-      </button>
+
+      <div style="font-size: 13px; color: var(--text-dim); max-width: 480px; margin: 0 auto;">
+        If you receive a new email invitation for an interview or technical assessment, you may use the new link provided in that email.
+      </div>
     </div>
   `;
-}
-
-function startFreshCandidateTest() {
-  const newId = 'cand-' + Date.now();
-  const newToken = 'tkn_' + Date.now();
-  window.location.href = `/assessment.html?id=${newId}&token=${newToken}&role=Frontend Developer&name=New Candidate`;
 }
 
 // -------------------------------------------------------------

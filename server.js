@@ -885,6 +885,37 @@ app.post('/api/assessment/submit', async (req, res) => {
       }
     }
 
+    // Strict Guard: Prevent re-submitting an already completed assessment
+    if (candidateIdx !== -1 && candidates[candidateIdx].assessmentCompleted === true) {
+      console.log(`[Assessment Engine] 🔒 Refusing resubmission for already completed candidate "${candidates[candidateIdx].name}" (ID: ${candidates[candidateIdx].id}).`);
+      const existingCand = candidates[candidateIdx];
+      const passed = existingCand.assessmentDetails?.passed !== undefined 
+        ? existingCand.assessmentDetails.passed 
+        : ((existingCand.testScore || 0) >= 80);
+      return res.json({
+        success: false,
+        alreadySubmitted: true,
+        message: 'Response has already been submitted. Each test link can only be submitted once.',
+        candidate: {
+          id: existingCand.id,
+          name: existingCand.name,
+          email: existingCand.email,
+          roleApplied: existingCand.roleApplied || effectiveRole,
+          scorePercent: existingCand.assessmentDetails?.scorePercent !== undefined 
+            ? existingCand.assessmentDetails.scorePercent 
+            : (existingCand.testScore || 0),
+          correctCount: existingCand.assessmentDetails?.correctCount !== undefined
+            ? existingCand.assessmentDetails.correctCount
+            : Math.round(((existingCand.testScore || 0) / 100) * 20),
+          totalQuestions: existingCand.assessmentDetails?.totalQuestions || 20,
+          passed,
+          status: existingCand.status || (passed ? 'SELECTED' : 'REJECTED'),
+          offerRefId: existingCand.offerRefId,
+          completedAt: existingCand.assessmentDetails?.completedAt || existingCand.callLetterSentAt
+        }
+      });
+    }
+
     let targetCandidate = candidateIdx !== -1 ? candidates[candidateIdx] : {
       id: candidateId || 'cand-' + Date.now(),
       name: candidateName || 'Candidate',
