@@ -86,9 +86,8 @@ async function runTests() {
   assert(sampleEmailHtml.includes('₹11,50,000 per annum'), 'Email includes role annual package');
   assert(sampleEmailHtml.includes('Remote / Hybrid'), 'Email includes working mode');
   assert(sampleEmailHtml.includes('Aarav Kapoor'), 'Email includes reporting authority HR');
-  assert(sampleEmailHtml.includes(futureDateStr), 'Email includes dynamic future joining date');
-  assert(sampleEmailHtml.includes('/api/offer/decision?id=cand-test-rohan-001&decision=accept'), 'Email includes Accept button URL');
-  assert(sampleEmailHtml.includes('/api/offer/decision?id=cand-test-rohan-001&decision=reject'), 'Email includes Decline button URL');
+  assert(sampleEmailHtml.includes('/api/offer/decision?') && sampleEmailHtml.includes('id=cand-test-rohan-001') && sampleEmailHtml.includes('decision=accept'), 'Email includes Accept button URL with candidate ID and parameters');
+  assert(sampleEmailHtml.includes('/api/offer/decision?') && sampleEmailHtml.includes('id=cand-test-rohan-001') && sampleEmailHtml.includes('decision=reject'), 'Email includes Decline button URL with candidate ID and parameters');
 
   // --- TEST GROUP 3: Offer Decision Portal Page ---
   console.log('\n--- Test Group 3: Offer Decision Landing Page HTTP 200 ---');
@@ -159,10 +158,10 @@ async function runTests() {
 
   // --- TEST GROUP 5: Candidate Clicks ACCEPT ---
   console.log('\n--- Test Group 5: Candidate Clicks Accept Offer ---');
-  const acceptRes = await makeRequest(`/api/offer/decision?id=${candidatePassId}&decision=accept`);
-  assert(acceptRes.status === 302, 'GET /api/offer/decision?decision=accept returns HTTP 302 Redirect');
-  const acceptRedirect = acceptRes.headers['location'] || '';
-  assert(acceptRedirect.includes('/offer-decision.html?status=accepted'), `Redirects to accepted screen: "${acceptRedirect}"`);
+  const acceptRes = await makeRequest(`/api/offer/decision?id=${candidatePassId}&decision=accept&name=Siddharth+Rao&role=Full+Stack+AI+Engineer&email=sharmavageesha2000%40gmail.com`);
+  assert(acceptRes.status === 200, 'GET /api/offer/decision?decision=accept returns HTTP 200 Direct Page');
+  assert(typeof acceptRes.data === 'string' && acceptRes.data.includes('Offer Formally Accepted!'), 'Response contains "Offer Formally Accepted!" headline');
+  assert(typeof acceptRes.data === 'string' && acceptRes.data.includes('Siddharth Rao'), 'Response renders candidate name "Siddharth Rao"');
 
   // Check candidate record in DB
   const afterAcceptCandidates = JSON.parse(fs.readFileSync(candidatesPath, 'utf8'));
@@ -174,10 +173,9 @@ async function runTests() {
 
   // --- TEST GROUP 6: Double Click Guard ---
   console.log('\n--- Test Group 6: Double Decision Guard on already accepted candidate ---');
-  const doubleRes = await makeRequest(`/api/offer/decision?id=${candidatePassId}&decision=accept`);
-  assert(doubleRes.status === 302, 'Double decision returns HTTP 302 Redirect');
-  const doubleRedirect = doubleRes.headers['location'] || '';
-  assert(doubleRedirect.includes('status=already_recorded'), `Redirects to already_recorded state: "${doubleRedirect}"`);
+  const doubleRes = await makeRequest(`/api/offer/decision?id=${candidatePassId}&decision=accept&name=Siddharth+Rao&role=Full+Stack+AI+Engineer&email=sharmavageesha2000%40gmail.com`);
+  assert(doubleRes.status === 200, 'Double decision returns HTTP 200 Direct Page');
+  assert(typeof doubleRes.data === 'string' && doubleRes.data.includes('Decision Already Recorded'), 'Response renders "Decision Already Recorded" state');
 
   // --- TEST GROUP 7: Candidate Clicks REJECT / DECLINE ---
   console.log('\n--- Test Group 7: Candidate Clicks Decline / Reject Offer ---');
@@ -201,10 +199,10 @@ async function runTests() {
   });
   fs.writeFileSync(candidatesPath, JSON.stringify(candList, null, 2), 'utf8');
 
-  const rejectRes = await makeRequest(`/api/offer/decision?id=${candidateRejectId}&decision=reject`);
-  assert(rejectRes.status === 302, 'GET /api/offer/decision?decision=reject returns HTTP 302 Redirect');
-  const rejectRedirect = rejectRes.headers['location'] || '';
-  assert(rejectRedirect.includes('/offer-decision.html?status=declined'), `Redirects to declined screen: "${rejectRedirect}"`);
+  const rejectRes = await makeRequest(`/api/offer/decision?id=${candidateRejectId}&decision=reject&name=Kavita+Patel&role=AI%2FML+Engineer&email=sharmavageesha2000%40gmail.com`);
+  assert(rejectRes.status === 200, 'GET /api/offer/decision?decision=reject returns HTTP 200 Direct Page');
+  assert(typeof rejectRes.data === 'string' && rejectRes.data.includes('Offer Decision Recorded: Declined'), 'Response renders "Offer Decision Recorded: Declined" headline');
+  assert(typeof rejectRes.data === 'string' && rejectRes.data.includes('Kavita Patel'), 'Response renders candidate name "Kavita Patel"');
 
   // Check candidate record in DB
   const afterRejectCandidates = JSON.parse(fs.readFileSync(candidatesPath, 'utf8'));

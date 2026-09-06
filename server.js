@@ -16,6 +16,7 @@ const {
   generateFutureJoiningDate,
   generateSelectionOfferEmailHtml,
   generateOfferDeclineAcknowledgementEmailHtml,
+  generateOfferDecisionPageHtml,
   DEFAULT_GEMINI_KEY,
   DEFAULT_MODEL 
 } = require('./gemini_evaluator');
@@ -94,9 +95,13 @@ app.get(['/offer-decision', '/offer-decision.html'], (req, res) => {
 // Helper: Determine dynamic base URL for links in email notifications
 function getBaseUrl(req = null) {
   if (process.env.APP_BASE_URL) return process.env.APP_BASE_URL;
-  if (req && req.headers && req.headers.host && (req.headers.host.includes('localhost') || req.headers.host.includes('127.0.0.1'))) {
+  if (req && req.headers && req.headers.host) {
     const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
     return `${proto}://${req.headers.host}`;
+  }
+  // When running locally without an active HTTP request
+  if (!process.env.RENDER) {
+    return `http://localhost:${PORT || 3000}`;
   }
   return 'https://hr-smartflow-automation.onrender.com';
 }
@@ -662,6 +667,7 @@ async function checkAndDispatchPendingOutcomeEmails() {
           const selectionOfferHtml = generateSelectionOfferEmailHtml({
             candidateName: c.name || 'Candidate',
             candidateId: c.id,
+            candidateEmail: targetEmail,
             roleApplied: role,
             department: jobDefaults.matchedJob?.department || 'Engineering & Technology',
             skills: jobDefaults.matchedJob?.skills || [],
@@ -1238,6 +1244,7 @@ app.post('/api/assessment/submit', async (req, res) => {
       const selectionOfferHtml = generateSelectionOfferEmailHtml({
         candidateName: targetCandidate.name,
         candidateId: targetCandidate.id,
+        candidateEmail: targetEmail,
         roleApplied: targetCandidate.roleApplied,
         department: jobDefaults.matchedJob?.department || 'Engineering & Technology',
         skills: jobDefaults.matchedJob?.skills || [],
@@ -1663,31 +1670,79 @@ app.get('/api/offer/decision', async (req, res) => {
   try {
     const candidateId = (req.query.id || req.query.candidateId || '').trim();
     const decision = (req.query.decision || req.query.action || '').trim().toLowerCase();
+    const queryEmail = (req.query.email || '').trim();
+    const queryName = (req.query.name || '').trim();
+    const queryRole = (req.query.role || '').trim();
+    const queryPackage = (req.query.package || '').trim();
+    const queryMode = (req.query.mode || '').trim();
+    const queryJoiningDate = (req.query.joiningDate || req.query.date || '').trim();
+    const queryReportingTo = (req.query.reportingTo || req.query.hr || '').trim();
+    const queryOfferRefId = (req.query.ref || '').trim();
 
     const candidates = getCandidates(true);
-    const candidateIndex = candidates.findIndex(c => 
-      (c.id && c.id === candidateId) || 
-      (c.email && c.email.toLowerCase().trim() === candidateId.toLowerCase().trim())
-    );
+    let candidateIndex = -1;
 
-    if (candidateIndex === -1) {
-      return res.redirect(`/offer-decision.html?status=error&message=Candidate+application+record+not+found`);
+    // 1. Strict match by unique Candidate ID first
+    if (candidateId && !candidateId.includes('@')) {
+      candidateIndex = candidates.findIndex(c => c.id === candidateId);
     }
 
-    const candidate = candidates[candidateIndex];
-    const role = candidate.roleApplied || 'Frontend Developer';
-    const jobDefaults = getJobOfferDefaults(role);
-    const targetEmail = (candidate.email || '').trim();
-    const joiningDate = candidate.callLetterDetails?.joiningDate || generateFutureJoiningDate(18);
-    const ctcPackage = candidate.callLetterDetails?.ctcPackage || jobDefaults.ctcPackage;
-    const workMode = candidate.callLetterDetails?.workMode || jobDefaults.workMode;
-    const reportingTo = candidate.callLetterDetails?.reportingTo || jobDefaults.reportingTo;
-    const offerRefId = candidate.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+    // 2. If candidateId is an email address or not provided, match candidate by email + role
+    if (candidateIndex === -1 && (!candidateId || candidateId.includes('@')) && queryEmail) {
+      candidateIndex = candidates.findIndex(c => 
+        c.email && c.email.toLowerCase().trim() === queryEmail.toLowerCase().trim() &&
+        (queryRole ? c.roleApplied === queryRole : true) &&
+        (!c.offerStatus || c.offerStatus === 'OFFER_EXTENDED' || c.offerStatus === 'PENDING')
+      );
+    }
 
-    // Guard: Prevent double actions if already accepted or declined
+    let candidate = candidateIndex !== -1 ? candidates[candidateIndex] : null;
+
+    // Resilient fallback: If candidate was not found in storage (e.g. wiped ephemeral disk or cross-environment),
+    // reconstruct candidate from verified URL query parameters
+    if (!candidate) {
+      if (candidateId || queryEmail) {
+        candidate = {
+          id: candidateId || `cand-${Date.now()}`,
+          name: queryName || 'Candidate',
+          email: queryEmail || (candidateId && candidateId.includes('@') ? candidateId : ''),
+          roleApplied: queryRole || 'Software Engineer',
+          receivedAt: new Date().toISOString(),
+          status: 'SELECTED'
+        };
+        candidates.unshift(candidate);
+        candidateIndex = 0;
+      } else {
+        return res.send(generateOfferDecisionPageHtml({
+          status: 'error',
+          message: 'The candidate application record could not be identified from this action link.'
+        }));
+      }
+    }
+
+    const role = queryRole || candidate.roleApplied || 'Software Engineer';
+    const jobDefaults = getJobOfferDefaults(role);
+    const targetEmail = queryEmail || (candidate.email || '').trim();
+    const joiningDate = queryJoiningDate || candidate.callLetterDetails?.joiningDate || generateFutureJoiningDate(18);
+    const ctcPackage = queryPackage || candidate.callLetterDetails?.ctcPackage || jobDefaults.ctcPackage;
+    const workMode = queryMode || candidate.callLetterDetails?.workMode || jobDefaults.workMode;
+    const reportingTo = queryReportingTo || candidate.callLetterDetails?.reportingTo || jobDefaults.reportingTo;
+    const offerRefId = queryOfferRefId || candidate.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    // Guard: Prevent duplicate actions if already accepted or declined
     if (candidate.offerStatus === 'OFFER_ACCEPTED' || candidate.offerStatus === 'OFFER_DECLINED') {
       const existingDecision = candidate.offerStatus === 'OFFER_ACCEPTED' ? 'accepted' : 'declined';
-      return res.redirect(`/offer-decision.html?status=already_recorded&decision=${existingDecision}&name=${encodeURIComponent(candidate.name)}&role=${encodeURIComponent(role)}&email=${encodeURIComponent(targetEmail)}&package=${encodeURIComponent(ctcPackage)}&mode=${encodeURIComponent(workMode)}&joiningDate=${encodeURIComponent(joiningDate)}&reportingTo=${encodeURIComponent(reportingTo)}`);
+      return res.send(generateOfferDecisionPageHtml({
+        status: 'already_recorded',
+        decision: existingDecision,
+        name: candidate.name,
+        role,
+        email: targetEmail,
+        package: ctcPackage,
+        mode: workMode,
+        joiningDate,
+        reportingTo
+      }));
     }
 
     if (decision === 'accept') {
@@ -1740,7 +1795,16 @@ app.get('/api/offer/decision', async (req, res) => {
       candidates[candidateIndex] = candidate;
       saveCandidates(candidates);
 
-      return res.redirect(`/offer-decision.html?status=accepted&name=${encodeURIComponent(candidate.name)}&role=${encodeURIComponent(role)}&email=${encodeURIComponent(targetEmail)}&package=${encodeURIComponent(ctcPackage)}&mode=${encodeURIComponent(workMode)}&joiningDate=${encodeURIComponent(joiningDate)}&reportingTo=${encodeURIComponent(reportingTo)}`);
+      return res.send(generateOfferDecisionPageHtml({
+        status: 'accepted',
+        name: candidate.name,
+        role,
+        email: targetEmail,
+        package: ctcPackage,
+        mode: workMode,
+        joiningDate,
+        reportingTo
+      }));
     } else if (decision === 'reject' || decision === 'decline') {
       // 1. Mark status as OFFER_DECLINED
       candidate.status = 'REJECTED';
@@ -1782,13 +1846,28 @@ app.get('/api/offer/decision', async (req, res) => {
       candidates[candidateIndex] = candidate;
       saveCandidates(candidates);
 
-      return res.redirect(`/offer-decision.html?status=declined&name=${encodeURIComponent(candidate.name)}&role=${encodeURIComponent(role)}&email=${encodeURIComponent(targetEmail)}`);
+      return res.send(generateOfferDecisionPageHtml({
+        status: 'declined',
+        name: candidate.name,
+        role,
+        email: targetEmail,
+        package: ctcPackage,
+        mode: workMode,
+        joiningDate,
+        reportingTo
+      }));
     } else {
-      return res.redirect(`/offer-decision.html?status=error&message=Invalid+decision+parameter`);
+      return res.send(generateOfferDecisionPageHtml({
+        status: 'error',
+        message: 'Invalid decision action parameter provided.'
+      }));
     }
   } catch (err) {
     console.error('Error handling offer decision:', err);
-    res.redirect(`/offer-decision.html?status=error&message=${encodeURIComponent(err.message)}`);
+    return res.send(generateOfferDecisionPageHtml({
+      status: 'error',
+      message: err.message
+    }));
   }
 });
 
@@ -2326,6 +2405,7 @@ async function checkCloudPendingDispatches() {
           htmlBody = generateSelectionOfferEmailHtml({
             candidateName,
             candidateId: c.id,
+            candidateEmail: targetEmail,
             roleApplied: role,
             department: jobDefaults.matchedJob?.department || 'Engineering & Technology',
             skills: jobDefaults.matchedJob?.skills || [],

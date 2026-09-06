@@ -405,9 +405,17 @@
         headline.textContent = 'Decision Already Recorded';
         subHeadline.innerHTML = `Dear <strong>${name}</strong>, your response to this offer has already been securely processed and recorded.`;
         
+      } else if (status === 'error') {
+        // Error State
+        iconBox.className = 'status-icon-box declined';
+        icon.className = 'fa-solid fa-triangle-exclamation';
+        headline.textContent = 'Application Link Notice';
+        const msg = urlParams.get('message') || 'We could not process this action link.';
+        subHeadline.innerHTML = `${msg}`;
+        detailsBox.style.display = 'none';
         actionNotice.className = 'action-notice-box neutral';
         actionContent.innerHTML = `
-          <strong>No Further Action Required:</strong> Your previous selection decision is on file with Talent Acquisition. If you need to make updates or discuss onboarding, please contact your hiring lead directly.
+          <strong>Assistance Required:</strong> Please contact Talent Acquisition directly at <a href="mailto:sharmavageesha2000@gmail.com" style="color:#818cf8; text-decoration:underline;">sharmavageesha2000@gmail.com</a> with your offer decision.
         `;
       } else {
         // Accepted State

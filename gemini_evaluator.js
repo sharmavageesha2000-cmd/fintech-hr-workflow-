@@ -604,6 +604,7 @@ function generateFutureJoiningDate(minDaysAhead = 18) {
 function generateSelectionOfferEmailHtml({
   candidateName = 'Candidate',
   candidateId = '',
+  candidateEmail = '',
   roleApplied = 'Frontend Developer',
   department = 'Engineering',
   skills = [],
@@ -616,8 +617,24 @@ function generateSelectionOfferEmailHtml({
   offerRefId = 'HR-OFFER-2026'
 }) {
   const effectiveJoiningDate = joiningDate || generateFutureJoiningDate(18);
-  const acceptUrl = `${decisionBaseUrl}/api/offer/decision?id=${encodeURIComponent(candidateId)}&decision=accept`;
-  const rejectUrl = `${decisionBaseUrl}/api/offer/decision?id=${encodeURIComponent(candidateId)}&decision=reject`;
+  const cleanBase = (decisionBaseUrl || 'http://localhost:3000').replace(/\/+$/, '');
+
+  const queryParams = new URLSearchParams({
+    id: candidateId || '',
+    name: candidateName || 'Candidate',
+    role: roleApplied || 'Software Engineer',
+    package: ctcPackage || '₹9,50,000 per annum',
+    mode: workMode || 'Remote / Hybrid',
+    joiningDate: effectiveJoiningDate,
+    reportingTo: reportingTo || 'Vageesha Sharma (Founder & Hiring Lead)',
+    ref: offerRefId || 'HR-OFFER-2026'
+  });
+  if (candidateEmail) {
+    queryParams.set('email', candidateEmail);
+  }
+
+  const acceptUrl = `${cleanBase}/api/offer/decision?${queryParams.toString()}&decision=accept`;
+  const rejectUrl = `${cleanBase}/api/offer/decision?${queryParams.toString()}&decision=reject`;
   
   const skillsDisplay = Array.isArray(skills) && skills.length > 0
     ? skills.slice(0, 6).join(' • ')
@@ -1445,6 +1462,258 @@ Return a strictly valid JSON object matching this schema:
   });
 }
 
+/**
+ * Generate Complete, Standalone HTML Response for Candidate Offer Decision Portal
+ */
+function generateOfferDecisionPageHtml({
+  status = 'accepted',
+  name = 'Candidate',
+  role = 'Software Engineer',
+  email = '',
+  package: ctcPackage = '₹9,50,000 per annum',
+  mode: workMode = 'Remote / Hybrid',
+  joiningDate = 'Monday, 28 September 2026',
+  reportingTo = 'Vageesha Sharma (Founder & Hiring Lead)',
+  message = ''
+}) {
+  const isDeclined = status === 'declined' || status === 'reject';
+  const isAlreadyRecorded = status === 'already_recorded';
+  const isError = status === 'error';
+
+  let iconBoxClass = 'status-icon-box accepted';
+  let iconHtml = '<i class="fa-solid fa-check"></i>';
+  let headline = '🎉 Offer Formally Accepted!';
+  let subHeadline = `Dear <strong>${name}</strong>, congratulations on accepting the offer! We are thrilled to welcome you to the <strong>Finova Technologies</strong> team.`;
+  let showDetails = true;
+  let noticeClass = 'action-notice-box success';
+  let noticeHtml = `
+    <i class="fa-solid fa-envelope-circle-check" style="font-size: 1.4rem; margin-top: 2px;"></i>
+    <div>
+      <strong>Official Signed Call Letter Emailed:</strong> Your official signed Offer Letter &amp; Call Letter has been automatically generated and delivered to <strong>${email || 'your registered email'}</strong>. Please review the attached terms and onboarding instructions.
+    </div>
+  `;
+
+  if (isDeclined) {
+    iconBoxClass = 'status-icon-box declined';
+    iconHtml = '<i class="fa-solid fa-xmark"></i>';
+    headline = 'Offer Decision Recorded: Declined';
+    subHeadline = `Dear <strong>${name}</strong>, we have acknowledged your decision to decline the offer for <strong>${role}</strong>.`;
+    showDetails = false;
+    noticeClass = 'action-notice-box neutral';
+    noticeHtml = `
+      <i class="fa-solid fa-handshake-angle" style="font-size: 1.4rem; margin-top: 2px;"></i>
+      <div>
+        <strong>Decision Acknowledged:</strong> A formal confirmation email has been dispatched to <strong>${email || 'your registered email'}</strong>. Your candidate profile remains active in our <strong>Priority Talent Network</strong> for upcoming senior opportunities. We wish you the very best in your career pursuits!
+      </div>
+    `;
+  } else if (isAlreadyRecorded) {
+    iconBoxClass = 'status-icon-box info';
+    iconHtml = '<i class="fa-solid fa-circle-info"></i>';
+    headline = 'Decision Already Recorded';
+    subHeadline = `Dear <strong>${name}</strong>, your response to this offer has already been securely processed and recorded.`;
+    noticeClass = 'action-notice-box neutral';
+    noticeHtml = `
+      <i class="fa-solid fa-circle-check" style="font-size: 1.4rem; margin-top: 2px;"></i>
+      <div>
+        <strong>No Further Action Required:</strong> Your previous selection decision is on file with Talent Acquisition. If you need to make updates or discuss onboarding, please contact your hiring lead directly.
+      </div>
+    `;
+  } else if (isError) {
+    iconBoxClass = 'status-icon-box declined';
+    iconHtml = '<i class="fa-solid fa-triangle-exclamation"></i>';
+    headline = 'Decision Notification';
+    subHeadline = message || 'We could not automatically process this action link.';
+    showDetails = false;
+    noticeClass = 'action-notice-box neutral';
+    noticeHtml = `
+      <i class="fa-solid fa-headset" style="font-size: 1.4rem; margin-top: 2px;"></i>
+      <div>
+        Please reach out directly to <strong>sharmavageesha2000@gmail.com</strong> with your decision so we can assist you immediately.
+      </div>
+    `;
+  }
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employment Offer Response | Finova Technologies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #090d16 0%, #0f172a 50%, #1e1b4b 100%);
+      --card-bg: rgba(255, 255, 255, 0.04);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .glow-orb-1 {
+      position: absolute; top: -10%; left: 15%; width: 450px; height: 450px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.22) 0%, transparent 70%);
+      pointer-events: none; filter: blur(50px);
+    }
+    .glow-orb-2 {
+      position: absolute; bottom: -10%; right: 15%; width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, transparent 70%);
+      pointer-events: none; filter: blur(60px);
+    }
+    .container { width: 100%; max-width: 640px; position: relative; z-index: 10; }
+    .header-logo { text-align: center; margin-bottom: 24px; }
+    .brand-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 6px 16px; border-radius: 99px; font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; color: #cbd5e1;
+      backdrop-filter: blur(10px); margin-bottom: 12px;
+    }
+    .brand-title { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; color: #ffffff; }
+    .brand-title span {
+      background: linear-gradient(135deg, #a5b4fc 0%, #38bdf8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .response-card {
+      background: rgba(15, 23, 42, 0.75); border: 1px solid var(--card-border);
+      border-radius: 20px; padding: 36px 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(16px); text-align: center;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .status-icon-box {
+      width: 76px; height: 76px; margin: 0 auto 20px auto; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 32px;
+    }
+    .status-icon-box.accepted {
+      background: rgba(16, 185, 129, 0.15); color: #34d399;
+      border: 2px solid rgba(16, 185, 129, 0.4); box-shadow: 0 0 35px var(--emerald-glow);
+    }
+    .status-icon-box.declined {
+      background: rgba(244, 63, 94, 0.12); color: #fb7185;
+      border: 2px solid rgba(244, 63, 94, 0.35); box-shadow: 0 0 30px rgba(244, 63, 94, 0.2);
+    }
+    .status-icon-box.info {
+      background: rgba(99, 102, 241, 0.15); color: #818cf8;
+      border: 2px solid rgba(99, 102, 241, 0.4); box-shadow: 0 0 30px rgba(99, 102, 241, 0.2);
+    }
+    .headline { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 10px; color: #ffffff; }
+    .sub-headline { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; }
+    .details-box {
+      background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px; padding: 20px 22px; margin-bottom: 24px; text-align: left;
+    }
+    .details-box-header {
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+      color: #94a3b8; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;
+    }
+    .detail-row {
+      display: flex; justify-content: space-between; align-items: center; padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.88rem;
+    }
+    .detail-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .detail-label { color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+    .detail-value { font-weight: 700; color: #ffffff; text-align: right; }
+    .detail-value.highlight { color: #34d399; font-size: 0.95rem; }
+    .action-notice-box {
+      border-radius: 12px; padding: 16px 18px; margin-bottom: 24px;
+      display: flex; align-items: flex-start; gap: 12px; text-align: left;
+      font-size: 0.86rem; line-height: 1.5;
+    }
+    .action-notice-box.success { background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); color: #a7f3d0; }
+    .action-notice-box.neutral { background: rgba(148, 163, 184, 0.08); border: 1px solid rgba(148, 163, 184, 0.2); color: #cbd5e1; }
+    .footer-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .btn-return {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255, 255, 255, 0.08); color: #f1f5f9;
+      border: 1px solid rgba(255, 255, 255, 0.15); padding: 11px 22px;
+      border-radius: 10px; font-size: 0.88rem; font-weight: 600; text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-return:hover { background: rgba(255, 255, 255, 0.14); color: #ffffff; transform: translateY(-1px); }
+    .contact-line { margin-top: 24px; font-size: 0.82rem; color: #64748b; }
+    .contact-line a { color: #818cf8; text-decoration: none; }
+    .contact-line a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="glow-orb-1"></div>
+  <div class="glow-orb-2"></div>
+  <div class="container">
+    <div class="header-logo">
+      <div class="brand-badge">
+        <i class="fa-solid fa-shield-halved"></i> Finova Technologies Talent Acquisition
+      </div>
+      <h1 class="brand-title">Offer Decision <span>Portal</span></h1>
+    </div>
+    <div class="response-card">
+      <div class="${iconBoxClass}">
+        ${iconHtml}
+      </div>
+      <h2 class="headline">${headline}</h2>
+      <p class="sub-headline">${subHeadline}</p>
+      ${showDetails ? `
+      <div class="details-box">
+        <div class="details-box-header">
+          <i class="fa-solid fa-file-contract"></i> Appointment Summary
+        </div>
+        <div class="detail-row">
+          <span class="detail-label"><i class="fa-solid fa-briefcase"></i> Designation / Role:</span>
+          <span class="detail-value">${role}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label"><i class="fa-solid fa-money-bill-wave"></i> Annual CTC Package:</span>
+          <span class="detail-value highlight">${ctcPackage}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label"><i class="fa-solid fa-laptop-house"></i> Working Mode:</span>
+          <span class="detail-value">${workMode}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label"><i class="fa-solid fa-calendar-check"></i> Date of Joining:</span>
+          <span class="detail-value">${joiningDate}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label"><i class="fa-solid fa-user-tie"></i> Reporting Authority:</span>
+          <span class="detail-value">${reportingTo}</span>
+        </div>
+      </div>
+      ` : ''}
+      <div class="${noticeClass}">
+        ${noticeHtml}
+      </div>
+      <div class="footer-actions">
+        <a href="mailto:sharmavageesha2000@gmail.com" class="btn-return">
+          <i class="fa-solid fa-headset"></i> Contact Talent Acquisition
+        </a>
+      </div>
+      <div class="contact-line">
+        Questions or need assistance? Reach out to <a href="mailto:sharmavageesha2000@gmail.com">sharmavageesha2000@gmail.com</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+}
+
 module.exports = {
   evaluateResumeWithGemini,
   heuristicFallbackEvaluation,
@@ -1461,6 +1730,7 @@ module.exports = {
   generateFutureJoiningDate,
   generateSelectionOfferEmailHtml,
   generateOfferDeclineAcknowledgementEmailHtml,
+  generateOfferDecisionPageHtml,
   DEFAULT_MODEL,
   DEFAULT_GEMINI_KEY
 };

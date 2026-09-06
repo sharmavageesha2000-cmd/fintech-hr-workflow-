@@ -1,5 +1,220 @@
 [
   {
+    "id": "cand-reject-flow-1788692691934",
+    "name": "Kavita Patel",
+    "email": "sharmavageesha2000@gmail.com",
+    "roleApplied": "AI/ML Engineer",
+    "status": "REJECTED",
+    "offerStatus": "OFFER_DECLINED",
+    "receivedAt": "2026-09-06T11:04:51.936Z",
+    "attachmentInfo": {
+      "fileName": "Kavita_Patel_Resume.pdf",
+      "urlPath": "/uploads/dummy.pdf"
+    },
+    "callLetterDetails": {
+      "joiningDate": "Monday, 28 September 2026",
+      "ctcPackage": "₹17,00,000 per annum (Standard Full-Time)",
+      "reportingTo": "Aarav Kapoor (Head of Engineering & Tech Hiring)",
+      "workMode": "Hybrid (3 Days Office / 2 Days Remote)"
+    },
+    "interviewStatus": "COMPLETED",
+    "offerDeclinedAt": "2026-09-06T11:04:51.929Z",
+    "declineDetails": {
+      "declinedAt": "2026-09-06T11:04:51.929Z",
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<4c8051d3-0036-4248-9ff9-e93d9b261f55@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "Acknowledgement of Decision: AI/ML Engineer Offer - Finova Technologies",
+        "transport": "smtp.gmail.com:465 (Standard Direct SSL)"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
+  },
+  {
+    "id": "cand-pass-flow-1788692683600",
+    "name": "Siddharth Rao",
+    "email": "sharmavageesha2000@gmail.com",
+    "roleApplied": "Full Stack AI Engineer",
+    "receivedAt": "2026-09-06T11:04:43.602Z",
+    "attachmentInfo": {
+      "fileName": "Siddharth_Rao_Resume.pdf",
+      "urlPath": "/uploads/dummy.pdf"
+    },
+    "assessmentDetails": {
+      "completedAt": "2026-09-06T11:04:43.606Z",
+      "scorePercent": 90,
+      "correctCount": 18,
+      "totalQuestions": 20,
+      "passed": true,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 420,
+      "forcedByViolation": false
+    },
+    "testScore": 90,
+    "testPassed": true,
+    "assessmentCompleted": true,
+    "testSubmitted": true,
+    "status": "SELECTED",
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "OFFER_ACCEPTED",
+    "offerRefId": "HR-OFFER-2026-8548",
+    "callLetterSentAt": "2026-09-06T11:04:47.715Z",
+    "pendingEmailSync": false,
+    "callLetterDetails": {
+      "joiningDate": "Monday, 28 September 2026",
+      "ctcPackage": "₹15,50,000 per annum (Standard Full-Time) (Full-Time)",
+      "reportingTo": "Vageesha Sharma (Founder & Hiring Lead)",
+      "workMode": "100% Remote (Work from Anywhere)",
+      "offerRefId": "HR-OFFER-2026-8548",
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<3c9cc07d-0092-1f13-4c0a-02616f4bc511@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "📜 Official Employment Offer Letter & Call Letter: Full Stack AI Engineer - Finova Technologies",
+        "transport": "smtp.gmail.com:465 (Standard Direct SSL)"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com",
+      "type": "FINAL_OFFER_LETTER"
+    },
+    "offerAcceptedAt": "2026-09-06T11:04:47.729Z"
+  },
+  {
+    "id": "cand-reject-flow-1788692651888",
+    "name": "Kavita Patel",
+    "email": "sharmavageesha2000@gmail.com",
+    "roleApplied": "AI/ML Engineer",
+    "status": "REJECTED",
+    "offerStatus": "OFFER_DECLINED",
+    "receivedAt": "2026-09-06T11:04:11.890Z",
+    "attachmentInfo": {
+      "fileName": "Kavita_Patel_Resume.pdf",
+      "urlPath": "/uploads/dummy.pdf"
+    },
+    "callLetterDetails": {
+      "joiningDate": "Monday, 28 September 2026",
+      "ctcPackage": "₹17,00,000 per annum (Standard Full-Time)",
+      "reportingTo": "Aarav Kapoor (Head of Engineering & Tech Hiring)",
+      "workMode": "Hybrid (3 Days Office / 2 Days Remote)"
+    },
+    "interviewStatus": "COMPLETED",
+    "offerDeclinedAt": "2026-09-06T11:04:11.896Z",
+    "declineDetails": {
+      "declinedAt": "2026-09-06T11:04:11.896Z",
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<4076d156-c0d0-b83d-4e38-2326c552351f@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "Acknowledgement of Decision: AI/ML Engineer Offer - Finova Technologies",
+        "transport": "smtp.gmail.com:465 (Standard Direct SSL)"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
+  },
+  {
+    "id": "cand-pass-flow-1788692637315",
+    "name": "Siddharth Rao",
+    "email": "sharmavageesha2000@gmail.com",
+    "roleApplied": "Full Stack AI Engineer",
+    "receivedAt": "2026-09-06T11:03:57.319Z",
+    "attachmentInfo": {
+      "fileName": "Siddharth_Rao_Resume.pdf",
+      "urlPath": "/uploads/dummy.pdf"
+    },
+    "assessmentDetails": {
+      "completedAt": "2026-09-06T11:03:57.353Z",
+      "scorePercent": 90,
+      "correctCount": 18,
+      "totalQuestions": 20,
+      "passed": true,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 420,
+      "forcedByViolation": false
+    },
+    "testScore": 90,
+    "testPassed": true,
+    "assessmentCompleted": true,
+    "testSubmitted": true,
+    "status": "SELECTED",
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "OFFER_ACCEPTED",
+    "offerRefId": "HR-OFFER-2026-8533",
+    "callLetterSentAt": "2026-09-06T11:04:07.106Z",
+    "pendingEmailSync": false,
+    "callLetterDetails": {
+      "joiningDate": "Monday, 28 September 2026",
+      "ctcPackage": "₹15,50,000 per annum (Standard Full-Time) (Full-Time)",
+      "reportingTo": "Vageesha Sharma (Founder & Hiring Lead)",
+      "workMode": "100% Remote (Work from Anywhere)",
+      "offerRefId": "HR-OFFER-2026-8533",
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<caa298e3-44e6-227d-46e5-b4bec51428da@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "📜 Official Employment Offer Letter & Call Letter: Full Stack AI Engineer - Finova Technologies",
+        "transport": "smtp.gmail.com:465 (Standard Direct SSL)"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com",
+      "type": "FINAL_OFFER_LETTER"
+    },
+    "offerAcceptedAt": "2026-09-06T11:04:07.119Z"
+  },
+  {
+    "id": "cand-decline-live-1788692582642",
+    "name": "Vikramaditya Roy",
+    "email": "sharmavageesha2000@gmail.com",
+    "roleApplied": "AI/ML Engineer",
+    "receivedAt": "2026-09-06T11:03:02.658Z",
+    "status": "REJECTED",
+    "offerStatus": "OFFER_DECLINED",
+    "interviewStatus": "COMPLETED",
+    "offerDeclinedAt": "2026-09-06T11:03:02.659Z",
+    "declineDetails": {
+      "declinedAt": "2026-09-06T11:03:02.659Z",
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<97d57db7-af10-55c1-fe4c-89f9df0644be@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "Acknowledgement of Decision: AI/ML Engineer Offer - Finova Technologies",
+        "transport": "smtp.gmail.com:465 (Standard Direct SSL)"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com"
+    }
+  },
+  {
+    "id": "cand-priya-live-999",
+    "name": "Priya Mehra",
+    "email": "sharmavageesha2000@gmail.com",
+    "roleApplied": "Business Analyst",
+    "receivedAt": "2026-09-06T11:02:29.238Z",
+    "status": "SELECTED",
+    "offerStatus": "OFFER_ACCEPTED",
+    "interviewStatus": "COMPLETED",
+    "offerAcceptedAt": "2026-09-06T11:02:29.238Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 28 September 2026",
+      "ctcPackage": "₹11,50,000 per annum",
+      "reportingTo": "Pooja Mehta",
+      "workMode": "Hybrid",
+      "offerRefId": "HR-OFFER-2026-5710",
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<77a0e844-3091-618e-b25f-138fa61966a2@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "📜 Official Employment Offer Letter & Call Letter: Business Analyst - Finova Technologies",
+        "transport": "smtp.gmail.com:465 (Standard Direct SSL)"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com",
+      "type": "FINAL_OFFER_LETTER"
+    }
+  },
+  {
     "id": "cand-reject-flow-1788691276818",
     "name": "Kavita Patel",
     "email": "sharmavageesha2000@gmail.com",
@@ -107,7 +322,7 @@
     "matchScore": 90,
     "status": "SELECTED",
     "interviewStatus": "COMPLETED",
-    "offerStatus": "OFFER_EXTENDED",
+    "offerStatus": "OFFER_ACCEPTED",
     "summary": "Ananya Verma possesses 2.5 years of relevant experience aligned with Business Analyst. Strong foundation in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping. Shortlisted for 20-MCQ technical assessment.",
     "strengths": [
       "2.5 years of demonstrated experience in Business Analyst",
@@ -159,12 +374,16 @@
       "offerRefId": "HR-OFFER-2026-1973",
       "emailDispatch": {
         "success": true,
-        "messageId": "<d45cf066-48a6-b077-e8b8-72a492886ea7@gmail.com>",
-        "to": "sharmavageesha2000@gmail.com"
+        "simulated": false,
+        "messageId": "<7664e7ee-8deb-a5fc-d7e7-01530c5b17c5@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "📜 Official Employment Offer Letter & Call Letter: Business Analyst - Finova Technologies",
+        "transport": "smtp.gmail.com:465 (Standard Direct SSL)"
       },
       "deliveredTo": "sharmavageesha2000@gmail.com",
-      "type": "SELECTION_INTENT_OFFER"
-    }
+      "type": "FINAL_OFFER_LETTER"
+    },
+    "offerAcceptedAt": "2026-09-06T10:54:25.730Z"
   },
   {
     "id": "cand-reject-flow-1788689306360",
@@ -1161,8 +1380,8 @@
     },
     "matchScore": 90,
     "status": "SELECTED",
-    "interviewStatus": "SCHEDULED",
-    "offerStatus": "PENDING",
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "OFFER_ACCEPTED",
     "summary": "Ananya Verma possesses 2.5 years of relevant experience aligned with Business Analyst. Strong foundation in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping. Shortlisted for 20-MCQ technical assessment.",
     "strengths": [
       "2.5 years of demonstrated experience in Business Analyst",
@@ -1191,7 +1410,25 @@
     "receivedAt": "2026-09-05T13:29:53.000Z",
     "evaluatedAt": "2026-09-05T13:30:34.266Z",
     "source": "EMAIL_INBOX_ATTACHMENT",
-    "lastEmailSentAt": "2026-09-05T13:30:39.476Z"
+    "lastEmailSentAt": "2026-09-05T13:30:39.476Z",
+    "offerAcceptedAt": "2026-09-06T11:01:20.286Z",
+    "callLetterDetails": {
+      "joiningDate": "Monday, 28 September 2026",
+      "ctcPackage": "₹11,50,000 per annum",
+      "reportingTo": "Pooja Mehta",
+      "workMode": "Hybrid",
+      "offerRefId": "HR-OFFER-2026-7735",
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<a5b42dc2-c353-9c54-04e5-472141faa596@gmail.com>",
+        "to": "sharmavageesha2000@gmail.com",
+        "subject": "📜 Official Employment Offer Letter & Call Letter: Business Analyst - Finova Technologies",
+        "transport": "smtp.gmail.com:465 (Standard Direct SSL)"
+      },
+      "deliveredTo": "sharmavageesha2000@gmail.com",
+      "type": "FINAL_OFFER_LETTER"
+    }
   },
   {
     "id": "cand-1788612717916-1221",
