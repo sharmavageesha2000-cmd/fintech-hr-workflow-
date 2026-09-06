@@ -25,7 +25,7 @@
     "matchScore": 90,
     "status": "SELECTED",
     "interviewStatus": "COMPLETED",
-    "offerStatus": "OFFER_EXTENDED",
+    "offerStatus": "OFFER_ACCEPTED",
     "summary": "Ananya Verma possesses 2.5 years of relevant experience aligned with Business Analyst. Strong foundation in Requirement Gathering (BRD/FRD), Agile / Scrum, Jira, Process Mapping. Shortlisted for 20-MCQ technical assessment.",
     "strengths": [
       "2.5 years of demonstrated experience in Business Analyst",
@@ -73,21 +73,22 @@
     "pendingEmailSync": false,
     "callLetterDetails": {
       "joiningDate": "Monday, 28 September 2026",
-      "ctcPackage": "₹9,00,000 per annum (Standard Full-Time) (Full-Time)",
-      "reportingTo": "Pooja Mehta (VP of Talent Acquisition)",
-      "workMode": "Remote / Hybrid (Flexible Work Arrangements)",
+      "ctcPackage": "₹9,00,000 per annum",
+      "reportingTo": "Pooja Mehta",
+      "workMode": "Remote / Hybrid",
       "offerRefId": "HR-OFFER-2026-3460",
       "emailDispatch": {
         "success": true,
         "simulated": false,
-        "messageId": "<bb7e1aa7-d439-fc2b-66e7-f86e4bfc0344@gmail.com>",
+        "messageId": "<ba330ce4-4996-a03a-984d-510c95092371@gmail.com>",
         "to": "sharmavageesha2000@gmail.com",
-        "subject": "🎉 Congratulations! Job Offer & Selection Intent: Business Analyst - Finova Technologies",
+        "subject": "📜 Official Employment Offer Letter & Call Letter: Business Analyst - Finova Technologies",
         "transport": "smtp.gmail.com:465 (Standard Direct SSL)"
       },
       "deliveredTo": "sharmavageesha2000@gmail.com",
-      "type": "SELECTION_INTENT_OFFER"
-    }
+      "type": "FINAL_OFFER_LETTER"
+    },
+    "offerAcceptedAt": "2026-09-06T11:45:31.056Z"
   },
   {
     "id": "cand-live-offer-1788692785312",
