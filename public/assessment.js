@@ -620,6 +620,8 @@ async function confirmFinalSubmission(forcedByViolation = false) {
     const data = await res.json();
     if (data.success) {
       renderSystematicResultDashboard(data.result, data.candidate);
+    } else if (data.alreadySubmitted) {
+      renderAlreadySubmittedScreen(data.candidate || {});
     } else {
       throw new Error(data.error || 'Evaluation failed.');
     }

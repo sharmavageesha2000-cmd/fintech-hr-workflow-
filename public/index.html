@@ -339,7 +339,9 @@
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
             <div>
               <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Annual Compensation Package (CTC) *</label>
-              <input type="text" id="offerCtc" name="ctcPackage" value="₹16,00,000 per annum (Full-Time)" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;" required>
+              <select id="offerCtc" name="ctcPackage" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff; font-weight:600; color:#0f172a;" required>
+                <!-- Dynamically populated based on candidate job role -->
+              </select>
             </div>
             <div>
               <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Official Joining Date *</label>
@@ -352,13 +354,22 @@
               <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Work Mode</label>
               <select id="offerWorkMode" name="workMode" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff;">
                 <option value="Remote / Hybrid (Flexible Work Arrangements)">Remote / Hybrid (Flexible)</option>
-                <option value="100% Remote (Work from Anywhere)">100% Remote</option>
-                <option value="On-Site / Office Location">On-Site Office</option>
+                <option value="100% Remote (Work from Anywhere)">100% Remote (Work from Anywhere)</option>
+                <option value="Hybrid (3 Days Office / 2 Days Remote)">Hybrid (3 Days Office / 2 Days Remote)</option>
+                <option value="Hybrid (2 Days Office / 3 Days Remote)">Hybrid (2 Days Office / 3 Days Remote)</option>
+                <option value="On-Site / Office Location (Bangalore HQ)">On-Site Office (Bangalore HQ)</option>
+                <option value="On-Site / Office Location (Mumbai / Gurgaon Hub)">On-Site Office (Mumbai / Gurgaon)</option>
               </select>
             </div>
             <div>
-              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Reporting Authority</label>
-              <input type="text" id="offerReportingTo" value="Vageesha Sharma (Founder &amp; Hiring Lead)" readonly style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; background:#f8fafc; color:#475569;">
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Reporting Authority HR Name</label>
+              <select id="offerReportingTo" name="reportingTo" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff; color:#0f172a;">
+                <option value="Vageesha Sharma (Founder &amp; Hiring Lead)">Vageesha Sharma (Founder &amp; Hiring Lead)</option>
+                <option value="Aarav Kapoor (Head of Engineering &amp; Tech Hiring)">Aarav Kapoor (Head of Engineering &amp; Tech Hiring)</option>
+                <option value="Pooja Mehta (VP of Talent Acquisition)">Pooja Mehta (VP of Talent Acquisition)</option>
+                <option value="Rohan Mehta (Technical Hiring Director)">Rohan Mehta (Technical Hiring Director)</option>
+                <option value="Ananya Deshmukh (People Operations Manager)">Ananya Deshmukh (People Operations Manager)</option>
+              </select>
             </div>
           </div>
 
@@ -375,11 +386,11 @@
 
   <!-- ================= Job Role & Vacancy Modal (Add / Edit) ================= -->
   <div class="modal-backdrop" id="jobModal">
-    <div class="modal-card" style="max-width:580px;">
+    <div class="modal-card" style="max-width:620px;">
       <div class="modal-header">
         <div>
           <h2 id="jobModalTitle" style="font-size:1.25rem; font-weight:800;"><i class="fa-solid fa-briefcase" style="color:var(--primary-purple);"></i> Manage Job Role &amp; Vacancies</h2>
-          <p style="font-size:0.82rem; color:var(--text-muted);">Set required experience, vacancies left, and hiring status for HR management.</p>
+          <p style="font-size:0.82rem; color:var(--text-muted);">Configure role-specific packages, working mode, reporting HR authority, and vacancy limits.</p>
         </div>
         <button class="icon-badge-btn" id="closeJobModalBtn"><i class="fa-solid fa-xmark"></i></button>
       </div>
@@ -390,11 +401,63 @@
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
             <div>
               <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Job Title / Role *</label>
-              <input type="text" id="jobTitle" name="title" placeholder="e.g. AI Prompt Engineer" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;" required>
+              <input type="text" id="jobTitle" name="title" placeholder="e.g. AI Prompt Engineer" list="presetRoleOptions" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;" required>
+              <datalist id="presetRoleOptions">
+                <option value="Frontend Developer">
+                <option value="Backend Developer">
+                <option value="Full Stack AI Engineer">
+                <option value="AI/ML Engineer">
+                <option value="Data Analyst">
+                <option value="Business Analyst">
+                <option value="Business Development Executive">
+                <option value="UI/UX Designer">
+              </datalist>
             </div>
             <div>
               <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">Department</label>
               <input type="text" id="jobDept" name="department" placeholder="e.g. Engineering / Automation" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px;">
+            </div>
+          </div>
+
+          <!-- Role-Specific Annual Package Dropdown -->
+          <div style="margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <label style="font-size:0.8rem; font-weight:700; color:#0f172a;">
+                <i class="fa-solid fa-money-bill-wave" style="color:#10b981; margin-right:4px;"></i> Annual Compensation Package (CTC) *
+              </label>
+              <span id="jobPackageRoleHint" style="font-size:0.72rem; color:#64748b; font-weight:600;">Tailored for Frontend Developer</span>
+            </div>
+            <select id="jobAnnualPackage" name="annualPackage" style="width:100%; padding:9px 12px; border:1.5px solid #10b981; border-radius:8px; background:#ffffff; font-weight:700; color:#047857;" required>
+              <!-- Dynamically populated based on selected job role -->
+            </select>
+          </div>
+
+          <!-- Working Mode and Reporting Authority HR Name Dropdowns -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">
+                <i class="fa-solid fa-laptop-house" style="color:#3b82f6; margin-right:4px;"></i> Working Mode *
+              </label>
+              <select id="jobWorkingMode" name="workingMode" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff; font-size:0.83rem;" required>
+                <option value="Remote / Hybrid (Flexible Work Arrangements)">Remote / Hybrid (Flexible)</option>
+                <option value="100% Remote (Work from Anywhere)">100% Remote (Work from Anywhere)</option>
+                <option value="Hybrid (3 Days Office / 2 Days Remote)">Hybrid (3 Days Office / 2 Days Remote)</option>
+                <option value="Hybrid (2 Days Office / 3 Days Remote)">Hybrid (2 Days Office / 3 Days Remote)</option>
+                <option value="On-Site / Office Location (Bangalore HQ)">On-Site Office (Bangalore HQ)</option>
+                <option value="On-Site / Office Location (Mumbai / Gurgaon Hub)">On-Site Office (Mumbai / Gurgaon)</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.8rem; font-weight:600; display:block; margin-bottom:4px;">
+                <i class="fa-solid fa-user-tie" style="color:#8b5cf6; margin-right:4px;"></i> Reporting Authority HR Name *
+              </label>
+              <select id="jobReportingAuthority" name="reportingAuthority" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff; font-size:0.83rem;" required>
+                <option value="Vageesha Sharma (Founder &amp; Hiring Lead)">Vageesha Sharma (Founder &amp; Hiring Lead)</option>
+                <option value="Aarav Kapoor (Head of Engineering &amp; Tech Hiring)">Aarav Kapoor (Head of Engineering &amp; Tech Hiring)</option>
+                <option value="Pooja Mehta (VP of Talent Acquisition)">Pooja Mehta (VP of Talent Acquisition)</option>
+                <option value="Rohan Mehta (Technical Hiring Director)">Rohan Mehta (Technical Hiring Director)</option>
+                <option value="Ananya Deshmukh (People Operations Manager)">Ananya Deshmukh (People Operations Manager)</option>
+              </select>
             </div>
           </div>
 

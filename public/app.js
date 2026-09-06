@@ -281,6 +281,9 @@ function setupEventListeners() {
         department: document.getElementById('jobDept').value,
         experienceRequired: document.getElementById('jobExp').value,
         status: document.getElementById('jobStatus').value,
+        annualPackage: document.getElementById('jobAnnualPackage')?.value || '',
+        workingMode: document.getElementById('jobWorkingMode')?.value || 'Remote / Hybrid (Flexible Work Arrangements)',
+        reportingAuthority: document.getElementById('jobReportingAuthority')?.value || 'Vageesha Sharma (Founder & Hiring Lead)',
         totalVacancies: parseInt(document.getElementById('jobTotalVacancies').value) || 1,
         vacanciesLeft: parseInt(document.getElementById('jobVacanciesLeft').value) || 0,
         skills: document.getElementById('jobSkills').value,
@@ -445,7 +448,119 @@ async function loadJobs() {
   }
 }
 
-// Render Jobs Card on Dashboard
+// Role-Specific Package Matrix: Different realistic market compensation tiers per job role
+const ROLE_PACKAGE_CATALOG = {
+  'frontend developer': [
+    '₹8,50,000 per annum (Associate Frontend Developer)',
+    '₹9,50,000 per annum (Standard Full-Time)',
+    '₹12,00,000 per annum (Mid-Senior Frontend Engineer)',
+    '₹15,00,000 per annum (Senior Frontend Specialist)'
+  ],
+  'backend developer': [
+    '₹9,00,000 per annum (Associate Backend Developer)',
+    '₹11,50,000 per annum (Standard Full-Time)',
+    '₹14,00,000 per annum (Mid-Senior Backend Engineer)',
+    '₹17,50,000 per annum (Senior Backend Architect)'
+  ],
+  'full stack ai engineer': [
+    '₹12,00,000 per annum (Junior AI/Full-Stack Developer)',
+    '₹15,50,000 per annum (Standard Full-Time)',
+    '₹18,50,000 per annum (Senior AI Engineer)',
+    '₹22,00,000 per annum (Lead AI Architect)'
+  ],
+  'ai/ml engineer': [
+    '₹13,50,000 per annum (Associate ML Engineer)',
+    '₹17,00,000 per annum (Standard Full-Time)',
+    '₹21,00,000 per annum (Senior ML Scientist)',
+    '₹25,00,000 per annum (Principal AI/ML Lead)'
+  ],
+  'data analyst': [
+    '₹6,50,000 per annum (Associate Data Analyst)',
+    '₹8,50,000 per annum (Standard Full-Time)',
+    '₹11,00,000 per annum (Senior BI & Analytics Specialist)',
+    '₹13,50,000 per annum (Lead Data Strategist)'
+  ],
+  'business analyst': [
+    '₹7,00,000 per annum (Associate Business Analyst)',
+    '₹9,00,000 per annum (Standard Full-Time)',
+    '₹12,00,000 per annum (Senior Agile BA)',
+    '₹14,50,000 per annum (Lead Business Consultant)'
+  ],
+  'business development executive': [
+    '₹6,00,000 per annum (Base + Performance Bonus)',
+    '₹8,00,000 per annum (Fixed + Variable CTC)',
+    '₹10,50,000 per annum (Senior Enterprise Sales Lead)',
+    '₹13,00,000 per annum (Strategic Accounts Director)'
+  ],
+  'ui/ux designer': [
+    '₹6,50,000 per annum (Associate UI/UX Designer)',
+    '₹8,50,000 per annum (Standard Full-Time)',
+    '₹11,50,000 per annum (Senior Product Designer)',
+    '₹14,00,000 per annum (Design Systems Lead)'
+  ]
+};
+
+// Retrieve differing package brackets for any job role
+function getPackagesForRole(roleName) {
+  if (!roleName) return ROLE_PACKAGE_CATALOG['frontend developer'];
+  const clean = roleName.toLowerCase().trim();
+  for (const key of Object.keys(ROLE_PACKAGE_CATALOG)) {
+    if (clean === key || clean.includes(key) || key.includes(clean)) {
+      return ROLE_PACKAGE_CATALOG[key];
+    }
+  }
+
+  // Dynamic tier fallback based on title seniority keywords
+  if (clean.includes('lead') || clean.includes('architect') || clean.includes('director')) {
+    return [
+      '₹18,00,000 per annum (Lead Specialist)',
+      '₹22,50,000 per annum (Principal Director)',
+      '₹26,00,000 per annum (Executive Leadership CTC)'
+    ];
+  }
+  if (clean.includes('senior')) {
+    return [
+      '₹13,00,000 per annum (Senior Level CTC)',
+      '₹15,50,000 per annum (Senior Specialist Full-Time)',
+      '₹18,00,000 per annum (Advanced Senior)'
+    ];
+  }
+  return [
+    '₹7,50,000 per annum (Associate Level CTC)',
+    '₹9,50,000 per annum (Standard Full-Time)',
+    '₹12,50,000 per annum (Mid-Level CTC)',
+    '₹16,00,000 per annum (Senior Level CTC)'
+  ];
+}
+
+// Dynamically refresh package dropdown options based on the chosen job role
+function updateJobPackageDropdown(selectedPackage = null) {
+  const titleInput = document.getElementById('jobTitle');
+  const packageSelect = document.getElementById('jobAnnualPackage');
+  const roleHint = document.getElementById('jobPackageRoleHint');
+  if (!packageSelect) return;
+
+  const roleName = (titleInput ? titleInput.value : '').trim() || 'Frontend Developer';
+  if (roleHint) roleHint.textContent = `Tailored for ${roleName}`;
+
+  const packages = getPackagesForRole(roleName);
+  let html = '';
+  packages.forEach((pkg, idx) => {
+    const isSelected = selectedPackage
+      ? (selectedPackage === pkg || selectedPackage.includes(pkg.split(' ')[0]))
+      : (idx === 1 || pkg.includes('Standard'));
+    html += `<option value="${escapeHtml(pkg)}" ${isSelected ? 'selected' : ''}>${escapeHtml(pkg)}</option>`;
+  });
+
+  // If a custom saved package was previously assigned, preserve it in the dropdown
+  if (selectedPackage && !packages.includes(selectedPackage)) {
+    html = `<option value="${escapeHtml(selectedPackage)}" selected>${escapeHtml(selectedPackage)} (Current)</option>` + html;
+  }
+
+  packageSelect.innerHTML = html;
+}
+
+// Render Jobs Card on Dashboard with Package, Mode & HR Metadata
 function renderJobsList() {
   if (!openRolesContainer) return;
 
@@ -464,21 +579,33 @@ function renderJobsList() {
     const badgeClass = isFilled ? 'red' : (j.status === 'ACTIVE' ? 'green' : 'blue');
     const badgeText = isFilled ? '0 Left (Filled)' : `${vacanciesLeft} Vacanc${vacanciesLeft > 1 ? 'ies' : 'y'} Left (${j.totalVacancies} Total)`;
 
+    const defaultPackage = j.annualPackage || (getPackagesForRole(j.title)[1] || '₹9,50,000 per annum (Standard Full-Time)');
+    const defaultMode = j.workingMode || 'Remote / Hybrid (Flexible Work Arrangements)';
+    const defaultHr = j.reportingAuthority || 'Vageesha Sharma (Founder & Hiring Lead)';
+
     return `
       <div class="role-item">
         <div class="role-info-group">
           <div class="role-icon-bullet"><i class="fa-solid fa-briefcase"></i></div>
           <div class="role-title-sub">
-            <div style="display:flex; align-items:center; gap:8px;">
-              <strong>${escapeHtml(j.title)}</strong>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <strong style="font-size:0.95rem;">${escapeHtml(j.title)}</strong>
               <span style="font-size:0.7rem; background:#f1f5f9; color:#475569; padding:2px 6px; border-radius:4px; font-weight:700;">${escapeHtml(j.experienceRequired || 'All Yrs')}</span>
+              <span style="font-size:0.72rem; background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; padding:2px 8px; border-radius:99px; font-weight:700;">
+                <i class="fa-solid fa-money-bill-wave" style="margin-right:3px;"></i>${escapeHtml(defaultPackage)}
+              </span>
             </div>
-            <span>${j.department || 'Startup Team'} • ${j.applicantCount || 0} Applicants (${j.shortlistedCount || 0} Shortlisted)</span>
+            <div style="font-size:0.75rem; color:var(--text-muted); margin-top:3px; display:flex; gap:10px; flex-wrap:wrap;">
+              <span><i class="fa-solid fa-building" style="margin-right:3px;"></i>${escapeHtml(j.department || 'Startup Team')}</span>
+              <span><i class="fa-solid fa-laptop-house" style="margin-right:3px;"></i>${escapeHtml(defaultMode)}</span>
+              <span><i class="fa-solid fa-user-tie" style="margin-right:3px;"></i>${escapeHtml(defaultHr.split(' (')[0])}</span>
+              <span>• ${j.applicantCount || 0} Applicants (${j.shortlistedCount || 0} Shortlisted)</span>
+            </div>
           </div>
         </div>
         <div style="display:flex; align-items:center; gap:8px;">
           <span class="badge-pill ${badgeClass}">${badgeText}</span>
-          <button class="btn-secondary-light" style="padding:0.25rem 0.65rem; font-size:0.75rem;" onclick="openEditJobModal('${j.id}')" title="Edit Vacancies or Experience">
+          <button class="btn-secondary-light" style="padding:0.25rem 0.65rem; font-size:0.75rem;" onclick="openEditJobModal('${j.id}')" title="Edit Vacancies, Package or Working Mode">
             <i class="fa-solid fa-pen-to-square"></i> Edit
           </button>
         </div>
@@ -517,6 +644,18 @@ function populateRoleDropdown() {
 window.openAddJobModal = function() {
   jobForm.reset();
   document.getElementById('jobId').value = '';
+  document.getElementById('jobWorkingMode').value = 'Remote / Hybrid (Flexible Work Arrangements)';
+  document.getElementById('jobReportingAuthority').value = 'Vageesha Sharma (Founder & Hiring Lead)';
+  updateJobPackageDropdown();
+
+  // Attach dynamic package update listeners if not already attached
+  const titleInput = document.getElementById('jobTitle');
+  if (titleInput && !titleInput.dataset.listenerAttached) {
+    titleInput.addEventListener('input', () => updateJobPackageDropdown());
+    titleInput.addEventListener('change', () => updateJobPackageDropdown());
+    titleInput.dataset.listenerAttached = 'true';
+  }
+
   jobModalTitle.innerHTML = '<i class="fa-solid fa-plus" style="color:var(--primary-purple);"></i> Add New Job Role &amp; Vacancy';
   if (deleteJobBtn) deleteJobBtn.style.display = 'none';
   openModal(jobModal);
@@ -537,6 +676,24 @@ window.openEditJobModal = function(jobId) {
   document.getElementById('jobSkills').value = Array.isArray(job.skills) ? job.skills.join(', ') : (job.skills || '');
   document.getElementById('jobDesc').value = job.description || '';
 
+  // Prefill Working Mode & Reporting Authority
+  if (document.getElementById('jobWorkingMode')) {
+    document.getElementById('jobWorkingMode').value = job.workingMode || 'Remote / Hybrid (Flexible Work Arrangements)';
+  }
+  if (document.getElementById('jobReportingAuthority')) {
+    document.getElementById('jobReportingAuthority').value = job.reportingAuthority || 'Vageesha Sharma (Founder & Hiring Lead)';
+  }
+
+  // Populate role-specific package dropdown matching this job
+  updateJobPackageDropdown(job.annualPackage);
+
+  const titleInput = document.getElementById('jobTitle');
+  if (titleInput && !titleInput.dataset.listenerAttached) {
+    titleInput.addEventListener('input', () => updateJobPackageDropdown());
+    titleInput.addEventListener('change', () => updateJobPackageDropdown());
+    titleInput.dataset.listenerAttached = 'true';
+  }
+
   jobModalTitle.innerHTML = `<i class="fa-solid fa-pen-to-square" style="color:var(--primary-purple);"></i> Edit Role: ${escapeHtml(job.title)}`;
   if (deleteJobBtn) deleteJobBtn.style.display = 'block';
 
@@ -553,13 +710,42 @@ window.openOfferModal = function(candId) {
   document.getElementById('offerCandidateEmail').textContent = c.email;
   document.getElementById('offerCandidateRole').textContent = c.roleApplied;
 
-  const defaultCtc = c.roleApplied.includes('Architect') || c.roleApplied.includes('Lead')
-    ? '₹20,00,000 per annum (Full-Time)'
-    : (c.roleApplied.includes('Specialist') || c.roleApplied.includes('Senior')
-        ? '₹16,00,000 per annum (Full-Time)'
-        : '₹9,50,000 per annum (Full-Time)');
+  // Match candidate's role to job definition to get tailored packages and defaults
+  const matchedJob = allJobs.find(j => 
+    j.title && c.roleApplied && (
+      j.title.toLowerCase().trim() === c.roleApplied.toLowerCase().trim() ||
+      c.roleApplied.toLowerCase().includes(j.title.toLowerCase().trim()) ||
+      j.title.toLowerCase().includes(c.roleApplied.toLowerCase().trim())
+    )
+  );
 
-  document.getElementById('offerCtc').value = defaultCtc;
+  const packages = (matchedJob && Array.isArray(matchedJob.packageOptions) && matchedJob.packageOptions.length > 0)
+    ? matchedJob.packageOptions
+    : getPackagesForRole(c.roleApplied);
+
+  const selectedPkg = matchedJob?.annualPackage || packages[1] || packages[0];
+
+  const offerCtcSelect = document.getElementById('offerCtc');
+  if (offerCtcSelect) {
+    let html = '';
+    packages.forEach(pkg => {
+      const isSelected = (pkg === selectedPkg);
+      html += `<option value="${escapeHtml(pkg)}" ${isSelected ? 'selected' : ''}>${escapeHtml(pkg)}</option>`;
+    });
+    if (selectedPkg && !packages.includes(selectedPkg)) {
+      html = `<option value="${escapeHtml(selectedPkg)}" selected>${escapeHtml(selectedPkg)}</option>` + html;
+    }
+    offerCtcSelect.innerHTML = html;
+  }
+
+  if (document.getElementById('offerWorkMode')) {
+    document.getElementById('offerWorkMode').value = matchedJob?.workingMode || 'Remote / Hybrid (Flexible Work Arrangements)';
+  }
+
+  if (document.getElementById('offerReportingTo')) {
+    document.getElementById('offerReportingTo').value = matchedJob?.reportingAuthority || 'Vageesha Sharma (Founder & Hiring Lead)';
+  }
+
   document.getElementById('offerJoiningDate').value = 'Monday, 14 September 2026';
 
   openModal(offerModal);
@@ -790,6 +976,8 @@ function renderCandidatesTable() {
   candidatesTableBody.innerHTML = displayedCandidates.map(c => {
     const isSelected = c.status === 'SELECTED';
     const isShortlisted = c.status === 'SHORTLISTED';
+    const isOfferAccepted = c.offerStatus === 'OFFER_ACCEPTED';
+    const isOfferDeclined = c.offerStatus === 'OFFER_DECLINED';
     const isOfferExtended = c.offerStatus === 'OFFER_EXTENDED';
     const hasPassedAssessment = Boolean(
       (c.testPassed === true || (c.assessmentDetails && c.assessmentDetails.passed === true)) &&
@@ -807,8 +995,12 @@ function renderCandidatesTable() {
 
     // Interview Status Toggle & Badge
     let interviewStatusHtml = '';
-    if (isOfferExtended) {
-      interviewStatusHtml = `<span class="badge-pill green" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0;"><i class="fa-solid fa-award"></i> Offer Extended</span>`;
+    if (isOfferAccepted) {
+      interviewStatusHtml = `<span class="badge-pill green" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;"><i class="fa-solid fa-circle-check"></i> Offer Accepted</span>`;
+    } else if (isOfferDeclined) {
+      interviewStatusHtml = `<span class="badge-pill red" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;"><i class="fa-solid fa-ban"></i> Offer Declined</span>`;
+    } else if (isOfferExtended) {
+      interviewStatusHtml = `<span class="badge-pill blue" style="background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe; font-weight:700;"><i class="fa-solid fa-paper-plane"></i> Offer Sent (Pending)</span>`;
     } else if (hasPassedAssessment) {
       interviewStatusHtml = `<span class="badge-pill green" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0;"><i class="fa-solid fa-circle-check"></i> Test Passed (${c.testScore || c.assessmentDetails?.scorePercent}%)</span>`;
     } else if (c.testScore !== undefined && c.testScore < 80) {
@@ -825,16 +1017,24 @@ function renderCandidatesTable() {
 
     // Call Letter Action Button: STRICTLY available only after passing test
     let callLetterActionHtml = '';
-    if (isOfferExtended) {
+    if (isOfferAccepted) {
       callLetterActionHtml = `
-        <button class="btn-secondary-light" style="padding:0.3rem 0.65rem; font-size:0.75rem; background:#ecfdf5; color:#059669; border-color:#a7f3d0;" onclick="openOfferModal('${c.id}')" title="Re-send or view Call Letter">
+        <button class="btn-secondary-light" style="padding:0.3rem 0.65rem; font-size:0.75rem; background:#ecfdf5; color:#059669; border-color:#a7f3d0;" onclick="openOfferModal('${c.id}')" title="Call Letter Dispatched & Formally Accepted">
           <i class="fa-solid fa-envelope-circle-check"></i> Call Letter Sent
+        </button>
+      `;
+    } else if (isOfferDeclined) {
+      callLetterActionHtml = `<span style="color:#ef4444; font-size:0.78rem; font-weight:600;"><i class="fa-solid fa-ban"></i> Declined</span>`;
+    } else if (isOfferExtended) {
+      callLetterActionHtml = `
+        <button class="btn-secondary-light" style="padding:0.3rem 0.65rem; font-size:0.75rem; background:#eff6ff; color:#2563eb; border-color:#bfdbfe;" onclick="openOfferModal('${c.id}')" title="Provisional Offer Sent (Awaiting Candidate Decision)">
+          <i class="fa-solid fa-clock"></i> Pending Decision
         </button>
       `;
     } else if (hasPassedAssessment) {
       callLetterActionHtml = `
-        <button class="btn-primary-purple" style="padding:0.3rem 0.65rem; font-size:0.75rem;" onclick="openOfferModal('${c.id}')" title="Send Official Job Offer & Call Letter Email">
-          <i class="fa-solid fa-award"></i> Issue Call Letter
+        <button class="btn-primary-purple" style="padding:0.3rem 0.65rem; font-size:0.75rem;" onclick="openOfferModal('${c.id}')" title="Send Official Job Offer Email">
+          <i class="fa-solid fa-award"></i> Issue Offer
         </button>
       `;
     } else {
@@ -939,19 +1139,31 @@ function openCandidateDetail(candidate) {
   modalRole.textContent = `${candidate.roleApplied} • Match Score: ${candidate.matchScore}%`;
 
   const isSelected = candidate.status === 'SELECTED';
-  const isOffer = candidate.offerStatus === 'OFFER_EXTENDED';
+  const isOfferAccepted = candidate.offerStatus === 'OFFER_ACCEPTED';
+  const isOfferDeclined = candidate.offerStatus === 'OFFER_DECLINED';
+  const isOffer = isOfferAccepted || isOfferDeclined || candidate.offerStatus === 'OFFER_EXTENDED' || Boolean(candidate.callLetterDetails);
 
   let offerBoxHtml = '';
   if (isOffer && candidate.callLetterDetails) {
+    let decisionBadge = `<span style="color:#2563eb; font-weight:700;"><i class="fa-solid fa-paper-plane"></i> Provisional Offer Sent (Awaiting Candidate Decision)</span>`;
+    if (isOfferAccepted) {
+      decisionBadge = `<span style="color:#059669; font-weight:700;"><i class="fa-solid fa-circle-check"></i> Formally Accepted by Candidate (${new Date(candidate.offerAcceptedAt || Date.now()).toLocaleDateString()}) • Official Call Letter Delivered</span>`;
+    } else if (isOfferDeclined) {
+      decisionBadge = `<span style="color:#dc2626; font-weight:700;"><i class="fa-solid fa-ban"></i> Declined by Candidate (${new Date(candidate.offerDeclinedAt || Date.now()).toLocaleDateString()}) • Acknowledgement Delivered</span>`;
+    }
+
     offerBoxHtml = `
-      <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:12px; padding:16px; margin:16px 0;">
-        <h4 style="color:#065f46; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
-          <i class="fa-solid fa-award"></i> Official Job Offer &amp; Call Letter Details
+      <div style="background:${isOfferAccepted ? '#ecfdf5' : (isOfferDeclined ? '#fef2f2' : '#eff6ff')}; border:1px solid ${isOfferAccepted ? '#a7f3d0' : (isOfferDeclined ? '#fecaca' : '#bfdbfe')}; border-radius:12px; padding:16px; margin:16px 0;">
+        <h4 style="color:${isOfferAccepted ? '#065f46' : (isOfferDeclined ? '#991b1b' : '#1e40af')}; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+          <i class="fa-solid fa-award"></i> Employment Offer &amp; Call Letter Details
         </h4>
-        <p style="margin:4px 0; font-size:0.86rem;"><strong>Ref ID:</strong> ${candidate.offerRefId || 'HR-OFFER-2026'}</p>
-        <p style="margin:4px 0; font-size:0.86rem;"><strong>Compensation (CTC):</strong> ${candidate.callLetterDetails.ctcPackage || 'Full-Time'}</p>
-        <p style="margin:4px 0; font-size:0.86rem;"><strong>Official Joining Date:</strong> ${candidate.callLetterDetails.joiningDate}</p>
-        <p style="margin:4px 0; font-size:0.86rem;"><strong>Status:</strong> <span style="color:#059669; font-weight:700;">Delivered to ${candidate.email}</span></p>
+        <p style="margin:4px 0; font-size:0.86rem;"><strong>Candidate Decision:</strong> ${decisionBadge}</p>
+        <p style="margin:4px 0; font-size:0.86rem;"><strong>Offer Ref ID:</strong> ${candidate.offerRefId || 'HR-OFFER-2026'}</p>
+        <p style="margin:4px 0; font-size:0.86rem;"><strong>Annual Package (CTC):</strong> ${candidate.callLetterDetails.ctcPackage || 'Full-Time'}</p>
+        <p style="margin:4px 0; font-size:0.86rem;"><strong>Working Mode:</strong> ${candidate.callLetterDetails.workMode || 'Remote / Hybrid'}</p>
+        <p style="margin:4px 0; font-size:0.86rem;"><strong>Reporting Authority:</strong> ${candidate.callLetterDetails.reportingTo || 'Founder & Hiring Lead'}</p>
+        <p style="margin:4px 0; font-size:0.86rem;"><strong>Projected Date of Joining:</strong> ${candidate.callLetterDetails.joiningDate}</p>
+        <p style="margin:4px 0; font-size:0.86rem;"><strong>Recipient:</strong> <span style="color:#059669; font-weight:700;">${candidate.email}</span></p>
       </div>
     `;
   }

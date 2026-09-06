@@ -3,11 +3,28 @@
     "id": "job-1",
     "title": "Frontend Developer",
     "department": "Technology",
-    "experienceRequired": "1–3 Years",
+    "experienceRequired": "",
     "totalVacancies": 2,
     "vacanciesLeft": 2,
     "status": "ACTIVE",
-    "skills": ["React.js", "JavaScript", "HTML5 & CSS3", "Tailwind CSS", "TypeScript", "Responsive Design", "REST APIs"],
+    "annualPackage": "₹8,50,000 per annum (Associate Frontend Developer)",
+    "packageOptions": [
+      "₹8,50,000 per annum (Associate Frontend Developer)",
+      "₹9,50,000 per annum (Standard Full-Time)",
+      "₹12,00,000 per annum (Mid-Senior Frontend Engineer)",
+      "₹15,00,000 per annum (Senior Frontend Specialist)"
+    ],
+    "workingMode": "Remote / Hybrid (Flexible Work Arrangements)",
+    "reportingAuthority": "Vageesha Sharma (Founder & Hiring Lead)",
+    "skills": [
+      "React.js",
+      "JavaScript",
+      "HTML5 & CSS3",
+      "Tailwind CSS",
+      "TypeScript",
+      "Responsive Design",
+      "REST APIs"
+    ],
     "description": "Building modern, responsive, high-performance web applications using React.js and modern JavaScript/TypeScript."
   },
   {
@@ -18,7 +35,24 @@
     "totalVacancies": 2,
     "vacanciesLeft": 2,
     "status": "ACTIVE",
-    "skills": ["Node.js", "Express", "REST APIs", "SQL / PostgreSQL", "MongoDB", "Databases", "Backend Development"],
+    "annualPackage": "₹11,50,000 per annum (Standard Full-Time)",
+    "packageOptions": [
+      "₹9,00,000 per annum (Associate Backend Developer)",
+      "₹11,50,000 per annum (Standard Full-Time)",
+      "₹14,00,000 per annum (Mid-Senior Backend Engineer)",
+      "₹17,50,000 per annum (Senior Backend Architect)"
+    ],
+    "workingMode": "Remote / Hybrid (Flexible Work Arrangements)",
+    "reportingAuthority": "Aarav Kapoor (Head of Engineering & Tech Hiring)",
+    "skills": [
+      "Node.js",
+      "Express",
+      "REST APIs",
+      "SQL / PostgreSQL",
+      "MongoDB",
+      "Databases",
+      "Backend Development"
+    ],
     "description": "Designing scalable REST APIs, microservices, and database schemas with Node.js and PostgreSQL/MongoDB."
   },
   {
@@ -29,7 +63,25 @@
     "totalVacancies": 2,
     "vacanciesLeft": 2,
     "status": "ACTIVE",
-    "skills": ["React.js", "Node.js", "Python", "FastAPI", "Gemini API / LLMs", "PostgreSQL", "REST APIs", "Docker"],
+    "annualPackage": "₹15,50,000 per annum (Standard Full-Time)",
+    "packageOptions": [
+      "₹12,00,000 per annum (Junior AI/Full-Stack Developer)",
+      "₹15,50,000 per annum (Standard Full-Time)",
+      "₹18,50,000 per annum (Senior AI Engineer)",
+      "₹22,00,000 per annum (Lead AI Architect)"
+    ],
+    "workingMode": "100% Remote (Work from Anywhere)",
+    "reportingAuthority": "Vageesha Sharma (Founder & Hiring Lead)",
+    "skills": [
+      "React.js",
+      "Node.js",
+      "Python",
+      "FastAPI",
+      "Gemini API / LLMs",
+      "PostgreSQL",
+      "REST APIs",
+      "Docker"
+    ],
     "description": "Building scalable full stack web applications integrating React, Node.js/Python APIs, and Gemini LLM pipelines."
   },
   {
@@ -40,7 +92,23 @@
     "totalVacancies": 2,
     "vacanciesLeft": 2,
     "status": "ACTIVE",
-    "skills": ["Python", "Machine Learning", "PyTorch / TensorFlow", "LLMs", "Data Processing", "AI Workflows"],
+    "annualPackage": "₹17,00,000 per annum (Standard Full-Time)",
+    "packageOptions": [
+      "₹13,50,000 per annum (Associate ML Engineer)",
+      "₹17,00,000 per annum (Standard Full-Time)",
+      "₹21,00,000 per annum (Senior ML Scientist)",
+      "₹25,00,000 per annum (Principal AI/ML Lead)"
+    ],
+    "workingMode": "Hybrid (3 Days Office / 2 Days Remote)",
+    "reportingAuthority": "Aarav Kapoor (Head of Engineering & Tech Hiring)",
+    "skills": [
+      "Python",
+      "Machine Learning",
+      "PyTorch / TensorFlow",
+      "LLMs",
+      "Data Processing",
+      "AI Workflows"
+    ],
     "description": "Developing machine learning models, LLM pipelines, and AI data processing workflows using Python."
   },
   {
@@ -51,7 +119,23 @@
     "totalVacancies": 1,
     "vacanciesLeft": 1,
     "status": "ACTIVE",
-    "skills": ["SQL", "Excel", "Power BI / Tableau", "Python", "Data Visualization", "Analytics"],
+    "annualPackage": "₹8,50,000 per annum (Standard Full-Time)",
+    "packageOptions": [
+      "₹6,50,000 per annum (Associate Data Analyst)",
+      "₹8,50,000 per annum (Standard Full-Time)",
+      "₹11,00,000 per annum (Senior BI & Analytics Specialist)",
+      "₹13,50,000 per annum (Lead Data Strategist)"
+    ],
+    "workingMode": "Hybrid (2 Days Office / 3 Days Remote)",
+    "reportingAuthority": "Pooja Mehta (VP of Talent Acquisition)",
+    "skills": [
+      "SQL",
+      "Excel",
+      "Power BI / Tableau",
+      "Python",
+      "Data Visualization",
+      "Analytics"
+    ],
     "description": "Extracting business insights, writing complex SQL queries, and creating executive data visualization dashboards."
   },
   {
@@ -62,7 +146,23 @@
     "totalVacancies": 1,
     "vacanciesLeft": 1,
     "status": "ACTIVE",
-    "skills": ["Requirement Gathering (BRD/FRD)", "Agile / Scrum", "Jira", "Process Mapping", "Documentation", "Business Analysis"],
+    "annualPackage": "₹9,00,000 per annum (Standard Full-Time)",
+    "packageOptions": [
+      "₹7,00,000 per annum (Associate Business Analyst)",
+      "₹9,00,000 per annum (Standard Full-Time)",
+      "₹12,00,000 per annum (Senior Agile BA)",
+      "₹14,50,000 per annum (Lead Business Consultant)"
+    ],
+    "workingMode": "Remote / Hybrid (Flexible Work Arrangements)",
+    "reportingAuthority": "Pooja Mehta (VP of Talent Acquisition)",
+    "skills": [
+      "Requirement Gathering (BRD/FRD)",
+      "Agile / Scrum",
+      "Jira",
+      "Process Mapping",
+      "Documentation",
+      "Business Analysis"
+    ],
     "description": "Bridging business stakeholders and engineering teams with detailed requirement analysis, BRD/FRD creation, and Agile workflows."
   },
   {
@@ -73,7 +173,23 @@
     "totalVacancies": 2,
     "vacanciesLeft": 2,
     "status": "ACTIVE",
-    "skills": ["Lead Generation", "Client Management", "B2B Sales", "CRM", "Communication", "Outreach"],
+    "annualPackage": "₹8,00,000 per annum (Fixed + Variable CTC)",
+    "packageOptions": [
+      "₹6,00,000 per annum (Base + Performance Bonus)",
+      "₹8,00,000 per annum (Fixed + Variable CTC)",
+      "₹10,50,000 per annum (Senior Enterprise Sales Lead)",
+      "₹13,00,000 per annum (Strategic Accounts Director)"
+    ],
+    "workingMode": "On-Site / Office Location (Bangalore HQ)",
+    "reportingAuthority": "Rohan Mehta (Technical Hiring Director)",
+    "skills": [
+      "Lead Generation",
+      "Client Management",
+      "B2B Sales",
+      "CRM",
+      "Communication",
+      "Outreach"
+    ],
     "description": "Driving outbound client acquisitions, managing enterprise accounts, and closing strategic sales opportunities."
   },
   {
@@ -84,7 +200,23 @@
     "totalVacancies": 1,
     "vacanciesLeft": 1,
     "status": "ACTIVE",
-    "skills": ["Figma", "UI Design", "UX Research", "Wireframing", "Prototyping", "Design Systems"],
+    "annualPackage": "₹8,50,000 per annum (Standard Full-Time)",
+    "packageOptions": [
+      "₹6,50,000 per annum (Associate UI/UX Designer)",
+      "₹8,50,000 per annum (Standard Full-Time)",
+      "₹11,50,000 per annum (Senior Product Designer)",
+      "₹14,00,000 per annum (Design Systems Lead)"
+    ],
+    "workingMode": "Remote / Hybrid (Flexible Work Arrangements)",
+    "reportingAuthority": "Ananya Deshmukh (People Operations Manager)",
+    "skills": [
+      "Figma",
+      "UI Design",
+      "UX Research",
+      "Wireframing",
+      "Prototyping",
+      "Design Systems"
+    ],
     "description": "Crafting user-centric UI designs, wireframes, interactive prototypes, and conducting user research in Figma."
   }
 ]

@@ -581,6 +581,234 @@ function generateOfficialCallLetterHtml({
 }
 
 /**
+ * Calculate dynamic future joining date (guaranteed future Monday, 18-25 days out)
+ */
+function generateFutureJoiningDate(minDaysAhead = 18) {
+  const target = new Date();
+  target.setDate(target.getDate() + minDaysAhead);
+  // Advance to next Monday (1 = Monday, 0 = Sunday)
+  const day = target.getDay();
+  const daysUntilMonday = (day === 1) ? 0 : ((8 - day) % 7);
+  target.setDate(target.getDate() + (daysUntilMonday === 0 ? 7 : daysUntilMonday));
+  return target.toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+}
+
+/**
+ * Generate Provisional Selection & Job Offer Notification with Accept / Reject Interactive Buttons
+ */
+function generateSelectionOfferEmailHtml({
+  candidateName = 'Candidate',
+  candidateId = '',
+  roleApplied = 'Frontend Developer',
+  department = 'Engineering',
+  skills = [],
+  description = '',
+  ctcPackage = '₹9,50,000 per annum (Standard Full-Time)',
+  workMode = 'Remote / Hybrid (Flexible Work Arrangements)',
+  reportingTo = 'Vageesha Sharma (Founder & Hiring Lead)',
+  joiningDate = null,
+  decisionBaseUrl = 'http://localhost:3000',
+  offerRefId = 'HR-OFFER-2026'
+}) {
+  const effectiveJoiningDate = joiningDate || generateFutureJoiningDate(18);
+  const acceptUrl = `${decisionBaseUrl}/api/offer/decision?id=${encodeURIComponent(candidateId)}&decision=accept`;
+  const rejectUrl = `${decisionBaseUrl}/api/offer/decision?id=${encodeURIComponent(candidateId)}&decision=reject`;
+  
+  const skillsDisplay = Array.isArray(skills) && skills.length > 0
+    ? skills.slice(0, 6).join(' • ')
+    : 'Domain Expertise, Architecture, Problem Solving';
+
+  return `
+    <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #0f172a; max-width: 660px; margin: 0 auto; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.06);">
+      
+      <!-- Top Corporate Header -->
+      <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); padding: 32px 28px; color: #ffffff; text-align: center;">
+        <span style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 4px 14px; border-radius: 99px; display: inline-block; margin-bottom: 10px; color: #6ee7b7;">🎉 SELECTION NOTIFICATION &amp; CONDITIONAL OFFER</span>
+        <h1 style="margin: 0 0 6px 0; font-size: 23px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">Finova Technologies Pvt. Ltd.</h1>
+        <p style="margin: 0; color: #94a3b8; font-size: 13px;">Talent Acquisition Division • Intent Ref: <strong>${offerRefId}</strong></p>
+      </div>
+
+      <!-- Letter Body -->
+      <div style="padding: 32px 28px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 14px; margin-bottom: 20px;">
+          <div>
+            <strong style="font-size: 16px; color: #0f172a;">Dear ${candidateName},</strong><br/>
+            <span style="font-size: 13px; color: #059669; font-weight: 700;">✔ Qualified &amp; Recommended for Appointment</span>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-size: 12px; color: #64748b; font-weight: 600;">Status:</span><br/>
+            <span style="display: inline-block; background: #ecfdf5; color: #059669; font-weight: 800; font-size: 12px; padding: 3px 10px; border-radius: 99px; border: 1px solid #a7f3d0;">
+              Assessment Cleared (&ge;80%)
+            </span>
+          </div>
+        </div>
+
+        <p style="font-size: 14.5px; line-height: 1.6; color: #334155; margin-top: 0;">
+          Congratulations! Following your outstanding performance on our technical assessment, the Hiring Committee at <strong>Finova Technologies</strong> is delighted to extend this <strong>Provisional Job Offer</strong> for the position of <strong>${roleApplied}</strong>.
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.6; color: #334155;">
+          Below are the confirmed employment specifications, annual compensation package, and flexible work terms associated with this role:
+        </p>
+
+        <!-- Employment Terms & Compensation Box -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 22px; margin: 24px 0;">
+          <h3 style="margin: 0 0 16px 0; color: #1e1b4b; font-size: 15px; font-weight: 700; border-bottom: 1px solid #cbd5e1; padding-bottom: 8px;">
+            📋 Confirmed Job Specifications &amp; Terms
+          </h3>
+
+          <table style="width: 100%; border-collapse: collapse; font-size: 13.5px;">
+            <tr>
+              <td style="padding: 7px 0; color: #64748b; width: 40%;"><strong>Designation / Role:</strong></td>
+              <td style="padding: 7px 0; color: #0f172a; font-weight: 700;">${roleApplied}</td>
+            </tr>
+            <tr>
+              <td style="padding: 7px 0; color: #64748b;"><strong>Department:</strong></td>
+              <td style="padding: 7px 0; color: #0f172a; font-weight: 600;">${department || 'Engineering & Technology'}</td>
+            </tr>
+            <tr>
+              <td style="padding: 7px 0; color: #64748b;"><strong>Annual Package (Total CTC):</strong></td>
+              <td style="padding: 7px 0; color: #059669; font-weight: 800; font-size: 15px;">${ctcPackage}</td>
+            </tr>
+            <tr>
+              <td style="padding: 7px 0; color: #64748b;"><strong>Working Mode:</strong></td>
+              <td style="padding: 7px 0; color: #0f172a; font-weight: 600;">${workMode}</td>
+            </tr>
+            <tr>
+              <td style="padding: 7px 0; color: #64748b;"><strong>Reporting Authority:</strong></td>
+              <td style="padding: 7px 0; color: #0f172a; font-weight: 700;">${reportingTo}</td>
+            </tr>
+            <tr>
+              <td style="padding: 7px 0; color: #64748b;"><strong>Projected Date of Joining:</strong></td>
+              <td style="padding: 7px 0; color: #1e1b4b; font-weight: 800; font-size: 14px;">${effectiveJoiningDate}</td>
+            </tr>
+            <tr>
+              <td style="padding: 7px 0; color: #64748b;"><strong>Core Technology &amp; Focus:</strong></td>
+              <td style="padding: 7px 0; color: #475569; font-size: 13px;">${skillsDisplay}</td>
+            </tr>
+            <tr>
+              <td style="padding: 7px 0; color: #64748b;"><strong>Reference Code:</strong></td>
+              <td style="padding: 7px 0; color: #4338ca; font-weight: 700;">${offerRefId}</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Call to Action Box: Accept or Decline Options -->
+        <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 12px; padding: 24px 20px; margin: 28px 0; text-align: center;">
+          <h3 style="margin: 0 0 8px 0; color: #166534; font-size: 16px; font-weight: 800;">
+            👉 Action Required: Indicate Your Offer Decision
+          </h3>
+          <p style="margin: 0 0 20px 0; font-size: 13.5px; color: #15803d; line-height: 1.5;">
+            Please select whether you accept this offer or wish to decline. Your choice will be recorded automatically:
+          </p>
+
+          <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 14px;">
+            <!-- Accept Button -->
+            <a href="${acceptUrl}" target="_blank" style="display: inline-block; background: #059669; color: #ffffff; font-weight: 800; font-size: 14px; text-decoration: none; padding: 13px 28px; border-radius: 8px; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35); text-align: center; border: 1px solid #047857;">
+              ✔ Accept Offer &amp; Receive Official Call Letter
+            </a>
+
+            <!-- Reject Button -->
+            <a href="${rejectUrl}" target="_blank" style="display: inline-block; background: #ffffff; color: #dc2626; font-weight: 700; font-size: 13.5px; text-decoration: none; padding: 13px 22px; border-radius: 8px; border: 1.5px solid #f87171; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
+              ✖ Decline Offer
+            </a>
+          </div>
+
+          <p style="margin: 0; font-size: 12.5px; color: #64748b;">
+            • Clicking <strong>Accept</strong> immediately generates and emails your signed <strong>Official Call Letter &amp; Joining Agreement</strong>.<br/>
+            • Clicking <strong>Decline</strong> will respectfully acknowledge your decision and maintain your profile for future opportunities.
+          </p>
+        </div>
+
+        <p style="font-size: 13.5px; line-height: 1.6; color: #64748b;">
+          If you have any questions regarding your role or terms, please feel free to reach out directly to your designated hiring lead.
+        </p>
+
+        <!-- Formal Signature -->
+        <div style="margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px; display: flex; justify-content: space-between; align-items: flex-end;">
+          <div>
+            <strong style="color: #0f172a; font-size: 14.5px; display: block;">${reportingTo}</strong>
+            <span style="color: #64748b; font-size: 13px; display: block;">Talent Acquisition &amp; Hiring Division</span>
+            <span style="color: #64748b; font-size: 13px; display: block;">Finova Technologies Pvt. Ltd.</span>
+            <span style="color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;">sharmavageesha2000@gmail.com</span>
+          </div>
+          <div style="text-align: right;">
+            <span style="display: inline-block; border: 1px dashed #cbd5e1; padding: 5px 12px; border-radius: 6px; font-size: 11px; color: #059669; font-weight: 700; background: #f0fdf4;">
+              ✔ CONDITIONAL OFFER ACTIVE
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Generate Polite Offer Decline Acknowledgement HTML Email
+ */
+function generateOfferDeclineAcknowledgementEmailHtml({
+  candidateName = 'Candidate',
+  roleApplied = 'Frontend Developer',
+  reportingTo = 'Vageesha Sharma (Founder & Hiring Lead)'
+}) {
+  return `
+    <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #0f172a; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05);">
+      
+      <!-- Top Header -->
+      <div style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; color: #ffffff; text-align: center;">
+        <span style="background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 4px 14px; border-radius: 99px; display: inline-block; margin-bottom: 8px; color: #cbd5e1;">DECISION ACKNOWLEDGEMENT</span>
+        <h1 style="margin: 0 0 4px 0; font-size: 21px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">Finova Technologies Pvt. Ltd.</h1>
+        <p style="margin: 0; color: #94a3b8; font-size: 13px;">Talent Acquisition Division • Notification of Decision</p>
+      </div>
+
+      <!-- Body -->
+      <div style="padding: 28px 24px;">
+        <p style="font-size: 15px; line-height: 1.6; color: #0f172a; margin-top: 0;">
+          Dear <strong>${candidateName}</strong>,
+        </p>
+
+        <p style="font-size: 14.5px; line-height: 1.6; color: #334155;">
+          Thank you for reviewing our offer and communicating your decision regarding the <strong>${roleApplied}</strong> position at <strong>Finova Technologies</strong>.
+        </p>
+
+        <!-- Acknowledgment Box -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 20px 0;">
+          <h4 style="margin: 0 0 8px 0; color: #475569; font-size: 14px; font-weight: 700;">
+            ℹ️ Offer Status: Declined by Candidate
+          </h4>
+          <p style="margin: 0; font-size: 13.5px; color: #475569; line-height: 1.5;">
+            We completely understand and respect your decision. Our technical hiring team was thoroughly impressed by your domain proficiency and problem-solving abilities throughout the evaluation.
+          </p>
+        </div>
+
+        <p style="font-size: 14px; line-height: 1.6; color: #334155;">
+          With your permission, we will keep your candidate profile within our <strong>Priority Talent Network</strong> for upcoming senior and specialized leadership openings that may align even closer with your career trajectory.
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.6; color: #334155;">
+          We sincerely appreciate the time and effort you dedicated to our recruitment process and wish you tremendous success in your professional endeavors!
+        </p>
+
+        <!-- Formal Signature -->
+        <div style="margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+          <strong style="color: #0f172a; font-size: 14.5px; display: block;">${reportingTo}</strong>
+          <span style="color: #64748b; font-size: 13px; display: block;">Talent Acquisition Lead</span>
+          <span style="color: #64748b; font-size: 13px; display: block;">Finova Technologies Pvt. Ltd.</span>
+          <span style="color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;">sharmavageesha2000@gmail.com</span>
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
+/**
  * Generate Post-Assessment Constructive Feedback HTML for candidates who did not achieve >= 80% passing threshold
  */
 function generateAssessmentOutcomeFeedbackHtml({
@@ -1230,6 +1458,9 @@ module.exports = {
   generateStructuredSelectedHtml,
   generateOfficialCallLetterHtml,
   generateAssessmentOutcomeFeedbackHtml,
+  generateFutureJoiningDate,
+  generateSelectionOfferEmailHtml,
+  generateOfferDeclineAcknowledgementEmailHtml,
   DEFAULT_MODEL,
   DEFAULT_GEMINI_KEY
 };

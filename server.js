@@ -13,6 +13,9 @@ const {
   generateAuthenticGoogleMeetLink,
   generateOfficialCallLetterHtml,
   generateAssessmentOutcomeFeedbackHtml,
+  generateFutureJoiningDate,
+  generateSelectionOfferEmailHtml,
+  generateOfferDeclineAcknowledgementEmailHtml,
   DEFAULT_GEMINI_KEY,
   DEFAULT_MODEL 
 } = require('./gemini_evaluator');
@@ -84,6 +87,19 @@ app.get(['/dashboard', '/dashboard/*'], (req, res) => {
 app.get(['/assessment', '/assessment/*', '/test', '/test/*'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'assessment.html'));
 });
+app.get(['/offer-decision', '/offer-decision.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'offer-decision.html'));
+});
+
+// Helper: Determine dynamic base URL for links in email notifications
+function getBaseUrl(req = null) {
+  if (process.env.APP_BASE_URL) return process.env.APP_BASE_URL;
+  if (req && req.headers && req.headers.host && (req.headers.host.includes('localhost') || req.headers.host.includes('127.0.0.1'))) {
+    const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+    return `${proto}://${req.headers.host}`;
+  }
+  return 'https://hr-smartflow-automation.onrender.com';
+}
 
 // Helper: Read Candidates (preserves valid candidate applications with attached resumes only)
 function getCandidates(includeAll = false) {
@@ -95,13 +111,21 @@ function getCandidates(includeAll = false) {
     const unique = [];
     for (const c of data) {
       if (!includeAll) {
-        // Enforce candidate has an attached resume document
-        if (!c.attachmentInfo || !c.attachmentInfo.fileName) continue;
+        // Always preserve candidates with active assessments or applications
+        const hasAssessmentActivity = Boolean(
+          c.assessmentCompleted === true || 
+          c.testSubmitted === true || 
+          c.testScore !== undefined || 
+          c.offerStatus || 
+          c.interviewStatus
+        );
+
+        if (!hasAssessmentActivity && (!c.attachmentInfo || !c.attachmentInfo.fileName)) continue;
         
         // Filter out non-candidate records / service alerts / invoices
         const name = (c.name || '').toLowerCase();
         const email = (c.email || '').toLowerCase();
-        const fn = (c.attachmentInfo.fileName || '').toLowerCase();
+        const fn = (c.attachmentInfo?.fileName || '').toLowerCase();
         if (name === 'obj' || name.includes('invoice') || email.includes('ubi.bank') || 
             email.includes('bookmyshow') || fn.includes('invoice') || fn.includes('receipt') || 
             fn.includes('ticket') || fn.includes('statement')) {
@@ -162,6 +186,32 @@ function saveJobs(jobs) {
     console.error('Error saving jobs file:', err);
     return false;
   }
+}
+
+// Helper: Get Role-specific job defaults (Package, Work Mode, Reporting Authority) from jobs.json
+function getJobOfferDefaults(roleApplied) {
+  const jobs = getJobs();
+  const cleanRole = (roleApplied || '').trim().toLowerCase();
+  
+  // Try exact match first, then partial match
+  let matchedJob = jobs.find(j => (j.title || '').trim().toLowerCase() === cleanRole);
+  if (!matchedJob) {
+    matchedJob = jobs.find(j => {
+      const t = (j.title || '').toLowerCase();
+      return cleanRole.includes(t) || t.includes(cleanRole);
+    });
+  }
+
+  // Fallback defaults if not found
+  const isSenior = cleanRole.includes('senior') || cleanRole.includes('lead');
+  const defaultPackage = isSenior ? '₹14,50,000 per annum (Full-Time)' : '₹9,50,000 per annum (Full-Time)';
+
+  return {
+    ctcPackage: matchedJob?.annualPackage ? `${matchedJob.annualPackage} (Full-Time)` : defaultPackage,
+    workMode: matchedJob?.workingMode || 'Remote / Hybrid (Flexible Work Arrangements)',
+    reportingTo: matchedJob?.reportingAuthority || 'Vageesha Sharma (Founder & Hiring Lead)',
+    matchedJob
+  };
 }
 
 // Helper: Read Settings (merges environment variables on Render/Cloud)
@@ -506,28 +556,35 @@ async function checkAndDispatchPendingOutcomeEmails() {
 
       const role = c.roleApplied || 'Frontend Developer';
 
-      if (passed) {
-        const hasDelivered = Boolean(c.callLetterDetails?.emailDispatch?.success);
-        if (!hasDelivered) {
-          const offerRefId = c.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-          const defaultJoining = c.callLetterDetails?.joiningDate || 'Monday, 14 September 2026';
-          const defaultCtc = c.callLetterDetails?.ctcPackage || ((role.toLowerCase().includes('senior') || role.toLowerCase().includes('lead'))
-            ? '₹14,50,000 per annum (Full-Time)'
-            : '₹9,50,000 per annum (Full-Time)');
+      const jobDefaults = getJobOfferDefaults(role);
+      const offerRefId = c.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      const futureJoiningDate = c.callLetterDetails?.joiningDate || generateFutureJoiningDate(18);
+      const defaultCtc = c.callLetterDetails?.ctcPackage || jobDefaults.ctcPackage;
+      const defaultReportingTo = c.callLetterDetails?.reportingTo || jobDefaults.reportingTo;
+      const defaultWorkMode = c.callLetterDetails?.workMode || jobDefaults.workMode;
+      const baseUrl = getBaseUrl();
 
+      if (c.offerStatus === 'OFFER_ACCEPTED') {
+        // Stage 2A: Candidate accepted conditional offer -> Dispatch official signed Offer & Call Letter
+        const hasDeliveredCallLetter = Boolean(
+          c.callLetterDetails?.type === 'FINAL_OFFER_LETTER' && 
+          c.callLetterDetails?.emailDispatch?.success
+        );
+
+        if (!hasDeliveredCallLetter) {
           const callLetterHtml = generateOfficialCallLetterHtml({
             candidateName: c.name || 'Candidate',
             roleApplied: role,
-            joiningDate: defaultJoining,
+            joiningDate: futureJoiningDate,
             ctcPackage: defaultCtc,
-            reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
-            workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
+            reportingTo: defaultReportingTo,
+            workMode: defaultWorkMode,
             offerRefId
           });
 
-          const subject = `🎉 Official Job Offer & Call Letter: ${role} - Finova Technologies`;
-
-          console.log(`[Outcome Watchdog] 🚀 Auto-dispatching Official Offer Letter via SMTP to: ${targetEmail} (Candidate: "${c.name}")...`);
+          const subject = `📜 Official Employment Offer Letter & Call Letter: ${role} - Finova Technologies`;
+          console.log(`[Outcome Watchdog] 🚀 Auto-dispatching signed Official Call Letter via SMTP to: ${targetEmail} (Candidate: "${c.name}")...`);
+          
           const emailDispatch = await sendNotificationEmail({
             to: targetEmail,
             subject,
@@ -536,18 +593,59 @@ async function checkAndDispatchPendingOutcomeEmails() {
           });
 
           if (emailDispatch && emailDispatch.success) {
-            console.log(`[Outcome Watchdog] ✅ Successfully delivered Call Letter to ${targetEmail} (Message ID: ${emailDispatch.messageId})`);
+            console.log(`[Outcome Watchdog] ✅ Successfully delivered Official Call Letter to ${targetEmail} (Message ID: ${emailDispatch.messageId})`);
             c.status = 'SELECTED';
-            c.offerStatus = 'OFFER_EXTENDED';
-            c.offerRefId = offerRefId;
+            c.offerStatus = 'OFFER_ACCEPTED';
             c.callLetterSentAt = new Date().toISOString();
             c.pendingEmailSync = false;
             delete c.pendingEmailPayload;
             delete c.lastOutcomeEmailAttempt;
             c.callLetterDetails = {
-              joiningDate: defaultJoining,
+              joiningDate: futureJoiningDate,
               ctcPackage: defaultCtc,
+              reportingTo: defaultReportingTo,
+              workMode: defaultWorkMode,
               offerRefId,
+              emailDispatch,
+              deliveredTo: targetEmail,
+              type: 'FINAL_OFFER_LETTER'
+            };
+            updated = true;
+          } else {
+            c.lastOutcomeEmailAttempt = Date.now();
+          }
+          await new Promise(r => setTimeout(r, 1000));
+        }
+      } else if (c.offerStatus === 'OFFER_DECLINED') {
+        // Stage 2B: Candidate declined conditional offer -> Dispatch polite decline acknowledgement
+        const hasDeliveredDeclineAck = Boolean(c.declineDetails?.emailDispatch?.success);
+
+        if (!hasDeliveredDeclineAck) {
+          const declineHtml = generateOfferDeclineAcknowledgementEmailHtml({
+            candidateName: c.name || 'Candidate',
+            roleApplied: role,
+            reportingTo: defaultReportingTo
+          });
+
+          const subject = `Acknowledgement of Decision: ${role} Offer - Finova Technologies`;
+          console.log(`[Outcome Watchdog] ℹ️ Auto-dispatching Decline Acknowledgement via SMTP to: ${targetEmail} (Candidate: "${c.name}")...`);
+          
+          const emailDispatch = await sendNotificationEmail({
+            to: targetEmail,
+            subject,
+            htmlBody: declineHtml,
+            bypassDedup: true
+          });
+
+          if (emailDispatch && emailDispatch.success) {
+            console.log(`[Outcome Watchdog] ✅ Successfully delivered Decline Acknowledgement to ${targetEmail} (Message ID: ${emailDispatch.messageId})`);
+            c.status = 'REJECTED';
+            c.offerStatus = 'OFFER_DECLINED';
+            c.pendingEmailSync = false;
+            delete c.pendingEmailPayload;
+            delete c.lastOutcomeEmailAttempt;
+            c.declineDetails = {
+              declinedAt: c.offerDeclinedAt || new Date().toISOString(),
               emailDispatch,
               deliveredTo: targetEmail
             };
@@ -557,7 +655,62 @@ async function checkAndDispatchPendingOutcomeEmails() {
           }
           await new Promise(r => setTimeout(r, 1000));
         }
+      } else if (passed) {
+        // Stage 1A: Assessment passed (>= 80%) -> Dispatch Selection Intent & Offer with Accept/Reject buttons
+        const hasDeliveredOffer = Boolean(c.callLetterDetails?.emailDispatch?.success);
+        if (!hasDeliveredOffer) {
+          const selectionOfferHtml = generateSelectionOfferEmailHtml({
+            candidateName: c.name || 'Candidate',
+            candidateId: c.id,
+            roleApplied: role,
+            department: jobDefaults.matchedJob?.department || 'Engineering & Technology',
+            skills: jobDefaults.matchedJob?.skills || [],
+            description: jobDefaults.matchedJob?.description || '',
+            joiningDate: futureJoiningDate,
+            ctcPackage: defaultCtc,
+            reportingTo: defaultReportingTo,
+            workMode: defaultWorkMode,
+            decisionBaseUrl: baseUrl,
+            offerRefId
+          });
+
+          const subject = `🎉 Congratulations! Job Offer & Selection Intent: ${role} - Finova Technologies`;
+
+          console.log(`[Outcome Watchdog] 🚀 Auto-dispatching Selection Offer Email via SMTP to: ${targetEmail} (Candidate: "${c.name}")...`);
+          const emailDispatch = await sendNotificationEmail({
+            to: targetEmail,
+            subject,
+            htmlBody: selectionOfferHtml,
+            bypassDedup: true
+          });
+
+          if (emailDispatch && emailDispatch.success) {
+            console.log(`[Outcome Watchdog] ✅ Successfully delivered Selection Offer to ${targetEmail} (Message ID: ${emailDispatch.messageId})`);
+            c.status = 'SELECTED';
+            c.offerStatus = 'OFFER_EXTENDED';
+            c.offerRefId = offerRefId;
+            c.callLetterSentAt = new Date().toISOString();
+            c.pendingEmailSync = false;
+            delete c.pendingEmailPayload;
+            delete c.lastOutcomeEmailAttempt;
+            c.callLetterDetails = {
+              joiningDate: futureJoiningDate,
+              ctcPackage: defaultCtc,
+              reportingTo: defaultReportingTo,
+              workMode: defaultWorkMode,
+              offerRefId,
+              emailDispatch,
+              deliveredTo: targetEmail,
+              type: 'SELECTION_INTENT_OFFER'
+            };
+            updated = true;
+          } else {
+            c.lastOutcomeEmailAttempt = Date.now();
+          }
+          await new Promise(r => setTimeout(r, 1000));
+        }
       } else {
+        // Stage 1B: Assessment not passed (< 80%) -> Dispatch Performance Feedback email
         const hasDeliveredFeedback = Boolean(c.feedbackDetails?.emailDispatch?.success);
         if (!hasDeliveredFeedback) {
           const feedbackHtml = generateAssessmentOutcomeFeedbackHtml({
@@ -570,7 +723,7 @@ async function checkAndDispatchPendingOutcomeEmails() {
             sectionBreakdown: c.assessmentDetails?.sectionBreakdown
           });
 
-          const subject = `Update regarding your Technical Assessment: ${role} - Finova Technologies`;
+          const subject = `📊 Technical Assessment Result & Performance Feedback: ${role} - Finova Technologies`;
 
           console.log(`[Outcome Watchdog] 🚀 Auto-dispatching Assessment Feedback email via SMTP to: ${targetEmail} (Candidate: "${c.name}")...`);
           const emailDispatch = await sendNotificationEmail({
@@ -624,7 +777,7 @@ setInterval(checkAndDispatchPendingOutcomeEmails, 20000);
 app.get('/api/candidates', (req, res) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
   const { status, search, role, sort } = req.query;
-  let candidates = getCandidates();
+  let candidates = getCandidates(true);
 
   if (status && status !== 'ALL') {
     candidates = candidates.filter(c => c.status === status.toUpperCase());
@@ -1070,37 +1223,47 @@ app.post('/api/assessment/submit', async (req, res) => {
       targetEmail = req.body.email.trim();
     }
 
-    // RULE: If candidate scores 80% or above (>= 16/20), automatically send Job Offer & Call Letter
+    // RULE: If candidate scores 80% or above (>= 16/20), automatically send Job Offer & Selection Intent Email with Accept/Reject actions
     if (evalResult.passed) {
-      console.log(`[Assessment Engine] 🎉 Candidate "${targetCandidate.name}" PASSED assessment with ${evalResult.scorePercent}% (Threshold: 80%)! Auto-generating Official Job Offer & Call Letter...`);
+      console.log(`[Assessment Engine] 🎉 Candidate "${targetCandidate.name}" PASSED assessment with ${evalResult.scorePercent}% (Threshold: 80%)! Auto-generating Selection Intent & Offer with Accept/Reject options...`);
 
+      const jobDefaults = getJobOfferDefaults(effectiveRole);
       const offerRefId = `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-      const defaultJoining = 'Monday, 14 September 2026';
-      const defaultCtc = (effectiveRole.toLowerCase().includes('senior') || effectiveRole.toLowerCase().includes('lead'))
-        ? '₹14,50,000 per annum (Full-Time)'
-        : '₹9,50,000 per annum (Full-Time)';
+      const futureJoiningDate = generateFutureJoiningDate(18);
+      const defaultCtc = jobDefaults.ctcPackage;
+      const defaultReportingTo = jobDefaults.reportingTo;
+      const defaultWorkMode = jobDefaults.workMode;
+      const baseUrl = getBaseUrl(req);
 
-      const callLetterHtml = generateOfficialCallLetterHtml({
+      const selectionOfferHtml = generateSelectionOfferEmailHtml({
         candidateName: targetCandidate.name,
+        candidateId: targetCandidate.id,
         roleApplied: targetCandidate.roleApplied,
-        joiningDate: defaultJoining,
+        department: jobDefaults.matchedJob?.department || 'Engineering & Technology',
+        skills: jobDefaults.matchedJob?.skills || [],
+        description: jobDefaults.matchedJob?.description || '',
         ctcPackage: defaultCtc,
-        reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
-        workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
+        workMode: defaultWorkMode,
+        reportingTo: defaultReportingTo,
+        joiningDate: futureJoiningDate,
+        decisionBaseUrl: baseUrl,
         offerRefId
       });
 
-      const subject = `🎉 Official Job Offer & Call Letter: ${targetCandidate.roleApplied} - Finova Technologies`;
+      const subject = `🎉 Congratulations! Job Offer & Selection Intent: ${targetCandidate.roleApplied} - Finova Technologies`;
 
-      if (targetEmail && targetEmail.includes('@')) {
-        console.log(`[Assessment Engine] 🚀 Dispatching Official Offer Letter via SMTP immediately to: ${targetEmail}`);
+      if (process.env.RENDER) {
+        console.log(`[Assessment Engine] ☁️ Cloud instance detected. Flagging Selection Offer for Local SMTP Bridge to: ${targetEmail}`);
+        emailDispatch = { success: false, pendingCloudBridge: true };
+      } else if (targetEmail && targetEmail.includes('@')) {
+        console.log(`[Assessment Engine] 🚀 Dispatching Selection Offer Email via SMTP immediately to: ${targetEmail}`);
         emailDispatch = await sendNotificationEmail({
           to: targetEmail,
           subject,
-          htmlBody: callLetterHtml,
+          htmlBody: selectionOfferHtml,
           bypassDedup: true
         });
-        console.log(`[Assessment Engine] Offer Letter SMTP Result:`, emailDispatch);
+        console.log(`[Assessment Engine] Selection Offer SMTP Result:`, emailDispatch);
       } else {
         console.warn(`[Assessment Engine Warning] No recipient email specified for candidate "${targetCandidate.name}".`);
         emailDispatch = { success: false, error: 'No recipient email provided' };
@@ -1121,18 +1284,21 @@ app.post('/api/assessment/submit', async (req, res) => {
         targetCandidate.pendingEmailPayload = {
           to: targetEmail,
           subject,
-          htmlBody: callLetterHtml,
+          htmlBody: selectionOfferHtml,
           emailType: 'OFFER_LETTER',
           offerRefId
         };
       }
 
       targetCandidate.callLetterDetails = {
-        joiningDate: defaultJoining,
+        joiningDate: futureJoiningDate,
         ctcPackage: defaultCtc,
+        reportingTo: defaultReportingTo,
+        workMode: defaultWorkMode,
         offerRefId,
         emailDispatch,
-        deliveredTo: targetEmail
+        deliveredTo: targetEmail,
+        type: 'SELECTION_INTENT_OFFER'
       };
     } else {
       console.log(`[Assessment Engine] ⚠️ Candidate "${targetCandidate.name}" scored ${evalResult.scorePercent}% (< 80% passing threshold). Auto-dispatching Assessment Outcome & Performance Feedback email...`);
@@ -1149,7 +1315,10 @@ app.post('/api/assessment/submit', async (req, res) => {
 
       const subject = `📊 Technical Assessment Result & Performance Feedback: ${targetCandidate.roleApplied} - Finova Technologies`;
 
-      if (targetEmail && targetEmail.includes('@')) {
+      if (process.env.RENDER) {
+        console.log(`[Assessment Engine] ☁️ Cloud instance detected. Flagging Assessment Feedback for Local SMTP Bridge to: ${targetEmail}`);
+        emailDispatch = { success: false, pendingCloudBridge: true };
+      } else if (targetEmail && targetEmail.includes('@')) {
         console.log(`[Assessment Engine] 🚀 Dispatching Assessment Feedback email via SMTP immediately to: ${targetEmail}`);
         emailDispatch = await sendNotificationEmail({
           to: targetEmail,
@@ -1230,19 +1399,20 @@ app.post('/api/assessment/resend-offer', async (req, res) => {
 
     const effectiveRole = roleApplied || candidate?.roleApplied || 'Frontend Developer';
     const effectiveName = (candidateName && candidateName !== 'Candidate' ? candidateName : candidate?.name) || 'Candidate';
+    const jobDefaults = getJobOfferDefaults(effectiveRole);
     const offerRefId = candidate?.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
     const defaultJoining = candidate?.callLetterDetails?.joiningDate || 'Monday, 14 September 2026';
-    const defaultCtc = candidate?.callLetterDetails?.ctcPackage || ((effectiveRole.toLowerCase().includes('senior') || effectiveRole.toLowerCase().includes('lead'))
-      ? '₹14,50,000 per annum (Full-Time)'
-      : '₹9,50,000 per annum (Full-Time)');
+    const defaultCtc = candidate?.callLetterDetails?.ctcPackage || jobDefaults.ctcPackage;
+    const defaultReportingTo = candidate?.callLetterDetails?.reportingTo || jobDefaults.reportingTo;
+    const defaultWorkMode = candidate?.callLetterDetails?.workMode || jobDefaults.workMode;
 
     const callLetterHtml = generateOfficialCallLetterHtml({
       candidateName: effectiveName,
       roleApplied: effectiveRole,
       joiningDate: defaultJoining,
       ctcPackage: defaultCtc,
-      reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
-      workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
+      reportingTo: defaultReportingTo,
+      workMode: defaultWorkMode,
       offerRefId
     });
 
@@ -1298,19 +1468,20 @@ app.post('/api/assessment/resend-outcome', async (req, res) => {
     let htmlBody = '';
 
     if (passed) {
+      const jobDefaults = getJobOfferDefaults(effectiveRole);
       const offerRefId = candidate?.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
       const defaultJoining = candidate?.callLetterDetails?.joiningDate || 'Monday, 14 September 2026';
-      const defaultCtc = candidate?.callLetterDetails?.ctcPackage || ((effectiveRole.toLowerCase().includes('senior') || effectiveRole.toLowerCase().includes('lead'))
-        ? '₹14,50,000 per annum (Full-Time)'
-        : '₹9,50,000 per annum (Full-Time)');
+      const defaultCtc = candidate?.callLetterDetails?.ctcPackage || jobDefaults.ctcPackage;
+      const defaultReportingTo = candidate?.callLetterDetails?.reportingTo || jobDefaults.reportingTo;
+      const defaultWorkMode = candidate?.callLetterDetails?.workMode || jobDefaults.workMode;
 
       htmlBody = generateOfficialCallLetterHtml({
         candidateName: effectiveName,
         roleApplied: effectiveRole,
         joiningDate: defaultJoining,
         ctcPackage: defaultCtc,
-        reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
-        workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
+        reportingTo: defaultReportingTo,
+        workMode: defaultWorkMode,
         offerRefId
       });
       subject = `🎉 Official Job Offer & Call Letter: ${effectiveRole} - Finova Technologies`;
@@ -1382,18 +1553,19 @@ app.get('/api/assessment/pending-dispatches', (req, res) => {
         let subject = '';
         let htmlBody = '';
         if (passed) {
+          const jobDefaults = getJobOfferDefaults(effectiveRole);
           const offerRefId = c.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
           const defaultJoining = c.callLetterDetails?.joiningDate || 'Monday, 14 September 2026';
-          const defaultCtc = c.callLetterDetails?.ctcPackage || ((effectiveRole.toLowerCase().includes('senior') || effectiveRole.toLowerCase().includes('lead'))
-            ? '₹14,50,000 per annum (Full-Time)'
-            : '₹9,50,000 per annum (Full-Time)');
+          const defaultCtc = c.callLetterDetails?.ctcPackage || jobDefaults.ctcPackage;
+          const defaultReportingTo = c.callLetterDetails?.reportingTo || jobDefaults.reportingTo;
+          const defaultWorkMode = c.callLetterDetails?.workMode || jobDefaults.workMode;
           htmlBody = generateOfficialCallLetterHtml({
             candidateName: effectiveName,
             roleApplied: effectiveRole,
             joiningDate: defaultJoining,
             ctcPackage: defaultCtc,
-            reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
-            workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
+            reportingTo: defaultReportingTo,
+            workMode: defaultWorkMode,
             offerRefId
           });
           subject = `🎉 Official Job Offer & Call Letter: ${effectiveRole} - Finova Technologies`;
@@ -1486,6 +1658,140 @@ app.post('/api/assessment/confirm-dispatch', (req, res) => {
   }
 });
 
+// 5g. Handle Candidate Offer Decision (Accept / Reject from Email Action Buttons)
+app.get('/api/offer/decision', async (req, res) => {
+  try {
+    const candidateId = (req.query.id || req.query.candidateId || '').trim();
+    const decision = (req.query.decision || req.query.action || '').trim().toLowerCase();
+
+    const candidates = getCandidates(true);
+    const candidateIndex = candidates.findIndex(c => 
+      (c.id && c.id === candidateId) || 
+      (c.email && c.email.toLowerCase().trim() === candidateId.toLowerCase().trim())
+    );
+
+    if (candidateIndex === -1) {
+      return res.redirect(`/offer-decision.html?status=error&message=Candidate+application+record+not+found`);
+    }
+
+    const candidate = candidates[candidateIndex];
+    const role = candidate.roleApplied || 'Frontend Developer';
+    const jobDefaults = getJobOfferDefaults(role);
+    const targetEmail = (candidate.email || '').trim();
+    const joiningDate = candidate.callLetterDetails?.joiningDate || generateFutureJoiningDate(18);
+    const ctcPackage = candidate.callLetterDetails?.ctcPackage || jobDefaults.ctcPackage;
+    const workMode = candidate.callLetterDetails?.workMode || jobDefaults.workMode;
+    const reportingTo = candidate.callLetterDetails?.reportingTo || jobDefaults.reportingTo;
+    const offerRefId = candidate.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    // Guard: Prevent double actions if already accepted or declined
+    if (candidate.offerStatus === 'OFFER_ACCEPTED' || candidate.offerStatus === 'OFFER_DECLINED') {
+      const existingDecision = candidate.offerStatus === 'OFFER_ACCEPTED' ? 'accepted' : 'declined';
+      return res.redirect(`/offer-decision.html?status=already_recorded&decision=${existingDecision}&name=${encodeURIComponent(candidate.name)}&role=${encodeURIComponent(role)}&email=${encodeURIComponent(targetEmail)}&package=${encodeURIComponent(ctcPackage)}&mode=${encodeURIComponent(workMode)}&joiningDate=${encodeURIComponent(joiningDate)}&reportingTo=${encodeURIComponent(reportingTo)}`);
+    }
+
+    if (decision === 'accept') {
+      // 1. Mark status as OFFER_ACCEPTED
+      candidate.status = 'SELECTED';
+      candidate.offerStatus = 'OFFER_ACCEPTED';
+      candidate.interviewStatus = 'COMPLETED';
+      candidate.offerAcceptedAt = new Date().toISOString();
+
+      // 2. Generate Final Official Signed Call Letter
+      const callLetterHtml = generateOfficialCallLetterHtml({
+        candidateName: candidate.name || 'Candidate',
+        roleApplied: role,
+        joiningDate,
+        ctcPackage,
+        reportingTo,
+        workMode,
+        offerRefId
+      });
+
+      const subject = `📜 Official Employment Offer Letter & Call Letter: ${role} - Finova Technologies`;
+
+      // 3. Auto-dispatch Official Call Letter via SMTP
+      let emailDispatch = null;
+      if (process.env.RENDER) {
+        console.log(`[Offer Decision Engine] ☁️ Cloud instance detected. Flagging Call Letter for Local SMTP Bridge to: ${targetEmail}`);
+        candidate.pendingCallLetterDispatch = true;
+        emailDispatch = { success: false, pendingCloudBridge: true };
+      } else if (targetEmail && targetEmail.includes('@') && targetEmail !== 'candidate@example.com') {
+        console.log(`[Offer Decision Engine] 🚀 Candidate "${candidate.name}" ACCEPTED offer! Auto-dispatching signed Official Call Letter to: ${targetEmail}`);
+        emailDispatch = await sendNotificationEmail({
+          to: targetEmail,
+          subject,
+          htmlBody: callLetterHtml,
+          bypassDedup: true
+        });
+      }
+
+      candidate.callLetterDetails = {
+        joiningDate,
+        ctcPackage,
+        reportingTo,
+        workMode,
+        offerRefId,
+        emailDispatch,
+        deliveredTo: targetEmail,
+        type: 'FINAL_OFFER_LETTER'
+      };
+
+      candidates[candidateIndex] = candidate;
+      saveCandidates(candidates);
+
+      return res.redirect(`/offer-decision.html?status=accepted&name=${encodeURIComponent(candidate.name)}&role=${encodeURIComponent(role)}&email=${encodeURIComponent(targetEmail)}&package=${encodeURIComponent(ctcPackage)}&mode=${encodeURIComponent(workMode)}&joiningDate=${encodeURIComponent(joiningDate)}&reportingTo=${encodeURIComponent(reportingTo)}`);
+    } else if (decision === 'reject' || decision === 'decline') {
+      // 1. Mark status as OFFER_DECLINED
+      candidate.status = 'REJECTED';
+      candidate.offerStatus = 'OFFER_DECLINED';
+      candidate.interviewStatus = 'COMPLETED';
+      candidate.offerDeclinedAt = new Date().toISOString();
+
+      // 2. Generate Polite Offer Decline Acknowledgement
+      const declineHtml = generateOfferDeclineAcknowledgementEmailHtml({
+        candidateName: candidate.name || 'Candidate',
+        roleApplied: role,
+        reportingTo
+      });
+
+      const subject = `Acknowledgement of Decision: ${role} Offer - Finova Technologies`;
+
+      // 3. Auto-dispatch Decline Acknowledgement via SMTP
+      let emailDispatch = null;
+      if (process.env.RENDER) {
+        console.log(`[Offer Decision Engine] ☁️ Cloud instance detected. Flagging Decline Acknowledgement for Local SMTP Bridge to: ${targetEmail}`);
+        candidate.pendingDeclineDispatch = true;
+        emailDispatch = { success: false, pendingCloudBridge: true };
+      } else if (targetEmail && targetEmail.includes('@') && targetEmail !== 'candidate@example.com') {
+        console.log(`[Offer Decision Engine] ℹ️ Candidate "${candidate.name}" DECLINED offer. Auto-dispatching polite acknowledgement to: ${targetEmail}`);
+        emailDispatch = await sendNotificationEmail({
+          to: targetEmail,
+          subject,
+          htmlBody: declineHtml,
+          bypassDedup: true
+        });
+      }
+
+      candidate.declineDetails = {
+        declinedAt: candidate.offerDeclinedAt,
+        emailDispatch,
+        deliveredTo: targetEmail
+      };
+
+      candidates[candidateIndex] = candidate;
+      saveCandidates(candidates);
+
+      return res.redirect(`/offer-decision.html?status=declined&name=${encodeURIComponent(candidate.name)}&role=${encodeURIComponent(role)}&email=${encodeURIComponent(targetEmail)}`);
+    } else {
+      return res.redirect(`/offer-decision.html?status=error&message=Invalid+decision+parameter`);
+    }
+  } catch (err) {
+    console.error('Error handling offer decision:', err);
+    res.redirect(`/offer-decision.html?status=error&message=${encodeURIComponent(err.message)}`);
+  }
+});
+
 // 6. Complete Interview & Send Official Job Offer / Call Letter
 app.post('/api/candidates/:id/complete-interview', async (req, res) => {
   const candidates = getCandidates();
@@ -1495,10 +1801,13 @@ app.post('/api/candidates/:id/complete-interview', async (req, res) => {
   }
 
   const candidate = candidates[index];
-  const { joiningDate, ctcPackage, workMode, customNote } = req.body;
+  const { joiningDate, ctcPackage, workMode, customNote, reportingTo } = req.body;
+  const jobDefaults = getJobOfferDefaults(candidate.roleApplied);
 
-  const defaultJoining = 'Monday, 14 September 2026';
-  const defaultCtc = ctcPackage || '₹9,50,000 per annum (Full-Time)';
+  const defaultJoining = joiningDate || generateFutureJoiningDate(18);
+  const defaultCtc = ctcPackage || jobDefaults.ctcPackage;
+  const defaultReportingTo = reportingTo || jobDefaults.reportingTo;
+  const defaultWorkMode = workMode || jobDefaults.workMode;
 
   const offerRefId = `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
@@ -1506,9 +1815,9 @@ app.post('/api/candidates/:id/complete-interview', async (req, res) => {
     candidateName: candidate.name,
     roleApplied: candidate.roleApplied,
     joiningDate: joiningDate || defaultJoining,
-    ctcPackage: ctcPackage || defaultCtc,
-    reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
-    workMode: workMode || 'Remote / Hybrid (Flexible Work Arrangements)',
+    ctcPackage: defaultCtc,
+    reportingTo: defaultReportingTo,
+    workMode: defaultWorkMode,
     offerRefId
   });
 
@@ -1529,7 +1838,9 @@ app.post('/api/candidates/:id/complete-interview', async (req, res) => {
   candidate.callLetterSentAt = new Date().toISOString();
   candidate.callLetterDetails = {
     joiningDate: joiningDate || defaultJoining,
-    ctcPackage: ctcPackage || defaultCtc,
+    ctcPackage: defaultCtc,
+    reportingTo: defaultReportingTo,
+    workMode: defaultWorkMode,
     offerRefId,
     emailDispatch: dispatchResult
   };
@@ -1629,7 +1940,21 @@ app.get('/api/jobs', (req, res) => {
 });
 
 app.post('/api/jobs', (req, res) => {
-  const { title, department, experienceRequired, totalVacancies, vacanciesLeft, status, skills, description } = req.body;
+  const { 
+    title, 
+    department, 
+    experienceRequired, 
+    totalVacancies, 
+    vacanciesLeft, 
+    status, 
+    skills, 
+    description,
+    annualPackage,
+    packageOptions,
+    workingMode,
+    reportingAuthority
+  } = req.body;
+
   if (!title) {
     return res.status(400).json({ success: false, error: 'Job title is required' });
   }
@@ -1644,7 +1969,11 @@ app.post('/api/jobs', (req, res) => {
     vacanciesLeft: parseInt(vacanciesLeft !== undefined ? vacanciesLeft : totalVacancies) || 1,
     status: status || 'ACTIVE',
     skills: Array.isArray(skills) ? skills : (skills ? skills.split(',').map(s => s.trim()) : []),
-    description: description || ''
+    description: description || '',
+    annualPackage: annualPackage || '₹8,50,000 - ₹12,00,000 per annum',
+    packageOptions: Array.isArray(packageOptions) ? packageOptions : (packageOptions ? [packageOptions] : []),
+    workingMode: workingMode || 'Remote / Hybrid (Flexible Work Arrangements)',
+    reportingAuthority: reportingAuthority || 'Vageesha Sharma (Founder & Hiring Lead)'
   };
 
   jobs.unshift(newJob);
@@ -1751,11 +2080,9 @@ function initCloudBridgeCache() {
       const completionTime = c.assessmentDetails?.completedAt || c.callLetterSentAt || c.feedbackSentAt;
       if (c.callLetterDetails?.emailDispatch?.success && c.callLetterSentAt) {
         DISPATCHED_CLOUD_ASSESSMENTS.add(`${c.id}__OFFER__${completionTime || 'INIT'}`);
-        DISPATCHED_CLOUD_ASSESSMENTS.add(`${(c.email || '').toLowerCase().trim()}__OFFER__${completionTime || 'INIT'}`);
       }
       if (c.feedbackDetails?.emailDispatch?.success && c.feedbackSentAt) {
         DISPATCHED_CLOUD_ASSESSMENTS.add(`${c.id}__FEEDBACK__${completionTime || 'INIT'}`);
-        DISPATCHED_CLOUD_ASSESSMENTS.add(`${(c.email || '').toLowerCase().trim()}__FEEDBACK__${completionTime || 'INIT'}`);
       }
     }
     console.log(`[Cloud Bridge Cache] Initialized with ${DISPATCHED_CLOUD_ASSESSMENTS.size} delivered outcome records.`);
@@ -1773,7 +2100,7 @@ async function checkCloudPendingDispatches() {
   isBridgeSyncActive = true;
   try {
     const https = require('https');
-    const cloudUrl = 'https://hr-smartflow-automation.onrender.com/api/candidates';
+    const cloudUrl = 'https://hr-smartflow-automation.onrender.com/api/candidates?status=ALL&includeAll=true';
 
     const rawData = await new Promise((resolve, reject) => {
       const req = https.get(cloudUrl, { timeout: 10000 }, (res) => {
@@ -1786,10 +2113,41 @@ async function checkCloudPendingDispatches() {
     });
 
     const parsed = JSON.parse(rawData);
-    if (parsed.success && Array.isArray(parsed.candidates) && parsed.candidates.length > 0) {
-      const localCandidates = getCandidates(true);
+    let remoteCandidates = (parsed.success && Array.isArray(parsed.candidates)) ? parsed.candidates : [];
 
-      for (const c of parsed.candidates) {
+    const localCandidates = getCandidates(true);
+
+    // Also actively probe Render for any local candidates awaiting assessment completion
+    for (const lc of localCandidates) {
+      if (lc.status === 'SELECTED' && lc.interviewStatus === 'SCHEDULED' && !lc.assessmentCompleted) {
+        try {
+          const statusRaw = await new Promise((res, rej) => {
+            const sReq = https.get(`https://hr-smartflow-automation.onrender.com/api/assessment/status?candidateId=${encodeURIComponent(lc.id)}`, { timeout: 6000 }, (sRes) => {
+              let b = '';
+              sRes.on('data', d => b += d);
+              sRes.on('end', () => res(b));
+            });
+            sReq.on('error', rej);
+            sReq.on('timeout', () => { sReq.destroy(); rej(new Error('Status timeout')); });
+          });
+          const statusJson = JSON.parse(statusRaw);
+          if (statusJson && statusJson.alreadySubmitted && statusJson.candidate) {
+            const rc = statusJson.candidate;
+            const existingIdx = remoteCandidates.findIndex(r => r.id === rc.id);
+            if (existingIdx !== -1) {
+              remoteCandidates[existingIdx] = { ...remoteCandidates[existingIdx], ...rc, assessmentCompleted: true, testSubmitted: true };
+            } else {
+              remoteCandidates.unshift({ ...lc, ...rc, assessmentCompleted: true, testSubmitted: true });
+            }
+          }
+        } catch (e) {
+          // Continue silently if status probe times out
+        }
+      }
+    }
+
+    if (remoteCandidates.length > 0) {
+      for (const c of remoteCandidates) {
         const isCompleted = Boolean(
           c.assessmentCompleted === true ||
           c.testSubmitted === true ||
@@ -1808,6 +2166,138 @@ async function checkCloudPendingDispatches() {
           scorePercent >= 80
         );
 
+        const role = c.roleApplied || 'Frontend Developer';
+        const candidateName = c.name || 'Candidate';
+        const jobDefaults = getJobOfferDefaults(role);
+        const offerRefId = c.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+        const futureJoiningDate = c.callLetterDetails?.joiningDate || generateFutureJoiningDate(18);
+        const defaultCtc = c.callLetterDetails?.ctcPackage || jobDefaults.ctcPackage;
+        const defaultReportingTo = c.callLetterDetails?.reportingTo || jobDefaults.reportingTo;
+        const defaultWorkMode = c.callLetterDetails?.workMode || jobDefaults.workMode;
+
+        // Locate corresponding local candidate record (Strictly match by ID first)
+        let localMatch = null;
+        if (c.id) {
+          localMatch = localCandidates.find(lc => lc.id === c.id);
+        }
+        if (!localMatch && c.email) {
+          localMatch = localCandidates.find(lc => 
+            lc.email && lc.email.toLowerCase().trim() === c.email.toLowerCase().trim() && 
+            lc.roleApplied === role && 
+            !lc.assessmentCompleted
+          );
+        }
+
+        // ================= STAGE 2A: CANDIDATE ACCEPTED OFFER =================
+        if (c.offerStatus === 'OFFER_ACCEPTED') {
+          const hasDeliveredCallLetter = Boolean(
+            localMatch?.callLetterDetails?.type === 'FINAL_OFFER_LETTER' && 
+            localMatch?.callLetterDetails?.emailDispatch?.success
+          );
+
+          const dedupKey = `${c.id}__CALL_LETTER__${c.offerAcceptedAt || 'ACCEPTED'}`;
+          if (!hasDeliveredCallLetter && !DISPATCHED_CLOUD_ASSESSMENTS.has(dedupKey)) {
+            console.log(`[Cloud Bridge] 🚀 Detected Candidate "${candidateName}" ACCEPTED offer on Render! Auto-dispatching signed Official Call Letter via local SMTP...`);
+            
+            const callLetterHtml = generateOfficialCallLetterHtml({
+              candidateName,
+              roleApplied: role,
+              joiningDate: futureJoiningDate,
+              ctcPackage: defaultCtc,
+              reportingTo: defaultReportingTo,
+              workMode: defaultWorkMode,
+              offerRefId
+            });
+
+            const subject = `📜 Official Employment Offer Letter & Call Letter: ${role} - Finova Technologies`;
+            const dispatchResult = await sendNotificationEmail({
+              to: targetEmail,
+              subject,
+              htmlBody: callLetterHtml,
+              bypassDedup: true
+            });
+
+            if (dispatchResult && dispatchResult.success) {
+              console.log(`[Cloud Bridge] ✅ Delivered signed Official Call Letter to ${targetEmail} (Candidate: "${candidateName}", Message ID: ${dispatchResult.messageId})!`);
+              DISPATCHED_CLOUD_ASSESSMENTS.add(dedupKey);
+
+              let targetLocal = localMatch;
+              if (!targetLocal) {
+                targetLocal = { id: c.id || `cand-${Date.now()}`, name: candidateName, email: targetEmail, roleApplied: role, receivedAt: c.receivedAt || new Date().toISOString() };
+                localCandidates.unshift(targetLocal);
+              }
+
+              targetLocal.status = 'SELECTED';
+              targetLocal.offerStatus = 'OFFER_ACCEPTED';
+              targetLocal.interviewStatus = 'COMPLETED';
+              targetLocal.offerAcceptedAt = c.offerAcceptedAt || new Date().toISOString();
+              targetLocal.callLetterSentAt = new Date().toISOString();
+              targetLocal.callLetterDetails = {
+                joiningDate: futureJoiningDate,
+                ctcPackage: defaultCtc,
+                reportingTo: defaultReportingTo,
+                workMode: defaultWorkMode,
+                offerRefId,
+                emailDispatch: dispatchResult,
+                deliveredTo: targetEmail,
+                type: 'FINAL_OFFER_LETTER'
+              };
+              saveCandidates(localCandidates);
+            }
+            await new Promise(r => setTimeout(r, 1000));
+          }
+          continue;
+        }
+
+        // ================= STAGE 2B: CANDIDATE DECLINED OFFER =================
+        if (c.offerStatus === 'OFFER_DECLINED') {
+          const hasDeliveredDeclineAck = Boolean(localMatch?.declineDetails?.emailDispatch?.success);
+          const dedupKey = `${c.id}__DECLINE_ACK__${c.offerDeclinedAt || 'DECLINED'}`;
+
+          if (!hasDeliveredDeclineAck && !DISPATCHED_CLOUD_ASSESSMENTS.has(dedupKey)) {
+            console.log(`[Cloud Bridge] ℹ️ Detected Candidate "${candidateName}" DECLINED offer on Render! Auto-dispatching polite acknowledgement via local SMTP...`);
+            
+            const declineHtml = generateOfferDeclineAcknowledgementEmailHtml({
+              candidateName,
+              roleApplied: role,
+              reportingTo: defaultReportingTo
+            });
+
+            const subject = `Acknowledgement of Decision: ${role} Offer - Finova Technologies`;
+            const dispatchResult = await sendNotificationEmail({
+              to: targetEmail,
+              subject,
+              htmlBody: declineHtml,
+              bypassDedup: true
+            });
+
+            if (dispatchResult && dispatchResult.success) {
+              console.log(`[Cloud Bridge] ✅ Delivered Decline Acknowledgement to ${targetEmail} (Candidate: "${candidateName}", Message ID: ${dispatchResult.messageId})!`);
+              DISPATCHED_CLOUD_ASSESSMENTS.add(dedupKey);
+
+              let targetLocal = localMatch;
+              if (!targetLocal) {
+                targetLocal = { id: c.id || `cand-${Date.now()}`, name: candidateName, email: targetEmail, roleApplied: role, receivedAt: c.receivedAt || new Date().toISOString() };
+                localCandidates.unshift(targetLocal);
+              }
+
+              targetLocal.status = 'REJECTED';
+              targetLocal.offerStatus = 'OFFER_DECLINED';
+              targetLocal.interviewStatus = 'COMPLETED';
+              targetLocal.offerDeclinedAt = c.offerDeclinedAt || new Date().toISOString();
+              targetLocal.declineDetails = {
+                declinedAt: targetLocal.offerDeclinedAt,
+                emailDispatch: dispatchResult,
+                deliveredTo: targetEmail
+              };
+              saveCandidates(localCandidates);
+            }
+            await new Promise(r => setTimeout(r, 1000));
+          }
+          continue;
+        }
+
+        // ================= STAGE 1: ASSESSMENT OUTCOME DISPATCH =================
         const outcomeType = passed ? 'OFFER' : 'FEEDBACK';
         const completionTime = c.assessmentDetails?.completedAt || c.feedbackSentAt || c.callLetterSentAt || c.evaluatedAt || 'RECENT';
         const dedupKey = `${c.id}__${outcomeType}__${completionTime}`;
@@ -1815,12 +2305,11 @@ async function checkCloudPendingDispatches() {
         // Check if already dispatched by local bridge
         if (DISPATCHED_CLOUD_ASSESSMENTS.has(dedupKey)) continue;
 
-        // Check if THIS SPECIFIC candidate completion is already marked delivered locally
-        const localMatch = localCandidates.find(lc => lc.id === c.id);
+        // Check if already marked delivered locally
         const alreadyDeliveredLocally = localMatch && (
           passed
-            ? (Boolean(localMatch.callLetterDetails?.emailDispatch?.success) && Boolean(localMatch.callLetterSentAt))
-            : (Boolean(localMatch.feedbackDetails?.emailDispatch?.success) && Boolean(localMatch.feedbackSentAt))
+            ? (Boolean(localMatch.callLetterDetails?.emailDispatch?.success) && (localMatch.callLetterDetails?.type === 'SELECTION_INTENT_OFFER' || localMatch.callLetterDetails?.type === 'FINAL_OFFER_LETTER'))
+            : (Boolean(localMatch.feedbackDetails?.emailDispatch?.success))
         );
 
         if (alreadyDeliveredLocally) {
@@ -1828,30 +2317,27 @@ async function checkCloudPendingDispatches() {
           continue;
         }
 
-        const role = c.roleApplied || 'Frontend Developer';
-        const candidateName = c.name || 'Candidate';
-
         console.log(`[Cloud Bridge] 🚀 Detected completed assessment on Render for "${candidateName}" (Score: ${scorePercent}%, Passed: ${passed})! Auto-dispatching via local SMTP...`);
 
         let subject = '';
         let htmlBody = '';
-        const offerRefId = c.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-        const defaultJoining = 'Monday, 14 September 2026';
-        const defaultCtc = (role.toLowerCase().includes('senior') || role.toLowerCase().includes('lead'))
-          ? '₹14,50,000 per annum (Full-Time)'
-          : '₹9,50,000 per annum (Full-Time)';
 
         if (passed) {
-          htmlBody = generateOfficialCallLetterHtml({
+          htmlBody = generateSelectionOfferEmailHtml({
             candidateName,
+            candidateId: c.id,
             roleApplied: role,
-            joiningDate: defaultJoining,
+            department: jobDefaults.matchedJob?.department || 'Engineering & Technology',
+            skills: jobDefaults.matchedJob?.skills || [],
+            description: jobDefaults.matchedJob?.description || '',
+            joiningDate: futureJoiningDate,
             ctcPackage: defaultCtc,
-            reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
-            workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
+            reportingTo: defaultReportingTo,
+            workMode: defaultWorkMode,
+            decisionBaseUrl: 'https://hr-smartflow-automation.onrender.com',
             offerRefId
           });
-          subject = `🎉 Official Job Offer & Call Letter: ${role} - Finova Technologies`;
+          subject = `🎉 Congratulations! Job Offer & Selection Intent: ${role} - Finova Technologies`;
         } else {
           htmlBody = generateAssessmentOutcomeFeedbackHtml({
             candidateName,
@@ -1862,7 +2348,7 @@ async function checkCloudPendingDispatches() {
             totalQuestions: c.assessmentDetails?.totalQuestions ?? 20,
             sectionBreakdown: c.assessmentDetails?.sectionBreakdown
           });
-          subject = `Update regarding your Technical Assessment: ${role} - Finova Technologies`;
+          subject = `📊 Technical Assessment Result & Performance Feedback: ${role} - Finova Technologies`;
         }
 
         const dispatchResult = await sendNotificationEmail({
@@ -1873,7 +2359,7 @@ async function checkCloudPendingDispatches() {
         });
 
         if (dispatchResult && dispatchResult.success) {
-          console.log(`[Cloud Bridge] ✅ Delivered ${passed ? 'Job Offer & Call Letter' : 'Assessment Feedback'} to ${targetEmail} (Candidate: "${candidateName}", Message ID: ${dispatchResult.messageId})!`);
+          console.log(`[Cloud Bridge] ✅ Delivered ${passed ? 'Selection Intent Offer' : 'Assessment Feedback'} to ${targetEmail} (Candidate: "${candidateName}", Message ID: ${dispatchResult.messageId})!`);
           DISPATCHED_CLOUD_ASSESSMENTS.add(dedupKey);
 
           // Update local candidate record
@@ -1901,11 +2387,14 @@ async function checkCloudPendingDispatches() {
             targetLocal.offerRefId = offerRefId;
             targetLocal.callLetterSentAt = new Date().toISOString();
             targetLocal.callLetterDetails = {
-              joiningDate: defaultJoining,
+              joiningDate: futureJoiningDate,
               ctcPackage: defaultCtc,
+              reportingTo: defaultReportingTo,
+              workMode: defaultWorkMode,
               offerRefId,
               emailDispatch: dispatchResult,
-              deliveredTo: targetEmail
+              deliveredTo: targetEmail,
+              type: 'SELECTION_INTENT_OFFER'
             };
           } else {
             targetLocal.feedbackSentAt = new Date().toISOString();
