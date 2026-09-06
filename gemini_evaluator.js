@@ -613,11 +613,11 @@ function generateSelectionOfferEmailHtml({
   workMode = 'Remote / Hybrid (Flexible Work Arrangements)',
   reportingTo = 'Vageesha Sharma (Founder & Hiring Lead)',
   joiningDate = null,
-  decisionBaseUrl = 'http://localhost:3000',
+  decisionBaseUrl = process.env.APP_BASE_URL || 'https://hr-smartflow-automation.onrender.com',
   offerRefId = 'HR-OFFER-2026'
 }) {
   const effectiveJoiningDate = joiningDate || generateFutureJoiningDate(18);
-  const cleanBase = (decisionBaseUrl || 'http://localhost:3000').replace(/\/+$/, '');
+  const cleanBase = (decisionBaseUrl || process.env.APP_BASE_URL || 'https://hr-smartflow-automation.onrender.com').replace(/\/+$/, '');
 
   const queryParams = new URLSearchParams({
     id: candidateId || '',

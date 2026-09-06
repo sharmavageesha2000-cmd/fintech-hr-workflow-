@@ -548,9 +548,16 @@ async function checkAndDispatchPendingOutcomeEmails() {
       const targetEmail = (c.email || '').trim();
       if (!targetEmail || !targetEmail.includes('@') || targetEmail === 'candidate@example.com') continue;
 
-      const scorePercent = c.assessmentDetails?.scorePercent ?? c.testScore ?? 0;
+      const scorePercent = (
+        c.assessmentDetails?.scorePercent !== undefined ? c.assessmentDetails.scorePercent :
+        c.scorePercent !== undefined ? c.scorePercent :
+        c.testScore !== undefined ? c.testScore :
+        0
+      );
       const passed = Boolean(
-        (c.testPassed === true || (c.assessmentDetails && c.assessmentDetails.passed === true) || c.status === 'SELECTED') &&
+        c.passed === true ||
+        c.testPassed === true ||
+        (c.assessmentDetails && c.assessmentDetails.passed === true) ||
         scorePercent >= 80
       );
 
@@ -676,7 +683,7 @@ async function checkAndDispatchPendingOutcomeEmails() {
             ctcPackage: defaultCtc,
             reportingTo: defaultReportingTo,
             workMode: defaultWorkMode,
-            decisionBaseUrl: baseUrl,
+            decisionBaseUrl: (process.env.APP_BASE_URL || 'https://hr-smartflow-automation.onrender.com'),
             offerRefId
           });
 
@@ -1253,7 +1260,7 @@ app.post('/api/assessment/submit', async (req, res) => {
         workMode: defaultWorkMode,
         reportingTo: defaultReportingTo,
         joiningDate: futureJoiningDate,
-        decisionBaseUrl: baseUrl,
+        decisionBaseUrl: (process.env.APP_BASE_URL || 'https://hr-smartflow-automation.onrender.com'),
         offerRefId
       });
 
@@ -2212,11 +2219,42 @@ async function checkCloudPendingDispatches() {
           const statusJson = JSON.parse(statusRaw);
           if (statusJson && statusJson.alreadySubmitted && statusJson.candidate) {
             const rc = statusJson.candidate;
+            const actualScore = (
+              rc.assessmentDetails?.scorePercent !== undefined ? rc.assessmentDetails.scorePercent :
+              rc.scorePercent !== undefined ? rc.scorePercent :
+              rc.testScore !== undefined ? rc.testScore :
+              0
+            );
+            const actualPassed = rc.passed !== undefined ? Boolean(rc.passed) : (actualScore >= 80);
+            const actualCorrect = rc.correctCount ?? rc.assessmentDetails?.correctCount ?? Math.round((actualScore / 100) * 20);
+            const actualTotal = rc.totalQuestions ?? rc.assessmentDetails?.totalQuestions ?? 20;
+
+            const enriched = {
+              ...lc,
+              ...rc,
+              scorePercent: actualScore,
+              testScore: actualScore,
+              passed: actualPassed,
+              testPassed: actualPassed,
+              assessmentCompleted: true,
+              testSubmitted: true,
+              status: actualPassed ? 'SELECTED' : 'REJECTED',
+              offerStatus: actualPassed ? (rc.offerStatus || 'OFFER_EXTENDED') : 'REJECTED',
+              assessmentDetails: {
+                ...(rc.assessmentDetails || {}),
+                scorePercent: actualScore,
+                passed: actualPassed,
+                correctCount: actualCorrect,
+                totalQuestions: actualTotal,
+                completedAt: rc.assessmentDetails?.completedAt || new Date().toISOString()
+              }
+            };
+
             const existingIdx = remoteCandidates.findIndex(r => r.id === rc.id);
             if (existingIdx !== -1) {
-              remoteCandidates[existingIdx] = { ...remoteCandidates[existingIdx], ...rc, assessmentCompleted: true, testSubmitted: true };
+              remoteCandidates[existingIdx] = enriched;
             } else {
-              remoteCandidates.unshift({ ...lc, ...rc, assessmentCompleted: true, testSubmitted: true });
+              remoteCandidates.unshift(enriched);
             }
           }
         } catch (e) {
@@ -2239,9 +2277,16 @@ async function checkCloudPendingDispatches() {
         const targetEmail = (c.email || '').trim();
         if (!targetEmail || !targetEmail.includes('@') || targetEmail === 'candidate@example.com') continue;
 
-        const scorePercent = c.assessmentDetails?.scorePercent ?? c.testScore ?? 0;
+        const scorePercent = (
+          c.assessmentDetails?.scorePercent !== undefined ? c.assessmentDetails.scorePercent :
+          c.scorePercent !== undefined ? c.scorePercent :
+          c.testScore !== undefined ? c.testScore :
+          0
+        );
         const passed = Boolean(
-          (c.testPassed === true || (c.assessmentDetails && c.assessmentDetails.passed === true) || c.status === 'SELECTED') &&
+          c.passed === true ||
+          c.testPassed === true ||
+          (c.assessmentDetails && c.assessmentDetails.passed === true) ||
           scorePercent >= 80
         );
 
@@ -2414,7 +2459,7 @@ async function checkCloudPendingDispatches() {
             ctcPackage: defaultCtc,
             reportingTo: defaultReportingTo,
             workMode: defaultWorkMode,
-            decisionBaseUrl: 'https://hr-smartflow-automation.onrender.com',
+            decisionBaseUrl: (process.env.APP_BASE_URL || 'https://hr-smartflow-automation.onrender.com'),
             offerRefId
           });
           subject = `🎉 Congratulations! Job Offer & Selection Intent: ${role} - Finova Technologies`;
