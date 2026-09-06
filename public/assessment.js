@@ -792,10 +792,10 @@ function renderSystematicResultDashboard(result, candidate) {
     container.appendChild(feedbackCard);
   }
 
-  // Interactive Live Auto-Reply Email Confirmation & Resend Bar
+  // Live Auto-Reply Email Confirmation Banner
   const deliveredEmail = candidate?.callLetterDetails?.deliveredTo || candidate?.feedbackDetails?.deliveredTo || candidateEmail || candidate?.email || '';
   const emailDispatchBanner = document.createElement('div');
-  emailDispatchBanner.style.cssText = 'background: rgba(6, 182, 212, 0.1); border: 1.5px solid var(--primary); border-radius: 12px; padding: 16px 20px; margin: 16px 0 20px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; color: #fff; text-align: left; width: 100%; box-sizing: border-box;';
+  emailDispatchBanner.style.cssText = 'background: rgba(6, 182, 212, 0.1); border: 1.5px solid var(--primary); border-radius: 12px; padding: 16px 20px; margin: 16px 0 20px 0; display: flex; align-items: center; gap: 12px; color: #fff; text-align: left; width: 100%; box-sizing: border-box;';
   emailDispatchBanner.innerHTML = `
     <div>
       <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 14.5px; color: #38bdf8;">
@@ -805,9 +805,6 @@ function renderSystematicResultDashboard(result, candidate) {
         Sent to: <strong style="color: #fff;">${escapeHtml(deliveredEmail || 'Candidate Email')}</strong> • Verification status: <span style="color: #34d399; font-weight: 700;">Delivered ✔</span>
       </div>
     </div>
-    <button type="button" onclick="resendAssessmentOutcomeEmail(${scorePct}, ${passed})" style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 800; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px var(--primary-glow);">
-      🔄 Resend Copy to Email
-    </button>
   `;
   container.appendChild(emailDispatchBanner);
 
@@ -966,45 +963,4 @@ function formatQuestionText(text) {
   // Format inline code `code`
   escaped = escaped.replace(/`([^`]+)`/g, '<code>$1</code>');
   return escaped;
-}
-
-async function resendAssessmentOutcomeEmail(scorePct, isPassed) {
-  const current = candidateEmail && candidateEmail !== 'candidate@example.com' ? candidateEmail : '';
-  const targetEmail = prompt('Confirm or enter your valid email address to immediately receive your official outcome / offer letter:', current);
-  if (!targetEmail || !targetEmail.includes('@')) {
-    if (targetEmail) alert('Please enter a valid email address (e.g. yourname@gmail.com).');
-    return;
-  }
-  candidateEmail = targetEmail.trim();
-
-  const toast = document.createElement('div');
-  toast.style.cssText = 'position: fixed; bottom: 28px; right: 28px; z-index: 9999; background: #0891b2; color: #fff; padding: 16px 24px; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-size: 14px; display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,0.2);';
-  toast.innerHTML = '<span>⏳</span> Dispatching outcome email via Gmail SMTP...';
-  document.body.appendChild(toast);
-
-  try {
-    const res = await fetch('/api/assessment/resend-outcome', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        candidateId,
-        candidateEmail,
-        candidateName,
-        roleApplied,
-        scorePercent: scorePct
-      })
-    });
-    const data = await res.json();
-    if (data.success) {
-      toast.style.background = '#059669';
-      toast.innerHTML = `<span>✅</span> Official outcome email delivered to <strong>${escapeHtml(candidateEmail)}</strong>!`;
-    } else {
-      toast.style.background = '#dc2626';
-      toast.innerHTML = `<span>❌</span> Delivery issue: ${escapeHtml(data.error || 'SMTP error')}`;
-    }
-  } catch (err) {
-    toast.style.background = '#dc2626';
-    toast.innerHTML = `<span>❌</span> Network error while dispatching email.`;
-  }
-  setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 4500);
 }
