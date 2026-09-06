@@ -714,13 +714,23 @@ app.post('/api/send-email', async (req, res) => {
 
 // 5. Quick Check Assessment Status by Candidate ID (For Page-Load Guard)
 app.get('/api/assessment/status', (req, res) => {
-  const { candidateId } = req.query;
-  if (!candidateId || candidateId === 'null' || candidateId === 'undefined') {
-    return res.json({ alreadySubmitted: false });
+  const { candidateId, candidateEmail, role } = req.query;
+  const candidates = getCandidates(true);
+  let candidateRecord = null;
+
+  if (candidateId && candidateId.trim() && candidateId !== 'null' && candidateId !== 'undefined') {
+    candidateRecord = candidates.find(item => item.id === candidateId.trim());
+  } else if (candidateEmail && candidateEmail.trim()) {
+    const cleanEmail = candidateEmail.trim().toLowerCase();
+    candidateRecord = candidates.find(item => 
+      item.email && item.email.toLowerCase() === cleanEmail && 
+      (!role || item.roleApplied === role)
+    ) || candidates.find(item => item.email && item.email.toLowerCase() === cleanEmail);
   }
 
-  const candidates = getCandidates(true);
-  const candidateRecord = candidates.find(item => item.id === candidateId.trim());
+  if (!candidateRecord) {
+    return res.json({ alreadySubmitted: false });
+  }
 
   if (candidateRecord && (
     candidateRecord.assessmentCompleted === true ||
@@ -760,9 +770,15 @@ app.get('/api/assessment/questions', (req, res) => {
   let candidateRecord = null;
 
   const candidates = getCandidates(true);
-  // Match candidate STRICTLY by explicit candidateId (NEVER by email/name fallback across candidates!)
+  // Match candidate strictly by explicit candidateId if present, or fallback to email + role
   if (candidateId && candidateId.trim() && candidateId !== 'null' && candidateId !== 'undefined') {
     candidateRecord = candidates.find(item => item.id === candidateId.trim());
+  } else if (candidateEmail && candidateEmail.trim()) {
+    const cleanEmail = candidateEmail.trim().toLowerCase();
+    candidateRecord = candidates.find(item => 
+      item.email && item.email.toLowerCase() === cleanEmail && 
+      (!targetRole || item.roleApplied === targetRole)
+    ) || candidates.find(item => item.email && item.email.toLowerCase() === cleanEmail);
   }
 
   // Check if THIS specific candidate attempt has ALREADY completed / submitted their assessment test
@@ -855,9 +871,18 @@ app.post('/api/assessment/submit', async (req, res) => {
     const candidates = getCandidates(true);
     let candidateIdx = -1;
 
-    // Match strictly by candidateId to ensure this candidate's record is updated
+    // Match strictly by candidateId to ensure this candidate's record is updated, or fallback to email + role
     if (candidateId && candidateId !== 'null' && candidateId !== 'undefined') {
       candidateIdx = candidates.findIndex(c => c.id === candidateId.trim());
+    } else if (candidateEmail && candidateEmail.trim()) {
+      const cleanEmail = candidateEmail.trim().toLowerCase();
+      candidateIdx = candidates.findIndex(c => 
+        c.email && c.email.toLowerCase() === cleanEmail &&
+        (!roleApplied || c.roleApplied === effectiveRole)
+      );
+      if (candidateIdx === -1) {
+        candidateIdx = candidates.findIndex(c => c.email && c.email.toLowerCase() === cleanEmail);
+      }
     }
 
     let targetCandidate = candidateIdx !== -1 ? candidates[candidateIdx] : {

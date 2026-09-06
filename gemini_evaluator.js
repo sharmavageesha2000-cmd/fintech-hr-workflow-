@@ -646,7 +646,7 @@ function generateAssessmentOutcomeFeedbackHtml({
       
       <!-- Header -->
       <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 30px 24px; text-align: center; color: #ffffff;">
-        <span style="background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 14px; border-radius: 99px; display: inline-block; margin-bottom: 8px; color: #94a3b8;">ASSESSMENT PERFORMANCE REPORT</span>
+        <span style="background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 14px; border-radius: 99px; display: inline-block; margin-bottom: 8px; color: #94a3b8;">ASSESSMENT OUTCOME UPDATE &amp; PERFORMANCE REPORT</span>
         <h2 style="margin: 0; font-size: 21px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px;">Technical Assessment Evaluation &amp; Feedback</h2>
         <p style="margin: 6px 0 0 0; color: #94a3b8; font-size: 13.5px;">Domain: <strong style="color: #38bdf8;">${roleApplied}</strong> • Finova Technologies</p>
       </div>

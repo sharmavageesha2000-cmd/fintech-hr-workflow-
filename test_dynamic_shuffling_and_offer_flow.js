@@ -104,14 +104,21 @@ async function runTestSuite() {
   const sId = sessionTest.data.sessionId;
   const questions = sessionTest.data.questions;
 
-  // Let's get the master session answer key directly by querying the session in assessment_questions
-  const { ACTIVE_ASSESSMENT_SESSIONS } = require('./assessment_questions');
-  const sessionObj = ACTIVE_ASSESSMENT_SESSIONS.get(sId);
+  // Look up correct answers by matching question bank options (cross-process safe)
+  const { ROLE_QUESTIONS_BANK, normalizeRoleToBankKey } = require('./assessment_questions');
+  const bankKey = normalizeRoleToBankKey('Full Stack AI Engineer');
+  const roleBank = ROLE_QUESTIONS_BANK[bankKey] || [];
 
   // Submit answers: 18 correct answers out of 20 (90%)
   const answersToSubmit = {};
   questions.forEach((q, idx) => {
-    const correctIdx = sessionObj ? sessionObj.answerKey[q.id] : 0;
+    const bankQ = roleBank.find(item => item.id === q.id);
+    let correctIdx = 0;
+    if (bankQ) {
+      const correctText = bankQ.options[bankQ.correctIndex || 0];
+      const matchPos = q.options.indexOf(correctText);
+      correctIdx = matchPos !== -1 ? matchPos : 0;
+    }
     if (idx < 18) {
       answersToSubmit[q.id] = correctIdx; // Correct
     } else {

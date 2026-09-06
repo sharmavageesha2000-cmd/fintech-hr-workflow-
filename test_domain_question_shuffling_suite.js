@@ -7,19 +7,19 @@ const {
 } = require('./assessment_questions');
 
 console.log('===============================================================');
-console.log('  TEST SUITE: DOMAIN QUESTIONS SHUFFLING & NON-REPEATING TEST');
+console.log('  TEST SUITE: DOMAIN QUESTIONS SHUFFLE & NON-REPEATING TEST');
 console.log('===============================================================');
 
-// 1. Verify 50 questions exist per role
-console.log('\n[TEST 1] Verifying 50 Questions per Domain:');
+// 1. Verify at least 50 questions exist per role (100 in enterprise bank)
+console.log('\n[TEST 1] Verifying 50+ Questions per Domain (Enterprise Bank):');
 const roles = Object.keys(ROLE_QUESTIONS_BANK);
 let allRolesHave50 = true;
 roles.forEach(role => {
   const count = ROLE_QUESTIONS_BANK[role].length;
   console.log(`  ✓ Domain "${role}": ${count} MCQs`);
-  if (count !== 50) allRolesHave50 = false;
+  if (count < 50) allRolesHave50 = false;
 });
-if (!allRolesHave50) throw new Error('Not all roles have exactly 50 questions!');
+if (!allRolesHave50) throw new Error('Not all roles have at least 50 questions!');
 
 // 2. Test candidate applying for the same job multiple times
 console.log('\n[TEST 2] Testing Candidate Applying for Same Job Consecutive Attempts:');
