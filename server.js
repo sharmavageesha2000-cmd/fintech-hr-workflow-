@@ -214,11 +214,44 @@ async function extractTextFromFile(filePath) {
   }
 }
 
-// Deduplication cache to prevent sending duplicate emails to the same recipient within 5 minutes
+// Deduplication cache to prevent duplicate email dispatches
 const DISPATCHED_EMAILS_CACHE = new Map();
 
-// Helper: Send Email via Nodemailer (Multi-protocol: Gmail Service + SSL 465 + STARTTLS 587 with IPv4 Force)
-async function sendNotificationEmail({ to, subject, htmlBody, bypassDedup = false }) {
+// Sequential SMTP Queue Mutex to prevent simultaneous socket collisions on Gmail SMTP
+let smtpDispatchMutex = Promise.resolve();
+let isSmtpDispatching = false;
+let isSmtpPending = false;
+
+function sendNotificationEmail({ to, subject, htmlBody, bypassDedup = false }) {
+  isSmtpPending = true;
+  return new Promise((resolve) => {
+    smtpDispatchMutex = smtpDispatchMutex.then(async () => {
+      // Wait for any active IMAP polling cycle to conclude to prevent socket collisions
+      let waitCount = 0;
+      while (isPollingActive && waitCount < 50) {
+        await new Promise(r => setTimeout(r, 200));
+        waitCount++;
+      }
+      // Cooldown to let any previous IMAP connection cleanly disconnect on Gmail server
+      await new Promise(r => setTimeout(r, 500));
+
+      isSmtpDispatching = true;
+      try {
+        const result = await doSendNotificationEmail({ to, subject, htmlBody, bypassDedup });
+        await new Promise(r => setTimeout(r, 500));
+        resolve(result);
+      } catch (err) {
+        resolve({ success: false, error: err.message });
+      } finally {
+        isSmtpDispatching = false;
+        isSmtpPending = false;
+      }
+    });
+  });
+}
+
+// Internal: Send Email via Nodemailer (Multi-protocol: Gmail Service + SSL 465 + STARTTLS 587)
+async function doSendNotificationEmail({ to, subject, htmlBody, bypassDedup = false }) {
   const settings = getSettings();
   const recruiterEmail = settings.recruiterEmail || process.env.RECRUITER_EMAIL || 'sharmavageesha2000@gmail.com';
   const appPassword = (settings.appPassword || process.env.GOOGLE_APP_PASSWORD || 'qoyolivxrkuqxmkx').replace(/\s+/g, '');
@@ -244,62 +277,102 @@ async function sendNotificationEmail({ to, subject, htmlBody, bypassDedup = fals
 
   const transportConfigs = [
     { 
-      service: 'gmail', 
-      family: 4, 
-      auth: { user: recruiterEmail, pass: appPassword }, 
-      tls: { rejectUnauthorized: false }, 
-      connectionTimeout: 8000, 
-      greetingTimeout: 6000, 
-      socketTimeout: 12000 
-    },
-    { 
+      label: 'smtp.gmail.com:465 (Standard Direct SSL)',
       host: 'smtp.gmail.com', 
       port: 465, 
       secure: true, 
-      family: 4, 
-      auth: { user: recruiterEmail, pass: appPassword }, 
-      tls: { rejectUnauthorized: false }, 
-      connectionTimeout: 8000, 
-      greetingTimeout: 6000, 
-      socketTimeout: 12000 
+      auth: { user: recruiterEmail, pass: appPassword },
+      connectionTimeout: 15000,
+      greetingTimeout: 12000,
+      socketTimeout: 25000
     },
     { 
+      label: 'smtp.gmail.com:587 (STARTTLS)',
       host: 'smtp.gmail.com', 
       port: 587, 
       secure: false, 
-      family: 4, 
-      auth: { user: recruiterEmail, pass: appPassword }, 
-      tls: { rejectUnauthorized: false }, 
-      connectionTimeout: 8000, 
-      greetingTimeout: 6000, 
-      socketTimeout: 12000 
+      auth: { user: recruiterEmail, pass: appPassword },
+      connectionTimeout: 15000,
+      greetingTimeout: 12000,
+      socketTimeout: 25000
     }
   ];
 
   let lastError = null;
   for (let i = 0; i < transportConfigs.length; i++) {
-    const config = transportConfigs[i];
+    const { label, ...transportOptions } = transportConfigs[i];
+    let transporter = null;
     try {
-      console.log(`[Gmail SMTP] Dispatching email to: ${to} (Subject: "${subject}") [Method ${i + 1}/${transportConfigs.length}]...`);
-      const transporter = nodemailer.createTransport(config);
+      console.log(`[Gmail SMTP] Dispatching email to: ${to} (Subject: "${subject}") [Method ${i + 1}/${transportConfigs.length}: ${label}]...`);
+      transporter = nodemailer.createTransport(transportOptions);
       const info = await transporter.sendMail({
         from: `"${settings.recruiterName || 'Vageesha Sharma'}" <${recruiterEmail}>`,
         to,
         subject,
         html: htmlBody
       });
-      console.log(`[Gmail SMTP] ✅ Delivered successfully! Message ID: ${info.messageId}`);
+      console.log(`[Gmail SMTP] ✅ Delivered successfully via ${label}! Message ID: ${info.messageId}`);
+      try { transporter.close(); } catch (e) {}
       return {
         success: true,
         simulated: false,
         messageId: info.messageId,
         to,
-        subject
+        subject,
+        transport: label
       };
     } catch (error) {
+      if (transporter) {
+        try { transporter.close(); } catch (e) {}
+      }
       lastError = error;
-      console.warn(`[Gmail SMTP Warning] Method ${i + 1} failed: ${error.message}`);
-      await new Promise(r => setTimeout(r, 400));
+      console.warn(`[Gmail SMTP Warning] Method ${i + 1} (${label}) failed: ${error.message}`);
+      await new Promise(r => setTimeout(r, 1000));
+    }
+  }
+
+  // Fallback: Check if an external HTTPS email webhook relay is configured
+  const emailRelayUrl = settings.emailRelayUrl || process.env.EMAIL_RELAY_URL;
+  if (emailRelayUrl && emailRelayUrl.startsWith('http')) {
+    try {
+      console.log(`[Email Relay] Attempting dispatch via configured HTTPS relay: ${emailRelayUrl}`);
+      const https = require('https');
+      const http = require('http');
+      const client = emailRelayUrl.startsWith('https') ? https : http;
+      const relayPayload = JSON.stringify({ to, subject, htmlBody, from: recruiterEmail, recruiterName: settings.recruiterName || 'Vageesha Sharma' });
+      
+      const relayRes = await new Promise((resolve, reject) => {
+        const req = client.request(emailRelayUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(relayPayload)
+          },
+          timeout: 15000
+        }, (res) => {
+          let body = '';
+          res.on('data', d => body += d);
+          res.on('end', () => resolve({ statusCode: res.statusCode, body }));
+        });
+        req.on('error', reject);
+        req.on('timeout', () => { req.destroy(); reject(new Error('Relay timeout')); });
+        req.write(relayPayload);
+        req.end();
+      });
+
+      if (relayRes.statusCode >= 200 && relayRes.statusCode < 300) {
+        console.log(`[Email Relay] ✅ Delivered successfully via HTTPS relay!`);
+        return {
+          success: true,
+          simulated: false,
+          messageId: `RELAY_${Date.now()}`,
+          to,
+          subject,
+          transport: 'HTTPS_RELAY'
+        };
+      }
+    } catch (relayErr) {
+      console.warn(`[Email Relay Warning] HTTPS relay failed: ${relayErr.message}`);
     }
   }
 
@@ -315,7 +388,14 @@ async function sendNotificationEmail({ to, subject, htmlBody, bypassDedup = fals
 let isPollingActive = false;
 let lastPollStartTime = 0;
 
+let hasDoneInitialInboxPoll = false;
+
 async function checkInboxNow() {
+  if (isSmtpDispatching || isSmtpPending) {
+    console.log('[Email Daemon] ⏳ Deferring IMAP inbox check: Outgoing SMTP email dispatch in progress or queued.');
+    return;
+  }
+
   // Watchdog reset: if polling has been active for over 45 seconds, force-clear lock
   if (isPollingActive) {
     if (Date.now() - lastPollStartTime > 45000) {
@@ -331,10 +411,13 @@ async function checkInboxNow() {
 
   try {
     const settings = getSettings();
+    const countToCheck = hasDoneInitialInboxPoll ? 5 : 8;
+    hasDoneInitialInboxPoll = true;
+
     const result = await pollCandidateEmails({
       email: settings.recruiterEmail || process.env.RECRUITER_EMAIL || 'sharmavageesha2000@gmail.com',
       password: settings.appPassword || process.env.GOOGLE_APP_PASSWORD || '',
-      checkLatestCount: 35,
+      checkLatestCount: countToCheck,
       onCandidateProcessed: async (newCand) => {
         console.log(`[Auto-Processor] 🎯 Processing candidate resume: "${newCand.name}" (Email: <${newCand.email}>, Role: "${newCand.roleApplied}")`);
 
@@ -390,7 +473,7 @@ async function checkInboxNow() {
 let isDispatchingOutcomes = false;
 
 async function checkAndDispatchPendingOutcomeEmails() {
-  if (isDispatchingOutcomes) return;
+  if (isDispatchingOutcomes || isPollingActive || isSmtpDispatching) return;
   isDispatchingOutcomes = true;
 
   try {
@@ -415,6 +498,11 @@ async function checkAndDispatchPendingOutcomeEmails() {
         (c.testPassed === true || (c.assessmentDetails && c.assessmentDetails.passed === true) || c.status === 'SELECTED') &&
         scorePercent >= 80
       );
+
+      // Rate limit retry attempts per candidate to prevent rapid socket cycling
+      if (c.lastOutcomeEmailAttempt && (Date.now() - c.lastOutcomeEmailAttempt < 45000)) {
+        continue;
+      }
 
       const role = c.roleApplied || 'Frontend Developer';
 
@@ -447,12 +535,15 @@ async function checkAndDispatchPendingOutcomeEmails() {
             bypassDedup: true
           });
 
-          if (emailDispatch.success) {
+          if (emailDispatch && emailDispatch.success) {
             console.log(`[Outcome Watchdog] ✅ Successfully delivered Call Letter to ${targetEmail} (Message ID: ${emailDispatch.messageId})`);
             c.status = 'SELECTED';
             c.offerStatus = 'OFFER_EXTENDED';
             c.offerRefId = offerRefId;
             c.callLetterSentAt = new Date().toISOString();
+            c.pendingEmailSync = false;
+            delete c.pendingEmailPayload;
+            delete c.lastOutcomeEmailAttempt;
             c.callLetterDetails = {
               joiningDate: defaultJoining,
               ctcPackage: defaultCtc,
@@ -461,7 +552,10 @@ async function checkAndDispatchPendingOutcomeEmails() {
               deliveredTo: targetEmail
             };
             updated = true;
+          } else {
+            c.lastOutcomeEmailAttempt = Date.now();
           }
+          await new Promise(r => setTimeout(r, 1000));
         }
       } else {
         const hasDeliveredFeedback = Boolean(c.feedbackDetails?.emailDispatch?.success);
@@ -486,11 +580,14 @@ async function checkAndDispatchPendingOutcomeEmails() {
             bypassDedup: true
           });
 
-          if (emailDispatch.success) {
+          if (emailDispatch && emailDispatch.success) {
             console.log(`[Outcome Watchdog] ✅ Successfully delivered Feedback email to ${targetEmail} (Message ID: ${emailDispatch.messageId})`);
             c.status = 'REJECTED';
             c.offerStatus = 'REJECTED';
             c.feedbackSentAt = new Date().toISOString();
+            c.pendingEmailSync = false;
+            delete c.pendingEmailPayload;
+            delete c.lastOutcomeEmailAttempt;
             c.feedbackDetails = {
               scorePercent,
               correctCount: c.assessmentDetails?.correctCount ?? Math.round((scorePercent / 100) * 20),
@@ -499,7 +596,10 @@ async function checkAndDispatchPendingOutcomeEmails() {
               deliveredTo: targetEmail
             };
             updated = true;
+          } else {
+            c.lastOutcomeEmailAttempt = Date.now();
           }
+          await new Promise(r => setTimeout(r, 1000));
         }
       }
     }
@@ -515,8 +615,8 @@ async function checkAndDispatchPendingOutcomeEmails() {
 }
 
 // Start continuous real-time background polling loops
-setInterval(checkInboxNow, 15000);
-setInterval(checkAndDispatchPendingOutcomeEmails, 10000);
+setInterval(checkInboxNow, 30000);
+setInterval(checkAndDispatchPendingOutcomeEmails, 20000);
 
 // ================= API ROUTES =================
 
@@ -1010,7 +1110,23 @@ app.post('/api/assessment/submit', async (req, res) => {
       targetCandidate.interviewStatus = 'COMPLETED';
       targetCandidate.offerStatus = 'OFFER_EXTENDED';
       targetCandidate.offerRefId = offerRefId;
-      targetCandidate.callLetterSentAt = new Date().toISOString();
+      if (emailDispatch && emailDispatch.success) {
+        targetCandidate.callLetterSentAt = new Date().toISOString();
+        targetCandidate.pendingEmailSync = false;
+        delete targetCandidate.pendingEmailPayload;
+      } else {
+        // Flag for immediate cloud bridge / local daemon dispatch
+        console.warn(`[Assessment Engine] ⚠️ Immediate SMTP dispatch failed. Flagging for Cloud Bridge delivery to: ${targetEmail}`);
+        targetCandidate.pendingEmailSync = true;
+        targetCandidate.pendingEmailPayload = {
+          to: targetEmail,
+          subject,
+          htmlBody: callLetterHtml,
+          emailType: 'OFFER_LETTER',
+          offerRefId
+        };
+      }
+
       targetCandidate.callLetterDetails = {
         joiningDate: defaultJoining,
         ctcPackage: defaultCtc,
@@ -1050,7 +1166,22 @@ app.post('/api/assessment/submit', async (req, res) => {
       targetCandidate.status = 'REJECTED';
       targetCandidate.offerStatus = 'REJECTED';
       targetCandidate.interviewStatus = 'COMPLETED';
-      targetCandidate.feedbackSentAt = new Date().toISOString();
+      if (emailDispatch && emailDispatch.success) {
+        targetCandidate.feedbackSentAt = new Date().toISOString();
+        targetCandidate.pendingEmailSync = false;
+        delete targetCandidate.pendingEmailPayload;
+      } else {
+        // Flag for immediate cloud bridge / local daemon dispatch
+        console.warn(`[Assessment Engine] ⚠️ Immediate SMTP dispatch failed. Flagging for Cloud Bridge delivery to: ${targetEmail}`);
+        targetCandidate.pendingEmailSync = true;
+        targetCandidate.pendingEmailPayload = {
+          to: targetEmail,
+          subject,
+          htmlBody: feedbackHtml,
+          emailType: 'FEEDBACK'
+        };
+      }
+
       targetCandidate.feedbackDetails = {
         scorePercent: evalResult.scorePercent,
         correctCount: evalResult.correctCount,
@@ -1217,6 +1348,140 @@ app.post('/api/assessment/resend-outcome', async (req, res) => {
     });
   } catch (err) {
     console.error('Error resending assessment outcome email:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 5e. Cloud-to-Local Bridge: Query candidates requiring automated email dispatch
+app.get('/api/assessment/pending-dispatches', (req, res) => {
+  try {
+    const candidates = getCandidates(true);
+    const pending = [];
+    for (const c of candidates) {
+      if (!c.assessmentCompleted) continue;
+      const passed = c.testPassed === true || (c.testScore || 0) >= 80;
+      const emailSuccess = passed 
+        ? (c.callLetterDetails?.emailDispatch?.success === true && !!c.callLetterSentAt)
+        : (c.feedbackDetails?.emailDispatch?.success === true && !!c.feedbackSentAt);
+      
+      if (!emailSuccess || c.pendingEmailSync) {
+        const effectiveRole = c.roleApplied || 'Frontend Developer';
+        const effectiveName = (c.name && c.name !== 'Candidate') ? c.name : 'Candidate';
+        const effectiveScore = c.testScore ?? c.assessmentDetails?.scorePercent ?? 0;
+        let targetEmail = '';
+        if (c.email && c.email.includes('@') && c.email.toLowerCase() !== 'candidate@example.com') {
+          targetEmail = c.email.trim();
+        } else if (c.callLetterDetails?.deliveredTo && c.callLetterDetails.deliveredTo.includes('@')) {
+          targetEmail = c.callLetterDetails.deliveredTo.trim();
+        } else if (c.feedbackDetails?.deliveredTo && c.feedbackDetails.deliveredTo.includes('@')) {
+          targetEmail = c.feedbackDetails.deliveredTo.trim();
+        }
+
+        if (!targetEmail || !targetEmail.includes('@')) continue;
+
+        let subject = '';
+        let htmlBody = '';
+        if (passed) {
+          const offerRefId = c.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+          const defaultJoining = c.callLetterDetails?.joiningDate || 'Monday, 14 September 2026';
+          const defaultCtc = c.callLetterDetails?.ctcPackage || ((effectiveRole.toLowerCase().includes('senior') || effectiveRole.toLowerCase().includes('lead'))
+            ? '₹14,50,000 per annum (Full-Time)'
+            : '₹9,50,000 per annum (Full-Time)');
+          htmlBody = generateOfficialCallLetterHtml({
+            candidateName: effectiveName,
+            roleApplied: effectiveRole,
+            joiningDate: defaultJoining,
+            ctcPackage: defaultCtc,
+            reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
+            workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
+            offerRefId
+          });
+          subject = `🎉 Official Job Offer & Call Letter: ${effectiveRole} - Finova Technologies`;
+        } else {
+          htmlBody = generateAssessmentOutcomeFeedbackHtml({
+            candidateName: effectiveName,
+            roleApplied: effectiveRole,
+            scorePercent: effectiveScore,
+            passingThreshold: 80,
+            correctCount: c.assessmentDetails?.correctCount ?? Math.round((effectiveScore / 100) * 20),
+            totalQuestions: c.assessmentDetails?.totalQuestions ?? 20,
+            sectionBreakdown: c.assessmentDetails?.sectionBreakdown
+          });
+          subject = `📊 Technical Assessment Result & Performance Feedback: ${effectiveRole} - Finova Technologies`;
+        }
+
+        pending.push({
+          candidateId: c.id,
+          candidateName: effectiveName,
+          candidateEmail: targetEmail,
+          roleApplied: effectiveRole,
+          scorePercent: effectiveScore,
+          passed,
+          emailType: passed ? 'OFFER_LETTER' : 'FEEDBACK',
+          subject,
+          htmlBody
+        });
+      }
+    }
+    res.json({ success: true, count: pending.length, pending });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 5f. Confirm Email Dispatch from Local Bridge or Background Worker
+app.post('/api/assessment/confirm-dispatch', (req, res) => {
+  try {
+    const { candidateId, messageId, emailType, deliveredTo, success } = req.body;
+    const candidates = getCandidates(true);
+    let cand = candidates.find(c => c.id === candidateId);
+    if (!cand && deliveredTo) {
+      cand = candidates.find(c => c.email && c.email.toLowerCase().trim() === deliveredTo.toLowerCase().trim());
+    }
+
+    if (!cand) {
+      return res.status(404).json({ success: false, error: 'Candidate not found' });
+    }
+
+    cand.pendingEmailSync = false;
+    delete cand.pendingEmailPayload;
+
+    if (success) {
+      const nowIso = new Date().toISOString();
+      if (emailType === 'OFFER_LETTER' || cand.testPassed) {
+        cand.status = 'SELECTED';
+        cand.offerStatus = 'OFFER_EXTENDED';
+        cand.interviewStatus = 'COMPLETED';
+        cand.callLetterSentAt = nowIso;
+        if (!cand.callLetterDetails) cand.callLetterDetails = {};
+        cand.callLetterDetails.emailDispatch = {
+          success: true,
+          simulated: false,
+          messageId: messageId || `BRIDGE_${Date.now()}`,
+          deliveredAt: nowIso,
+          to: deliveredTo || cand.email
+        };
+        cand.callLetterDetails.deliveredTo = deliveredTo || cand.email;
+      } else {
+        cand.status = 'REJECTED';
+        cand.offerStatus = 'REJECTED';
+        cand.interviewStatus = 'COMPLETED';
+        cand.feedbackSentAt = nowIso;
+        if (!cand.feedbackDetails) cand.feedbackDetails = {};
+        cand.feedbackDetails.emailDispatch = {
+          success: true,
+          simulated: false,
+          messageId: messageId || `BRIDGE_${Date.now()}`,
+          deliveredAt: nowIso,
+          to: deliveredTo || cand.email
+        };
+        cand.feedbackDetails.deliveredTo = deliveredTo || cand.email;
+      }
+      saveCandidates(candidates);
+      console.log(`[Assessment Engine] ✅ Confirmed email dispatch for ${cand.name} (${cand.email || deliveredTo}) [${emailType}]. Message ID: ${messageId}`);
+    }
+    res.json({ success: true, candidateId: cand.id, confirmed: true });
+  } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
 });
@@ -1474,6 +1739,118 @@ app.get('/api/export/json', (req, res) => {
   res.send(JSON.stringify(candidates, null, 2));
 });
 
+// ================= CLOUD BRIDGE & AUTOMATED EMAIL SWEEP DAEMON =================
+let isBridgeSyncActive = false;
+
+async function checkCloudPendingDispatches() {
+  if (isBridgeSyncActive) return;
+  // If running in cloud (Render), do not poll external cloud endpoint
+  if (process.env.RENDER === 'true') return;
+
+  isBridgeSyncActive = true;
+  try {
+    const https = require('https');
+    const cloudUrl = 'https://hr-smartflow-automation.onrender.com/api/assessment/pending-dispatches';
+
+    const rawData = await new Promise((resolve, reject) => {
+      const req = https.get(cloudUrl, { timeout: 12000 }, (res) => {
+        let body = '';
+        res.on('data', d => body += d);
+        res.on('end', () => resolve(body));
+      });
+      req.on('error', reject);
+      req.on('timeout', () => { req.destroy(); reject(new Error('Cloud sync timeout')); });
+    });
+
+    const parsed = JSON.parse(rawData);
+    if (parsed.success && Array.isArray(parsed.pending) && parsed.pending.length > 0) {
+      console.log(`[Cloud Bridge] 🚀 Detected ${parsed.pending.length} pending assessment email dispatch(es) on Render! Processing via local SMTP...`);
+
+      for (const item of parsed.pending) {
+        if (!item.candidateEmail || !item.candidateEmail.includes('@')) continue;
+
+        console.log(`[Cloud Bridge] ✉️ Dispatching ${item.emailType} to: ${item.candidateEmail} (${item.candidateName})...`);
+        const dispatchResult = await sendNotificationEmail({
+          to: item.candidateEmail,
+          subject: item.subject,
+          htmlBody: item.htmlBody,
+          bypassDedup: true
+        });
+
+        if (dispatchResult && dispatchResult.success) {
+          console.log(`[Cloud Bridge] ✅ Delivered ${item.emailType} for ${item.candidateName}! Message ID: ${dispatchResult.messageId}. Confirming to Render...`);
+
+          // Confirm to Render
+          const postData = JSON.stringify({
+            candidateId: item.candidateId,
+            messageId: dispatchResult.messageId,
+            emailType: item.emailType,
+            deliveredTo: item.candidateEmail,
+            success: true
+          });
+
+          await new Promise((resolve) => {
+            const confirmReq = https.request('https://hr-smartflow-automation.onrender.com/api/assessment/confirm-dispatch', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(postData)
+              },
+              timeout: 10000
+            }, (res) => {
+              res.on('data', () => {});
+              res.on('end', resolve);
+            });
+            confirmReq.on('error', resolve);
+            confirmReq.on('timeout', () => { confirmReq.destroy(); resolve(); });
+            confirmReq.write(postData);
+            confirmReq.end();
+          });
+
+          // Sync into local candidates.json
+          const localCandidates = getCandidates(true);
+          let localCand = localCandidates.find(c => c.id === item.candidateId || (c.email && c.email.toLowerCase().trim() === item.candidateEmail.toLowerCase().trim()));
+          if (!localCand) {
+            localCand = {
+              id: item.candidateId,
+              name: item.candidateName,
+              email: item.candidateEmail,
+              roleApplied: item.roleApplied,
+              receivedAt: new Date().toISOString()
+            };
+            localCandidates.unshift(localCand);
+          }
+          localCand.testScore = item.scorePercent;
+          localCand.testPassed = item.passed;
+          localCand.assessmentCompleted = true;
+          localCand.status = item.passed ? 'SELECTED' : 'REJECTED';
+          localCand.offerStatus = item.passed ? 'OFFER_EXTENDED' : 'REJECTED';
+          localCand.interviewStatus = 'COMPLETED';
+          if (item.passed) {
+            localCand.callLetterSentAt = new Date().toISOString();
+            if (!localCand.callLetterDetails) localCand.callLetterDetails = {};
+            localCand.callLetterDetails.emailDispatch = dispatchResult;
+            localCand.callLetterDetails.deliveredTo = item.candidateEmail;
+          } else {
+            localCand.feedbackSentAt = new Date().toISOString();
+            if (!localCand.feedbackDetails) localCand.feedbackDetails = {};
+            localCand.feedbackDetails.emailDispatch = dispatchResult;
+            localCand.feedbackDetails.deliveredTo = item.candidateEmail;
+          }
+          saveCandidates(localCandidates);
+          console.log(`[Cloud Bridge] 💾 Synchronized candidate ${item.candidateName} into local database.`);
+        } else {
+          console.warn(`[Cloud Bridge Warning] Failed to dispatch email to: ${item.candidateEmail}:`, dispatchResult?.error);
+        }
+      }
+    }
+  } catch (err) {
+    // Silently continue if cloud instance is asleep or unreachable
+  } finally {
+    isBridgeSyncActive = false;
+  }
+}
+
 function startServerWithFallback(portToTry) {
   const server = app.listen(portToTry, () => {
     console.log(`====================================================`);
@@ -1482,12 +1859,18 @@ function startServerWithFallback(portToTry) {
     console.log(`  Live Cloud: https://hr-smartflow-automation.onrender.com`);
     console.log(`  Recruiter:  sharmavageesha2000@gmail.com           `);
     console.log(`  Gmail SMTP & IMAP: CONNECTED & AUTHENTICATED      `);
-    console.log(`  Auto-Scanner Daemon: ACTIVE (Polling every 5s)    `);
+    console.log(`  Auto-Scanner Daemon: ACTIVE (Polling every 15s)   `);
+    console.log(`  Outcome Watchdog & Cloud Bridge: ACTIVE           `);
     console.log(`  Gemini Model: ${DEFAULT_MODEL} (Connected)        `);
     console.log(`====================================================`);
 
-    // Initial check on boot
-    setTimeout(checkInboxNow, 1500);
+    // Initial checks on boot
+    setTimeout(checkCloudPendingDispatches, 3000);
+    setTimeout(checkInboxNow, 6000);
+    setTimeout(checkAndDispatchPendingOutcomeEmails, 9000);
+
+    // Continuous intervals
+    setInterval(checkCloudPendingDispatches, 10000);
 
     // Keep Render Cloud instance active and warm (every 2.5 minutes)
     setInterval(() => {
@@ -1507,4 +1890,5 @@ function startServerWithFallback(portToTry) {
 }
 
 startServerWithFallback(Number(PORT));
+
 
