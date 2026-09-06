@@ -1741,6 +1741,29 @@ app.get('/api/export/json', (req, res) => {
 
 // ================= CLOUD BRIDGE & AUTOMATED EMAIL SWEEP DAEMON =================
 let isBridgeSyncActive = false;
+const DISPATCHED_CLOUD_ASSESSMENTS = new Set();
+
+// Seed existing delivered candidate assessments on startup so past submissions aren't re-sent
+function initCloudBridgeCache() {
+  try {
+    const candidates = getCandidates(true);
+    for (const c of candidates) {
+      const completionTime = c.assessmentDetails?.completedAt || c.callLetterSentAt || c.feedbackSentAt;
+      if (c.callLetterDetails?.emailDispatch?.success && c.callLetterSentAt) {
+        DISPATCHED_CLOUD_ASSESSMENTS.add(`${c.id}__OFFER__${completionTime || 'INIT'}`);
+        DISPATCHED_CLOUD_ASSESSMENTS.add(`${(c.email || '').toLowerCase().trim()}__OFFER__${completionTime || 'INIT'}`);
+      }
+      if (c.feedbackDetails?.emailDispatch?.success && c.feedbackSentAt) {
+        DISPATCHED_CLOUD_ASSESSMENTS.add(`${c.id}__FEEDBACK__${completionTime || 'INIT'}`);
+        DISPATCHED_CLOUD_ASSESSMENTS.add(`${(c.email || '').toLowerCase().trim()}__FEEDBACK__${completionTime || 'INIT'}`);
+      }
+    }
+    console.log(`[Cloud Bridge Cache] Initialized with ${DISPATCHED_CLOUD_ASSESSMENTS.size} delivered outcome records.`);
+  } catch (err) {
+    console.warn('[Cloud Bridge Cache Warn]:', err.message);
+  }
+}
+initCloudBridgeCache();
 
 async function checkCloudPendingDispatches() {
   if (isBridgeSyncActive) return;
@@ -1750,10 +1773,10 @@ async function checkCloudPendingDispatches() {
   isBridgeSyncActive = true;
   try {
     const https = require('https');
-    const cloudUrl = 'https://hr-smartflow-automation.onrender.com/api/assessment/pending-dispatches';
+    const cloudUrl = 'https://hr-smartflow-automation.onrender.com/api/candidates';
 
     const rawData = await new Promise((resolve, reject) => {
-      const req = https.get(cloudUrl, { timeout: 12000 }, (res) => {
+      const req = https.get(cloudUrl, { timeout: 10000 }, (res) => {
         let body = '';
         res.on('data', d => body += d);
         res.on('end', () => resolve(body));
@@ -1763,85 +1786,165 @@ async function checkCloudPendingDispatches() {
     });
 
     const parsed = JSON.parse(rawData);
-    if (parsed.success && Array.isArray(parsed.pending) && parsed.pending.length > 0) {
-      console.log(`[Cloud Bridge] 🚀 Detected ${parsed.pending.length} pending assessment email dispatch(es) on Render! Processing via local SMTP...`);
+    if (parsed.success && Array.isArray(parsed.candidates) && parsed.candidates.length > 0) {
+      const localCandidates = getCandidates(true);
 
-      for (const item of parsed.pending) {
-        if (!item.candidateEmail || !item.candidateEmail.includes('@')) continue;
+      for (const c of parsed.candidates) {
+        const isCompleted = Boolean(
+          c.assessmentCompleted === true ||
+          c.testSubmitted === true ||
+          (c.assessmentDetails && c.assessmentDetails.completedAt) ||
+          (c.testScore !== undefined && c.testScore !== null && c.interviewStatus === 'COMPLETED')
+        );
 
-        console.log(`[Cloud Bridge] ✉️ Dispatching ${item.emailType} to: ${item.candidateEmail} (${item.candidateName})...`);
+        if (!isCompleted) continue;
+
+        const targetEmail = (c.email || '').trim();
+        if (!targetEmail || !targetEmail.includes('@') || targetEmail === 'candidate@example.com') continue;
+
+        const scorePercent = c.assessmentDetails?.scorePercent ?? c.testScore ?? 0;
+        const passed = Boolean(
+          (c.testPassed === true || (c.assessmentDetails && c.assessmentDetails.passed === true) || c.status === 'SELECTED') &&
+          scorePercent >= 80
+        );
+
+        const outcomeType = passed ? 'OFFER' : 'FEEDBACK';
+        const completionTime = c.assessmentDetails?.completedAt || c.feedbackSentAt || c.callLetterSentAt || c.evaluatedAt || 'RECENT';
+        const dedupKey = `${c.id}__${outcomeType}__${completionTime}`;
+
+        // Check if already dispatched by local bridge
+        if (DISPATCHED_CLOUD_ASSESSMENTS.has(dedupKey)) continue;
+
+        // Check if THIS SPECIFIC candidate completion is already marked delivered locally
+        const localMatch = localCandidates.find(lc => lc.id === c.id);
+        const alreadyDeliveredLocally = localMatch && (
+          passed
+            ? (Boolean(localMatch.callLetterDetails?.emailDispatch?.success) && Boolean(localMatch.callLetterSentAt))
+            : (Boolean(localMatch.feedbackDetails?.emailDispatch?.success) && Boolean(localMatch.feedbackSentAt))
+        );
+
+        if (alreadyDeliveredLocally) {
+          DISPATCHED_CLOUD_ASSESSMENTS.add(dedupKey);
+          continue;
+        }
+
+        const role = c.roleApplied || 'Frontend Developer';
+        const candidateName = c.name || 'Candidate';
+
+        console.log(`[Cloud Bridge] 🚀 Detected completed assessment on Render for "${candidateName}" (Score: ${scorePercent}%, Passed: ${passed})! Auto-dispatching via local SMTP...`);
+
+        let subject = '';
+        let htmlBody = '';
+        const offerRefId = c.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+        const defaultJoining = 'Monday, 14 September 2026';
+        const defaultCtc = (role.toLowerCase().includes('senior') || role.toLowerCase().includes('lead'))
+          ? '₹14,50,000 per annum (Full-Time)'
+          : '₹9,50,000 per annum (Full-Time)';
+
+        if (passed) {
+          htmlBody = generateOfficialCallLetterHtml({
+            candidateName,
+            roleApplied: role,
+            joiningDate: defaultJoining,
+            ctcPackage: defaultCtc,
+            reportingTo: 'Vageesha Sharma (Founder & Hiring Lead)',
+            workMode: 'Remote / Hybrid (Flexible Work Arrangements)',
+            offerRefId
+          });
+          subject = `🎉 Official Job Offer & Call Letter: ${role} - Finova Technologies`;
+        } else {
+          htmlBody = generateAssessmentOutcomeFeedbackHtml({
+            candidateName,
+            roleApplied: role,
+            scorePercent,
+            passingThreshold: 80,
+            correctCount: c.assessmentDetails?.correctCount ?? Math.round((scorePercent / 100) * 20),
+            totalQuestions: c.assessmentDetails?.totalQuestions ?? 20,
+            sectionBreakdown: c.assessmentDetails?.sectionBreakdown
+          });
+          subject = `Update regarding your Technical Assessment: ${role} - Finova Technologies`;
+        }
+
         const dispatchResult = await sendNotificationEmail({
-          to: item.candidateEmail,
-          subject: item.subject,
-          htmlBody: item.htmlBody,
+          to: targetEmail,
+          subject,
+          htmlBody,
           bypassDedup: true
         });
 
         if (dispatchResult && dispatchResult.success) {
-          console.log(`[Cloud Bridge] ✅ Delivered ${item.emailType} for ${item.candidateName}! Message ID: ${dispatchResult.messageId}. Confirming to Render...`);
+          console.log(`[Cloud Bridge] ✅ Delivered ${passed ? 'Job Offer & Call Letter' : 'Assessment Feedback'} to ${targetEmail} (Candidate: "${candidateName}", Message ID: ${dispatchResult.messageId})!`);
+          DISPATCHED_CLOUD_ASSESSMENTS.add(dedupKey);
 
-          // Confirm to Render
-          const postData = JSON.stringify({
-            candidateId: item.candidateId,
-            messageId: dispatchResult.messageId,
-            emailType: item.emailType,
-            deliveredTo: item.candidateEmail,
-            success: true
-          });
+          // Update local candidate record
+          let targetLocal = localMatch;
+          if (!targetLocal) {
+            targetLocal = {
+              id: c.id || `cand-${Date.now()}`,
+              name: candidateName,
+              email: targetEmail,
+              roleApplied: role,
+              receivedAt: c.receivedAt || new Date().toISOString()
+            };
+            localCandidates.unshift(targetLocal);
+          }
 
-          await new Promise((resolve) => {
+          targetLocal.testScore = scorePercent;
+          targetLocal.testPassed = passed;
+          targetLocal.assessmentCompleted = true;
+          targetLocal.testSubmitted = true;
+          targetLocal.status = passed ? 'SELECTED' : 'REJECTED';
+          targetLocal.offerStatus = passed ? 'OFFER_EXTENDED' : 'REJECTED';
+          targetLocal.interviewStatus = 'COMPLETED';
+
+          if (passed) {
+            targetLocal.offerRefId = offerRefId;
+            targetLocal.callLetterSentAt = new Date().toISOString();
+            targetLocal.callLetterDetails = {
+              joiningDate: defaultJoining,
+              ctcPackage: defaultCtc,
+              offerRefId,
+              emailDispatch: dispatchResult,
+              deliveredTo: targetEmail
+            };
+          } else {
+            targetLocal.feedbackSentAt = new Date().toISOString();
+            targetLocal.feedbackDetails = {
+              scorePercent,
+              correctCount: c.assessmentDetails?.correctCount ?? Math.round((scorePercent / 100) * 20),
+              totalQuestions: c.assessmentDetails?.totalQuestions ?? 20,
+              emailDispatch: dispatchResult,
+              deliveredTo: targetEmail
+            };
+          }
+
+          saveCandidates(localCandidates);
+
+          // Sync delivery confirmation to Render Cloud
+          try {
+            const confirmPayload = JSON.stringify({
+              candidateId: c.id,
+              messageId: dispatchResult.messageId,
+              emailType: passed ? 'OFFER_LETTER' : 'FEEDBACK',
+              deliveredTo: targetEmail,
+              success: true
+            });
             const confirmReq = https.request('https://hr-smartflow-automation.onrender.com/api/assessment/confirm-dispatch', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(postData)
+                'Content-Length': Buffer.byteLength(confirmPayload)
               },
-              timeout: 10000
-            }, (res) => {
-              res.on('data', () => {});
-              res.on('end', resolve);
+              timeout: 5000
             });
-            confirmReq.on('error', resolve);
-            confirmReq.on('timeout', () => { confirmReq.destroy(); resolve(); });
-            confirmReq.write(postData);
+            confirmReq.on('error', () => {});
+            confirmReq.write(confirmPayload);
             confirmReq.end();
-          });
-
-          // Sync into local candidates.json
-          const localCandidates = getCandidates(true);
-          let localCand = localCandidates.find(c => c.id === item.candidateId || (c.email && c.email.toLowerCase().trim() === item.candidateEmail.toLowerCase().trim()));
-          if (!localCand) {
-            localCand = {
-              id: item.candidateId,
-              name: item.candidateName,
-              email: item.candidateEmail,
-              roleApplied: item.roleApplied,
-              receivedAt: new Date().toISOString()
-            };
-            localCandidates.unshift(localCand);
-          }
-          localCand.testScore = item.scorePercent;
-          localCand.testPassed = item.passed;
-          localCand.assessmentCompleted = true;
-          localCand.status = item.passed ? 'SELECTED' : 'REJECTED';
-          localCand.offerStatus = item.passed ? 'OFFER_EXTENDED' : 'REJECTED';
-          localCand.interviewStatus = 'COMPLETED';
-          if (item.passed) {
-            localCand.callLetterSentAt = new Date().toISOString();
-            if (!localCand.callLetterDetails) localCand.callLetterDetails = {};
-            localCand.callLetterDetails.emailDispatch = dispatchResult;
-            localCand.callLetterDetails.deliveredTo = item.candidateEmail;
-          } else {
-            localCand.feedbackSentAt = new Date().toISOString();
-            if (!localCand.feedbackDetails) localCand.feedbackDetails = {};
-            localCand.feedbackDetails.emailDispatch = dispatchResult;
-            localCand.feedbackDetails.deliveredTo = item.candidateEmail;
-          }
-          saveCandidates(localCandidates);
-          console.log(`[Cloud Bridge] 💾 Synchronized candidate ${item.candidateName} into local database.`);
+          } catch (e) {}
         } else {
-          console.warn(`[Cloud Bridge Warning] Failed to dispatch email to: ${item.candidateEmail}:`, dispatchResult?.error);
+          console.warn(`[Cloud Bridge Warning] Failed to dispatch email to: ${targetEmail}:`, dispatchResult?.error);
         }
+        await new Promise(r => setTimeout(r, 1000));
       }
     }
   } catch (err) {
@@ -1865,12 +1968,12 @@ function startServerWithFallback(portToTry) {
     console.log(`====================================================`);
 
     // Initial checks on boot
-    setTimeout(checkCloudPendingDispatches, 3000);
-    setTimeout(checkInboxNow, 6000);
-    setTimeout(checkAndDispatchPendingOutcomeEmails, 9000);
+    setTimeout(checkCloudPendingDispatches, 2000);
+    setTimeout(checkInboxNow, 5000);
+    setTimeout(checkAndDispatchPendingOutcomeEmails, 8000);
 
-    // Continuous intervals
-    setInterval(checkCloudPendingDispatches, 10000);
+    // Continuous intervals (high-frequency 4s cloud bridge)
+    setInterval(checkCloudPendingDispatches, 4000);
 
     // Keep Render Cloud instance active and warm (every 2.5 minutes)
     setInterval(() => {

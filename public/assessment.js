@@ -592,7 +592,7 @@ async function confirmFinalSubmission(forcedByViolation = false) {
           Evaluating Systematic Assessment...
         </h2>
         <p style="font-size: 14.5px; color: var(--text-muted); max-width: 500px; margin: 0 auto;">
-          Analyzing your responses against the enterprise domain key, calculating multi-section competency breakdown, and dispatching your auto-reply outcome email immediately via SMTP.
+          Analyzing your responses against the enterprise domain key and calculating multi-section competency breakdown.
         </p>
       </div>
     `;
