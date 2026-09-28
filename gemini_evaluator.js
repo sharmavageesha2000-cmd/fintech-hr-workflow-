@@ -23,6 +23,7 @@ function extractCandidateNameFromResume(resumeText, fileName = '', senderName = 
     for (let i = 0; i < Math.min(8, lines.length); i++) {
       let line = lines[i]
         .replace(/^(mr\.|ms\.|mrs\.|dr\.)\s+/i, '')
+        .replace(/^(candidate\s*(name)?|applicant\s*(name)?|name|full\s*name)\s*[:\-]\s*/i, '')
         .replace(/[|•,].*$/, '') // remove title after pipe
         .replace(/[\(\[\{].*?[\)\]\}]/g, '') // remove brackets
         .trim();
@@ -31,7 +32,10 @@ function extractCandidateNameFromResume(resumeText, fileName = '', senderName = 
       if (lower.includes('curriculum') || lower.includes('resume') || lower.includes('profile') || 
           lower.includes('summary') || lower.includes('experience') || lower.includes('education') || 
           lower.includes('contact') || lower.includes('phone') || lower.includes('objective') ||
-          lower.includes('email') || lower.includes('@') || lower.includes('http') || lower.length < 3 || lower.length > 30) {
+          lower.includes('email') || lower.includes('@') || lower.includes('http') ||
+          lower.includes('vageesha') || lower.includes('recruiter') || lower.includes('talent acquisition') ||
+          lower.includes('hiring team') || lower.includes('finova') ||
+          lower.length < 3 || lower.length > 30) {
         continue;
       }
 
