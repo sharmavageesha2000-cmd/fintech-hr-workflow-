@@ -109,6 +109,11 @@
   - `reportingAuthority`: Designated HR manager / authority.
 - The dashboard UI in `public/index.html` and `public/app.js` renders these dropdowns and updates them via `PUT /api/jobs/:id`.
 
+### Rule 5: Pure Production Operation & Prohibition of Synthetic Test Email Dispatches
+- **Zero Mock Testing on Live System**: NEVER execute background test suites (`test_master_system_workflow.js`, `test_offer_letter_only_after_test_passed.js`, etc.) using synthetic/dummy email addresses (such as `kavita.sundaram...`, `fail_test_...`, etc.) on the live system or against the active Gmail SMTP daemon. Doing so dispatches real outgoing emails to non-existent mailboxes and triggers Google Mail Delivery Subsystem bounce-backs ("Address not found" / "Delivery incomplete").
+- **Pure Production Candidate Intake**: The platform operates exclusively in dedicated production intake mode. The workflow must ONLY trigger resume parsing, screening, assessment generation, and offer dispatches when an authentic applicant sends their CV/Resume in PDF (`.pdf`) or Word (`.doc`, `.docx`) format to the recruiter inbox or uploads it via the careers portal.
+- **Strict Dry-Run Invariant for Testing**: If internal system tests ever need to be executed in the future, they MUST run in mock/dry-run mode (`SIMULATE_EMAIL=true`) or route test notifications strictly to the authorized recruiter email (`sharmavageesha2000@gmail.com`).
+
 ---
 
 ## 4. Standard Operational Procedures

@@ -18,3 +18,6 @@
    - `C:\Users\VAGEESHA\AppData\Local\GitHubDesktop\app-3.6.3\resources\app\git\cmd\git.exe`
 6. **Deployment Command**:
    - `node trigger_render_deploy.js` triggers fresh clear-cache build on Render and monitors until live.
+7. **Pure Production Intake Mode (Zero Mock Test Emails)**:
+   - NEVER run automated test scripts using fake/synthetic email addresses.
+   - The system operates strictly for real applicants emailing their PDF or DOC/DOCX resumes.
