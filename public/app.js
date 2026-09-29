@@ -85,6 +85,15 @@ document.addEventListener('DOMContentLoaded', () => {
   loadJobs();
   loadCandidates();
 
+  const headerCurrentDate = document.getElementById('headerCurrentDate');
+  if (headerCurrentDate) {
+    headerCurrentDate.textContent = new Date().toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  }
+
   // Background auto-refresh every 4s for instant real-time synchronization
   setInterval(() => {
     loadCandidates(false);
@@ -96,6 +105,11 @@ function setupEventListeners() {
   // Sidebar Navigation Links
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href && (href.startsWith('/') || href.startsWith('http'))) {
+        // Let external or separate SPA page links open normally
+        return;
+      }
       e.preventDefault();
       document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
       link.classList.add('active');
@@ -746,7 +760,18 @@ window.openOfferModal = function(candId) {
     document.getElementById('offerReportingTo').value = matchedJob?.reportingAuthority || 'Vageesha Sharma (Founder & Hiring Lead)';
   }
 
-  document.getElementById('offerJoiningDate').value = 'Monday, 14 September 2026';
+  // Calculate guaranteed future Monday joining date (~18-25 days out)
+  const futureMonday = (() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 18);
+    while (d.getDay() !== 1) d.setDate(d.getDate() + 1);
+    return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  })();
+
+  const offerDateInput = document.getElementById('offerJoiningDate');
+  if (offerDateInput) {
+    offerDateInput.value = futureMonday;
+  }
 
   openModal(offerModal);
 };
@@ -775,15 +800,32 @@ function updateFilterTabsUI() {
   });
 }
 
-// Helper: Ensure unique candidates by ID
+// Helper: Ensure unique candidates by canonical name + role or email + role
 function deduplicateCandidateArray(list) {
   if (!Array.isArray(list)) return [];
-  const seenIds = new Set();
+  const seenKeys = new Set();
   const uniqueList = [];
   for (const c of list) {
-    const key = (c.id || c.email + '_' + (c.roleApplied || '')).toLowerCase().trim();
-    if (!seenIds.has(key)) {
-      seenIds.add(key);
+    if (!c) continue;
+    const normName = (c.name || '').toLowerCase().trim().replace(/^(candidate:?|applicant:?|name:?)\s*/i, '').replace(/\s+/g, ' ');
+    const normRole = (c.roleApplied || '').toLowerCase().trim();
+    const normEmail = (c.email || '').toLowerCase().trim();
+    const isRecruiter = normEmail === 'sharmavageesha2000@gmail.com' || normEmail.includes('recruiter') || normName.includes('vageesha sharma');
+
+    // Skip recruiter or test artifacts
+    if (normName.includes('vageesha sharma') || normName === 'anonymous' || normName === 'failed candidate' || normName === 'obj') continue;
+
+    let key = '';
+    if (normName && normName !== 'candidate' && normRole) {
+      key = `name_role::${normName}::${normRole}`;
+    } else if (normEmail && !isRecruiter && normRole) {
+      key = `email_role::${normEmail}::${normRole}`;
+    } else {
+      key = `id::${c.id || Math.random()}`;
+    }
+
+    if (!seenKeys.has(key)) {
+      seenKeys.add(key);
       uniqueList.push(c);
     }
   }
@@ -831,9 +873,14 @@ async function loadSettings() {
 // Update Top KPIs and Startup Funnel dynamically from database
 function updateKPIsAndCounts() {
   const total = allCandidates.length;
-  const selected = allCandidates.filter(c => c.status === 'SELECTED').length;
+  const selected = allCandidates.filter(c => c.status === 'SELECTED' || c.status === 'SHORTLISTED').length;
   const rejected = allCandidates.filter(c => c.status === 'REJECTED').length;
-  const offers = allCandidates.filter(c => c.offerStatus === 'OFFER_EXTENDED').length;
+  const offers = allCandidates.filter(c => 
+    c.offerStatus === 'OFFER_EXTENDED' || 
+    c.offerStatus === 'OFFER_ACCEPTED' || 
+    c.offerStatus === 'OFFER_DECLINED' || 
+    Boolean(c.callLetterDetails)
+  ).length;
   const avgScore = total > 0 ? Math.round(allCandidates.reduce((acc, c) => acc + (c.matchScore || 0), 0) / total) : 0;
 
   const selectedPercent = total > 0 ? Math.round((selected / total) * 100) : 0;
@@ -882,9 +929,16 @@ function renderCandidatesTable() {
   let filtered = allCandidates.filter(c => {
     // 1. Status Filter
     let matchStatus = true;
-    if (activeFilter === 'SELECTED') matchStatus = c.status === 'SELECTED';
-    else if (activeFilter === 'OFFER_EXTENDED') matchStatus = c.offerStatus === 'OFFER_EXTENDED';
-    else if (activeFilter === 'REJECTED') matchStatus = c.status === 'REJECTED';
+    if (activeFilter === 'SELECTED') {
+      matchStatus = c.status === 'SELECTED' || c.status === 'SHORTLISTED';
+    } else if (activeFilter === 'OFFER_EXTENDED') {
+      matchStatus = c.offerStatus === 'OFFER_EXTENDED' || 
+                    c.offerStatus === 'OFFER_ACCEPTED' || 
+                    c.offerStatus === 'OFFER_DECLINED' || 
+                    Boolean(c.callLetterDetails);
+    } else if (activeFilter === 'REJECTED') {
+      matchStatus = c.status === 'REJECTED';
+    }
 
     // 2. Role Filter Dropdown
     const candidateRole = (c.roleApplied || '').toLowerCase();

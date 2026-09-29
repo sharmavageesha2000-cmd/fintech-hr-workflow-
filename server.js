@@ -107,61 +107,188 @@ function getBaseUrl(req = null) {
 }
 
 // Helper: Read Candidates (preserves valid candidate applications with attached resumes only)
+// Canonical Candidate Deduplication Key
+function getCandidateDedupKey(c) {
+  if (!c) return `null_${Math.random()}`;
+  const normName = (c.name || '')
+    .toLowerCase()
+    .trim()
+    .replace(/^(candidate:?|applicant:?|name:?)\s*/i, '')
+    .replace(/\s+/g, ' ');
+  const normRole = (c.roleApplied || '').toLowerCase().trim();
+  const normEmail = (c.email || '').toLowerCase().trim();
+  const isRecruiterEmail = normEmail === 'sharmavageesha2000@gmail.com' || normEmail.includes('recruiter') || normEmail.includes('finova');
+
+  // 1. Primary deduplication key: Candidate Full Name + Job Role
+  if (normName && normName !== 'candidate' && normName !== 'obj' && normRole) {
+    return `name_role::${normName}::${normRole}`;
+  }
+  // 2. Secondary deduplication key: Personal Email + Job Role (if email is not shared recruiter inbox)
+  if (normEmail && !isRecruiterEmail && normRole) {
+    return `email_role::${normEmail}::${normRole}`;
+  }
+  // 3. Fallback name only if role is empty
+  if (normName && normName !== 'candidate' && normName !== 'obj') {
+    return `name::${normName}`;
+  }
+  // 4. Fallback unique candidate ID
+  return `id::${c.id || Math.random()}`;
+}
+
+// Check if candidate is non-candidate junk / test mock / service alert
+function isJunkOrTestCandidate(c) {
+  if (!c) return true;
+  const name = (c.name || '').toLowerCase().trim();
+  const email = (c.email || '').toLowerCase().trim();
+  const id = (c.id || '').toLowerCase();
+  const fn = (c.attachmentInfo?.fileName || '').toLowerCase();
+
+  // Block recruiter name mistakenly extracted
+  if (name.includes('vageesha sharma') || name === 'vageesha' || name === 'sharma vageesha') {
+    return true;
+  }
+  // Block placeholder/invalid names
+  if (name === 'obj' || name === 'anonymous' || name === 'candidate' || name === 'failed candidate') {
+    return true;
+  }
+  // Block automated test mock candidate names and IDs
+  if (id.includes('cand-iso-') || id.includes('cand-reject-flow') || id.includes('cand-pass-flow') || id.includes('auto-fail') || id.includes('auto-pass') || id.includes('demo-live-')) {
+    return true;
+  }
+  if (name.includes('test candidate') || name === 'deepak verma' || name === 'pooja verma' || name === 'kavita patel' || name === 'siddharth rao' || name === 'devashish sen') {
+    return true;
+  }
+  // Block non-resume documents / invoices / bank statements
+  if (name.includes('invoice') || email.includes('ubi.bank') || email.includes('bookmyshow') || fn.includes('invoice') || fn.includes('receipt') || fn.includes('ticket') || fn.includes('statement')) {
+    return true;
+  }
+  return false;
+}
+
+// Intelligent Candidate Record Merger (preserves test scores, call letters, offers, and resume metadata)
+function mergeCandidateRecords(existing, incoming) {
+  const statusRank = {
+    'OFFER_ACCEPTED': 60,
+    'OFFER_DECLINED': 55,
+    'OFFER_EXTENDED': 50,
+    'SELECTED': 40,
+    'REJECTED': 30,
+    'SHORTLISTED': 20,
+    'NEW': 10,
+    'APPLIED': 10
+  };
+
+  const existingRank = Math.max(
+    statusRank[existing.offerStatus] || 0,
+    statusRank[existing.status] || 0,
+    existing.assessmentCompleted ? 35 : 0
+  );
+  const incomingRank = Math.max(
+    statusRank[incoming.offerStatus] || 0,
+    statusRank[incoming.status] || 0,
+    incoming.assessmentCompleted ? 35 : 0
+  );
+
+  const base = existingRank >= incomingRank ? { ...incoming, ...existing } : { ...existing, ...incoming };
+
+  // Retain canonical non-empty fields
+  base.id = existing.id || incoming.id;
+  base.name = (existing.name && existing.name !== 'Candidate' ? existing.name : incoming.name) || base.name;
+  base.email = (existing.email && !existing.email.includes('example.com') ? existing.email : incoming.email) || base.email;
+  base.roleApplied = existing.roleApplied || incoming.roleApplied;
+  base.phone = (existing.phone && existing.phone !== 'Not specified' ? existing.phone : incoming.phone) || base.phone;
+  base.skills = (existing.skills && existing.skills.length ? existing.skills : incoming.skills) || base.skills;
+  base.matchScore = existing.matchScore || incoming.matchScore || base.matchScore;
+  base.resumeText = existing.resumeText || incoming.resumeText || base.resumeText;
+  base.attachmentInfo = existing.attachmentInfo || incoming.attachmentInfo || base.attachmentInfo;
+
+  // Preserve assessment & offer details
+  if (existing.assessmentDetails || incoming.assessmentDetails) {
+    base.assessmentDetails = existing.assessmentDetails || incoming.assessmentDetails;
+    base.assessmentCompleted = true;
+    base.testSubmitted = true;
+  }
+  if (existing.callLetterDetails || incoming.callLetterDetails) {
+    base.callLetterDetails = existing.callLetterDetails || incoming.callLetterDetails;
+  }
+  if (existing.offerAcceptedAt || incoming.offerAcceptedAt) {
+    base.offerAcceptedAt = existing.offerAcceptedAt || incoming.offerAcceptedAt;
+  }
+  if (existing.offerDeclinedAt || incoming.offerDeclinedAt) {
+    base.offerDeclinedAt = existing.offerDeclinedAt || incoming.offerDeclinedAt;
+  }
+  if (existing.callLetterSentAt || incoming.callLetterSentAt) {
+    base.callLetterSentAt = existing.callLetterSentAt || incoming.callLetterSentAt;
+  }
+  if (existing.testScore !== undefined || incoming.testScore !== undefined) {
+    base.testScore = existing.testScore !== undefined ? existing.testScore : incoming.testScore;
+  }
+  if (existing.testPassed !== undefined || incoming.testPassed !== undefined) {
+    base.testPassed = existing.testPassed !== undefined ? existing.testPassed : incoming.testPassed;
+  }
+  if (existing.offerRefId || incoming.offerRefId) {
+    base.offerRefId = existing.offerRefId || incoming.offerRefId;
+  }
+
+  // Preserve highest status
+  if (existingRank >= incomingRank) {
+    base.status = existing.status;
+    base.offerStatus = existing.offerStatus;
+    base.interviewStatus = existing.interviewStatus;
+  } else {
+    base.status = incoming.status;
+    base.offerStatus = incoming.offerStatus;
+    base.interviewStatus = incoming.interviewStatus;
+  }
+
+  return base;
+}
+
+// Helper: Read Candidates
 function getCandidates(includeAll = false) {
   if (!fs.existsSync(CANDIDATES_FILE)) return [];
   try {
-    const data = JSON.parse(fs.readFileSync(CANDIDATES_FILE, 'utf8'));
-    if (!Array.isArray(data)) return [];
-    const seen = new Set();
-    const unique = [];
-    for (const c of data) {
-      if (!includeAll) {
-        // Always preserve candidates with active assessments or applications
-        const hasAssessmentActivity = Boolean(
-          c.assessmentCompleted === true || 
-          c.testSubmitted === true || 
-          c.testScore !== undefined || 
-          c.offerStatus || 
-          c.interviewStatus
-        );
+    const rawData = JSON.parse(fs.readFileSync(CANDIDATES_FILE, 'utf8'));
+    if (!Array.isArray(rawData)) return [];
 
-        if (!hasAssessmentActivity && (!c.attachmentInfo || !c.attachmentInfo.fileName)) continue;
-        
-        // Filter out non-candidate records / service alerts / invoices
-        const name = (c.name || '').toLowerCase();
-        const email = (c.email || '').toLowerCase();
-        const fn = (c.attachmentInfo?.fileName || '').toLowerCase();
-        if (name === 'obj' || name.includes('invoice') || email.includes('ubi.bank') || 
-            email.includes('bookmyshow') || fn.includes('invoice') || fn.includes('receipt') || 
-            fn.includes('ticket') || fn.includes('statement')) {
-          continue;
-        }
+    const keyMap = new Map();
+    for (const c of rawData) {
+      if (!c) continue;
+      if (!includeAll && isJunkOrTestCandidate(c)) {
+        continue;
       }
-      const uniqueKey = c.id || `${(c.email || '').toLowerCase().trim()}_${(c.roleApplied || '').toLowerCase().trim()}`;
-      if (!seen.has(uniqueKey)) {
-        seen.add(uniqueKey);
-        unique.push(c);
+      const key = getCandidateDedupKey(c);
+      if (keyMap.has(key)) {
+        const merged = mergeCandidateRecords(keyMap.get(key), c);
+        keyMap.set(key, merged);
+      } else {
+        keyMap.set(key, c);
       }
     }
-    return unique;
+    return Array.from(keyMap.values());
   } catch (err) {
     console.error('Error reading candidates file:', err);
     return [];
   }
 }
 
-// Helper: Save Candidates (preserves all distinct applications)
+// Helper: Save Candidates (deduplicates and merges distinct records)
 function saveCandidates(candidates) {
   try {
-    const seen = new Set();
-    const unique = [];
+    const keyMap = new Map();
     for (const c of (candidates || [])) {
-      const uniqueKey = c.id || `${(c.email || '').toLowerCase().trim()}_${(c.roleApplied || '').toLowerCase().trim()}`;
-      if (!seen.has(uniqueKey)) {
-        seen.add(uniqueKey);
-        unique.push(c);
+      if (!c) continue;
+      if (isJunkOrTestCandidate(c)) continue;
+
+      const key = getCandidateDedupKey(c);
+      if (keyMap.has(key)) {
+        const merged = mergeCandidateRecords(keyMap.get(key), c);
+        keyMap.set(key, merged);
+      } else {
+        keyMap.set(key, c);
       }
     }
+    const unique = Array.from(keyMap.values());
     fs.writeFileSync(CANDIDATES_FILE, JSON.stringify(unique, null, 2), 'utf8');
     return true;
   } catch (err) {
@@ -491,18 +618,15 @@ async function checkInboxNow() {
           console.warn(`[Auto-Processor] ⚠️ Auto-reply skipped: autoDispatchEmail=${settings.autoDispatchEmail}, email=${newCand.email}`);
         }
 
-        // 2. Add to database (preserves candidate application history)
+        // 2. Add to database (preserves candidate application history and prevents duplicates)
         const candidates = getCandidates(true);
-        const duplicateIndex = candidates.findIndex(c => 
-          (c.email && c.email.toLowerCase().trim() === (newCand.email || '').toLowerCase().trim()) &&
-          (c.roleApplied && c.roleApplied.toLowerCase().trim() === (newCand.roleApplied || '').toLowerCase().trim()) &&
-          (Math.abs(new Date(newCand.receivedAt || 0) - new Date(c.receivedAt || 0)) < 60000)
-        );
+        const incomingKey = getCandidateDedupKey(newCand);
+        const duplicateIndex = candidates.findIndex(c => getCandidateDedupKey(c) === incomingKey);
 
         if (duplicateIndex !== -1) {
-          // Update duplicate application record while preserving newCand.id so it matches the sent email link
-          candidates[duplicateIndex] = newCand;
-          console.log(`[Auto-Processor] 🔄 Refreshed duplicate candidate record: ${newCand.name} (${newCand.roleApplied}) [ID: ${newCand.id}]`);
+          // Merge with existing candidate record, preserving advanced interview or offer status
+          candidates[duplicateIndex] = mergeCandidateRecords(candidates[duplicateIndex], newCand);
+          console.log(`[Auto-Processor] 🔄 Merged & updated candidate record: ${newCand.name} (${newCand.roleApplied}) [ID: ${candidates[duplicateIndex].id}]`);
         } else {
           candidates.unshift(newCand);
           console.log(`[Auto-Processor] ✅ Added new candidate application: ${newCand.name} (${newCand.roleApplied}) [ID: ${newCand.id}] (Total records: ${candidates.length})`);
@@ -939,9 +1063,15 @@ app.post('/api/evaluate', upload.single('resumeFile'), async (req, res) => {
       finalCandidate.lastEmailSentAt = new Date().toISOString();
     }
 
-    // Save to Database
-    const candidates = getCandidates();
-    candidates.unshift(finalCandidate);
+    // Save to Database (deduplicate & merge if candidate already exists)
+    const candidates = getCandidates(true);
+    const evalKey = getCandidateDedupKey(finalCandidate);
+    const existingIdx = candidates.findIndex(c => getCandidateDedupKey(c) === evalKey);
+    if (existingIdx !== -1) {
+      candidates[existingIdx] = mergeCandidateRecords(candidates[existingIdx], finalCandidate);
+    } else {
+      candidates.unshift(finalCandidate);
+    }
     saveCandidates(candidates);
 
     res.json({
@@ -2273,6 +2403,7 @@ async function checkCloudPendingDispatches() {
         );
 
         if (!isCompleted) continue;
+        if (isJunkOrTestCandidate(c)) continue;
 
         const targetEmail = (c.email || '').trim();
         if (!targetEmail || !targetEmail.includes('@') || targetEmail === 'candidate@example.com') continue;
@@ -2437,6 +2568,13 @@ async function checkCloudPendingDispatches() {
         );
 
         if (alreadyDeliveredLocally) {
+          DISPATCHED_CLOUD_ASSESSMENTS.add(dedupKey);
+          continue;
+        }
+
+        // Strict Invariant Rule 1: Never send rejection/feedback if candidate has passed or is SELECTED/OFFER_ACCEPTED locally
+        if (localMatch && (localMatch.status === 'SELECTED' || localMatch.offerStatus === 'OFFER_ACCEPTED' || localMatch.offerStatus === 'OFFER_EXTENDED' || (localMatch.testScore || 0) >= 80) && !passed) {
+          console.warn(`[Cloud Bridge] 🛡️ Refusing to send rejection feedback to "${candidateName}" who is already SELECTED/OFFER_ACCEPTED locally.`);
           DISPATCHED_CLOUD_ASSESSMENTS.add(dedupKey);
           continue;
         }

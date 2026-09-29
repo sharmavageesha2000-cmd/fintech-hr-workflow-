@@ -114,6 +114,29 @@ function httpPost(path, body) {
   });
 }
 
+function httpDelete(path) {
+  return new Promise((resolve, reject) => {
+    const req = http.request({
+      hostname: 'localhost',
+      port: 3000,
+      path,
+      method: 'DELETE'
+    }, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        try {
+          resolve({ status: res.statusCode, data: JSON.parse(data) });
+        } catch (e) {
+          resolve({ status: res.statusCode, raw: data });
+        }
+      });
+    });
+    req.on('error', reject);
+    req.end();
+  });
+}
+
 async function runMasterSystemTest() {
   const startTime = Date.now();
   console.log('\n================================================================================');
@@ -233,14 +256,15 @@ async function runMasterSystemTest() {
   // STAGE 5: AI Resume Screening (Gemini 3.5 Flash Decision Engine)
   // ==========================================================================
   console.log('\n--- STAGE 5: Gemini 3.5 Flash AI Resume Screening ---');
+  const testRunSuffix = Date.now().toString().slice(-4);
   const testCandidatePayload = {
-    name: 'Kavita Sundaram',
-    email: 'kavita.sundaram.qa2026@gmail.com',
+    name: `Kavita Sundaram ${testRunSuffix}`,
+    email: `kavita.sundaram.qa${testRunSuffix}@gmail.com`,
     roleApplied: 'Frontend Developer',
     experienceYears: 3.5,
     skills: ['React.js', 'TypeScript', 'Tailwind CSS', 'Next.js', 'Redux', 'REST APIs'],
     resumeText: `Kavita Sundaram | Senior Frontend Developer
-Email: kavita.sundaram.qa2026@gmail.com | Location: Bengaluru
+Email: kavita.sundaram.qa${testRunSuffix}@gmail.com | Location: Bengaluru
 Summary: Frontend Engineer with 3.5 years of production React and TypeScript experience.
 Skills: React.js, TypeScript, Tailwind CSS, Redux Toolkit, Next.js, HTML5, CSS3, Jest.
 Experience: Developed responsive fintech dashboards with 99.9% uptime.`
@@ -405,9 +429,8 @@ Experience: Developed responsive fintech dashboards with 99.9% uptime.`
   assert(updatedDeclineCand.status === 'REJECTED', 'Declined candidate status updated to REJECTED');
   assert(Boolean(updatedDeclineCand.offerDeclinedAt), `Recorded offerDeclinedAt timestamp: ${updatedDeclineCand.offerDeclinedAt}`);
 
-  // Clean up secondary test candidate
-  const finalCandidates = JSON.parse(fs.readFileSync(candidatesFilePath, 'utf8')).filter(c => c.id !== declineCandidate.id);
-  fs.writeFileSync(candidatesFilePath, JSON.stringify(finalCandidates, null, 2), 'utf8');
+  // Clean up secondary test candidate via API
+  await httpDelete(`/api/candidates/${declineCandidate.id}`);
 
   // ==========================================================================
   // STAGE 10: HR Dashboard Operations & Candidate Management
@@ -421,6 +444,10 @@ Experience: Developed responsive fintech dashboards with 99.9% uptime.`
 
   const searchRes = await httpGet(`/api/candidates?search=${encodeURIComponent(screenedCand.name)}`);
   assert(searchRes.status === 200 && searchRes.data.candidates.some(c => c.id === screenedCand.id), 'Search candidate by name returns target record');
+
+  // Clean up primary test candidate so database stays pristine
+  await httpDelete(`/api/candidates/${screenedCand.id}`);
+  console.log(`  🧹 [Test Cleanup] Cleaned up temporary test candidate: ${screenedCand.name} (ID: ${screenedCand.id})`);
 
   // ==========================================================================
   // FINAL AUDIT VERDICT
