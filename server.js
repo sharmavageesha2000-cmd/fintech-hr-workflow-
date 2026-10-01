@@ -404,18 +404,20 @@ let smtpDispatchMutex = Promise.resolve();
 let isSmtpDispatching = false;
 let isSmtpPending = false;
 
-function sendNotificationEmail({ to, subject, htmlBody, bypassDedup = false }) {
+function sendNotificationEmail({ to, subject, htmlBody, bypassDedup = false, fromPoller = false }) {
   isSmtpPending = true;
   return new Promise((resolve) => {
     smtpDispatchMutex = smtpDispatchMutex.then(async () => {
-      // Wait for any active IMAP polling cycle to conclude to prevent socket collisions
-      let waitCount = 0;
-      while (isPollingActive && waitCount < 50) {
-        await new Promise(r => setTimeout(r, 200));
-        waitCount++;
+      // If called from the active poller, do not wait for isPollingActive to avoid self-deadlock
+      if (!fromPoller) {
+        let waitCount = 0;
+        while (isPollingActive && waitCount < 50) {
+          await new Promise(r => setTimeout(r, 200));
+          waitCount++;
+        }
       }
       // Cooldown to let any previous IMAP connection cleanly disconnect on Gmail server
-      await new Promise(r => setTimeout(r, 500));
+      await new Promise(r => setTimeout(r, 400));
 
       isSmtpDispatching = true;
       try {
@@ -558,6 +560,86 @@ async function doSendNotificationEmail({ to, subject, htmlBody, bypassDedup = fa
     }
   }
 
+  // Fallback 2: Check Resend API (Pure HTTPS Port 443 - Never blocked on cloud)
+  const resendApiKey = process.env.RESEND_API_KEY;
+  if (resendApiKey) {
+    try {
+      console.log(`[Email Dispatch] Attempting dispatch via Resend HTTPS API...`);
+      const https = require('https');
+      const resendPayload = JSON.stringify({
+        from: process.env.RESEND_FROM_EMAIL || `${settings.recruiterName || 'Talent Acquisition'} <onboarding@resend.dev>`,
+        to: [to],
+        subject,
+        html: htmlBody
+      });
+      const resendRes = await new Promise((resolve, reject) => {
+        const req = https.request('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${resendApiKey}`,
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(resendPayload)
+          },
+          timeout: 10000
+        }, (res) => {
+          let body = '';
+          res.on('data', d => body += d);
+          res.on('end', () => resolve({ statusCode: res.statusCode, body }));
+        });
+        req.on('error', reject);
+        req.on('timeout', () => { req.destroy(); reject(new Error('Resend timeout')); });
+        req.write(resendPayload);
+        req.end();
+      });
+      if (resendRes.statusCode >= 200 && resendRes.statusCode < 300) {
+        console.log(`[Resend API] ✅ Delivered successfully via Resend HTTPS API!`);
+        return { success: true, simulated: false, messageId: `RESEND_${Date.now()}`, to, subject, transport: 'RESEND_API' };
+      }
+    } catch (resendErr) {
+      console.warn(`[Resend API Warning] Dispatch failed: ${resendErr.message}`);
+    }
+  }
+
+  // Fallback 3: Check Brevo API (Pure HTTPS Port 443 - Never blocked on cloud)
+  const brevoApiKey = process.env.BREVO_API_KEY;
+  if (brevoApiKey) {
+    try {
+      console.log(`[Email Dispatch] Attempting dispatch via Brevo HTTPS API...`);
+      const https = require('https');
+      const brevoPayload = JSON.stringify({
+        sender: { name: settings.recruiterName || 'Talent Acquisition', email: recruiterEmail },
+        to: [{ email: to }],
+        subject,
+        htmlContent: htmlBody
+      });
+      const brevoRes = await new Promise((resolve, reject) => {
+        const req = https.request('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'api-key': brevoApiKey,
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(brevoPayload)
+          },
+          timeout: 10000
+        }, (res) => {
+          let body = '';
+          res.on('data', d => body += d);
+          res.on('end', () => resolve({ statusCode: res.statusCode, body }));
+        });
+        req.on('error', reject);
+        req.on('timeout', () => { req.destroy(); reject(new Error('Brevo timeout')); });
+        req.write(brevoPayload);
+        req.end();
+      });
+      if (brevoRes.statusCode >= 200 && brevoRes.statusCode < 300) {
+        console.log(`[Brevo API] ✅ Delivered successfully via Brevo HTTPS API!`);
+        return { success: true, simulated: false, messageId: `BREVO_${Date.now()}`, to, subject, transport: 'BREVO_API' };
+      }
+    } catch (brevoErr) {
+      console.warn(`[Brevo API Warning] Dispatch failed: ${brevoErr.message}`);
+    }
+  }
+
   console.error('[Gmail SMTP Error] All dispatch methods failed:', lastError?.message);
   return {
     success: false,
@@ -609,7 +691,8 @@ async function checkInboxNow() {
           const emailResult = await sendNotificationEmail({
             to: newCand.email,
             subject: newCand.emailSubject,
-            htmlBody: newCand.emailHtmlBody
+            htmlBody: newCand.emailHtmlBody,
+            fromPoller: true
           });
           newCand.emailStatus = emailResult.success ? 'SENT' : 'FAILED';
           newCand.lastEmailSentAt = new Date().toISOString();
@@ -2089,6 +2172,22 @@ app.post('/api/candidates/:id/toggle-interview', (req, res) => {
   res.json({ success: true, candidate, interviewStatus: candidate.interviewStatus });
 });
 
+// 7b. Candidate Status Synchronization (Used by Cloud Bridge & Dashboard)
+app.post('/api/candidate-sync-status', (req, res) => {
+  const { candidateId, emailStatus, status, offerStatus, name } = req.body;
+  if (!candidateId) return res.status(400).json({ success: false, error: 'Missing candidateId' });
+  const candidates = getCandidates();
+  const c = candidates.find(item => item.id === candidateId);
+  if (!c) return res.status(404).json({ success: false, error: 'Candidate not found' });
+  if (emailStatus) c.emailStatus = emailStatus;
+  if (status) c.status = status;
+  if (offerStatus) c.offerStatus = offerStatus;
+  if (name) c.name = name;
+  c.lastEmailSentAt = new Date().toISOString();
+  saveCandidates(candidates);
+  res.json({ success: true, candidate: c });
+});
+
 // 8. Check Inbox Now On-Demand (Supports GET / POST & /api/poll alias)
 app.all(['/api/check-inbox', '/api/poll', '/api/sync-emails'], async (req, res) => {
   try {
@@ -2395,31 +2494,10 @@ async function checkCloudPendingDispatches() {
 
     if (remoteCandidates.length > 0) {
       for (const c of remoteCandidates) {
-        const isCompleted = Boolean(
-          c.assessmentCompleted === true ||
-          c.testSubmitted === true ||
-          (c.assessmentDetails && c.assessmentDetails.completedAt) ||
-          (c.testScore !== undefined && c.testScore !== null && c.interviewStatus === 'COMPLETED')
-        );
-
-        if (!isCompleted) continue;
         if (isJunkOrTestCandidate(c)) continue;
 
         const targetEmail = (c.email || '').trim();
         if (!targetEmail || !targetEmail.includes('@') || targetEmail === 'candidate@example.com') continue;
-
-        const scorePercent = (
-          c.assessmentDetails?.scorePercent !== undefined ? c.assessmentDetails.scorePercent :
-          c.scorePercent !== undefined ? c.scorePercent :
-          c.testScore !== undefined ? c.testScore :
-          0
-        );
-        const passed = Boolean(
-          c.passed === true ||
-          c.testPassed === true ||
-          (c.assessmentDetails && c.assessmentDetails.passed === true) ||
-          scorePercent >= 80
-        );
 
         const role = c.roleApplied || 'Frontend Developer';
         const candidateName = c.name || 'Candidate';
@@ -2442,6 +2520,74 @@ async function checkCloudPendingDispatches() {
             !lc.assessmentCompleted
           );
         }
+
+        // ================= STAGE 0: RECOVER FAILED INITIAL / SCREENING EMAILS FROM CLOUD =================
+        // Render free tier blocks outbound SMTP ports (465/587). If an initial application auto-reply failed on Render,
+        // the local daemon automatically rescues and delivers it via local authenticated Gmail SMTP!
+        if (c.emailStatus === 'FAILED' && c.emailHtmlBody && targetEmail) {
+          const failedEmailDedupKey = `${c.id}__FAILED_CLOUD_INITIAL__${c.receivedAt || c.evaluatedAt || 'INITIAL'}`;
+          if (!DISPATCHED_CLOUD_ASSESSMENTS.has(failedEmailDedupKey)) {
+            console.log(`[Cloud Bridge] ✉️ Detected candidate "${candidateName}" with FAILED cloud email on Render. Auto-dispatching via local Gmail SMTP...`);
+            const recoveryResult = await sendNotificationEmail({
+              to: targetEmail,
+              subject: c.emailSubject || `Application Status Update - ${role}`,
+              htmlBody: c.emailHtmlBody,
+              bypassDedup: true
+            });
+            if (recoveryResult && recoveryResult.success) {
+              console.log(`[Cloud Bridge] ✅ Delivered recovered initial email to ${targetEmail} (Candidate: "${candidateName}", Message ID: ${recoveryResult.messageId})!`);
+              DISPATCHED_CLOUD_ASSESSMENTS.add(failedEmailDedupKey);
+
+              let targetLocal = localMatch;
+              if (!targetLocal) {
+                targetLocal = { ...c };
+                localCandidates.unshift(targetLocal);
+              }
+              targetLocal.emailStatus = 'SENT';
+              targetLocal.lastEmailSentAt = new Date().toISOString();
+              saveCandidates(localCandidates);
+
+              // Notify Render Cloud of successful email delivery
+              try {
+                const https = require('https');
+                const syncPayload = JSON.stringify({
+                  candidateId: c.id,
+                  emailStatus: 'SENT'
+                });
+                const syncReq = https.request('https://hr-smartflow-automation.onrender.com/api/candidate-sync-status', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(syncPayload) },
+                  timeout: 5000
+                }, () => {});
+                syncReq.on('error', () => {});
+                syncReq.write(syncPayload);
+                syncReq.end();
+              } catch (e) {}
+            }
+          }
+        }
+
+        const isCompleted = Boolean(
+          c.assessmentCompleted === true ||
+          c.testSubmitted === true ||
+          (c.assessmentDetails && c.assessmentDetails.completedAt) ||
+          (c.testScore !== undefined && c.testScore !== null && c.interviewStatus === 'COMPLETED')
+        );
+
+        if (!isCompleted) continue;
+
+        const scorePercent = (
+          c.assessmentDetails?.scorePercent !== undefined ? c.assessmentDetails.scorePercent :
+          c.scorePercent !== undefined ? c.scorePercent :
+          c.testScore !== undefined ? c.testScore :
+          0
+        );
+        const passed = Boolean(
+          c.passed === true ||
+          c.testPassed === true ||
+          (c.assessmentDetails && c.assessmentDetails.passed === true) ||
+          scorePercent >= 80
+        );
 
         // ================= STAGE 2A: CANDIDATE ACCEPTED OFFER =================
         if (c.offerStatus === 'OFFER_ACCEPTED') {

@@ -12,6 +12,15 @@ const JOBS_FILE = path.join(__dirname, 'data', 'jobs.json');
  */
 function extractCandidateNameFromResume(resumeText, fileName = '', senderName = '') {
   const roleStopwords = ['ai', 'ml', 'prompt', 'engineer', 'developer', 'analyst', 'designer', 'specialist', 'consultant', 'fresher', 'intern', 'manager', 'lead', 'digital', 'marketing', 'executive', 'cv', 'resume', 'fashion', 'stylist', 'business', 'years', 'full', 'stack', 'frontend', 'backend', 'page'];
+  const addressStopwords = [
+    'sbi', 'colony', 'nagar', 'road', 'street', 'lane', 'sector', 'block',
+    'apartment', 'building', 'flat', 'floor', 'house', 'plot', 'phase',
+    'story', 'double story', 'jabalpur', 'delhi', 'mumbai', 'bangalore',
+    'bengaluru', 'hyderabad', 'chennai', 'pune', 'kolkata', 'noida', 'gurgaon',
+    'gurugram', 'madhya pradesh', 'pradesh', 'uttar pradesh', 'haryana', 'punjab',
+    'maharashtra', 'karnataka', 'tamil nadu', 'gujarat', 'rajasthan', 'bihar',
+    'pin', 'pincode', 'india', 'postal'
+  ];
 
   // 1. PRIMARY: Extract from Resume Document Text Header (First 8 lines)
   if (resumeText) {
@@ -33,8 +42,8 @@ function extractCandidateNameFromResume(resumeText, fileName = '', senderName = 
           lower.includes('summary') || lower.includes('experience') || lower.includes('education') || 
           lower.includes('contact') || lower.includes('phone') || lower.includes('objective') ||
           lower.includes('email') || lower.includes('@') || lower.includes('http') ||
-          lower.includes('vageesha') || lower.includes('recruiter') || lower.includes('talent acquisition') ||
-          lower.includes('hiring team') || lower.includes('finova') ||
+          lower.includes('talent acquisition') || lower.includes('hiring team') || lower.includes('finova') ||
+          addressStopwords.some(addr => lower.includes(addr)) ||
           lower.length < 3 || lower.length > 30) {
         continue;
       }
@@ -64,8 +73,8 @@ function extractCandidateNameFromResume(resumeText, fileName = '', senderName = 
     }
   }
 
-  // 3. TERTIARY: Sender name if not recruiter name
-  if (senderName && !senderName.toLowerCase().includes('vageesha') && !senderName.toLowerCase().includes('recruiter')) {
+  // 3. TERTIARY: Sender name if available
+  if (senderName && !senderName.toLowerCase().includes('recruiter') && !senderName.toLowerCase().includes('finova') && !senderName.toLowerCase().includes('talent acquisition')) {
     return senderName;
   }
 
