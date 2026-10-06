@@ -11,7 +11,17 @@ const JOBS_FILE = path.join(__dirname, 'data', 'jobs.json');
  * Extract the real candidate full name strictly from the top of the resume document text
  */
 function extractCandidateNameFromResume(resumeText, fileName = '', senderName = '') {
-  const roleStopwords = ['ai', 'ml', 'prompt', 'engineer', 'developer', 'analyst', 'designer', 'specialist', 'consultant', 'fresher', 'intern', 'manager', 'lead', 'digital', 'marketing', 'executive', 'cv', 'resume', 'fashion', 'stylist', 'business', 'years', 'full', 'stack', 'frontend', 'backend', 'page'];
+  const roleStopwords = [
+    'ai', 'ml', 'prompt', 'engineer', 'developer', 'analyst', 'designer', 'specialist',
+    'consultant', 'fresher', 'intern', 'manager', 'lead', 'digital', 'marketing', 'executive',
+    'cv', 'resume', 'fashion', 'stylist', 'business', 'years', 'full', 'stack', 'frontend',
+    'backend', 'page', 'skills', 'skill', 'core', 'technical', 'key', 'competencies',
+    'strengths', 'certifications', 'certification', 'training', 'education', 'experience',
+    'projects', 'project', 'activities', 'achievements', 'awards', 'languages', 'language',
+    'hobbies', 'declaration', 'personal', 'details', 'interests', 'contact', 'info',
+    'information', 'about', 'summary', 'profile', 'objective', 'overview', 'academic',
+    'qualification', 'qualifications', 'training', 'professional', 'tools', 'automation'
+  ];
   const addressStopwords = [
     'sbi', 'colony', 'nagar', 'road', 'street', 'lane', 'sector', 'block',
     'apartment', 'building', 'flat', 'floor', 'house', 'plot', 'phase',
@@ -19,17 +29,40 @@ function extractCandidateNameFromResume(resumeText, fileName = '', senderName = 
     'bengaluru', 'hyderabad', 'chennai', 'pune', 'kolkata', 'noida', 'gurgaon',
     'gurugram', 'madhya pradesh', 'pradesh', 'uttar pradesh', 'haryana', 'punjab',
     'maharashtra', 'karnataka', 'tamil nadu', 'gujarat', 'rajasthan', 'bihar',
-    'pin', 'pincode', 'india', 'postal'
+    'pin', 'pincode', 'india', 'postal', 'ahmedabad', 'maharashtra'
   ];
 
-  // 1. PRIMARY: Extract from Resume Document Text Header (First 8 lines)
+  // PRIORITY 1: Cross-check Filename against Resume Content
+  // Filenames like "Vageesha_Sharma_Resume.pdf" or "Kabir_Singh_CV.docx" are high-signal
+  if (fileName) {
+    const cleanFn = fileName
+      .replace(/\.(pdf|docx?|txt|rtf|odt)$/i, '')
+      .replace(/^[\d\s_\-()#]+/, '')
+      .replace(/[\s_\-()#\d]+$/, '')
+      .replace(/[_\-]+/g, ' ')
+      .trim();
+
+    const fnParts = cleanFn.split(/\s+/).filter(w => !roleStopwords.includes(w.toLowerCase()) && !/^\d+$/.test(w));
+    if (fnParts.length >= 2 && fnParts.length <= 3) {
+      const candidateFromFn = fnParts.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+      // If filename name appears anywhere in resume text or sender name, it is 100% genuine
+      if (resumeText && (resumeText.toLowerCase().includes(fnParts[0].toLowerCase()) || resumeText.toLowerCase().includes(fnParts[1].toLowerCase()))) {
+        return candidateFromFn;
+      }
+      if (senderName && (senderName.toLowerCase().includes(fnParts[0].toLowerCase()) || senderName.toLowerCase().includes(fnParts[1].toLowerCase()))) {
+        return candidateFromFn;
+      }
+    }
+  }
+
+  // PRIORITY 2: Extract from Resume Document Text (Scan up to 60 lines for 2-column or header layouts)
   if (resumeText) {
     const lines = resumeText
       .split(/\r?\n/)
       .map(l => l.trim())
       .filter(l => l.length > 0 && !l.toLowerCase().startsWith('page ') && !l.toLowerCase().startsWith('--'));
 
-    for (let i = 0; i < Math.min(8, lines.length); i++) {
+    for (let i = 0; i < Math.min(60, lines.length); i++) {
       let line = lines[i]
         .replace(/^(mr\.|ms\.|mrs\.|dr\.)\s+/i, '')
         .replace(/^(candidate\s*(name)?|applicant\s*(name)?|name|full\s*name)\s*[:\-]\s*/i, '')
@@ -42,6 +75,7 @@ function extractCandidateNameFromResume(resumeText, fileName = '', senderName = 
           lower.includes('summary') || lower.includes('experience') || lower.includes('education') || 
           lower.includes('contact') || lower.includes('phone') || lower.includes('objective') ||
           lower.includes('email') || lower.includes('@') || lower.includes('http') ||
+          lower.includes('skill') || lower.includes('core') || lower.includes('competenc') ||
           lower.includes('talent acquisition') || lower.includes('hiring team') || lower.includes('finova') ||
           addressStopwords.some(addr => lower.includes(addr)) ||
           lower.length < 3 || lower.length > 30) {
@@ -58,7 +92,7 @@ function extractCandidateNameFromResume(resumeText, fileName = '', senderName = 
     }
   }
 
-  // 2. SECONDARY: Extract from Filename if it contains candidate name pattern (e.g. "Kabir_Singh_...", "Sneha_Verma_...")
+  // PRIORITY 3: Filename candidate name as direct fallback
   if (fileName) {
     const cleanFn = fileName
       .replace(/\.(pdf|docx?|txt|rtf|odt)$/i, '')
@@ -73,8 +107,8 @@ function extractCandidateNameFromResume(resumeText, fileName = '', senderName = 
     }
   }
 
-  // 3. TERTIARY: Sender name if available
-  if (senderName && !senderName.toLowerCase().includes('recruiter') && !senderName.toLowerCase().includes('finova') && !senderName.toLowerCase().includes('talent acquisition')) {
+  // PRIORITY 4: Sender name if genuine candidate
+  if (senderName && !senderName.toLowerCase().includes('recruiter') && !senderName.toLowerCase().includes('finova') && !senderName.toLowerCase().includes('talent acquisition') && !senderName.toLowerCase().includes('notification')) {
     return senderName;
   }
 
@@ -1401,10 +1435,15 @@ Return a strictly valid JSON object matching this schema:
               evalObj.assessmentToken = finalToken;
               
               // Validate extracted candidate name
-              const finalName = evalObj.candidateName && !evalObj.candidateName.toLowerCase().includes('vageesha') && !evalObj.candidateName.toLowerCase().includes('candidate')
-                ? evalObj.candidateName
-                : resolvedCandidateName;
-              evalObj.candidateName = finalName;
+              let finalName = resolvedCandidateName;
+              if (evalObj.candidateName && typeof evalObj.candidateName === 'string') {
+                const candNameLower = evalObj.candidateName.trim().toLowerCase();
+                const isGeneric = candNameLower.includes('candidate') || candNameLower === 'unknown' || candNameLower === 'first last';
+                if (!isGeneric && candNameLower.length >= 2) {
+                  finalName = evalObj.candidateName.trim();
+                }
+              }
+              evalObj.candidateName = finalName || resolvedCandidateName || 'Candidate';
 
               // Strict guard: If domain is mismatched, force REJECTED
               if (domainCheck.mismatched) {

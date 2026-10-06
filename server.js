@@ -143,8 +143,8 @@ function isJunkOrTestCandidate(c) {
   const id = (c.id || '').toLowerCase();
   const fn = (c.attachmentInfo?.fileName || '').toLowerCase();
 
-  // Block recruiter name mistakenly extracted
-  if (name.includes('vageesha sharma') || name === 'vageesha' || name === 'sharma vageesha') {
+  // Block recruiter name mistakenly extracted ONLY if the resume attachment does not actually belong to a candidate named Vageesha
+  if ((name.includes('vageesha sharma') || name === 'vageesha' || name === 'sharma vageesha') && !fn.includes('vageesha') && !c.attachmentInfo) {
     return true;
   }
   // Block placeholder/invalid names
@@ -675,7 +675,7 @@ async function checkInboxNow() {
 
   try {
     const settings = getSettings();
-    const countToCheck = hasDoneInitialInboxPoll ? 5 : 8;
+    const countToCheck = 30;
     hasDoneInitialInboxPoll = true;
 
     const result = await pollCandidateEmails({
@@ -2183,6 +2183,8 @@ app.post('/api/candidate-sync-status', (req, res) => {
   if (status) c.status = status;
   if (offerStatus) c.offerStatus = offerStatus;
   if (name) c.name = name;
+  if (req.body.emailHtmlBody) c.emailHtmlBody = req.body.emailHtmlBody;
+  if (req.body.interviewSchedule) c.interviewSchedule = req.body.interviewSchedule;
   c.lastEmailSentAt = new Date().toISOString();
   saveCandidates(candidates);
   res.json({ success: true, candidate: c });
@@ -2527,11 +2529,31 @@ async function checkCloudPendingDispatches() {
         if (c.emailStatus === 'FAILED' && c.emailHtmlBody && targetEmail) {
           const failedEmailDedupKey = `${c.id}__FAILED_CLOUD_INITIAL__${c.receivedAt || c.evaluatedAt || 'INITIAL'}`;
           if (!DISPATCHED_CLOUD_ASSESSMENTS.has(failedEmailDedupKey)) {
+            // Self-healing: Correct candidate name if misextracted (e.g. "Core Skills" -> actual candidate name from resume/filename)
+            let fixedCandidateName = candidateName;
+            let fixedHtmlBody = c.emailHtmlBody;
+            if (fixedCandidateName.toLowerCase().includes('core skills') || fixedCandidateName.toLowerCase() === 'candidate') {
+              if (c.attachmentInfo && c.attachmentInfo.fileName) {
+                const recovered = extractCandidateNameFromResume('', c.attachmentInfo.fileName, '');
+                if (recovered && recovered !== 'Candidate') {
+                  fixedCandidateName = recovered;
+                }
+              }
+            }
+            if (fixedCandidateName !== candidateName) {
+              fixedHtmlBody = fixedHtmlBody.replace(/Core Skills/g, fixedCandidateName);
+              if (c.interviewSchedule && c.interviewSchedule.assessmentLink) {
+                c.interviewSchedule.assessmentLink = c.interviewSchedule.assessmentLink.replace(/name=Core%20Skills/g, `name=${encodeURIComponent(fixedCandidateName)}`);
+              }
+              c.name = fixedCandidateName;
+              candidateName = fixedCandidateName;
+            }
+
             console.log(`[Cloud Bridge] ✉️ Detected candidate "${candidateName}" with FAILED cloud email on Render. Auto-dispatching via local Gmail SMTP...`);
             const recoveryResult = await sendNotificationEmail({
               to: targetEmail,
               subject: c.emailSubject || `Application Status Update - ${role}`,
-              htmlBody: c.emailHtmlBody,
+              htmlBody: fixedHtmlBody,
               bypassDedup: true
             });
             if (recoveryResult && recoveryResult.success) {
@@ -2543,16 +2565,19 @@ async function checkCloudPendingDispatches() {
                 targetLocal = { ...c };
                 localCandidates.unshift(targetLocal);
               }
+              targetLocal.name = candidateName;
+              targetLocal.emailHtmlBody = fixedHtmlBody;
               targetLocal.emailStatus = 'SENT';
               targetLocal.lastEmailSentAt = new Date().toISOString();
               saveCandidates(localCandidates);
 
-              // Notify Render Cloud of successful email delivery
+              // Notify Render Cloud of successful email delivery & corrected name
               try {
                 const https = require('https');
                 const syncPayload = JSON.stringify({
                   candidateId: c.id,
-                  emailStatus: 'SENT'
+                  emailStatus: 'SENT',
+                  name: candidateName
                 });
                 const syncReq = https.request('https://hr-smartflow-automation.onrender.com/api/candidate-sync-status', {
                   method: 'POST',

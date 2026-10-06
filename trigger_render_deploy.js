@@ -55,7 +55,10 @@ async function trigger() {
 
   const targetService = services.find(s => {
     const svc = s.service || s;
-    return svc.name.includes('hr') || svc.name.includes('smartflow') || svc.name.includes('workflow') || svc.name.includes('automation');
+    return svc.name === 'hr-smartflow-automation' || svc.id === 'srv-daarg4bbc2fs738g15m0' || svc.name.startsWith('hr-');
+  }) || services.find(s => {
+    const svc = s.service || s;
+    return (svc.name || '').includes('smartflow') || (svc.name || '').includes('fintech-hr');
   }) || services[0];
 
   if (!targetService) {
