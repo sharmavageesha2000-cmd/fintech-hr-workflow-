@@ -67,7 +67,8 @@ function post(url, body) {
     roleApplied: testRole,
     answers,
     tabSwitchesCount: 0,
-    timeSpentSeconds: 300
+    timeSpentSeconds: 300,
+    simulateEmail: true
   });
 
   console.log('   Submission Result -> Success:', step2.success, '| Score:', step2.scorePercent + '%');

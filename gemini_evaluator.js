@@ -8,7 +8,8 @@ const DEFAULT_MODEL = 'gemini-3.5-flash';
 const JOBS_FILE = path.join(__dirname, 'data', 'jobs.json');
 
 /**
- * Extract the real candidate full name strictly from the top of the resume document text
+ * Extract the real candidate full name strictly from the resume document text
+ * Prioritizes resume content over filenames and sender names, supporting standard, 2-column, and header layouts.
  */
 function extractCandidateNameFromResume(resumeText, fileName = '', senderName = '') {
   const roleStopwords = [
@@ -20,7 +21,13 @@ function extractCandidateNameFromResume(resumeText, fileName = '', senderName = 
     'projects', 'project', 'activities', 'achievements', 'awards', 'languages', 'language',
     'hobbies', 'declaration', 'personal', 'details', 'interests', 'contact', 'info',
     'information', 'about', 'summary', 'profile', 'objective', 'overview', 'academic',
-    'qualification', 'qualifications', 'training', 'professional', 'tools', 'automation'
+    'qualification', 'qualifications', 'training', 'professional', 'tools', 'automation',
+    'generative', 'learning', 'applications', 'curriculum', 'vitae', 'data', 'to', 'senior',
+    'junior', 'associate', 'operations', 'management', 'recruiter', 'recruitment', 'team',
+    'content', 'ideas', 'market', 'audience', 'research', 'concept', 'concepts', 'application',
+    'product', 'products', 'process', 'systems', 'system', 'network', 'database', 'cloud',
+    'graduate', 'economics', 'commerce', 'science', 'arts', 'english', 'hindi', 'college',
+    'university', 'school', 'degree', 'bachelor', 'master', 'study', 'focus', 'areas'
   ];
   const addressStopwords = [
     'sbi', 'colony', 'nagar', 'road', 'street', 'lane', 'sector', 'block',
@@ -29,45 +36,77 @@ function extractCandidateNameFromResume(resumeText, fileName = '', senderName = 
     'bengaluru', 'hyderabad', 'chennai', 'pune', 'kolkata', 'noida', 'gurgaon',
     'gurugram', 'madhya pradesh', 'pradesh', 'uttar pradesh', 'haryana', 'punjab',
     'maharashtra', 'karnataka', 'tamil nadu', 'gujarat', 'rajasthan', 'bihar',
-    'pin', 'pincode', 'india', 'postal', 'ahmedabad', 'maharashtra'
+    'pin', 'pincode', 'india', 'postal', 'ahmedabad'
   ];
 
-  // PRIORITY 1: Cross-check Filename against Resume Content
-  // Filenames like "Vageesha_Sharma_Resume.pdf" or "Kabir_Singh_CV.docx" are high-signal
-  if (fileName) {
-    const cleanFn = fileName
-      .replace(/\.(pdf|docx?|txt|rtf|odt)$/i, '')
-      .replace(/^[\d\s_\-()#]+/, '')
-      .replace(/[\s_\-()#\d]+$/, '')
-      .replace(/[_\-]+/g, ' ')
-      .trim();
+  const toProperCase = (str) => str.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
 
-    const fnParts = cleanFn.split(/\s+/).filter(w => !roleStopwords.includes(w.toLowerCase()) && !/^\d+$/.test(w));
-    if (fnParts.length >= 2 && fnParts.length <= 3) {
-      const candidateFromFn = fnParts.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-      // If filename name appears anywhere in resume text or sender name, it is 100% genuine
-      if (resumeText && (resumeText.toLowerCase().includes(fnParts[0].toLowerCase()) || resumeText.toLowerCase().includes(fnParts[1].toLowerCase()))) {
-        return candidateFromFn;
-      }
-      if (senderName && (senderName.toLowerCase().includes(fnParts[0].toLowerCase()) || senderName.toLowerCase().includes(fnParts[1].toLowerCase()))) {
-        return candidateFromFn;
-      }
-    }
-  }
-
-  // PRIORITY 2: Extract from Resume Document Text (Scan up to 60 lines for 2-column or header layouts)
+  // 1. PRIMARY: Extract directly from Resume Document Text (Scan up to 80 lines)
   if (resumeText) {
     const lines = resumeText
       .split(/\r?\n/)
       .map(l => l.trim())
       .filter(l => l.length > 0 && !l.toLowerCase().startsWith('page ') && !l.toLowerCase().startsWith('--'));
 
-    for (let i = 0; i < Math.min(60, lines.length); i++) {
-      let line = lines[i]
+    // 1A. First check for explicit name labels: 'Candidate Name:', 'Name:', 'Applicant:'
+    for (let i = 0; i < Math.min(80, lines.length); i++) {
+      const line = lines[i];
+      const match = line.match(/^(?:candidate\s*(?:name)?|applicant\s*(?:name)?|name|full\s*name)\s*[:\-]\s*(.+)$/i);
+      if (match) {
+        let val = match[1].replace(/[|•,].*$/, '').replace(/[\(\[\{].*?[\)\]\}]/g, '').trim();
+        const parts = val.split(/\s+/).filter(w => /^[a-zA-Z.'-]+$/.test(w) && !roleStopwords.includes(w.toLowerCase()));
+        if (parts.length >= 2 && parts.length <= 4) {
+          return toProperCase(parts.join(' '));
+        }
+      }
+    }
+
+    // 1B. Check for ALL-CAPS Candidate Name line (e.g. "VAGEESHA SHARMA", "ROHAN MEHTA", "ANANYA VERMA")
+    for (let i = 0; i < Math.min(80, lines.length); i++) {
+      const rawLine = lines[i];
+      if (rawLine.includes('•') || rawLine.includes('*') || rawLine.includes(';') || rawLine.includes(',') || rawLine.includes('&') || rawLine.includes(':')) {
+        continue;
+      }
+      let line = rawLine
         .replace(/^(mr\.|ms\.|mrs\.|dr\.)\s+/i, '')
-        .replace(/^(candidate\s*(name)?|applicant\s*(name)?|name|full\s*name)\s*[:\-]\s*/i, '')
-        .replace(/[|•,].*$/, '') // remove title after pipe
-        .replace(/[\(\[\{].*?[\)\]\}]/g, '') // remove brackets
+        .replace(/[|].*$/, '')
+        .replace(/[\(\[\{].*?[\)\]\}]/g, '')
+        .trim();
+
+      const lower = line.toLowerCase();
+      if (lower.includes('curriculum') || lower.includes('resume') || lower.includes('profile') || 
+          lower.includes('summary') || lower.includes('experience') || lower.includes('education') || 
+          lower.includes('contact') || lower.includes('phone') || lower.includes('objective') ||
+          lower.includes('email') || lower.includes('@') || lower.includes('http') ||
+          lower.includes('skill') || lower.includes('core') || lower.includes('competenc') ||
+          lower.includes('talent acquisition') || lower.includes('hiring team') || lower.includes('finova') ||
+          lower.includes('certificat') || lower.includes('strength') || lower.includes('language') ||
+          lower.includes('project') || lower.includes('internship') || lower.includes('training') ||
+          addressStopwords.some(addr => lower.includes(addr)) ||
+          lower.length < 3 || lower.length > 35) {
+        continue;
+      }
+
+      // Check if line is in ALL CAPS and contains 2 to 4 name words
+      const isAllCaps = /^[A-Z\s.'-]+$/.test(line) && line.length >= 4;
+      if (isAllCaps) {
+        const words = line.split(/\s+/).filter(w => /^[a-zA-Z.'-]+$/.test(w) && !roleStopwords.includes(w.toLowerCase()));
+        if (words.length >= 2 && words.length <= 4) {
+          return toProperCase(words.join(' '));
+        }
+      }
+    }
+
+    // 1C. Check for Title-Case Candidate Name in top 15 lines (e.g. "Kabir Singh", "Sneha Verma")
+    for (let i = 0; i < Math.min(15, lines.length); i++) {
+      const rawLine = lines[i];
+      if (rawLine.includes('•') || rawLine.includes('*') || rawLine.includes(';') || rawLine.includes(',') || rawLine.includes('&') || rawLine.includes(':')) {
+        continue;
+      }
+      let line = rawLine
+        .replace(/^(mr\.|ms\.|mrs\.|dr\.)\s+/i, '')
+        .replace(/[|].*$/, '')
+        .replace(/[\(\[\{].*?[\)\]\}]/g, '')
         .trim();
 
       const lower = line.toLowerCase();
@@ -78,21 +117,18 @@ function extractCandidateNameFromResume(resumeText, fileName = '', senderName = 
           lower.includes('skill') || lower.includes('core') || lower.includes('competenc') ||
           lower.includes('talent acquisition') || lower.includes('hiring team') || lower.includes('finova') ||
           addressStopwords.some(addr => lower.includes(addr)) ||
-          lower.length < 3 || lower.length > 30) {
+          lower.length < 3 || lower.length > 35) {
         continue;
       }
 
       const words = line.split(/\s+/).filter(w => /^[a-zA-Z.'-]+$/.test(w) && !roleStopwords.includes(w.toLowerCase()));
-      if (words.length >= 2 && words.length <= 3) {
-        return words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-      }
-      if (words.length === 1 && words[0].length >= 3 && !roleStopwords.includes(words[0].toLowerCase())) {
-        return words[0].charAt(0).toUpperCase() + words[0].slice(1).toLowerCase();
+      if (words.length >= 2 && words.length <= 4) {
+        return toProperCase(words.join(' '));
       }
     }
   }
 
-  // PRIORITY 3: Filename candidate name as direct fallback
+  // 2. SECONDARY: Filename candidate name (e.g. "Kabir_Singh_CV.pdf", "Sneha_Verma_Digital_Marketing.docx")
   if (fileName) {
     const cleanFn = fileName
       .replace(/\.(pdf|docx?|txt|rtf|odt)$/i, '')
@@ -103,13 +139,13 @@ function extractCandidateNameFromResume(resumeText, fileName = '', senderName = 
 
     const fnParts = cleanFn.split(/\s+/).filter(w => !roleStopwords.includes(w.toLowerCase()) && !/^\d+$/.test(w));
     if (fnParts.length >= 2 && fnParts.length <= 3) {
-      return fnParts.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+      return toProperCase(fnParts.join(' '));
     }
   }
 
-  // PRIORITY 4: Sender name if genuine candidate
+  // 3. TERTIARY: Sender name if genuine candidate (never recruiter/system)
   if (senderName && !senderName.toLowerCase().includes('recruiter') && !senderName.toLowerCase().includes('finova') && !senderName.toLowerCase().includes('talent acquisition') && !senderName.toLowerCase().includes('notification')) {
-    return senderName;
+    return toProperCase(senderName);
   }
 
   return 'Candidate';

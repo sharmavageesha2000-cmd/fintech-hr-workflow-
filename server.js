@@ -143,10 +143,12 @@ function isJunkOrTestCandidate(c) {
   const id = (c.id || '').toLowerCase();
   const fn = (c.attachmentInfo?.fileName || '').toLowerCase();
 
-  // Block recruiter name mistakenly extracted ONLY if the resume attachment does not actually belong to a candidate named Vageesha
-  if ((name.includes('vageesha sharma') || name === 'vageesha' || name === 'sharma vageesha') && !fn.includes('vageesha') && !c.attachmentInfo) {
+  // STRICT REQUIREMENT: In HR resume dashboard, only candidates who send/submit a resume should appear
+  const hasResume = Boolean(c.attachmentInfo?.fileName || (c.resumeText && c.resumeText.length > 30));
+  if (!hasResume) {
     return true;
   }
+
   // Block placeholder/invalid names
   if (name === 'obj' || name === 'anonymous' || name === 'candidate' || name === 'failed candidate') {
     return true;
@@ -155,7 +157,7 @@ function isJunkOrTestCandidate(c) {
   if (id.includes('cand-iso-') || id.includes('cand-reject-flow') || id.includes('cand-pass-flow') || id.includes('auto-fail') || id.includes('auto-pass') || id.includes('demo-live-')) {
     return true;
   }
-  if (name.includes('test candidate') || name === 'deepak verma' || name === 'pooja verma' || name === 'kavita patel' || name === 'siddharth rao' || name === 'devashish sen') {
+  if (name.includes('test candidate')) {
     return true;
   }
   // Block non-resume documents / invoices / bank statements
@@ -189,56 +191,68 @@ function mergeCandidateRecords(existing, incoming) {
     incoming.assessmentCompleted ? 35 : 0
   );
 
-  const base = existingRank >= incomingRank ? { ...incoming, ...existing } : { ...existing, ...incoming };
+  const base = incomingRank >= existingRank ? { ...existing, ...incoming } : { ...incoming, ...existing };
 
   // Retain canonical non-empty fields
   base.id = existing.id || incoming.id;
-  base.name = (existing.name && existing.name !== 'Candidate' ? existing.name : incoming.name) || base.name;
+  base.name = (incoming.name && incoming.name !== 'Candidate' ? incoming.name : existing.name) || base.name;
   base.email = (existing.email && !existing.email.includes('example.com') ? existing.email : incoming.email) || base.email;
-  base.roleApplied = existing.roleApplied || incoming.roleApplied;
-  base.phone = (existing.phone && existing.phone !== 'Not specified' ? existing.phone : incoming.phone) || base.phone;
-  base.skills = (existing.skills && existing.skills.length ? existing.skills : incoming.skills) || base.skills;
-  base.matchScore = existing.matchScore || incoming.matchScore || base.matchScore;
-  base.resumeText = existing.resumeText || incoming.resumeText || base.resumeText;
-  base.attachmentInfo = existing.attachmentInfo || incoming.attachmentInfo || base.attachmentInfo;
+  base.roleApplied = incoming.roleApplied || existing.roleApplied;
+  base.phone = (incoming.phone && incoming.phone !== 'Not specified' ? incoming.phone : existing.phone) || base.phone;
+  base.skills = (incoming.skills && incoming.skills.length ? incoming.skills : existing.skills) || base.skills;
+  base.matchScore = incoming.matchScore || existing.matchScore || base.matchScore;
+  base.resumeText = incoming.resumeText || existing.resumeText || base.resumeText;
+  base.attachmentInfo = incoming.attachmentInfo || existing.attachmentInfo || base.attachmentInfo;
 
-  // Preserve assessment & offer details
-  if (existing.assessmentDetails || incoming.assessmentDetails) {
-    base.assessmentDetails = existing.assessmentDetails || incoming.assessmentDetails;
+  // Preserve assessment & offer details (prioritizing the record with latest assessment completion)
+  const assessmentSource = (incoming.assessmentCompleted && incoming.assessmentDetails)
+    ? incoming
+    : (existing.assessmentCompleted && existing.assessmentDetails ? existing : (incoming.assessmentDetails ? incoming : existing));
+
+  if (assessmentSource.assessmentDetails) {
+    base.assessmentDetails = assessmentSource.assessmentDetails;
     base.assessmentCompleted = true;
     base.testSubmitted = true;
   }
-  if (existing.callLetterDetails || incoming.callLetterDetails) {
-    base.callLetterDetails = existing.callLetterDetails || incoming.callLetterDetails;
+  if (incoming.testScore !== undefined && incoming.assessmentCompleted) {
+    base.testScore = incoming.testScore;
+    base.testPassed = incoming.testPassed;
+  } else if (existing.testScore !== undefined && existing.assessmentCompleted) {
+    base.testScore = existing.testScore;
+    base.testPassed = existing.testPassed;
+  } else if (incoming.testScore !== undefined) {
+    base.testScore = incoming.testScore;
+    base.testPassed = incoming.testPassed;
+  } else if (existing.testScore !== undefined) {
+    base.testScore = existing.testScore;
+    base.testPassed = existing.testPassed;
   }
-  if (existing.offerAcceptedAt || incoming.offerAcceptedAt) {
-    base.offerAcceptedAt = existing.offerAcceptedAt || incoming.offerAcceptedAt;
+
+  if (incoming.callLetterDetails || existing.callLetterDetails) {
+    base.callLetterDetails = incoming.callLetterDetails || existing.callLetterDetails;
   }
-  if (existing.offerDeclinedAt || incoming.offerDeclinedAt) {
-    base.offerDeclinedAt = existing.offerDeclinedAt || incoming.offerDeclinedAt;
+  if (incoming.offerAcceptedAt || existing.offerAcceptedAt) {
+    base.offerAcceptedAt = incoming.offerAcceptedAt || existing.offerAcceptedAt;
   }
-  if (existing.callLetterSentAt || incoming.callLetterSentAt) {
-    base.callLetterSentAt = existing.callLetterSentAt || incoming.callLetterSentAt;
+  if (incoming.offerDeclinedAt || existing.offerDeclinedAt) {
+    base.offerDeclinedAt = incoming.offerDeclinedAt || existing.offerDeclinedAt;
   }
-  if (existing.testScore !== undefined || incoming.testScore !== undefined) {
-    base.testScore = existing.testScore !== undefined ? existing.testScore : incoming.testScore;
+  if (incoming.callLetterSentAt || existing.callLetterSentAt) {
+    base.callLetterSentAt = incoming.callLetterSentAt || existing.callLetterSentAt;
   }
-  if (existing.testPassed !== undefined || incoming.testPassed !== undefined) {
-    base.testPassed = existing.testPassed !== undefined ? existing.testPassed : incoming.testPassed;
-  }
-  if (existing.offerRefId || incoming.offerRefId) {
-    base.offerRefId = existing.offerRefId || incoming.offerRefId;
+  if (incoming.offerRefId || existing.offerRefId) {
+    base.offerRefId = incoming.offerRefId || existing.offerRefId;
   }
 
   // Preserve highest status
-  if (existingRank >= incomingRank) {
-    base.status = existing.status;
-    base.offerStatus = existing.offerStatus;
-    base.interviewStatus = existing.interviewStatus;
-  } else {
+  if (incomingRank >= existingRank) {
     base.status = incoming.status;
     base.offerStatus = incoming.offerStatus;
     base.interviewStatus = incoming.interviewStatus;
+  } else {
+    base.status = existing.status;
+    base.offerStatus = existing.offerStatus;
+    base.interviewStatus = existing.interviewStatus;
   }
 
   return base;
@@ -278,7 +292,8 @@ function saveCandidates(candidates) {
     const keyMap = new Map();
     for (const c of (candidates || [])) {
       if (!c) continue;
-      if (isJunkOrTestCandidate(c)) continue;
+      const name = (c.name || '').toLowerCase().trim();
+      if (name === 'obj' || name === 'anonymous') continue;
 
       const key = getCandidateDedupKey(c);
       if (keyMap.has(key)) {
@@ -404,7 +419,10 @@ let smtpDispatchMutex = Promise.resolve();
 let isSmtpDispatching = false;
 let isSmtpPending = false;
 
-function sendNotificationEmail({ to, subject, htmlBody, bypassDedup = false, fromPoller = false }) {
+function sendNotificationEmail({ to, subject, htmlBody, bypassDedup = false, fromPoller = false, simulate = false }) {
+  if (simulate || process.env.SIMULATE_EMAIL === 'true') {
+    return doSendNotificationEmail({ to, subject, htmlBody, bypassDedup, simulate: true });
+  }
   isSmtpPending = true;
   return new Promise((resolve) => {
     smtpDispatchMutex = smtpDispatchMutex.then(async () => {
@@ -421,7 +439,7 @@ function sendNotificationEmail({ to, subject, htmlBody, bypassDedup = false, fro
 
       isSmtpDispatching = true;
       try {
-        const result = await doSendNotificationEmail({ to, subject, htmlBody, bypassDedup });
+        const result = await doSendNotificationEmail({ to, subject, htmlBody, bypassDedup, simulate });
         await new Promise(r => setTimeout(r, 500));
         resolve(result);
       } catch (err) {
@@ -435,10 +453,22 @@ function sendNotificationEmail({ to, subject, htmlBody, bypassDedup = false, fro
 }
 
 // Internal: Send Email via Nodemailer (Multi-protocol: Gmail Service + SSL 465 + STARTTLS 587)
-async function doSendNotificationEmail({ to, subject, htmlBody, bypassDedup = false }) {
+async function doSendNotificationEmail({ to, subject, htmlBody, bypassDedup = false, simulate = false }) {
   const settings = getSettings();
   const recruiterEmail = settings.recruiterEmail || process.env.RECRUITER_EMAIL || 'sharmavageesha2000@gmail.com';
   const appPassword = (settings.appPassword || process.env.GOOGLE_APP_PASSWORD || 'qoyolivxrkuqxmkx').replace(/\s+/g, '');
+
+  // Dry-run simulation mode (Rule 5: Zero Mock Testing on Live System)
+  if (simulate || process.env.SIMULATE_EMAIL === 'true') {
+    console.log(`[Email Simulator] 🧪 Simulated email dispatch to: ${to} (Subject: "${subject}")`);
+    return {
+      success: true,
+      simulated: true,
+      messageId: `SIMULATED_${Date.now()}`,
+      to,
+      subject
+    };
+  }
 
   if (!to || !appPassword) {
     return { success: false, error: 'Missing destination email or app password' };
@@ -996,8 +1026,8 @@ setInterval(checkAndDispatchPendingOutcomeEmails, 20000);
 // 1. Get Candidates
 app.get('/api/candidates', (req, res) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-  const { status, search, role, sort } = req.query;
-  let candidates = getCandidates(true);
+  const { status, search, role, sort, includeAll } = req.query;
+  let candidates = getCandidates(includeAll === 'true');
 
   if (status && status !== 'ALL') {
     candidates = candidates.filter(c => c.status === status.toUpperCase());
@@ -1046,7 +1076,7 @@ app.get('/api/candidates/:id', (req, res) => {
 
 // 3. Delete Candidate
 app.delete('/api/candidates/:id', (req, res) => {
-  let candidates = getCandidates();
+  let candidates = getCandidates(true);
   const initialLength = candidates.length;
   candidates = candidates.filter(c => c.id !== req.params.id);
   if (candidates.length === initialLength) {
@@ -1415,6 +1445,18 @@ app.post('/api/assessment/submit', async (req, res) => {
       receivedAt: new Date().toISOString()
     };
 
+    // If candidate record was newly instantiated, preserve attachment and resume info from matching candidate
+    if (candidateIdx === -1 && candidateEmail) {
+      const matchByEmail = candidates.find(c => c.email && c.email.toLowerCase().trim() === candidateEmail.toLowerCase().trim());
+      if (matchByEmail) {
+        targetCandidate.attachmentInfo = matchByEmail.attachmentInfo;
+        targetCandidate.resumeText = matchByEmail.resumeText;
+        if (!targetCandidate.name || targetCandidate.name === 'Candidate') {
+          targetCandidate.name = matchByEmail.name;
+        }
+      }
+    }
+
     // Ensure candidate name and email are preserved from resume, and never overwritten by placeholder values
     if (candidateEmail && candidateEmail.trim() && candidateEmail.includes('@') && candidateEmail.trim().toLowerCase() !== 'candidate@example.com') {
       targetCandidate.email = candidateEmail.trim();
@@ -1448,6 +1490,8 @@ app.post('/api/assessment/submit', async (req, res) => {
     } else if (req.body.email && req.body.email.includes('@') && req.body.email.toLowerCase() !== 'candidate@example.com') {
       targetEmail = req.body.email.trim();
     }
+
+    const simulateEmail = Boolean(req.body.simulateEmail || req.headers['x-simulate-email'] === 'true' || process.env.SIMULATE_EMAIL === 'true');
 
     // RULE: If candidate scores 80% or above (>= 16/20), automatically send Job Offer & Selection Intent Email with Accept/Reject actions
     if (evalResult.passed) {
@@ -1488,7 +1532,8 @@ app.post('/api/assessment/submit', async (req, res) => {
           to: targetEmail,
           subject,
           htmlBody: selectionOfferHtml,
-          bypassDedup: true
+          bypassDedup: true,
+          simulate: simulateEmail
         });
         console.log(`[Assessment Engine] Selection Offer SMTP Result:`, emailDispatch);
       } else {
@@ -1551,7 +1596,8 @@ app.post('/api/assessment/submit', async (req, res) => {
           to: targetEmail,
           subject,
           htmlBody: feedbackHtml,
-          bypassDedup: true
+          bypassDedup: true,
+          simulate: simulateEmail
         });
         console.log(`[Assessment Engine] Assessment Feedback SMTP Result:`, emailDispatch);
       } else {
@@ -1898,6 +1944,7 @@ app.get('/api/offer/decision', async (req, res) => {
     const queryJoiningDate = (req.query.joiningDate || req.query.date || '').trim();
     const queryReportingTo = (req.query.reportingTo || req.query.hr || '').trim();
     const queryOfferRefId = (req.query.ref || '').trim();
+    const simulateEmail = Boolean(req.query.simulateEmail === 'true' || req.headers['x-simulate-email'] === 'true' || process.env.SIMULATE_EMAIL === 'true');
 
     const candidates = getCandidates(true);
     let candidateIndex = -1;
@@ -1997,7 +2044,8 @@ app.get('/api/offer/decision', async (req, res) => {
           to: targetEmail,
           subject,
           htmlBody: callLetterHtml,
-          bypassDedup: true
+          bypassDedup: true,
+          simulate: simulateEmail
         });
       }
 
@@ -2053,7 +2101,8 @@ app.get('/api/offer/decision', async (req, res) => {
           to: targetEmail,
           subject,
           htmlBody: declineHtml,
-          bypassDedup: true
+          bypassDedup: true,
+          simulate: simulateEmail
         });
       }
 
@@ -2649,8 +2698,18 @@ async function checkCloudPendingDispatches() {
 
               let targetLocal = localMatch;
               if (!targetLocal) {
-                targetLocal = { id: c.id || `cand-${Date.now()}`, name: candidateName, email: targetEmail, roleApplied: role, receivedAt: c.receivedAt || new Date().toISOString() };
+                targetLocal = {
+                  id: c.id || `cand-${Date.now()}`,
+                  name: candidateName,
+                  email: targetEmail,
+                  roleApplied: role,
+                  attachmentInfo: c.attachmentInfo,
+                  resumeText: c.resumeText,
+                  receivedAt: c.receivedAt || new Date().toISOString()
+                };
                 localCandidates.unshift(targetLocal);
+              } else if (!targetLocal.attachmentInfo && c.attachmentInfo) {
+                targetLocal.attachmentInfo = c.attachmentInfo;
               }
 
               targetLocal.status = 'SELECTED';
@@ -2703,8 +2762,18 @@ async function checkCloudPendingDispatches() {
 
               let targetLocal = localMatch;
               if (!targetLocal) {
-                targetLocal = { id: c.id || `cand-${Date.now()}`, name: candidateName, email: targetEmail, roleApplied: role, receivedAt: c.receivedAt || new Date().toISOString() };
+                targetLocal = {
+                  id: c.id || `cand-${Date.now()}`,
+                  name: candidateName,
+                  email: targetEmail,
+                  roleApplied: role,
+                  attachmentInfo: c.attachmentInfo,
+                  resumeText: c.resumeText,
+                  receivedAt: c.receivedAt || new Date().toISOString()
+                };
                 localCandidates.unshift(targetLocal);
+              } else if (!targetLocal.attachmentInfo && c.attachmentInfo) {
+                targetLocal.attachmentInfo = c.attachmentInfo;
               }
 
               targetLocal.status = 'REJECTED';
@@ -2804,9 +2873,13 @@ async function checkCloudPendingDispatches() {
               name: candidateName,
               email: targetEmail,
               roleApplied: role,
+              attachmentInfo: c.attachmentInfo,
+              resumeText: c.resumeText,
               receivedAt: c.receivedAt || new Date().toISOString()
             };
             localCandidates.unshift(targetLocal);
+          } else if (!targetLocal.attachmentInfo && c.attachmentInfo) {
+            targetLocal.attachmentInfo = c.attachmentInfo;
           }
 
           targetLocal.testScore = scorePercent;

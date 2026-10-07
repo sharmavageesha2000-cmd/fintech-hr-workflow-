@@ -803,33 +803,85 @@ function updateFilterTabsUI() {
 // Helper: Ensure unique candidates by canonical name + role or email + role
 function deduplicateCandidateArray(list) {
   if (!Array.isArray(list)) return [];
-  const seenKeys = new Set();
-  const uniqueList = [];
+  const statusRank = {
+    'OFFER_ACCEPTED': 60,
+    'OFFER_DECLINED': 55,
+    'OFFER_EXTENDED': 50,
+    'SELECTED': 40,
+    'REJECTED': 30,
+    'SHORTLISTED': 20,
+    'NEW': 10,
+    'APPLIED': 10
+  };
+
+  const keyMap = new Map();
   for (const c of list) {
     if (!c) continue;
     const normName = (c.name || '').toLowerCase().trim().replace(/^(candidate:?|applicant:?|name:?)\s*/i, '').replace(/\s+/g, ' ');
     const normRole = (c.roleApplied || '').toLowerCase().trim();
     const normEmail = (c.email || '').toLowerCase().trim();
-    const isRecruiter = normEmail === 'sharmavageesha2000@gmail.com' || normEmail.includes('recruiter') || normName.includes('vageesha sharma');
 
-    // Skip recruiter or test artifacts
-    if (normName.includes('vageesha sharma') || normName === 'anonymous' || normName === 'failed candidate' || normName === 'obj') continue;
+    // STRICT USER REQUIREMENT: In HR resume dashboard, only candidates who sent/uploaded a resume appear
+    const hasResume = Boolean(c.attachmentInfo?.fileName || (c.resumeText && c.resumeText.length > 30));
+    if (!hasResume) continue;
+
+    // Skip invalid dummy artifacts
+    if (normName === 'anonymous' || normName === 'failed candidate' || normName === 'obj' || normName === 'candidate') continue;
 
     let key = '';
-    if (normName && normName !== 'candidate' && normRole) {
+    if (normName && normRole) {
       key = `name_role::${normName}::${normRole}`;
-    } else if (normEmail && !isRecruiter && normRole) {
+    } else if (normEmail && normEmail !== 'candidate@example.com' && normRole) {
       key = `email_role::${normEmail}::${normRole}`;
     } else {
       key = `id::${c.id || Math.random()}`;
     }
 
-    if (!seenKeys.has(key)) {
-      seenKeys.add(key);
-      uniqueList.push(c);
+    if (keyMap.has(key)) {
+      const existing = keyMap.get(key);
+      const existingRank = Math.max(
+        statusRank[existing.offerStatus] || 0,
+        statusRank[existing.status] || 0,
+        existing.assessmentCompleted ? 35 : 0
+      );
+      const incomingRank = Math.max(
+        statusRank[c.offerStatus] || 0,
+        statusRank[c.status] || 0,
+        c.assessmentCompleted ? 35 : 0
+      );
+
+      // Merge intelligent record preserving test scores, offer statuses, and dates
+      const merged = incomingRank >= existingRank ? { ...existing, ...c } : { ...c, ...existing };
+      merged.assessmentCompleted = Boolean(existing.assessmentCompleted || c.assessmentCompleted);
+      merged.testSubmitted = Boolean(existing.testSubmitted || c.testSubmitted);
+      if (c.testScore !== undefined) merged.testScore = c.testScore;
+      else if (existing.testScore !== undefined) merged.testScore = existing.testScore;
+
+      if (c.testPassed !== undefined) merged.testPassed = c.testPassed;
+      else if (existing.testPassed !== undefined) merged.testPassed = existing.testPassed;
+
+      if (c.assessmentDetails) merged.assessmentDetails = c.assessmentDetails;
+      else if (existing.assessmentDetails) merged.assessmentDetails = existing.assessmentDetails;
+
+      if (c.callLetterDetails) merged.callLetterDetails = c.callLetterDetails;
+      else if (existing.callLetterDetails) merged.callLetterDetails = existing.callLetterDetails;
+
+      if (incomingRank >= existingRank) {
+        merged.status = c.status;
+        merged.offerStatus = c.offerStatus;
+        merged.interviewStatus = c.interviewStatus;
+      } else {
+        merged.status = existing.status;
+        merged.offerStatus = existing.offerStatus;
+        merged.interviewStatus = existing.interviewStatus;
+      }
+
+      keyMap.set(key, merged);
+    } else {
+      keyMap.set(key, c);
     }
   }
-  return uniqueList;
+  return Array.from(keyMap.values());
 }
 
 // Load Candidates from Server
