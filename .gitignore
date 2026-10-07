@@ -1,8 +1,6 @@
 node_modules/
 website/node_modules/
 website/dist/
-uploads/*
-!uploads/.gitkeep
 .DS_Store
 *.log
 .env

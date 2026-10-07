@@ -405,6 +405,7 @@ async function pollCandidateEmails({
           emailHtmlBody: evalResult.emailHtmlBody,
           emailStatus: 'PENDING',
           attachmentInfo: resumeAttachment,
+          resumeText: extractedResumeText,
           receivedAt: parsedMail.date ? parsedMail.date.toISOString() : new Date().toISOString(),
           evaluatedAt: new Date().toISOString(),
           source: 'EMAIL_INBOX_ATTACHMENT'
