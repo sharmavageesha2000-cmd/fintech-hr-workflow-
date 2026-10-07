@@ -1074,6 +1074,68 @@ app.get('/api/candidates/:id', (req, res) => {
   res.json({ success: true, candidate });
 });
 
+// 2b. View or Download Candidate Resume / CV Document
+app.get('/api/candidates/:id/resume', (req, res) => {
+  const candidates = getCandidates(true);
+  const candidate = candidates.find(c => c.id === req.params.id);
+  if (!candidate) {
+    return res.status(404).send('Candidate record not found');
+  }
+
+  const att = candidate.attachmentInfo || {};
+  let targetPath = att.savedPath;
+
+  if (!targetPath || !fs.existsSync(targetPath)) {
+    const rawPath = att.urlPath || att.path || '';
+    if (rawPath) {
+      const fn = path.basename(rawPath);
+      const testPath = path.join(UPLOADS_DIR, fn);
+      if (fs.existsSync(testPath)) {
+        targetPath = testPath;
+      }
+    }
+  }
+
+  if (!targetPath || !fs.existsSync(targetPath)) {
+    if (att.fileName) {
+      const testPath = path.join(UPLOADS_DIR, att.fileName);
+      if (fs.existsSync(testPath)) {
+        targetPath = testPath;
+      } else {
+        try {
+          const files = fs.readdirSync(UPLOADS_DIR);
+          const match = files.find(f => f.endsWith(att.fileName) || f.includes(att.fileName.replace(/\s+/g, '_')));
+          if (match) {
+            targetPath = path.join(UPLOADS_DIR, match);
+          }
+        } catch (e) {}
+      }
+    }
+  }
+
+  if (targetPath && fs.existsSync(targetPath)) {
+    const ext = path.extname(targetPath).toLowerCase();
+    const mimeTypes = {
+      '.pdf': 'application/pdf',
+      '.doc': 'application/msword',
+      '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      '.txt': 'text/plain'
+    };
+    const contentType = mimeTypes[ext] || 'application/octet-stream';
+    const safeName = (candidate.name || 'Candidate').replace(/[^a-zA-Z0-9_-]/g, '_');
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Content-Disposition', `inline; filename="${safeName}_Resume${ext}"`);
+    return res.sendFile(path.resolve(targetPath));
+  }
+
+  if (candidate.resumeText) {
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    return res.send(candidate.resumeText);
+  }
+
+  res.status(404).send('No resume document found for this candidate');
+});
+
 // 3. Delete Candidate
 app.delete('/api/candidates/:id', (req, res) => {
   let candidates = getCandidates(true);

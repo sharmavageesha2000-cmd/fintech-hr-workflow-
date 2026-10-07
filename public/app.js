@@ -884,6 +884,15 @@ function deduplicateCandidateArray(list) {
   return Array.from(keyMap.values());
 }
 
+// Helper: Resolve reliable URL to view/download candidate CV / resume document
+function getCandidateResumeUrl(c) {
+  if (!c) return '#';
+  if (c.id) return `/api/candidates/${c.id}/resume`;
+  if (c.attachmentInfo?.urlPath) return c.attachmentInfo.urlPath;
+  if (c.attachmentInfo?.path) return c.attachmentInfo.path;
+  return '#';
+}
+
 // Load Candidates from Server
 async function loadCandidates(showLoadingToast = false) {
   try {
@@ -1151,9 +1160,10 @@ function renderCandidatesTable() {
       ? `${c.experienceYears} Yr${c.experienceYears === 1 ? '' : 's'}`
       : '1 Yr';
 
+    const resumeUrl = getCandidateResumeUrl(c);
     const resumeLinkHtml = c.attachmentInfo?.fileName
       ? `<div style="font-size:0.73rem; margin-top:3px;">
-          <a href="${c.attachmentInfo.urlPath}" target="_blank" style="color:#0284c7; text-decoration:none; font-weight:600; display:inline-flex; align-items:center; gap:3px;" title="View Attached Resume">
+          <a href="${resumeUrl}" target="_blank" style="color:#0284c7; text-decoration:none; font-weight:600; display:inline-flex; align-items:center; gap:3px;" title="View Attached Resume">
             <i class="fa-solid fa-paperclip"></i> ${escapeHtml(c.attachmentInfo.fileName.slice(0, 24))}
           </a>
         </div>`
@@ -1294,6 +1304,7 @@ function openCandidateDetail(candidate) {
     `;
   }
 
+  const resumeUrl = getCandidateResumeUrl(candidate);
   const resumeDocHtml = candidate.attachmentInfo?.fileName
     ? `<div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:8px; padding:12px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
         <div>
@@ -1302,7 +1313,7 @@ function openCandidateDetail(candidate) {
             <i class="fa-solid fa-file-pdf" style="color:#e11d48;"></i> ${escapeHtml(candidate.attachmentInfo.fileName)}
           </p>
         </div>
-        <a href="${candidate.attachmentInfo.urlPath}" target="_blank" class="btn-secondary-light" style="font-size:0.75rem; padding:4px 12px; color:#0284c7; border-color:#7dd3fc; text-decoration:none; font-weight:600;">
+        <a href="${resumeUrl}" target="_blank" class="btn-secondary-light" style="font-size:0.75rem; padding:4px 12px; color:#0284c7; border-color:#7dd3fc; text-decoration:none; font-weight:600;">
           <i class="fa-solid fa-arrow-down-to-bracket"></i> Download / View Resume
         </a>
       </div>`

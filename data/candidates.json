@@ -1,5 +1,58 @@
 [
   {
+    "id": "cand-1791360292349-3658",
+    "name": "Palak Jain",
+    "email": "manasvipaliwal317@gmail.com",
+    "phone": "Not specified",
+    "education": "MBA",
+    "roleApplied": "Frontend Developer",
+    "experienceYears": 5,
+    "skills": [
+      "General Domain Skills"
+    ],
+    "missingSkills": [
+      "React.js",
+      "JavaScript",
+      "HTML5 & CSS3",
+      "Tailwind CSS",
+      "TypeScript",
+      "Responsive Design",
+      "REST APIs"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 8,
+      "experienceRelevance": 8,
+      "education": 10,
+      "communication": 8
+    },
+    "matchScore": 45,
+    "status": "REJECTED",
+    "interviewStatus": "N/A",
+    "offerStatus": "PENDING",
+    "summary": "Palak Jain applied for Frontend Developer. Profile does not satisfy core job requirements. Missing: React.js, JavaScript, HTML5 & CSS3. Status: REJECTED.",
+    "strengths": [
+      "Clear communication and professional presentation"
+    ],
+    "weaknesses": [
+      "Missing key competencies for Frontend Developer: React.js, JavaScript, HTML5 & CSS3"
+    ],
+    "interviewSchedule": null,
+    "emailSubject": "Update regarding your application for Frontend Developer - Vageesha Sharma",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04);\">\n      <div style=\"background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;\">\n        <span style=\"background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;\">APPLICATION STATUS UPDATE</span>\n        <h2 style=\"margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;\">Application Evaluation &amp; Feedback</h2>\n        <p style=\"margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;\">Role: <strong>Frontend Developer</strong> • Vageesha Sharma Talent Acquisition</p>\n      </div>\n\n      <div style=\"padding: 28px 24px;\">\n        <p style=\"font-size: 15px; line-height: 1.6; margin-top: 0;\">Dear <strong>Palak Jain</strong>,</p>\n        \n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Thank you for applying for the <strong>Frontend Developer</strong> position at our organization and for sharing your resume.\n        </p>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Our technical evaluation team has thoroughly reviewed your background against the active role requirements and competencies for this vacancy.\n        </p>\n\n        <!-- Evaluation Summary Card -->\n        <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 20px 0;\">\n          <div style=\"display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;\">\n            <strong style=\"color: #0f172a; font-size: 15px;\">📊 Screening Evaluation Summary</strong>\n            <span style=\"background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 99px;\">Role Match: 45%</span>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;\">Skills Identified in Your Profile:</span>\n            <div><span style=\"color: #64748b; font-size: 13px;\">No direct core technical skills identified for this role</span></div>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #991b1b; display: block; margin-bottom: 6px;\">Critical Missing Skills for \"Frontend Developer\":</span>\n            <div><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ React.js</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ JavaScript</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ HTML5 & CSS3</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Tailwind CSS</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ TypeScript</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Responsive Design</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ REST APIs</span></div>\n          </div>\n        </div>\n\n        <!-- Resume Gaps & Detailed Feedback -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 20px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #92400e; font-size: 14px; font-weight: 700;\">🔍 Identified Gaps &amp; Resume Analysis</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #78350f; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Candidate background is focused in <strong>Digital Marketing & Paid Media</strong> rather than <strong>Frontend Developer</strong>.</li><li style=\"margin-bottom: 6px;\">Candidate background is in digital advertising and SEO campaigns, lacking core software programming competencies.</li>\n          </ul>\n        </div>\n\n        <!-- Recommendations for Future -->\n        <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px; margin-bottom: 24px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #166534; font-size: 14px; font-weight: 700;\">💡 Actionable Recommendations to Strengthen Your Profile</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #14532d; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Apply for roles aligned with <strong>Digital Marketing & Paid Media</strong> or build dedicated projects in <strong>React.js, JavaScript, HTML5 & CSS3</strong>.</li><li style=\"margin-bottom: 6px;\">Include live project links, portfolio dashboards, and quantifiable metrics in your resume.</li>\n          </ul>\n        </div>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          At this stage, we are moving forward with candidates whose technical stack more directly matches our immediate requirements for the <strong>Frontend Developer</strong> vacancy.\n        </p>\n\n        <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">\n          We will keep your resume on file for future openings that match your specific profile. We wish you great success in your career.\n        </p>\n\n        <div style=\"margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;\">\n          <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n          <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;\">sharmavageesha2000@gmail.com</span>\n        </div>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Palak Jain Resume.docx",
+      "fileSize": 15300,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1791360292343-Palak_Jain_Resume.docx",
+      "urlPath": "/uploads/1791360292343-Palak_Jain_Resume.docx",
+      "path": "/uploads/1791360292343-Palak_Jain_Resume.docx"
+    },
+    "receivedAt": "2026-10-07T08:03:19.000Z",
+    "evaluatedAt": "2026-10-07T08:04:53.895Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-10-07T08:05:39.922Z"
+  },
+  {
     "id": "cand-1791315691355-4095",
     "name": "Vageesha Sharma",
     "email": "sharmavageesha2000@gmail.com",
@@ -53,7 +106,8 @@
       "fileName": "Vageesha_Sharma_Resume_Digital_Marketing.pdf",
       "fileSize": 110300,
       "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1791317077757-Vageesha_Sharma_Resume_Digital_Marketing.pdf",
-      "urlPath": "/uploads/1791317077757-Vageesha_Sharma_Resume_Digital_Marketing.pdf"
+      "urlPath": "/uploads/1791317077757-Vageesha_Sharma_Resume_Digital_Marketing.pdf",
+      "path": "/uploads/1791317077757-Vageesha_Sharma_Resume_Digital_Marketing.pdf"
     },
     "receivedAt": "2026-10-06T20:37:04.600Z",
     "evaluatedAt": "2026-10-06T20:37:04.600Z",
@@ -72,7 +126,6 @@
       "React.js",
       "JavaScript",
       "HTML5 & CSS3",
-      "TypeScript",
       "Responsive Design",
       "REST APIs"
     ],
@@ -85,7 +138,7 @@
       "education": 15,
       "communication": 15
     },
-    "matchScore": 77,
+    "matchScore": 79,
     "status": "SELECTED",
     "interviewStatus": "COMPLETED",
     "offerStatus": "OFFER_ACCEPTED",
@@ -109,10 +162,11 @@
     "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 14px; background: #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.04);\">\n      <div style=\"text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9;\">\n        <span style=\"background: #ecfdf5; color: #047857; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 99px; display: inline-block; margin-bottom: 10px; border: 1px solid #a7f3d0;\">RESUME SHORTLISTED</span>\n        <h2 style=\"color: #0f172a; margin: 0 0 6px 0; font-size: 22px; font-weight: 800;\">🎉 Congratulations, Rohan Sharma!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 14.5px;\">Your application for <strong>Frontend Developer</strong> has been approved for the next stage.</p>\n      </div>\n\n      <p style=\"font-size: 15px; line-height: 1.6; color: #334155;\">Dear <strong>Rohan Sharma</strong>,</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">Thank you for applying for the <strong>Frontend Developer</strong> position at Finova Technologies. We thoroughly reviewed your resume and were impressed by your <strong>2 years of relevant experience</strong> and proficiency in <strong>React.js, JavaScript, HTML5 & CSS3, TypeScript, Responsive Design</strong>.</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">To finalize your selection and generate your official employment offer, you are invited to complete your <strong>Online Technical Assessment</strong>.</p>\n\n      <!-- Assessment Card -->\n      <div style=\"background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%); border: 1.5px solid #5eead4; border-radius: 12px; padding: 22px; margin: 24px 0;\">\n        <h3 style=\"margin: 0 0 14px 0; color: #0f766e; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;\">\n          📝 Technical Assessment Details (Frontend Developer)\n        </h3>\n        \n        <table style=\"width: 100%; font-size: 13.5px; color: #1e293b; border-collapse: collapse; margin-bottom: 16px;\">\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b; width: 42%;\"><strong>Role Domain:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #0f766e;\">Frontend Developer (20 Domain MCQs)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Time Duration:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700;\">25 Minutes</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Passing Requirement:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 800; color: #047857;\">80% or above (16 / 20 correct)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Automated Outcome:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #4338ca;\">Immediate Official Job Offer &amp; Call Letter Dispatch upon passing</td>\n          </tr>\n        </table>\n\n        <!-- Anti-Cheating & Proctoring Notice -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; font-size: 12.5px; color: #92400e; line-height: 1.5;\">\n          <strong>🛡️ Anti-Cheating &amp; Proctoring Regulations:</strong>\n          <ul style=\"margin: 6px 0 0 0; padding-left: 18px;\">\n            <li>Copy/paste and right-click are strictly disabled in the test portal.</li>\n            <li>Do not switch browser tabs or open secondary windows on mobile or laptop. Violations will be recorded and may auto-submit your test.</li>\n          </ul>\n        </div>\n\n        <!-- CTA Button -->\n        <div style=\"text-align: center;\">\n          <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Rohan%20Sharma&email=sharmavageesha2000%40gmail.com&id=cand-1790678374409-979&token=tkn_1790678374411_im132pw\" target=\"_blank\" style=\"background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: #ffffff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 15px; display: inline-block; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);\">\n            🚀 Start Online Technical Assessment (20 MCQs)\n          </a>\n        </div>\n        <p style=\"text-align: center; font-size: 12px; color: #64748b; margin: 10px 0 0 0;\">Link: <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Rohan%20Sharma&email=sharmavageesha2000%40gmail.com&id=cand-1790678374409-979&token=tkn_1790678374411_im132pw\" target=\"_blank\" style=\"color: #0f766e;\">https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Rohan%20Sharma&email=sharmavageesha2000%40gmail.com&id=cand-1790678374409-979&token=tkn_1790678374411_im132pw</a></p>\n      </div>\n\n      <p style=\"font-size: 14px; color: #475569; line-height: 1.6;\">Please take the test in a quiet environment on a reliable internet connection. We wish you the very best of luck!</p>\n\n      <div style=\"margin-top: 26px; border-top: 1px solid #e2e8f0; padding-top: 16px;\">\n        <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n        <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;\">sharmavageesha2000@gmail.com</span>\n      </div>\n    </div>\n  ",
     "emailStatus": "SENT",
     "attachmentInfo": {
-      "fileName": "Frontend_Developer_1_3_Years_Resume.pdf",
-      "fileSize": 26794,
-      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1790678374406-Frontend_Developer_1_3_Years_Resume.pdf",
-      "urlPath": "/uploads/1790678374406-Frontend_Developer_1_3_Years_Resume.pdf"
+      "fileName": "Full_Stack_AI_Engineer Rohan Sharma_Resume (2).pdf",
+      "fileSize": 27134,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1791360502016-Full_Stack_AI_Engineer_Rohan_Sharma_Resume__2_.pdf",
+      "urlPath": "/uploads/1791360502016-Full_Stack_AI_Engineer_Rohan_Sharma_Resume__2_.pdf",
+      "path": "/uploads/1791360502016-Full_Stack_AI_Engineer_Rohan_Sharma_Resume__2_.pdf"
     },
     "receivedAt": "2026-09-29T10:39:14.000Z",
     "evaluatedAt": "2026-09-29T10:39:43.406Z",
@@ -213,7 +267,8 @@
       "fileName": "Business_Analyst_Resume_2_to_3_Years.pdf",
       "fileSize": 35960,
       "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788693000506-Business_Analyst_Resume_2_to_3_Years.pdf",
-      "urlPath": "/uploads/1788693000506-Business_Analyst_Resume_2_to_3_Years.pdf"
+      "urlPath": "/uploads/1788693000506-Business_Analyst_Resume_2_to_3_Years.pdf",
+      "path": "/uploads/1788693000506-Business_Analyst_Resume_2_to_3_Years.pdf"
     },
     "evaluatedAt": "2026-09-06T11:10:10.627Z",
     "source": "EMAIL_INBOX_ATTACHMENT",
@@ -302,7 +357,8 @@
       "fileName": "Full_Stack_AI_Engineer_Resume (1).pdf",
       "fileSize": 27134,
       "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788677494876-Full_Stack_AI_Engineer_Resume__1_.pdf",
-      "urlPath": "/uploads/1788677494876-Full_Stack_AI_Engineer_Resume__1_.pdf"
+      "urlPath": "/uploads/1788677494876-Full_Stack_AI_Engineer_Resume__1_.pdf",
+      "path": "/uploads/1788677494876-Full_Stack_AI_Engineer_Resume__1_.pdf"
     },
     "receivedAt": "2026-09-06T06:51:09.000Z",
     "evaluatedAt": "2026-09-06T06:51:35.513Z",
@@ -377,7 +433,8 @@
       "fileName": "Data_Analyst_Resume_3_to_5_Years.pdf",
       "fileSize": 39530,
       "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788589755161-Data_Analyst_Resume_3_to_5_Years.pdf",
-      "urlPath": "/uploads/1788589755161-Data_Analyst_Resume_3_to_5_Years.pdf"
+      "urlPath": "/uploads/1788589755161-Data_Analyst_Resume_3_to_5_Years.pdf",
+      "path": "/uploads/1788589755161-Data_Analyst_Resume_3_to_5_Years.pdf"
     },
     "receivedAt": "2026-09-05T06:25:44.000Z",
     "evaluatedAt": "2026-09-05T06:29:15.644Z",
@@ -428,7 +485,8 @@
       "fileName": "c8468e9a-aca5-4d9f-9c5b-1932d36f54e1.pdf",
       "fileSize": 77415,
       "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788257966217-c8468e9a-aca5-4d9f-9c5b-1932d36f54e1.pdf",
-      "urlPath": "/uploads/1788257966217-c8468e9a-aca5-4d9f-9c5b-1932d36f54e1.pdf"
+      "urlPath": "/uploads/1788257966217-c8468e9a-aca5-4d9f-9c5b-1932d36f54e1.pdf",
+      "path": "/uploads/1788257966217-c8468e9a-aca5-4d9f-9c5b-1932d36f54e1.pdf"
     },
     "receivedAt": "2026-09-01T10:19:18.000Z",
     "evaluatedAt": "2026-09-01T10:19:26.719Z",
@@ -478,7 +536,8 @@
     "attachmentInfo": {
       "fileName": "4_Kabir_Singh_AI_Prompt_Engineer_Fresher (1).pdf",
       "fileSize": 184500,
-      "path": "/uploads/1788200567348-4_Kabir_Singh_AI_Prompt_Engineer_Fresher.pdf"
+      "path": "/uploads/1788200567348-4_Kabir_Singh_AI_Prompt_Engineer_Fresher.pdf",
+      "urlPath": "/uploads/1788200567348-4_Kabir_Singh_AI_Prompt_Engineer_Fresher.pdf"
     },
     "receivedAt": "2026-09-01T07:50:58.232Z",
     "evaluatedAt": "2026-09-01T08:50:58.233Z",
@@ -529,7 +588,8 @@
       "fileName": "AI_Workflow_Automation_Specialist_Resume.pdf",
       "fileSize": 26930,
       "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788252594999-AI_Workflow_Automation_Specialist_Resume.pdf",
-      "urlPath": "/uploads/1788252594999-AI_Workflow_Automation_Specialist_Resume.pdf"
+      "urlPath": "/uploads/1788252594999-AI_Workflow_Automation_Specialist_Resume.pdf",
+      "path": "/uploads/1788252594999-AI_Workflow_Automation_Specialist_Resume.pdf"
     },
     "receivedAt": "2026-09-01T06:26:39.000Z",
     "evaluatedAt": "2026-09-01T08:49:58.821Z",
@@ -586,7 +646,8 @@
     "attachmentInfo": {
       "fileName": "Frontend_Developer_1_3_Years_Resume.pdf",
       "fileSize": 195000,
-      "path": "/uploads/1788243684117-Frontend_Developer_1_3_Years_Resume.pdf"
+      "path": "/uploads/1788243684117-Frontend_Developer_1_3_Years_Resume.pdf",
+      "urlPath": "/uploads/1788243684117-Frontend_Developer_1_3_Years_Resume.pdf"
     },
     "receivedAt": "2026-09-01T06:50:58.233Z",
     "evaluatedAt": "2026-09-01T08:50:58.233Z",
