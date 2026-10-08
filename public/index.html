@@ -20,7 +20,7 @@
 
   <div class="app-container">
     <!-- ================= Sidebar ================= -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="appSidebar">
       <div>
         <!-- Brand Logo -->
         <div class="sidebar-brand">
@@ -31,6 +31,7 @@
             <h2>HR SmartFlow</h2>
             <p>Smart HR. Stronger Teams.</p>
           </div>
+          <button class="mobile-close-btn" id="mobileSidebarCloseBtn" aria-label="Close navigation"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
         <!-- Menu Navigation -->
@@ -79,13 +80,21 @@
       </div>
     </aside>
 
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
     <!-- ================= Main Content ================= -->
     <main class="main-wrapper">
       <!-- Top Header Bar -->
       <header class="top-header">
         <div class="header-title-group">
-          <h1>Startup Hiring Hub <span class="wave-hand">👋</span></h1>
-          <p>Welcome back, <strong>Vageesha Sharma</strong>! Manage your candidate pipeline, interviews &amp; job offers.</p>
+          <button class="mobile-menu-btn" id="mobileMenuToggleBtn" aria-label="Open navigation menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="header-titles">
+            <h1>Startup Hiring Hub <span class="wave-hand">👋</span></h1>
+            <p>Welcome back, <strong>Vageesha Sharma</strong>! Manage your candidate pipeline, interviews &amp; job offers.</p>
+          </div>
         </div>
 
         <div class="header-search">
@@ -531,7 +540,10 @@
       <div class="modal-body" id="modalBodyContent">
         <!-- Rendered profile details -->
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <button type="button" class="btn-primary-purple" id="modalResendEmailBtn" style="padding:0.45rem 1rem; font-size:0.85rem;">
+          <i class="fa-solid fa-paper-plane"></i> Resend Assessment / Offer Email
+        </button>
         <button class="btn-secondary-light" id="modalCloseFooterBtn">Close</button>
       </div>
     </div>

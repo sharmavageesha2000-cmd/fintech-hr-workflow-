@@ -7,6 +7,7 @@ let allCandidates = [];
 let allJobs = [];
 let activeFilter = 'ALL';
 let currentSettings = {};
+let currentViewingCandidateId = null;
 
 // Pagination State for Candidate Table
 let candidateCurrentPage = 1;
@@ -102,9 +103,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Setup Listeners
 function setupEventListeners() {
+  // Mobile Sidebar Drawer
+  const mobileMenuToggleBtn = document.getElementById('mobileMenuToggleBtn');
+  const mobileSidebarCloseBtn = document.getElementById('mobileSidebarCloseBtn');
+  const appSidebar = document.getElementById('appSidebar');
+  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+  function openMobileSidebar() {
+    if (appSidebar) appSidebar.classList.add('open');
+    if (sidebarBackdrop) sidebarBackdrop.classList.add('active');
+  }
+
+  function closeMobileSidebar() {
+    if (appSidebar) appSidebar.classList.remove('open');
+    if (sidebarBackdrop) sidebarBackdrop.classList.remove('active');
+  }
+
+  if (mobileMenuToggleBtn) mobileMenuToggleBtn.addEventListener('click', openMobileSidebar);
+  if (mobileSidebarCloseBtn) mobileSidebarCloseBtn.addEventListener('click', closeMobileSidebar);
+  if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeMobileSidebar);
+
   // Sidebar Navigation Links
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) closeMobileSidebar();
       const href = link.getAttribute('href');
       if (href && (href.startsWith('/') || href.startsWith('http'))) {
         // Let external or separate SPA page links open normally
@@ -214,9 +236,17 @@ function setupEventListeners() {
   if (closeOfferModalBtn) closeOfferModalBtn.addEventListener('click', () => closeModal(offerModal));
   if (cancelOfferModalBtn) cancelOfferModalBtn.addEventListener('click', () => closeModal(offerModal));
 
-  // Candidate Modal Close
+  // Candidate Modal Close & Actions
   if (closeCandidateModalBtn) closeCandidateModalBtn.addEventListener('click', () => closeModal(candidateModal));
   if (modalCloseFooterBtn) modalCloseFooterBtn.addEventListener('click', () => closeModal(candidateModal));
+  const modalResendEmailBtn = document.getElementById('modalResendEmailBtn');
+  if (modalResendEmailBtn) {
+    modalResendEmailBtn.addEventListener('click', () => {
+      if (currentViewingCandidateId) {
+        window.resendCandidateEmail(currentViewingCandidateId);
+      }
+    });
+  }
 
   // Settings Modal Close
   if (headerSettingsBtn) headerSettingsBtn.addEventListener('click', () => openModal(settingsModal));
@@ -1227,6 +1257,9 @@ function renderCandidatesTable() {
             <button class="btn-secondary-light" style="padding:0.3rem 0.55rem; font-size:0.75rem;" onclick="viewCandidateDetails('${c.id}')" title="View Full AI Evaluation & Resume Details">
               <i class="fa-solid fa-eye"></i>
             </button>
+            <button class="btn-secondary-light" style="padding:0.3rem 0.55rem; font-size:0.75rem; color:#4f46e5;" onclick="resendCandidateEmail('${c.id}')" title="Resend Assessment Test Link or Offer Email">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
             <button class="btn-secondary-light" style="padding:0.3rem 0.5rem; font-size:0.75rem; color:#ef4444;" onclick="deleteCandidate('${c.id}')" title="Delete Candidate">
               <i class="fa-regular fa-trash-can"></i>
             </button>
@@ -1399,8 +1432,42 @@ function openCandidateDetail(candidate) {
     </div>
   `;
 
+  currentViewingCandidateId = candidate.id;
   openModal(candidateModal);
 }
+
+// Resend Email to Candidate (Assessment Link or Offer Letter or Feedback)
+window.resendCandidateEmail = async function(candId) {
+  const triggerBtn = window.event?.currentTarget;
+  const originalHtml = triggerBtn ? triggerBtn.innerHTML : '';
+  if (triggerBtn) {
+    triggerBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+    triggerBtn.disabled = true;
+  }
+  try {
+    showToast('Dispatching email via Gmail SMTP...', 'info');
+    const res = await fetch(`/api/candidates/${candId}/resend-email`, { method: 'POST' });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`Email delivered successfully to ${data.deliveredTo}!`, 'success');
+      loadCandidates(false);
+      // If candidate modal is open and viewing this candidate, refresh view
+      if (currentViewingCandidateId === candId) {
+        const updated = allCandidates.find(c => c.id === candId);
+        if (updated) viewCandidateDetails(candId);
+      }
+    } else {
+      showToast(`Email delivery failed: ${data.error || 'SMTP issue'}`, 'error');
+    }
+  } catch (err) {
+    showToast(`Error sending email: ${err.message}`, 'error');
+  } finally {
+    if (triggerBtn) {
+      triggerBtn.innerHTML = originalHtml;
+      triggerBtn.disabled = false;
+    }
+  }
+};
 
 // Delete Candidate
 window.deleteCandidate = async function(candId) {

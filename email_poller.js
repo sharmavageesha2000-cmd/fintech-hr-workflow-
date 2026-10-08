@@ -351,14 +351,22 @@ async function pollCandidateEmails({
 
         // Resolve candidate email from sender or resume text
         let effectiveCandidateEmail = fromAddress;
-        if (!effectiveCandidateEmail || !effectiveCandidateEmail.includes('@')) {
-          const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
-          const found = (extractedResumeText + ' ' + bodyText).match(emailRegex);
-          if (found && found.length > 0) {
-            effectiveCandidateEmail = found[0].trim();
+        const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/gi;
+        const foundEmails = (extractedResumeText + ' ' + bodyText).match(emailRegex) || [];
+        
+        // Find personal email in resume text or body that is not recruiter email or service address
+        const candidateResumeEmail = foundEmails.find(em => {
+          const lower = em.toLowerCase().trim();
+          return lower !== recruiterEmail.toLowerCase().trim() && 
+                 !blockedSenderPatterns.some(pat => lower.includes(pat));
+        });
+
+        if (!effectiveCandidateEmail || !effectiveCandidateEmail.includes('@') || effectiveCandidateEmail.toLowerCase() === recruiterEmail.toLowerCase()) {
+          if (candidateResumeEmail) {
+            effectiveCandidateEmail = candidateResumeEmail.trim();
           }
         }
-        effectiveCandidateEmail = effectiveCandidateEmail || recruiterEmail;
+        effectiveCandidateEmail = effectiveCandidateEmail || candidateResumeEmail || fromAddress || recruiterEmail;
 
         // Detect job role and candidate name
         const detectedCleanRole = cleanAndExtractJobRole(subject || resumeAttachment.fileName, extractedResumeText || bodyText);

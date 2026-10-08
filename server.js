@@ -426,21 +426,13 @@ function sendNotificationEmail({ to, subject, htmlBody, bypassDedup = false, fro
   isSmtpPending = true;
   return new Promise((resolve) => {
     smtpDispatchMutex = smtpDispatchMutex.then(async () => {
-      // If called from the active poller, do not wait for isPollingActive to avoid self-deadlock
-      if (!fromPoller) {
-        let waitCount = 0;
-        while (isPollingActive && waitCount < 50) {
-          await new Promise(r => setTimeout(r, 200));
-          waitCount++;
-        }
-      }
-      // Cooldown to let any previous IMAP connection cleanly disconnect on Gmail server
-      await new Promise(r => setTimeout(r, 400));
+      // Small sequential cooldown to protect socket
+      await new Promise(r => setTimeout(r, 150));
 
       isSmtpDispatching = true;
       try {
         const result = await doSendNotificationEmail({ to, subject, htmlBody, bypassDedup, simulate });
-        await new Promise(r => setTimeout(r, 500));
+        await new Promise(r => setTimeout(r, 200));
         resolve(result);
       } catch (err) {
         resolve({ success: false, error: err.message });
@@ -452,7 +444,7 @@ function sendNotificationEmail({ to, subject, htmlBody, bypassDedup = false, fro
   });
 }
 
-// Internal: Send Email via Nodemailer (Multi-protocol: Gmail Service + SSL 465 + STARTTLS 587)
+// Internal: Send Email via Nodemailer (Multi-protocol: Gmail Service + SSL 465 + STARTTLS 587 with IPv4 support)
 async function doSendNotificationEmail({ to, subject, htmlBody, bypassDedup = false, simulate = false }) {
   const settings = getSettings();
   const recruiterEmail = settings.recruiterEmail || process.env.RECRUITER_EMAIL || 'sharmavageesha2000@gmail.com';
@@ -487,28 +479,41 @@ async function doSendNotificationEmail({ to, subject, htmlBody, bypassDedup = fa
       subject
     };
   }
-  DISPATCHED_EMAILS_CACHE.set(dedupKey, Date.now());
 
   const transportConfigs = [
     { 
-      label: 'smtp.gmail.com:465 (Standard Direct SSL)',
+      label: 'Gmail Service (IPv4 Direct)',
+      service: 'gmail',
+      family: 4,
+      auth: { user: recruiterEmail, pass: appPassword },
+      tls: { rejectUnauthorized: false },
+      connectionTimeout: 12000,
+      greetingTimeout: 10000,
+      socketTimeout: 20000
+    },
+    { 
+      label: 'smtp.gmail.com:465 (Standard Direct SSL, IPv4)',
       host: 'smtp.gmail.com', 
       port: 465, 
       secure: true, 
+      family: 4,
       auth: { user: recruiterEmail, pass: appPassword },
-      connectionTimeout: 15000,
-      greetingTimeout: 12000,
-      socketTimeout: 25000
+      tls: { rejectUnauthorized: false },
+      connectionTimeout: 12000,
+      greetingTimeout: 10000,
+      socketTimeout: 20000
     },
     { 
-      label: 'smtp.gmail.com:587 (STARTTLS)',
+      label: 'smtp.gmail.com:587 (STARTTLS, IPv4)',
       host: 'smtp.gmail.com', 
       port: 587, 
       secure: false, 
+      family: 4,
       auth: { user: recruiterEmail, pass: appPassword },
-      connectionTimeout: 15000,
-      greetingTimeout: 12000,
-      socketTimeout: 25000
+      tls: { rejectUnauthorized: false },
+      connectionTimeout: 12000,
+      greetingTimeout: 10000,
+      socketTimeout: 20000
     }
   ];
 
@@ -527,6 +532,7 @@ async function doSendNotificationEmail({ to, subject, htmlBody, bypassDedup = fa
       });
       console.log(`[Gmail SMTP] ✅ Delivered successfully via ${label}! Message ID: ${info.messageId}`);
       try { transporter.close(); } catch (e) {}
+      DISPATCHED_EMAILS_CACHE.set(dedupKey, Date.now());
       return {
         success: true,
         simulated: false,
@@ -541,7 +547,7 @@ async function doSendNotificationEmail({ to, subject, htmlBody, bypassDedup = fa
       }
       lastError = error;
       console.warn(`[Gmail SMTP Warning] Method ${i + 1} (${label}) failed: ${error.message}`);
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise(r => setTimeout(r, 600));
     }
   }
 
@@ -671,6 +677,7 @@ async function doSendNotificationEmail({ to, subject, htmlBody, bypassDedup = fa
   }
 
   console.error('[Gmail SMTP Error] All dispatch methods failed:', lastError?.message);
+  DISPATCHED_EMAILS_CACHE.delete(dedupKey);
   return {
     success: false,
     simulated: false,
@@ -1585,11 +1592,8 @@ app.post('/api/assessment/submit', async (req, res) => {
 
       const subject = `🎉 Congratulations! Job Offer & Selection Intent: ${targetCandidate.roleApplied} - Finova Technologies`;
 
-      if (process.env.RENDER) {
-        console.log(`[Assessment Engine] ☁️ Cloud instance detected. Flagging Selection Offer for Local SMTP Bridge to: ${targetEmail}`);
-        emailDispatch = { success: false, pendingCloudBridge: true };
-      } else if (targetEmail && targetEmail.includes('@')) {
-        console.log(`[Assessment Engine] 🚀 Dispatching Selection Offer Email via SMTP immediately to: ${targetEmail}`);
+      if (targetEmail && targetEmail.includes('@') && targetEmail !== 'candidate@example.com') {
+        console.log(`[Assessment Engine] 🚀 Dispatching Selection Offer Email via SMTP immediately to: ${targetEmail}...`);
         emailDispatch = await sendNotificationEmail({
           to: targetEmail,
           subject,
@@ -1598,6 +1602,10 @@ app.post('/api/assessment/submit', async (req, res) => {
           simulate: simulateEmail
         });
         console.log(`[Assessment Engine] Selection Offer SMTP Result:`, emailDispatch);
+        if ((!emailDispatch || !emailDispatch.success) && process.env.RENDER) {
+          console.log(`[Assessment Engine] ☁️ Cloud direct dispatch fallback: Flagging Selection Offer for Local SMTP Bridge to: ${targetEmail}`);
+          emailDispatch = { success: false, pendingCloudBridge: true, error: emailDispatch?.error };
+        }
       } else {
         console.warn(`[Assessment Engine Warning] No recipient email specified for candidate "${targetCandidate.name}".`);
         emailDispatch = { success: false, error: 'No recipient email provided' };
@@ -1649,11 +1657,8 @@ app.post('/api/assessment/submit', async (req, res) => {
 
       const subject = `📊 Technical Assessment Result & Performance Feedback: ${targetCandidate.roleApplied} - Finova Technologies`;
 
-      if (process.env.RENDER) {
-        console.log(`[Assessment Engine] ☁️ Cloud instance detected. Flagging Assessment Feedback for Local SMTP Bridge to: ${targetEmail}`);
-        emailDispatch = { success: false, pendingCloudBridge: true };
-      } else if (targetEmail && targetEmail.includes('@')) {
-        console.log(`[Assessment Engine] 🚀 Dispatching Assessment Feedback email via SMTP immediately to: ${targetEmail}`);
+      if (targetEmail && targetEmail.includes('@') && targetEmail !== 'candidate@example.com') {
+        console.log(`[Assessment Engine] 🚀 Dispatching Assessment Feedback email via SMTP immediately to: ${targetEmail}...`);
         emailDispatch = await sendNotificationEmail({
           to: targetEmail,
           subject,
@@ -1662,6 +1667,10 @@ app.post('/api/assessment/submit', async (req, res) => {
           simulate: simulateEmail
         });
         console.log(`[Assessment Engine] Assessment Feedback SMTP Result:`, emailDispatch);
+        if ((!emailDispatch || !emailDispatch.success) && process.env.RENDER) {
+          console.log(`[Assessment Engine] ☁️ Cloud direct dispatch fallback: Flagging Assessment Feedback for Local SMTP Bridge to: ${targetEmail}`);
+          emailDispatch = { success: false, pendingCloudBridge: true, error: emailDispatch?.error };
+        }
       } else {
         console.warn(`[Assessment Engine Warning] No recipient email specified for candidate "${targetCandidate.name}".`);
         emailDispatch = { success: false, error: 'No recipient email provided' };
@@ -2096,12 +2105,8 @@ app.get('/api/offer/decision', async (req, res) => {
 
       // 3. Auto-dispatch Official Call Letter via SMTP
       let emailDispatch = null;
-      if (process.env.RENDER) {
-        console.log(`[Offer Decision Engine] ☁️ Cloud instance detected. Flagging Call Letter for Local SMTP Bridge to: ${targetEmail}`);
-        candidate.pendingCallLetterDispatch = true;
-        emailDispatch = { success: false, pendingCloudBridge: true };
-      } else if (targetEmail && targetEmail.includes('@') && targetEmail !== 'candidate@example.com') {
-        console.log(`[Offer Decision Engine] 🚀 Candidate "${candidate.name}" ACCEPTED offer! Auto-dispatching signed Official Call Letter to: ${targetEmail}`);
+      if (targetEmail && targetEmail.includes('@') && targetEmail !== 'candidate@example.com') {
+        console.log(`[Offer Decision Engine] 🚀 Candidate "${candidate.name}" ACCEPTED offer! Auto-dispatching signed Official Call Letter to: ${targetEmail}...`);
         emailDispatch = await sendNotificationEmail({
           to: targetEmail,
           subject,
@@ -2109,6 +2114,12 @@ app.get('/api/offer/decision', async (req, res) => {
           bypassDedup: true,
           simulate: simulateEmail
         });
+        console.log(`[Offer Decision Engine] Call Letter SMTP Result:`, emailDispatch);
+        if ((!emailDispatch || !emailDispatch.success) && process.env.RENDER) {
+          console.log(`[Offer Decision Engine] ☁️ Cloud direct dispatch fallback: Flagging Call Letter for Local SMTP Bridge to: ${targetEmail}`);
+          candidate.pendingCallLetterDispatch = true;
+          emailDispatch = { success: false, pendingCloudBridge: true, error: emailDispatch?.error };
+        }
       }
 
       candidate.callLetterDetails = {
@@ -2153,12 +2164,8 @@ app.get('/api/offer/decision', async (req, res) => {
 
       // 3. Auto-dispatch Decline Acknowledgement via SMTP
       let emailDispatch = null;
-      if (process.env.RENDER) {
-        console.log(`[Offer Decision Engine] ☁️ Cloud instance detected. Flagging Decline Acknowledgement for Local SMTP Bridge to: ${targetEmail}`);
-        candidate.pendingDeclineDispatch = true;
-        emailDispatch = { success: false, pendingCloudBridge: true };
-      } else if (targetEmail && targetEmail.includes('@') && targetEmail !== 'candidate@example.com') {
-        console.log(`[Offer Decision Engine] ℹ️ Candidate "${candidate.name}" DECLINED offer. Auto-dispatching polite acknowledgement to: ${targetEmail}`);
+      if (targetEmail && targetEmail.includes('@') && targetEmail !== 'candidate@example.com') {
+        console.log(`[Offer Decision Engine] ℹ️ Candidate "${candidate.name}" DECLINED offer. Auto-dispatching polite acknowledgement to: ${targetEmail}...`);
         emailDispatch = await sendNotificationEmail({
           to: targetEmail,
           subject,
@@ -2166,6 +2173,12 @@ app.get('/api/offer/decision', async (req, res) => {
           bypassDedup: true,
           simulate: simulateEmail
         });
+        console.log(`[Offer Decision Engine] Decline Acknowledgement SMTP Result:`, emailDispatch);
+        if ((!emailDispatch || !emailDispatch.success) && process.env.RENDER) {
+          console.log(`[Offer Decision Engine] ☁️ Cloud direct dispatch fallback: Flagging Decline Acknowledgement for Local SMTP Bridge to: ${targetEmail}`);
+          candidate.pendingDeclineDispatch = true;
+          emailDispatch = { success: false, pendingCloudBridge: true, error: emailDispatch?.error };
+        }
       }
 
       candidate.declineDetails = {
@@ -2264,6 +2277,99 @@ app.post('/api/candidates/:id/complete-interview', async (req, res) => {
     dispatchResult,
     message: `Interview marked as COMPLETED! Official Call Letter sent to ${candidate.email}`
   });
+});
+
+// 6b. Resend Email to Candidate (Assessment Link or Offer Letter or Feedback)
+app.post('/api/candidates/:id/resend-email', async (req, res) => {
+  try {
+    const candidates = getCandidates(true);
+    const index = candidates.findIndex(c => c.id === req.params.id);
+    if (index === -1) {
+      return res.status(404).json({ success: false, error: 'Candidate not found' });
+    }
+
+    const candidate = candidates[index];
+    const targetEmail = (candidate.email || '').trim();
+
+    if (!targetEmail || !targetEmail.includes('@') || targetEmail === 'candidate@example.com') {
+      return res.status(400).json({ success: false, error: 'Candidate does not have a valid email address.' });
+    }
+
+    let subject = candidate.emailSubject;
+    let htmlBody = candidate.emailHtmlBody;
+
+    // If candidate has an accepted offer or call letter details, send official call letter
+    if (candidate.offerStatus === 'OFFER_ACCEPTED' || candidate.callLetterDetails?.type === 'FINAL_OFFER_LETTER') {
+      const jobDefaults = getJobOfferDefaults(candidate.roleApplied);
+      subject = `📜 Official Employment Offer Letter & Call Letter: ${candidate.roleApplied} - Finova Technologies`;
+      htmlBody = generateOfficialCallLetterHtml({
+        candidateName: candidate.name,
+        roleApplied: candidate.roleApplied,
+        joiningDate: candidate.callLetterDetails?.joiningDate || generateFutureJoiningDate(18),
+        ctcPackage: candidate.callLetterDetails?.ctcPackage || jobDefaults.ctcPackage,
+        reportingTo: candidate.callLetterDetails?.reportingTo || jobDefaults.reportingTo,
+        workMode: candidate.callLetterDetails?.workMode || jobDefaults.workMode,
+        offerRefId: candidate.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`
+      });
+    } else if (candidate.offerStatus === 'OFFER_EXTENDED' || ((candidate.testScore >= 80 || candidate.testPassed === true) && !candidate.callLetterSentAt)) {
+      // Send selection intent & provisional offer
+      const jobDefaults = getJobOfferDefaults(candidate.roleApplied);
+      const offerRefId = candidate.offerRefId || `HR-OFFER-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      subject = `🎉 Congratulations! Job Offer & Selection Intent: ${candidate.roleApplied} - Finova Technologies`;
+      htmlBody = generateSelectionOfferEmailHtml({
+        candidateName: candidate.name,
+        candidateId: candidate.id,
+        candidateEmail: targetEmail,
+        roleApplied: candidate.roleApplied,
+        department: jobDefaults.matchedJob?.department || 'Engineering & Technology',
+        skills: jobDefaults.matchedJob?.skills || [],
+        description: jobDefaults.matchedJob?.description || '',
+        ctcPackage: jobDefaults.ctcPackage,
+        workMode: jobDefaults.workMode,
+        reportingTo: jobDefaults.reportingTo,
+        joiningDate: generateFutureJoiningDate(18),
+        decisionBaseUrl: (process.env.APP_BASE_URL || 'https://hr-smartflow-automation.onrender.com'),
+        offerRefId
+      });
+    } else if (!htmlBody || !subject) {
+      // Re-generate assessment invitation or feedback
+      const cleanRole = cleanAndExtractJobRole(candidate.roleApplied);
+      subject = `Interview & Assessment Invitation: ${cleanRole} - Finova Technologies`;
+      htmlBody = generateStructuredSelectedHtml({
+        candidateName: candidate.name,
+        roleApplied: cleanRole,
+        candidateEmail: targetEmail,
+        candidateId: candidate.id,
+        detectedExp: candidate.experienceYears || 2,
+        matchedSkills: candidate.skills || []
+      });
+    }
+
+    console.log(`[Resend Engine] 🚀 Resending email to candidate "${candidate.name}" <${targetEmail}> (Subject: "${subject}")...`);
+    const dispatchResult = await sendNotificationEmail({
+      to: targetEmail,
+      subject,
+      htmlBody,
+      bypassDedup: true
+    });
+
+    candidate.lastEmailSentAt = new Date().toISOString();
+    candidate.emailStatus = dispatchResult.success ? 'SENT' : 'FAILED';
+    candidates[index] = candidate;
+    saveCandidates(candidates);
+
+    res.json({
+      success: dispatchResult.success,
+      emailDispatch: dispatchResult,
+      deliveredTo: targetEmail,
+      message: dispatchResult.success 
+        ? `Successfully resent email to ${targetEmail}!` 
+        : `SMTP delivery failed: ${dispatchResult.error}`
+    });
+  } catch (err) {
+    console.error('Error in resend-email endpoint:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 // 7. Toggle Interview Status (Scheduled <-> Completed)

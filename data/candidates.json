@@ -1,5 +1,221 @@
 [
   {
+    "id": "cand-1791315691355-4095",
+    "name": "Vageesha Sharma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "7247647151",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Full Stack AI Engineer",
+    "experienceYears": 5,
+    "skills": [
+      "React.js",
+      "Node.js",
+      "PostgreSQL",
+      "REST APIs",
+      "Generative AI Tools",
+      "Workflow Automation"
+    ],
+    "missingSkills": [
+      "Python",
+      "FastAPI",
+      "Gemini API / LLMs",
+      "Docker"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 18,
+      "experienceRelevance": 35,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 45,
+    "status": "SELECTED",
+    "interviewStatus": "SCHEDULED",
+    "offerStatus": "PENDING",
+    "summary": "Vageesha Sharma possesses 5 years of relevant experience aligned with Full Stack AI Engineer. Strong foundation in React.js, Node.js, PostgreSQL, REST APIs. Shortlisted for 20-MCQ technical assessment.",
+    "strengths": [
+      "5 years of demonstrated experience in Full Stack AI Engineer",
+      "Strong skills in React.js, Node.js, PostgreSQL"
+    ],
+    "weaknesses": [
+      "To be evaluated via 20-MCQ domain technical assessment (80% passing threshold)"
+    ],
+    "interviewSchedule": {
+      "roundName": "Round 1: Online Technical Assessment (20 MCQs)",
+      "format": "Proctored Online Assessment (20 Domain MCQs)",
+      "assessmentLink": "https://hr-smartflow-automation.onrender.com/assessment.html?role=Full%20Stack%20AI%20Engineer&name=Vageesha%20Sharma&email=sharmavageesha2000%40gmail.com&id=cand-1791455954882-7514&token=tkn_1791455954883_4ayjexr",
+      "duration": "25 Minutes",
+      "passingScore": "80% (16 / 20 correct)",
+      "preparationNotes": "Complete 20 domain-specific questions in Full Stack AI Engineer. Copy/paste and multi-window switching are strictly monitored."
+    },
+    "emailSubject": "📝 Technical Assessment Link: Full Stack AI Engineer - Finova Technologies",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 14px; background: #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.04);\">\n      <div style=\"text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9;\">\n        <span style=\"background: #ecfdf5; color: #047857; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 99px; display: inline-block; margin-bottom: 10px; border: 1px solid #a7f3d0;\">RESUME SHORTLISTED</span>\n        <h2 style=\"color: #0f172a; margin: 0 0 6px 0; font-size: 22px; font-weight: 800;\">🎉 Congratulations, Vageesha Sharma!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 14.5px;\">Your application for <strong>Full Stack AI Engineer</strong> has been approved for the next stage.</p>\n      </div>\n\n      <p style=\"font-size: 15px; line-height: 1.6; color: #334155;\">Dear <strong>Vageesha Sharma</strong>,</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">Thank you for applying for the <strong>Full Stack AI Engineer</strong> position at Finova Technologies. We thoroughly reviewed your resume and were impressed by your <strong>5 years of relevant experience</strong> and proficiency in <strong>React.js, Node.js, PostgreSQL, REST APIs</strong>.</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">To finalize your selection and generate your official employment offer, you are invited to complete your <strong>Online Technical Assessment</strong>.</p>\n\n      <!-- Assessment Card -->\n      <div style=\"background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%); border: 1.5px solid #5eead4; border-radius: 12px; padding: 22px; margin: 24px 0;\">\n        <h3 style=\"margin: 0 0 14px 0; color: #0f766e; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;\">\n          📝 Technical Assessment Details (Full Stack AI Engineer)\n        </h3>\n        \n        <table style=\"width: 100%; font-size: 13.5px; color: #1e293b; border-collapse: collapse; margin-bottom: 16px;\">\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b; width: 42%;\"><strong>Role Domain:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #0f766e;\">Full Stack AI Engineer (20 Domain MCQs)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Time Duration:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700;\">25 Minutes</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Passing Requirement:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 800; color: #047857;\">80% or above (16 / 20 correct)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Automated Outcome:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #4338ca;\">Immediate Official Job Offer &amp; Call Letter Dispatch upon passing</td>\n          </tr>\n        </table>\n\n        <!-- Anti-Cheating & Proctoring Notice -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; font-size: 12.5px; color: #92400e; line-height: 1.5;\">\n          <strong>🛡️ Anti-Cheating &amp; Proctoring Regulations:</strong>\n          <ul style=\"margin: 6px 0 0 0; padding-left: 18px;\">\n            <li>Copy/paste and right-click are strictly disabled in the test portal.</li>\n            <li>Do not switch browser tabs or open secondary windows on mobile or laptop. Violations will be recorded and may auto-submit your test.</li>\n          </ul>\n        </div>\n\n        <!-- CTA Button -->\n        <div style=\"text-align: center;\">\n          <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Full%20Stack%20AI%20Engineer&name=Vageesha%20Sharma&email=sharmavageesha2000%40gmail.com&id=cand-1791455954882-7514&token=tkn_1791455954883_4ayjexr\" target=\"_blank\" style=\"background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: #ffffff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 15px; display: inline-block; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);\">\n            🚀 Start Online Technical Assessment (20 MCQs)\n          </a>\n        </div>\n        <p style=\"text-align: center; font-size: 12px; color: #64748b; margin: 10px 0 0 0;\">Link: <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Full%20Stack%20AI%20Engineer&name=Vageesha%20Sharma&email=sharmavageesha2000%40gmail.com&id=cand-1791455954882-7514&token=tkn_1791455954883_4ayjexr\" target=\"_blank\" style=\"color: #0f766e;\">https://hr-smartflow-automation.onrender.com/assessment.html?role=Full%20Stack%20AI%20Engineer&name=Vageesha%20Sharma&email=sharmavageesha2000%40gmail.com&id=cand-1791455954882-7514&token=tkn_1791455954883_4ayjexr</a></p>\n      </div>\n\n      <p style=\"font-size: 14px; color: #475569; line-height: 1.6;\">Please take the test in a quiet environment on a reliable internet connection. We wish you the very best of luck!</p>\n\n      <div style=\"margin-top: 26px; border-top: 1px solid #e2e8f0; padding-top: 16px;\">\n        <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n        <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;\">sharmavageesha2000@gmail.com</span>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Vageesha_Sharma_Resume_Digital_Marketing.pdf",
+      "fileSize": 110300,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1791459868361-Vageesha_Sharma_Resume_Digital_Marketing.pdf",
+      "urlPath": "/uploads/1791459868361-Vageesha_Sharma_Resume_Digital_Marketing.pdf"
+    },
+    "resumeText": "CONTACT\nJabalpur, Madhya Pradesh\nCurrently based in Ahmedabad\n7247647151\nsharmavageesha2000@gmail.com\nCORE SKILLS\nGenerative AI Tools\nChatGPT, Gemini, Claude, NotebookLM\nWorkflow Automation\nn8n, Zapier, automation concepts\nDigital Marketing\nSEO ,Email, Canva AI, AI-assisted\ncontent ideas, market and audience\nresearch\nAI & Productivity\nAI-assisted research, Ai related business\ntasks\nBusiness Applications\nProcess optimization, productivity\nimprovement, technology integration\nTechnical Learning\nRAG concepts, REST APIs, web\ndevelopment fundamentals\nProfessional Skills\nQuick learning, adaptability,\nresponsibility, consistency, time-\nmanagement\nEDUCATION\nMaster of Arts (MA) – Economics\n(2021-2023)\nMata Gujri College, Jabalpur, Madhya\nPradesh\nAcademic distinction: Gold Medalist\nFocus Areas: Microeconomics,\nDevelopment Economics, International\nEconomics, Public Economics, Money &\nBanking, Macroeconomics\nPROFESSIONAL\nCERTIFICATIONS\n• Certification in Advanced Excel\n• Certification in Digital Marketing with\nAI\n• Certification in Product and Project\nManagement\nSTRENGTHS\n• Quick learner\n• Responsible and consistent\n• Adaptable to new tools and\ntechnologies\n• Positive attitude toward feedback\n• Practical learning mindset\n• Problem-solving and critical thinking\n• Team work\nLANGUAGES\n• Hindi\n• English\nVAGEESHA SHARMA\nECONOMICS GRADUATE | MARKETING & RESEARCH | GENERATIVE AI\nTOOLS & AUTOMATION\nPROFESSIONAL PROFILE\nMA Economics graduate with a background in market concepts, consumer behaviour,\nresearch, currently pursuing Generative AI Tools in Business Analytics, with practical\nlearning in generative AI, workflow automation, AI productivity tools, and business\napplications. Interested in building a career focused on digital marketing, AI tools,\nautomation, vibe coding, and technology-enabled business operations. Combines an\neconomics foundation in market, consumer analysis, and data interpretation. Interested in\nstarting a career in digital marketing and contributing to marketing and business activities.\nA quick learner with a responsible and consistent approach, comfortable learning new\ntools and applying them to practical tasks.\nPROFESSIONAL TRAINING\nCurrently Pursuing Generative AI Tools in Business Analytics\nTOPS Technologies, Ahmedabad\nCurrent learning areas:\n• Generative AI tools\n• Workflow automation and process optimization\n• Business-oriented use of AI\n• Practical exposure to ChatGPT, Gemini, Claude, Antigravity, n8n, Zapier, Canva AI and\nNotebookLM, HeyGen\nACADEMIC INTERNSHIP PROJECT\nMicroeconomic Research Study / Field Study\nJawaharlal Nehru Krishi Vishwavidyalaya, (Jabalpur)\n• Conducted field-level data collection and interviews for a rural microeconomic behavior\nstudy.\n• Analyzed economic data related to consumption patterns and household income.\n• Contributed to the preparation of a final research report.\nPRACTICAL PROJECTS & AUTOMATION WORKFLOWS\nGitHub Link: [https://github.com/sharmavageesha2000-cmd]\nA. AI-Driven Full-Stack & Web Development Projects (Antigravity & LLM APIs)\nTraining Institute Full-Stack Web Platform with AI & RAG\nTech Stack: Next.js, Neon DB (PostgreSQL), Gemini LLM API, RAG, Tailwind CSS\nLive URL / Demo: [https://apex-tech-institute.onrender.com/]\n• Architected a responsive full-stack training institute portal with dynamic course schedules,\ncurriculum catalogs, and persistent database storage via Neon DB (Serverless\nPostgreSQL).\n• Engineered an AI-powered conversational assistant utilizing Google Gemini LLM API and\nRetrieval-Augmented Generation (RAG) to provide real-time, context-accurate answers to\nstudent curriculum inquiries.\nDynamic Jewelry E-Commerce Website\nTech Stack: React.js, Node.js, PostgreSQL, Express, REST APIs\nLive URL / Demo: [https://dream-wear-jewelry.onrender.com/]\n• Engineered a fully dynamic, mobile-responsive e-commerce platform featuring interactive\nproduct showcases, dynamic filtering, sorting, and seamless shopping cart state\nmanagement.\n• Built robust backend RESTful API endpoints on Node.js connected to a PostgreSQL\ndatabase for real-time inventory tracking, user inquiries, and transactional data persistence.\nPrinting Press Static Website\nTech Stack: HTML5, CSS3, JavaScript, fully Responsive Web Design\nLive URL / Demo: [https://shree-printing-press.onrender.com/]\n• Designed and deployed a modern, multi-page business website tailored for commercial\nprinting services, showcasing print product catalogs, portfolio galleries, and service\nquotations.\n\n-- 1 of 2 --\n\n• Delivered a fully responsive user experience across desktop and mobile devices using\nclean semantic markup, custom CSS layouts, and interactive client-side form validation.\nB. Business Process & Operations Automations (Antigravity & n8n)\nHR Operations & Employee Onboarding Automation\nTech Stack: Antigravity AI Automation, Prompt Engineering, Notification Routing\nLive URL /Website: [https://hr-smartflow-automation.onrender.com/website/] | Live URL /HR Dashboard:\n[https://hr-smartflow-automation.onrender.com/]\n• Automated end-to-end human resource onboarding workflows in Antigravity, orchestrating\nautomated welcome notifications, document collection tracking, and employee profile setup.\n• Configured automated milestone reminders for internal HR stakeholders and candidates,\naccelerating onboarding turnaround and improving documentation compliance.\nReal-Time Inventory Stock Threshold Alert System\nTech Stack: n8n Automation, Webhooks, Inventory Database, Email & Slack Notifications\n• Built a continuous inventory surveillance bot using n8n that periodically monitors stock\nlevels against defined safety thresholds across store databases.\n• Triggered instant, multi-channel alerts (Email/Slack) with Stock Keeping Unit identifiers and\nnotifies the stock alert via. mail\nDebit/Credit Financial Transaction Reporting Mailer Bot\nTech Stack: n8n Automation, PDF Generation Engine, SMTP Email Automation\n• Developed an automated financial pipeline in n8n aggregating daily debit and credit\ntransactions across banking/ledger records and calculating reconciled balances.\n• Programmatically compiled an audit-ready, structured PDF financial summary and\nautomatically dispatched scheduled email reports with the PDF attached directly to the\nbusiness owner.\nCAREER OBJECTIVE\nTo begin my professional career in an AI tools, workflow automation, business technology\nor related role where I can use my current knowledge, develop strong practical skills,\ncontribute to business processes, and grow into a capable AI and automation\nprofessional.\n\n-- 2 of 2 --",
+    "receivedAt": "2026-10-08T10:38:48.000Z",
+    "evaluatedAt": "2026-10-08T10:39:23.058Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-10-08T11:43:51.545Z"
+  },
+  {
+    "id": "cand-1791366791172-9966",
+    "name": "Manasvi Paliwal",
+    "email": "manasvipaliwal317@gmail.com",
+    "phone": "Not specified",
+    "education": "MBA",
+    "roleApplied": "Frontend Developer",
+    "experienceYears": 5,
+    "skills": [
+      "React.js",
+      "JavaScript",
+      "Responsive Design",
+      "REST APIs"
+    ],
+    "missingSkills": [
+      "HTML5 & CSS3",
+      "Tailwind CSS",
+      "TypeScript"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 20,
+      "experienceRelevance": 35,
+      "education": 15,
+      "communication": 15
+    },
+    "matchScore": 76,
+    "status": "REJECTED",
+    "interviewStatus": "COMPLETED",
+    "offerStatus": "REJECTED",
+    "summary": "Manasvi Paliwal possesses 5 years of relevant experience aligned with Frontend Developer. Strong foundation in React.js, JavaScript, Responsive Design, REST APIs. Shortlisted for 20-MCQ technical assessment.",
+    "strengths": [
+      "5 years of demonstrated experience in Frontend Developer",
+      "Strong skills in React.js, JavaScript, Responsive Design"
+    ],
+    "weaknesses": [
+      "To be evaluated via 20-MCQ domain technical assessment (80% passing threshold)"
+    ],
+    "interviewSchedule": {
+      "roundName": "Round 1: Online Technical Assessment (20 MCQs)",
+      "format": "Proctored Online Assessment (20 Domain MCQs)",
+      "assessmentLink": "https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Manasvi%20Paliwal&email=manasvipaliwal317%40gmail.com&id=cand-1791366791172-9966&token=tkn_1791366791173_ho7qppz",
+      "duration": "25 Minutes",
+      "passingScore": "80% (16 / 20 correct)",
+      "preparationNotes": "Complete 20 domain-specific questions in Frontend Developer. Copy/paste and multi-window switching are strictly monitored."
+    },
+    "emailSubject": "📝 Technical Assessment Link: Frontend Developer - Finova Technologies",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 14px; background: #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.04);\">\n      <div style=\"text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9;\">\n        <span style=\"background: #ecfdf5; color: #047857; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 99px; display: inline-block; margin-bottom: 10px; border: 1px solid #a7f3d0;\">RESUME SHORTLISTED</span>\n        <h2 style=\"color: #0f172a; margin: 0 0 6px 0; font-size: 22px; font-weight: 800;\">🎉 Congratulations, Manasvi Paliwal!</h2>\n        <p style=\"color: #64748b; margin: 0; font-size: 14.5px;\">Your application for <strong>Frontend Developer</strong> has been approved for the next stage.</p>\n      </div>\n\n      <p style=\"font-size: 15px; line-height: 1.6; color: #334155;\">Dear <strong>Manasvi Paliwal</strong>,</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">Thank you for applying for the <strong>Frontend Developer</strong> position at Finova Technologies. We thoroughly reviewed your resume and were impressed by your <strong>5 years of relevant experience</strong> and proficiency in <strong>React.js, JavaScript, Responsive Design, REST APIs</strong>.</p>\n      <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">To finalize your selection and generate your official employment offer, you are invited to complete your <strong>Online Technical Assessment</strong>.</p>\n\n      <!-- Assessment Card -->\n      <div style=\"background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%); border: 1.5px solid #5eead4; border-radius: 12px; padding: 22px; margin: 24px 0;\">\n        <h3 style=\"margin: 0 0 14px 0; color: #0f766e; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;\">\n          📝 Technical Assessment Details (Frontend Developer)\n        </h3>\n        \n        <table style=\"width: 100%; font-size: 13.5px; color: #1e293b; border-collapse: collapse; margin-bottom: 16px;\">\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b; width: 42%;\"><strong>Role Domain:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #0f766e;\">Frontend Developer (20 Domain MCQs)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Time Duration:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700;\">25 Minutes</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Passing Requirement:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 800; color: #047857;\">80% or above (16 / 20 correct)</td>\n          </tr>\n          <tr>\n            <td style=\"padding: 6px 0; color: #64748b;\"><strong>Automated Outcome:</strong></td>\n            <td style=\"padding: 6px 0; font-weight: 700; color: #4338ca;\">Immediate Official Job Offer &amp; Call Letter Dispatch upon passing</td>\n          </tr>\n        </table>\n\n        <!-- Anti-Cheating & Proctoring Notice -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; font-size: 12.5px; color: #92400e; line-height: 1.5;\">\n          <strong>🛡️ Anti-Cheating &amp; Proctoring Regulations:</strong>\n          <ul style=\"margin: 6px 0 0 0; padding-left: 18px;\">\n            <li>Copy/paste and right-click are strictly disabled in the test portal.</li>\n            <li>Do not switch browser tabs or open secondary windows on mobile or laptop. Violations will be recorded and may auto-submit your test.</li>\n          </ul>\n        </div>\n\n        <!-- CTA Button -->\n        <div style=\"text-align: center;\">\n          <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Manasvi%20Paliwal&email=manasvipaliwal317%40gmail.com&id=cand-1791366791172-9966&token=tkn_1791366791173_ho7qppz\" target=\"_blank\" style=\"background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: #ffffff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 15px; display: inline-block; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);\">\n            🚀 Start Online Technical Assessment (20 MCQs)\n          </a>\n        </div>\n        <p style=\"text-align: center; font-size: 12px; color: #64748b; margin: 10px 0 0 0;\">Link: <a href=\"https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Manasvi%20Paliwal&email=manasvipaliwal317%40gmail.com&id=cand-1791366791172-9966&token=tkn_1791366791173_ho7qppz\" target=\"_blank\" style=\"color: #0f766e;\">https://hr-smartflow-automation.onrender.com/assessment.html?role=Frontend%20Developer&name=Manasvi%20Paliwal&email=manasvipaliwal317%40gmail.com&id=cand-1791366791172-9966&token=tkn_1791366791173_ho7qppz</a></p>\n      </div>\n\n      <p style=\"font-size: 14px; color: #475569; line-height: 1.6;\">Please take the test in a quiet environment on a reliable internet connection. We wish you the very best of luck!</p>\n\n      <div style=\"margin-top: 26px; border-top: 1px solid #e2e8f0; padding-top: 16px;\">\n        <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n        <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n        <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 2px;\">sharmavageesha2000@gmail.com</span>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "MANASVI PALIWAL-CV-2.pdf",
+      "fileSize": 313763,
+      "savedPath": "/opt/render/project/src/uploads/1791366791171-MANASVI_PALIWAL-CV-2.pdf",
+      "urlPath": "/uploads/1791366791171-MANASVI_PALIWAL-CV-2.pdf"
+    },
+    "resumeText": "MANASVI PALIWAL\nMBA – International Business | Marketing & Operations | Generative AI & Workflow Automation\n[Khandwa, M.P.] [9109933353] [manasvipaliwal317@gmail.com]\n[https://www.linkedin.com/in/manasvi-paliwal-a5a98a3a9/] GitHub: [https://github.com/manasvipaliwal317-arch]\nPROFESSIONAL SUMMARY\nMBA graduate in International Business with practical exposure to marketing, customer communication, business\noperations, international trade processes and documentation. Experienced in supporting customer follow-ups,\nsupplier/internal-team coordination and routine business activities. Currently building skills in CRM, digital marketing and\nAI-enabled productivity tools, with an interest in using technology to improve lead management, follow-up and business\nworkflows. Passionate about exploring AI-driven marketing trends and global trade dynamics. Looking forward to build a\nsuccessful and progressive career in a professional organization where I can apply my knowledge and experience while\ncontinuously developing new skills.\nCORE SKILLS\n• International Business\n• Export/Import Documentation\n• Marketing & Operations\n• Business Communication\n• Product/Service Management\n• Digital Marketing Fundamentals\n• Market Research\n• MS Office & Reporting\n• CRM Concepts\n• Agentic AI & LLM\n• Prompt Engineering & Vibe Coding\n• n8n Workflow Automation\n• RAG Concept\n• Generative AI tools: ChatGPT, Claude, Canva AI,\nNotebook LM\nPROFESSIONAL EXPERIENCE\nFinance & Operations – Oil Mill | Hemant Industries, Khandwa, M.P. | [November,2024 – June,2026]\n• Managed sales and purchase documents, invoices and related business records.\n• Maintained inventory records and monitored stock levels and stock movement.\n• Supported day-to-day marketing and business activities involving customers, suppliers and internal teams.\n• Supported order, procurement, dispatch and stock-related coordination, helping maintain smooth movement of\nbusiness information and materials.\nMarketing Intern – Symbiotic Pharmalab Pvt. Ltd., Rau, Indore | [August,2023-September2023]\n• Gained practical exposure to marketing activities within a pharmaceutical business environment.\n• Learned the basic process flow of international trade and export-oriented business operations.\n• Developed familiarity with trade documentation, document coordination and accuracy requirements in international\ntransactions.\nEDUCATION\nMaster of Business Administration (MBA) – International Business | IPS Academy, Indore, | [2022-2024]\nRelevant areas: International Marketing, CRM, International Trade, Export–Import Management, Supply Chain\nManagement, Strategic Management, Digital Marketing, Foreign Exchange & Risk.\nCERTIFICATIONS / COURSES\n• Generative AI Tools & Automation Course (Currently Pursuing) – TOPS Technologies, Ahmedabad\n• AI SEO Course- UDEMY\n• MS Excel (Data Analysis)- Great Learning\n• Canva AI- Canva\n• Product & Project Management- Corizo Edutech Private Limited\n\n-- 1 of 2 --\n\nSELECTED PRACTICAL PROJECTS\nDevelopment Approach: AI-assisted development using Antigravity (Vibe Coding)\n1. Static Printing Press Website\nHTML, CSS, JavaScript\n• Designed and developed a responsive static business website with structured sections, modern UI and mobile-friendly\nlayouts.\n• Focused on clean navigation, visual presentation and responsive design across different screen sizes.\nLive: [https://manasvi16.netlify.app/]\n2. IT Training Institute Website | Full Stack\nReact.js, Next.js, Node.js, Express.js, neon Postgres SQL\n• Developed a responsive website for an IT training institute with course information, trainer details, contact/enquiry\nfunctionality and dynamic content.\n• Created backend APIs and database integration for managing website data.\n• Designed the website with a mobile-friendly and user-focused interface.\n• Implement Gemini LLM & RAG in chatbot.\nLive: [https://nexgen-tech-academy.onrender.com/RL]\n3. E-Commerce Website | Full Stack\nReact.js, Next.js, Node.js, Express.js, Postgres SQL, REST API, Render\n• Developed a responsive full-stack e-commerce website for browsing products, categories, product details, cart and user\ninteractions.\n• Built REST APIs and connected the frontend with MongoDB for dynamic product and application data.\n• Implemented responsive UI and deployed the frontend and backend and Render.\nLive: [https://my-choise-ecommerce.onrender.com]\n4. HR Workflow Automation | Antigravity\nAntigravity, n8n, Google Sheets, Gmail, JavaScript\n• Created an HR automation workflow to collect and process employee/candidate information automatically.\n• Automated data handling using Google Sheets and triggered email notifications based on workflow conditions.\n• Reduced repetitive manual tasks by connecting multiple applications into a single automated workflow.\nLive: [https://nexus-hr-workflow.onrender.com], [https://tech-innovations-inc.onrender.com/]\n5. Automatic Email Dispatch Automation | n8n\nn8n, Google Forms, Google Sheets, Gmail, JavaScript\n• Built an automated workflow to receive form submissions, process the submitted information and automatically send\npersonalized emails.\n• Used JavaScript code nodes for data processing and dynamic email generation.\n• Designed the workflow to minimize manual email handling and improve response efficiency.\nKEY STRENGTHS\nCommunication & interpersonal skills | Relationship building | Analytical problem solving | Adaptability | Team coordination\n| Time management | Attention to documentation | Willingness to learn\nLANGUAGES\n• English\n• Hindi\n\n-- 2 of 2 --",
+    "receivedAt": "2026-10-07T09:52:10.000Z",
+    "evaluatedAt": "2026-10-07T09:53:23.038Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-10-07T09:54:10.422Z",
+    "assessmentDetails": {
+      "completedAt": "2026-10-07T09:55:33.128Z",
+      "scorePercent": 20,
+      "correctCount": 4,
+      "totalQuestions": 20,
+      "passed": false,
+      "tabSwitchesCount": 0,
+      "timeSpentSeconds": 38,
+      "forcedByViolation": false
+    },
+    "testScore": 20,
+    "testPassed": false,
+    "assessmentCompleted": true,
+    "testSubmitted": true,
+    "pendingEmailSync": false,
+    "feedbackDetails": {
+      "scorePercent": 20,
+      "correctCount": 4,
+      "totalQuestions": 20,
+      "emailDispatch": {
+        "success": true,
+        "simulated": false,
+        "messageId": "<4d2b4360-cef2-34d6-18ff-c1335a39686f@gmail.com>",
+        "to": "manasvipaliwal317@gmail.com",
+        "subject": "📊 Technical Assessment Result & Performance Feedback: Frontend Developer - Finova Technologies",
+        "transport": "smtp.gmail.com:465 (Standard Direct SSL)"
+      },
+      "deliveredTo": "manasvipaliwal317@gmail.com"
+    },
+    "feedbackSentAt": "2026-10-07T10:02:43.289Z"
+  },
+  {
+    "id": "cand-1791366732176-1442",
+    "name": "Vageesha Sharma",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "7247647151",
+    "education": "Master of Arts (MA) – Economics",
+    "roleApplied": "Backend Developer",
+    "experienceYears": 0,
+    "skills": [
+      "Generative AI Tools",
+      "Workflow Automation",
+      "Digital Marketing",
+      "SEO",
+      "REST APIs",
+      "HTML5",
+      "CSS3",
+      "JavaScript"
+    ],
+    "missingSkills": [
+      "Node.js",
+      "Express",
+      "SQL / PostgreSQL",
+      "MongoDB",
+      "Databases",
+      "Backend Development"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 15,
+      "experienceRelevance": 5,
+      "education": 5,
+      "communication": 10
+    },
+    "matchScore": 35,
+    "status": "REJECTED",
+    "interviewStatus": "N/A",
+    "offerStatus": "PENDING",
+    "summary": "The candidate's background is primarily in Economics and Digital Marketing, with a focus on Generative AI tools and automation rather than professional backend development. While she has completed some basic web development training projects, she lacks the required 2-4 years of professional backend engineering experience and core database/backend architecture skills.",
+    "strengths": [
+      "Familiarity with Generative AI tools and workflow automation (n8n, Zapier)",
+      "Strong academic background in Economics (Gold Medalist)",
+      "Basic exposure to front-end and API concepts through training projects"
+    ],
+    "weaknesses": [
+      "Lacks professional experience as a Backend Developer (2-4 years required)",
+      "Primary career focus and resume are tailored towards Digital Marketing and AI tools rather than core software engineering",
+      "Missing deep, production-level experience with Node.js, Express, and database management systems like PostgreSQL or MongoDB"
+    ],
+    "interviewSchedule": null,
+    "emailSubject": "Update regarding your application for Backend Developer - Vageesha Sharma",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04);\">\n      <div style=\"background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;\">\n        <span style=\"background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;\">APPLICATION STATUS UPDATE</span>\n        <h2 style=\"margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;\">Application Evaluation &amp; Feedback</h2>\n        <p style=\"margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;\">Role: <strong>Backend Developer</strong> • Vageesha Sharma Talent Acquisition</p>\n      </div>\n\n      <div style=\"padding: 28px 24px;\">\n        <p style=\"font-size: 15px; line-height: 1.6; margin-top: 0;\">Dear <strong>Vageesha Sharma</strong>,</p>\n        \n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Thank you for applying for the <strong>Backend Developer</strong> position at our organization and for sharing your resume.\n        </p>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Our technical evaluation team has thoroughly reviewed your background against the active role requirements and competencies for this vacancy.\n        </p>\n\n        <!-- Evaluation Summary Card -->\n        <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 20px 0;\">\n          <div style=\"display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;\">\n            <strong style=\"color: #0f172a; font-size: 15px;\">📊 Screening Evaluation Summary</strong>\n            <span style=\"background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 99px;\">Role Match: 35%</span>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;\">Skills Identified in Your Profile:</span>\n            <div><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">Generative AI Tools</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">Workflow Automation</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">Digital Marketing</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">SEO</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">REST APIs</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">HTML5</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">CSS3</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">JavaScript</span></div>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #991b1b; display: block; margin-bottom: 6px;\">Critical Missing Skills for \"Backend Developer\":</span>\n            <div><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Node.js</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Express</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ SQL / PostgreSQL</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ MongoDB</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Databases</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Backend Development</span></div>\n          </div>\n        </div>\n\n        <!-- Resume Gaps & Detailed Feedback -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 20px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #92400e; font-size: 14px; font-weight: 700;\">🔍 Identified Gaps &amp; Resume Analysis</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #78350f; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Lacks professional experience as a Backend Developer (2-4 years required)</li><li style=\"margin-bottom: 6px;\">Primary career focus and resume are tailored towards Digital Marketing and AI tools rather than core software engineering</li><li style=\"margin-bottom: 6px;\">Missing deep, production-level experience with Node.js, Express, and database management systems like PostgreSQL or MongoDB</li>\n          </ul>\n        </div>\n\n        <!-- Recommendations for Future -->\n        <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px; margin-bottom: 24px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #166534; font-size: 14px; font-weight: 700;\">💡 Actionable Recommendations to Strengthen Your Profile</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #14532d; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Focus on developing hands-on competency in Node.js, Express, REST APIs</li>\n          </ul>\n        </div>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          At this stage, we are moving forward with candidates whose technical stack more directly matches our immediate requirements for the <strong>Backend Developer</strong> vacancy.\n        </p>\n\n        <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">\n          We will keep your resume on file for future openings that match your specific profile. We wish you great success in your career.\n        </p>\n\n        <div style=\"margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;\">\n          <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n          <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;\">sharmavageesha2000@gmail.com</span>\n        </div>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "Vageesha_Sharma_Resume_Digital_Marketing.pdf",
+      "fileSize": 110300,
+      "savedPath": "/opt/render/project/src/uploads/1791366732172-Vageesha_Sharma_Resume_Digital_Marketing.pdf",
+      "urlPath": "/uploads/1791366732172-Vageesha_Sharma_Resume_Digital_Marketing.pdf"
+    },
+    "resumeText": "CONTACT\nJabalpur, Madhya Pradesh\nCurrently based in Ahmedabad\n7247647151\nsharmavageesha2000@gmail.com\nCORE SKILLS\nGenerative AI Tools\nChatGPT, Gemini, Claude, NotebookLM\nWorkflow Automation\nn8n, Zapier, automation concepts\nDigital Marketing\nSEO ,Email, Canva AI, AI-assisted\ncontent ideas, market and audience\nresearch\nAI & Productivity\nAI-assisted research, Ai related business\ntasks\nBusiness Applications\nProcess optimization, productivity\nimprovement, technology integration\nTechnical Learning\nRAG concepts, REST APIs, web\ndevelopment fundamentals\nProfessional Skills\nQuick learning, adaptability,\nresponsibility, consistency, time-\nmanagement\nEDUCATION\nMaster of Arts (MA) – Economics\n(2021-2023)\nMata Gujri College, Jabalpur, Madhya\nPradesh\nAcademic distinction: Gold Medalist\nFocus Areas: Microeconomics,\nDevelopment Economics, International\nEconomics, Public Economics, Money &\nBanking, Macroeconomics\nPROFESSIONAL\nCERTIFICATIONS\n• Certification in Advanced Excel\n• Certification in Digital Marketing with\nAI\n• Certification in Product and Project\nManagement\nSTRENGTHS\n• Quick learner\n• Responsible and consistent\n• Adaptable to new tools and\ntechnologies\n• Positive attitude toward feedback\n• Practical learning mindset\n• Problem-solving and critical thinking\n• Team work\nLANGUAGES\n• Hindi\n• English\nVAGEESHA SHARMA\nECONOMICS GRADUATE | MARKETING & RESEARCH | GENERATIVE AI\nTOOLS & AUTOMATION\nPROFESSIONAL PROFILE\nMA Economics graduate with a background in market concepts, consumer behaviour,\nresearch, currently pursuing Generative AI Tools in Business Analytics, with practical\nlearning in generative AI, workflow automation, AI productivity tools, and business\napplications. Interested in building a career focused on digital marketing, AI tools,\nautomation, vibe coding, and technology-enabled business operations. Combines an\neconomics foundation in market, consumer analysis, and data interpretation. Interested in\nstarting a career in digital marketing and contributing to marketing and business activities.\nA quick learner with a responsible and consistent approach, comfortable learning new\ntools and applying them to practical tasks.\nPROFESSIONAL TRAINING\nCurrently Pursuing Generative AI Tools in Business Analytics\nTOPS Technologies, Ahmedabad\nCurrent learning areas:\n• Generative AI tools\n• Workflow automation and process optimization\n• Business-oriented use of AI\n• Practical exposure to ChatGPT, Gemini, Claude, Antigravity, n8n, Zapier, Canva AI and\nNotebookLM, HeyGen\nACADEMIC INTERNSHIP PROJECT\nMicroeconomic Research Study / Field Study\nJawaharlal Nehru Krishi Vishwavidyalaya, (Jabalpur)\n• Conducted field-level data collection and interviews for a rural microeconomic behavior\nstudy.\n• Analyzed economic data related to consumption patterns and household income.\n• Contributed to the preparation of a final research report.\nPRACTICAL PROJECTS & AUTOMATION WORKFLOWS\nGitHub Link: [https://github.com/sharmavageesha2000-cmd]\nA. AI-Driven Full-Stack & Web Development Projects (Antigravity & LLM APIs)\nTraining Institute Full-Stack Web Platform with AI & RAG\nTech Stack: Next.js, Neon DB (PostgreSQL), Gemini LLM API, RAG, Tailwind CSS\nLive URL / Demo: [https://apex-tech-institute.onrender.com/]\n• Architected a responsive full-stack training institute portal with dynamic course schedules,\ncurriculum catalogs, and persistent database storage via Neon DB (Serverless\nPostgreSQL).\n• Engineered an AI-powered conversational assistant utilizing Google Gemini LLM API and\nRetrieval-Augmented Generation (RAG) to provide real-time, context-accurate answers to\nstudent curriculum inquiries.\nDynamic Jewelry E-Commerce Website\nTech Stack: React.js, Node.js, PostgreSQL, Express, REST APIs\nLive URL / Demo: [https://dream-wear-jewelry.onrender.com/]\n• Engineered a fully dynamic, mobile-responsive e-commerce platform featuring interactive\nproduct showcases, dynamic filtering, sorting, and seamless shopping cart state\nmanagement.\n• Built robust backend RESTful API endpoints on Node.js connected to a PostgreSQL\ndatabase for real-time inventory tracking, user inquiries, and transactional data persistence.\nPrinting Press Static Website\nTech Stack: HTML5, CSS3, JavaScript, fully Responsive Web Design\nLive URL / Demo: [https://shree-printing-press.onrender.com/]\n• Designed and deployed a modern, multi-page business website tailored for commercial\nprinting services, showcasing print product catalogs, portfolio galleries, and service\nquotations.\n\n-- 1 of 2 --\n\n• Delivered a fully responsive user experience across desktop and mobile devices using\nclean semantic markup, custom CSS layouts, and interactive client-side form validation.\nB. Business Process & Operations Automations (Antigravity & n8n)\nHR Operations & Employee Onboarding Automation\nTech Stack: Antigravity AI Automation, Prompt Engineering, Notification Routing\nLive URL /Website: [https://hr-smartflow-automation.onrender.com/website/] | Live URL /HR Dashboard:\n[https://hr-smartflow-automation.onrender.com/]\n• Automated end-to-end human resource onboarding workflows in Antigravity, orchestrating\nautomated welcome notifications, document collection tracking, and employee profile setup.\n• Configured automated milestone reminders for internal HR stakeholders and candidates,\naccelerating onboarding turnaround and improving documentation compliance.\nReal-Time Inventory Stock Threshold Alert System\nTech Stack: n8n Automation, Webhooks, Inventory Database, Email & Slack Notifications\n• Built a continuous inventory surveillance bot using n8n that periodically monitors stock\nlevels against defined safety thresholds across store databases.\n• Triggered instant, multi-channel alerts (Email/Slack) with Stock Keeping Unit identifiers and\nnotifies the stock alert via. mail\nDebit/Credit Financial Transaction Reporting Mailer Bot\nTech Stack: n8n Automation, PDF Generation Engine, SMTP Email Automation\n• Developed an automated financial pipeline in n8n aggregating daily debit and credit\ntransactions across banking/ledger records and calculating reconciled balances.\n• Programmatically compiled an audit-ready, structured PDF financial summary and\nautomatically dispatched scheduled email reports with the PDF attached directly to the\nbusiness owner.\nCAREER OBJECTIVE\nTo begin my professional career in an AI tools, workflow automation, business technology\nor related role where I can use my current knowledge, develop strong practical skills,\ncontribute to business processes, and grow into a capable AI and automation\nprofessional.\n\n-- 2 of 2 --",
+    "receivedAt": "2026-10-07T09:51:50.000Z",
+    "evaluatedAt": "2026-10-07T09:52:23.794Z",
+    "source": "EMAIL_INBOX_ATTACHMENT",
+    "lastEmailSentAt": "2026-10-07T09:53:17.112Z"
+  },
+  {
     "id": "cand-1791360292349-3658",
     "name": "Palak Jain",
     "email": "manasvipaliwal317@gmail.com",
@@ -52,68 +268,6 @@
     "source": "EMAIL_INBOX_ATTACHMENT",
     "lastEmailSentAt": "2026-10-07T08:05:39.922Z",
     "resumeText": "Palak Jain\n\nDigital Marketing Manager\n\nKhushijain12@email.com   |   +91 98111 22334   |   Mumbai, India   |   linkedin.com/in/snehavermamarketing\n\nPROFESSIONAL SUMMARY\n\nResults-driven Digital Marketing professional with 5 years of experience across SEO, paid media, content strategy, and marketing analytics. Track record of scaling organic traffic and managing multi-lakh monthly ad budgets to consistently beat ROAS targets for D2C and SaaS brands.\n\nSKILLS\n\nPaid Media: Google Ads, Meta Ads Manager, LinkedIn Ads, programmatic display\n\nSEO/Content: Technical SEO, keyword research, content strategy, on-page optimization\n\nAnalytics: Google Analytics 4, Google Tag Manager, Looker Studio, Mixpanel\n\nAutomation/CRM: HubSpot, Mailchimp, WhatsApp Business API, basic Zapier workflows\n\nOther: A/B testing, conversion rate optimization, influencer/affiliate campaigns\n\nPROFESSIONAL EXPERIENCE\n\nDigital Marketing Manager   |   Bloomcart D2C Pvt. Ltd.\tFeb 2023 – Present\n\n•\tOwn a monthly paid-media budget of ₹18 lakh across Meta and Google Ads, delivering a blended ROAS of 4.2x, up from 2.8x.\n\n•\tGrew organic search traffic by 65% YoY through a content and technical-SEO overhaul, reducing paid-acquisition dependency.\n\n•\tLed a 3-person team covering paid, content, and email marketing; introduced weekly performance reviews that cut wasted ad spend by 15%.\n\nSenior Digital Marketing Executive   |   Northgate SaaS Solutions\tJul 2021 – Jan 2023\n\n•\tManaged LinkedIn and Google Ads campaigns for B2B lead generation, reducing cost-per-qualified-lead by 30%.\n\n•\tBuilt and executed email nurture sequences in HubSpot that lifted trial-to-paid conversion by 12%.\n\nDigital Marketing Executive   |   Coral Reef Agency\tJun 2020 – Jun 2021\n\n•\tRan SEO and social media campaigns for 8 client accounts, growing average follower base by 40% within a year.\n\n•\tExecuted A/B tests on landing pages that improved average conversion rate from 2.1% to 3.4%.\n\nEDUCATION\n\nMBA in Marketing — Narsee Monjee Institute of Management Studies (2018 – 2020)\n\nB.Com — University of Mumbai (2015 – 2018)\n\nCERTIFICATIONS\n\n•\tGoogle Ads Certification (Search, Display, Measurement)\n\n•\tHubSpot Content Marketing Certification\n\n•\tMeta Certified Digital Marketing Associate"
-  },
-  {
-    "id": "cand-1791315691355-4095",
-    "name": "Vageesha Sharma",
-    "email": "sharmavageesha2000@gmail.com",
-    "phone": "+91 7247647151",
-    "education": "Master of Arts in Economics & Generative AI Certification",
-    "roleApplied": "Full Stack AI Engineer",
-    "experienceYears": 5,
-    "skills": [
-      "React.js",
-      "Node.js",
-      "PostgreSQL",
-      "REST APIs",
-      "Workflow Automation",
-      "n8n",
-      "Generative AI"
-    ],
-    "missingSkills": [
-      "Python",
-      "FastAPI",
-      "Docker"
-    ],
-    "scoreBreakdown": {
-      "technicalSkills": 18,
-      "experienceRelevance": 35,
-      "education": 15,
-      "communication": 15
-    },
-    "matchScore": 73,
-    "status": "SELECTED",
-    "interviewStatus": "SCHEDULED",
-    "offerStatus": "PENDING",
-    "summary": "Vageesha Sharma possesses strong technical proficiency and workflow automation competency in React.js, Node.js, and Generative AI pipelines. Shortlisted for 20-MCQ technical assessment.",
-    "strengths": [
-      "Demonstrated competency in Full Stack AI & Workflow Automation",
-      "Proficient in React.js, Node.js, PostgreSQL, and REST APIs"
-    ],
-    "weaknesses": [
-      "To be verified via 20-MCQ domain technical assessment (80% passing threshold)"
-    ],
-    "interviewSchedule": {
-      "roundName": "Round 1: Online Technical Assessment (20 MCQs)",
-      "format": "Proctored Online Assessment (20 Domain MCQs)",
-      "assessmentLink": "https://hr-smartflow-automation.onrender.com/assessment.html?role=Full%20Stack%20AI%20Engineer&name=Vageesha%20Sharma&email=sharmavageesha2000%40gmail.com&id=cand-1791315691355-4095&token=tkn_1791315691356_15z0bbr",
-      "duration": "25 Minutes",
-      "passingScore": "80% (16 / 20 correct)",
-      "preparationNotes": "Complete 20 domain-specific questions in Full Stack AI Engineer. Copy/paste and multi-window switching are strictly monitored."
-    },
-    "emailSubject": "📝 Technical Assessment Link: Full Stack AI Engineer - Finova Technologies",
-    "emailStatus": "SENT",
-    "attachmentInfo": {
-      "fileName": "Vageesha_Sharma_Resume_Digital_Marketing.pdf",
-      "fileSize": 110300,
-      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1791317077757-Vageesha_Sharma_Resume_Digital_Marketing.pdf",
-      "urlPath": "/uploads/1791317077757-Vageesha_Sharma_Resume_Digital_Marketing.pdf",
-      "path": "/uploads/1791317077757-Vageesha_Sharma_Resume_Digital_Marketing.pdf"
-    },
-    "receivedAt": "2026-10-06T20:37:04.600Z",
-    "evaluatedAt": "2026-10-06T20:37:04.600Z",
-    "source": "EMAIL_INBOX_ATTACHMENT",
-    "lastEmailSentAt": "2026-10-06T20:37:04.600Z"
   },
   {
     "id": "cand-1790678374409-979",
@@ -546,57 +700,6 @@
     "lastEmailSentAt": "2026-09-01T09:29:50.023Z"
   },
   {
-    "id": "cand-1788252598821-9743",
-    "name": "Arjun Mehta",
-    "email": "sharmavageesha2000@gmail.com",
-    "phone": "+91 98765 43210",
-    "education": "B.Tech in CS/IT",
-    "roleApplied": "Backend Developer",
-    "experienceYears": 4,
-    "skills": [
-      "Node.js",
-      "REST APIs",
-      "SQL / PostgreSQL",
-      "Databases"
-    ],
-    "missingSkills": [
-      "Express",
-      "MongoDB",
-      "Backend Development"
-    ],
-    "scoreBreakdown": {
-      "technicalSkills": 8,
-      "experienceRelevance": 8,
-      "education": 10,
-      "communication": 8
-    },
-    "matchScore": 48,
-    "status": "REJECTED",
-    "interviewStatus": "N/A",
-    "offerStatus": "PENDING",
-    "summary": "Arjun Mehta applied for Backend Developer. Profile does not satisfy core job requirements. Missing: Express, MongoDB, Backend Development. Status: REJECTED.",
-    "strengths": [
-      "Clear communication and professional presentation"
-    ],
-    "weaknesses": [
-      "Missing key competencies for Backend Developer: Express, MongoDB, Backend Development"
-    ],
-    "interviewSchedule": null,
-    "emailSubject": "Update regarding your application for Backend Developer - Vageesha Sharma",
-    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04);\">\n      <div style=\"background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;\">\n        <span style=\"background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;\">APPLICATION STATUS UPDATE</span>\n        <h2 style=\"margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;\">Application Evaluation &amp; Feedback</h2>\n        <p style=\"margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;\">Role: <strong>Backend Developer</strong> • Vageesha Sharma Talent Acquisition</p>\n      </div>\n\n      <div style=\"padding: 28px 24px;\">\n        <p style=\"font-size: 15px; line-height: 1.6; margin-top: 0;\">Dear <strong>Arjun Mehta</strong>,</p>\n        \n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Thank you for applying for the <strong>Backend Developer</strong> position at our organization and for sharing your resume.\n        </p>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Our technical evaluation team has thoroughly reviewed your background against the active role requirements and competencies for this vacancy.\n        </p>\n\n        <!-- Evaluation Summary Card -->\n        <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 20px 0;\">\n          <div style=\"display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;\">\n            <strong style=\"color: #0f172a; font-size: 15px;\">📊 Screening Evaluation Summary</strong>\n            <span style=\"background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 99px;\">Role Match: 48%</span>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;\">Skills Identified in Your Profile:</span>\n            <div><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">Node.js</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">REST APIs</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">SQL / PostgreSQL</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">Databases</span></div>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #991b1b; display: block; margin-bottom: 6px;\">Critical Missing Skills for \"Backend Developer\":</span>\n            <div><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Express</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ MongoDB</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Backend Development</span></div>\n          </div>\n        </div>\n\n        <!-- Resume Gaps & Detailed Feedback -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 20px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #92400e; font-size: 14px; font-weight: 700;\">🔍 Identified Gaps &amp; Resume Analysis</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #78350f; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Candidate background is focused in <strong>AI Prompt Engineering</strong> rather than <strong>Backend Developer</strong>.</li><li style=\"margin-bottom: 6px;\">Candidate profile lacks production backend server architecture, Node.js/Express, and relational database schema design required for Backend Developer.</li>\n          </ul>\n        </div>\n\n        <!-- Recommendations for Future -->\n        <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px; margin-bottom: 24px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #166534; font-size: 14px; font-weight: 700;\">💡 Actionable Recommendations to Strengthen Your Profile</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #14532d; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Apply for roles aligned with <strong>AI Prompt Engineering</strong> or build dedicated projects in <strong>Node.js, Express, REST APIs</strong>.</li><li style=\"margin-bottom: 6px;\">Include live project links, portfolio dashboards, and quantifiable metrics in your resume.</li>\n          </ul>\n        </div>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          At this stage, we are moving forward with candidates whose technical stack more directly matches our immediate requirements for the <strong>Backend Developer</strong> vacancy.\n        </p>\n\n        <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">\n          We will keep your resume on file for future openings that match your specific profile. We wish you great success in your career.\n        </p>\n\n        <div style=\"margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;\">\n          <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n          <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;\">sharmavageesha2000@gmail.com</span>\n        </div>\n      </div>\n    </div>\n  ",
-    "emailStatus": "SENT",
-    "attachmentInfo": {
-      "fileName": "AI_Workflow_Automation_Specialist_Resume.pdf",
-      "fileSize": 26930,
-      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788252594999-AI_Workflow_Automation_Specialist_Resume.pdf",
-      "urlPath": "/uploads/1788252594999-AI_Workflow_Automation_Specialist_Resume.pdf",
-      "path": "/uploads/1788252594999-AI_Workflow_Automation_Specialist_Resume.pdf"
-    },
-    "receivedAt": "2026-09-01T06:26:39.000Z",
-    "evaluatedAt": "2026-09-01T08:49:58.821Z",
-    "source": "EMAIL_INBOX_ATTACHMENT"
-  },
-  {
     "id": "cand-rishu-frontend",
     "name": "Rishu Paliwal",
     "email": "paliwalrishu2000@gmail.com",
@@ -656,5 +759,56 @@
     "offerRefId": null,
     "callLetterSentAt": null,
     "callLetterDetails": null
+  },
+  {
+    "id": "cand-1788252598821-9743",
+    "name": "Arjun Mehta",
+    "email": "sharmavageesha2000@gmail.com",
+    "phone": "+91 98765 43210",
+    "education": "B.Tech in CS/IT",
+    "roleApplied": "Backend Developer",
+    "experienceYears": 4,
+    "skills": [
+      "Node.js",
+      "REST APIs",
+      "SQL / PostgreSQL",
+      "Databases"
+    ],
+    "missingSkills": [
+      "Express",
+      "MongoDB",
+      "Backend Development"
+    ],
+    "scoreBreakdown": {
+      "technicalSkills": 8,
+      "experienceRelevance": 8,
+      "education": 10,
+      "communication": 8
+    },
+    "matchScore": 48,
+    "status": "REJECTED",
+    "interviewStatus": "N/A",
+    "offerStatus": "PENDING",
+    "summary": "Arjun Mehta applied for Backend Developer. Profile does not satisfy core job requirements. Missing: Express, MongoDB, Backend Development. Status: REJECTED.",
+    "strengths": [
+      "Clear communication and professional presentation"
+    ],
+    "weaknesses": [
+      "Missing key competencies for Backend Developer: Express, MongoDB, Backend Development"
+    ],
+    "interviewSchedule": null,
+    "emailSubject": "Update regarding your application for Backend Developer - Vageesha Sharma",
+    "emailHtmlBody": "\n    <div style=\"font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04);\">\n      <div style=\"background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 28px 24px; text-align: center; color: #ffffff;\">\n        <span style=\"background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 8px;\">APPLICATION STATUS UPDATE</span>\n        <h2 style=\"margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;\">Application Evaluation &amp; Feedback</h2>\n        <p style=\"margin: 4px 0 0 0; color: #cbd5e1; font-size: 13px;\">Role: <strong>Backend Developer</strong> • Vageesha Sharma Talent Acquisition</p>\n      </div>\n\n      <div style=\"padding: 28px 24px;\">\n        <p style=\"font-size: 15px; line-height: 1.6; margin-top: 0;\">Dear <strong>Arjun Mehta</strong>,</p>\n        \n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Thank you for applying for the <strong>Backend Developer</strong> position at our organization and for sharing your resume.\n        </p>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          Our technical evaluation team has thoroughly reviewed your background against the active role requirements and competencies for this vacancy.\n        </p>\n\n        <!-- Evaluation Summary Card -->\n        <div style=\"background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 20px 0;\">\n          <div style=\"display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 14px;\">\n            <strong style=\"color: #0f172a; font-size: 15px;\">📊 Screening Evaluation Summary</strong>\n            <span style=\"background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 99px;\">Role Match: 48%</span>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #475569; display: block; margin-bottom: 6px;\">Skills Identified in Your Profile:</span>\n            <div><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">Node.js</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">REST APIs</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">SQL / PostgreSQL</span><span style=\"background: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; margin: 3px 4px 3px 0;\">Databases</span></div>\n          </div>\n\n          <div style=\"margin-bottom: 14px;\">\n            <span style=\"font-size: 12.5px; font-weight: 700; color: #991b1b; display: block; margin-bottom: 6px;\">Critical Missing Skills for \"Backend Developer\":</span>\n            <div><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Express</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ MongoDB</span><span style=\"background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; margin: 3px 4px 3px 0;\">⚠️ Backend Development</span></div>\n          </div>\n        </div>\n\n        <!-- Resume Gaps & Detailed Feedback -->\n        <div style=\"background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 18px; margin-bottom: 20px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #92400e; font-size: 14px; font-weight: 700;\">🔍 Identified Gaps &amp; Resume Analysis</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #78350f; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Candidate background is focused in <strong>AI Prompt Engineering</strong> rather than <strong>Backend Developer</strong>.</li><li style=\"margin-bottom: 6px;\">Candidate profile lacks production backend server architecture, Node.js/Express, and relational database schema design required for Backend Developer.</li>\n          </ul>\n        </div>\n\n        <!-- Recommendations for Future -->\n        <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px; margin-bottom: 24px;\">\n          <h4 style=\"margin: 0 0 10px 0; color: #166534; font-size: 14px; font-weight: 700;\">💡 Actionable Recommendations to Strengthen Your Profile</h4>\n          <ul style=\"margin: 0; padding-left: 20px; font-size: 13.5px; color: #14532d; line-height: 1.6;\">\n            <li style=\"margin-bottom: 6px;\">Apply for roles aligned with <strong>AI Prompt Engineering</strong> or build dedicated projects in <strong>Node.js, Express, REST APIs</strong>.</li><li style=\"margin-bottom: 6px;\">Include live project links, portfolio dashboards, and quantifiable metrics in your resume.</li>\n          </ul>\n        </div>\n\n        <p style=\"font-size: 14.5px; line-height: 1.6; color: #334155;\">\n          At this stage, we are moving forward with candidates whose technical stack more directly matches our immediate requirements for the <strong>Backend Developer</strong> vacancy.\n        </p>\n\n        <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">\n          We will keep your resume on file for future openings that match your specific profile. We wish you great success in your career.\n        </p>\n\n        <div style=\"margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 18px;\">\n          <strong style=\"color: #0f172a; font-size: 14.5px; display: block;\">Vageesha Sharma</strong>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Founder &amp; Hiring Lead</span>\n          <span style=\"color: #64748b; font-size: 13px; display: block;\">Talent Acquisition Division</span>\n          <span style=\"color: #4338ca; font-size: 13px; font-weight: 600; display: block; margin-top: 3px;\">sharmavageesha2000@gmail.com</span>\n        </div>\n      </div>\n    </div>\n  ",
+    "emailStatus": "SENT",
+    "attachmentInfo": {
+      "fileName": "AI_Workflow_Automation_Specialist_Resume.pdf",
+      "fileSize": 26930,
+      "savedPath": "C:\\Users\\VAGEESHA\\Desktop\\my new n8n\\uploads\\1788252594999-AI_Workflow_Automation_Specialist_Resume.pdf",
+      "urlPath": "/uploads/1788252594999-AI_Workflow_Automation_Specialist_Resume.pdf",
+      "path": "/uploads/1788252594999-AI_Workflow_Automation_Specialist_Resume.pdf"
+    },
+    "receivedAt": "2026-09-01T06:26:39.000Z",
+    "evaluatedAt": "2026-09-01T08:49:58.821Z",
+    "source": "EMAIL_INBOX_ATTACHMENT"
   }
 ]
